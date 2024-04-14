@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+	"com.unity.addressables" : "1.21.20",
+  "com.unity.purchasing" : "4.11.0"
+  }
+}
