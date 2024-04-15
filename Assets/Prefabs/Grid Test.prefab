@@ -182,7 +182,6 @@ GameObject:
   - component: {fileID: 7120726320297118553}
   - component: {fileID: 846615370472368524}
   - component: {fileID: 5759782978007714301}
-  - component: {fileID: 2081418063100758239}
   m_Layer: 0
   m_Name: Grid Test
   m_TagString: Untagged
@@ -274,22 +273,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &2081418063100758239
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7940598716013232840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bb9541f5d9512c449efd1a5b478f4dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 21300000, guid: 2c69bab191157c54da7be3d5d9c0cb5e, type: 3}
-  - {fileID: 21300000, guid: fe2c72628ee720f45ac15a19dfacf900, type: 3}
-  - {fileID: 21300000, guid: 8f43d4ddc23960d4db2f2a43e32af7dc, type: 3}
-  - {fileID: 21300000, guid: fcf49cea65f79e94bb59e3ae2085da74, type: 3}
-  - {fileID: 21300000, guid: 442185b3edcfd3e489526caaba67834f, type: 3}
-  - {fileID: 21300000, guid: 5dc7c14f1a8ac674eba7478ef36d2ae3, type: 3}

@@ -1,26 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,IPointerEnterHandler
 {
-    private Camera mainCam;
-    void Start()
+    [SerializeField ] private TextMeshPro valueTxt;
+    [SerializeField] private int value;
+    public int Value
     {
-        mainCam = Camera.main;
+        get { return value; }
+        set 
+        {
+            this.value = value; 
+            valueTxt.text = value.ToString();
+        }
     }
 
     public void OnPointerEnter (PointerEventData eventData)
     {
-
+        Player.Instance.AddSegment (this);
     }
 
     public void OnBeginDrag (PointerEventData eventData)
     {
         Debug.Log ("Begin");
-        Line.Instance.AddSegment (transform.position);
+        Player.Instance.InitLine (this);
     }
 
     public void OnDrag (PointerEventData eventData)
@@ -33,6 +39,11 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void OnEndDrag (PointerEventData eventData)
     {
         Debug.Log ("End");
-        //line.positionCount = 0;
+        Player.Instance.ClearLine ();
+    }
+
+    private void OnValidate ()
+    {
+        valueTxt.text = value.ToString ();
     }
 }

@@ -7,10 +7,11 @@ public class RandomSprites : MonoBehaviour
 {
     public List<Sprite> sprites;
     private TextMeshPro txtNumber;
-
+    [SerializeField] private bool disable;
     [ContextMenu("Random Sprite")]
     public void Awake ()
     {
+        if (disable) return;
         txtNumber = GetComponentInChildren<TextMeshPro>();
         int index = Random.Range (0, sprites.Count);
         GetComponent<SpriteRenderer>().sprite = sprites[index];
