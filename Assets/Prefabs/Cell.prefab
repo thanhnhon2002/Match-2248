@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8f43d4ddc23960d4db2f2a43e32af7dc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c38d4a8c17215dc479943531d1431474, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -159,13 +159,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c7a7e4a3f4e6a4fb1844a7637486fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprites:
-  - {fileID: 21300000, guid: 8f43d4ddc23960d4db2f2a43e32af7dc, type: 3}
-  - {fileID: 21300000, guid: 442185b3edcfd3e489526caaba67834f, type: 3}
-  - {fileID: 21300000, guid: fcf49cea65f79e94bb59e3ae2085da74, type: 3}
-  - {fileID: 21300000, guid: fe2c72628ee720f45ac15a19dfacf900, type: 3}
-  - {fileID: 21300000, guid: 5dc7c14f1a8ac674eba7478ef36d2ae3, type: 3}
-  - {fileID: 21300000, guid: 2c69bab191157c54da7be3d5d9c0cb5e, type: 3}
+  colors:
+  - {r: 0.95294124, g: 0.43529415, b: 0.12941177, a: 1}
+  - {r: 0.5803922, g: 0.3137255, b: 0.627451, a: 1}
+  - {r: 0.82745105, g: 0.14901961, b: 0.3019608, a: 1}
+  - {r: 0.34117648, g: 0.43137258, b: 0.7058824, a: 1}
+  - {r: 0.2627451, g: 0.7372549, b: 0.5372549, a: 1}
+  - {r: 0.8980393, g: 0.42352945, b: 0.6666667, a: 1}
 --- !u!1 &2127309564538735043
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,42 +8,37 @@ public class GridManager : MonoBehaviour
 {
     public readonly int MAX_ROW = 8;
     public readonly int MAX_COL = 5;
+    public static GridManager Instance { get; private set; }
+    public static readonly List<GridPosition> neighbourGridPosition = new List<GridPosition> ()
+    { new GridPosition(0, 1), new GridPosition (1,1), new GridPosition(1, 0), new GridPosition(1,-1), new GridPosition(0, -1), new GridPosition(-1, -1), new GridPosition(-1, 0), new GridPosition(-1,1) };
+    [SerializeField] private Cell cellPrefab;
 
-    [SerializeField] private GridInfo girdPrefab;
-    public GridInfo[] allGrid { get; private set; }
+    private Cell[] allCell;
+    public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell> ();
 
-    private Dictionary<int, List<GridInfo>> rows = new Dictionary<int, List<GridInfo>>();
-    private Dictionary<int, List<GridInfo>> cols = new Dictionary<int, List<GridInfo>>();
-
-    public Dictionary<int, List<GridInfo>> Rows => rows;
-    public Dictionary<int, List<GridInfo>> Cols => cols;
-
-    [SerializeField] private Vector2 maxPos;
-    [SerializeField] private Vector2 minPos;
-
-    [ContextMenu("Init")]
-    private void InitData()
+    private void Awake ()
     {
-        allGrid = GetComponentsInChildren<GridInfo>();
-        foreach (var info in allGrid)
+        Instance = this;
+        allCell = GetComponentsInChildren<Cell> ();
+        foreach (var item in allCell)
         {
-            //info.GetNearbyGrid();
-            if (!rows.ContainsKey(info.position.y)) rows.Add(info.position.y, new List<GridInfo>());
-            rows[info.position.y].Add(info);
-            if (!cols.ContainsKey(info.position.x)) cols.Add(info.position.x, new List<GridInfo>());
-            cols[info.position.x].Add(info);
+            cellDic.Add(item.gridPosition, item);
+        }
+        LoadCells ();
+    }
+
+    private void LoadCells()
+    {
+        foreach (var item in allCell)
+        {
+            item.Value = (int)Mathf.Pow (2, Random.Range (1, 7));
         }
     }
-    public GridInfo GetGridAt(int x, int y)
-    {
-        var grid = allGrid.FirstOrDefault(g => g.position.x == x && g.position.y == y);
-        return grid;
-    }
 
-    public GridInfo GetGridAt (GridPosition position)
+    public Cell GetCellAt(GridPosition position)
     {
-        var grid = allGrid.FirstOrDefault (g => g.position.x == position.x && g.position.y == position.y);
-        return grid;
+        if (!cellDic.ContainsKey (position)) return null;
+        return cellDic[position];
     }
 
     [ContextMenu("Spawn")]
@@ -55,20 +50,15 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < MAX_ROW; y++)
             {
-                var grid = Instantiate (girdPrefab, pos, Quaternion.identity, transform);
-                grid.position = gridPos;
+                var cell = Instantiate (cellPrefab, pos, Quaternion.identity);
+                cell.gridPosition = gridPos;
                 gridPos.y += 1;
                 pos.y -= 1f;
-#if UNITY_EDITOR
-                var randomSprite = grid.GetComponent<RandomSprites> ();
-                if (randomSprite) randomSprite.Awake ();
-#endif
             }
             gridPos.x += 1;
             gridPos.y = 1;
             pos.x += 1f;
             pos.y = (MAX_ROW / 2f) - 0.5f;
         }
-        InitData();
     }
 }

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Cell))]
-public class SpriteSet : MonoBehaviour
+public class ColorSet : MonoBehaviour
 {
-    [SerializeField] private Sprite[] sprites;
+    [SerializeField] private Color[] colors;
     private SpriteRenderer spriteRenderer;
     private Cell cell;
 
@@ -19,7 +19,7 @@ public class SpriteSet : MonoBehaviour
     private void Start ()
     {
         var pow = (int)MathF.Log (cell.Value, 2);
-        var index = pow % sprites.Length;
-        spriteRenderer.sprite = sprites[index];
+        var index = pow % colors.Length;
+        spriteRenderer.color = colors[index];
     }
 }

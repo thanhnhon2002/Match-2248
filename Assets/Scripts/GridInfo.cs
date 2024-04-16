@@ -28,5 +28,7 @@ public class GridInfo : MonoBehaviour
     {
         var cell = PoolSystem.Instance.GetObject (cellPrefab, transform.position);
         cell.Value = (int)Mathf.Pow (2, Random.Range (1, 5));
+        cell.gridPosition = position;
+        //manager.allCell.Add (cell);
     }
 }

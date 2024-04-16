@@ -6,63 +6,112 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
-    [SerializeField] private List<Vector3> segments = new List<Vector3> ();
-    private LineRenderer lineRenderer;
+    public Vector3 mousePos { get; private set; }
+    [SerializeField] private Line linePrefab;
+    private List<Cell> conectedCell = new List<Cell> ();
+    private List<Line> lines = new List<Line> ();
+    private Dictionary<int, int> conectedValueCount = new Dictionary<int, int> ();
     private Camera mainCam;
-    private bool init;
+    public bool isDraging;
     private int segmentCount;
     private int initValue;
-    private List<int> conectedValue = new List<int> ();
 
     private void Awake ()
     {
         Instance = this;
-        lineRenderer = GetComponent<LineRenderer> ();
         mainCam = Camera.main;
     }
 
     private void Update ()
     {
-        if (segments.Count > 1) segments[segments.Count - 1] = mainCam.ScreenToWorldPoint (Input.mousePosition);
-        lineRenderer.SetPositions (segments.ToArray ());
+        mousePos = mainCam.ScreenToWorldPoint (Input.mousePosition);
+        if (lines.Count > 0)
+        {
+            var lastLine = lines[lines.Count - 1];
+            lastLine.SetLine (lastLine.startCell, null);
+        }
     }
 
     public void InitLine (Cell cell)
     {
-        if (segments.Contains (cell.transform.position)) return;
+        if (conectedCell.Contains (cell)) return;
         initValue = cell.Value;
-        conectedValue.Add(cell.Value);
+        if (!conectedValueCount.ContainsKey (cell.Value)) conectedValueCount.Add (cell.Value, 0);
+        conectedValueCount[cell.Value] = 1;
+        conectedCell.Add (cell);
         segmentCount++;
         GameFlow.Instance.TotalPoint = initValue;
-        segments.Add (cell.transform.position);
-        segments.Add (Vector3.zero);
-        lineRenderer.positionCount = segments.Count;
-        //lineRenderer.colorGradient.SetKeys (new GradientColorKey(Color.green,);
-        init = true;
+        var line = PoolSystem.Instance.GetObject (linePrefab, cell.transform.position);
+        lines.Add (line);
+        line.SetLine (cell, null);
+        line.SetColor (cell.spriteRenderer.color);
+        isDraging = true;
     }
 
-    public void AddSegment(Cell cell)
+    public void CheckCell(Cell cell)
     {
-        if (!init) return;
-        if (segments.Contains (cell.transform.position)) return;
-        if(CanConect(cell))
+        if (!isDraging) return;
+        if (conectedCell.Contains (cell) && conectedCell.Count > 1 && cell.Equals (conectedCell[conectedCell.Count - 2]))
         {
-            segments[segments.Count - 1] = cell.transform.position;
-            segments.Add (Vector3.zero);
-            lineRenderer.positionCount = segments.Count;
-            segmentCount += cell.Value / initValue;
-            GameFlow.Instance.CalculateTotal (initValue, segmentCount);
-        }       
+            RemoveCell (conectedCell[conectedCell.Count - 1]);
+            initValue = conectedCell[conectedCell.Count - 1].Value;
+        } else if (!conectedCell.Contains (cell)) AddCell (cell);
+    }
+
+    public void AddCell(Cell cell)
+    {
+        var lastCell = conectedCell[conectedCell.Count - 1];
+        if (!lastCell.nearbyCell.Contains (cell)) return;
+        if (!CanConect (cell)) return;
+
+        //conect last line to cell
+        var lastLine = lines[lines.Count - 1];
+        lastLine.SetLine (lastLine.startCell, cell);
+
+        //spawn new line and conect it with mouse position
+        var line = PoolSystem.Instance.GetObject (linePrefab, cell.transform.position);
+        lines.Add (line);
+        line.SetLine (cell, null);
+        line.SetColor (cell.spriteRenderer.color);
+
+        conectedCell.Add (cell);
+        segmentCount += cell.Value / initValue;
+        if (segmentCount >= 2) GameFlow.Instance.CalculateTotal (initValue, segmentCount);
+    }
+
+    public void RemoveCell(Cell lastCell)
+    {
+        if (!isDraging) return;
+        if (conectedCell.Count <= 1) return;
+        var lastLine = lines[lines.Count - 1];
+        lastLine.gameObject.SetActive (false);
+        lines.Remove (lastLine);
+
+        var line = lines.Find (x => x.endCell.Equals (lastCell));
+        line.SetLine(line.startCell, null);
+        segmentCount -= lastCell.Value / initValue;
+        conectedCell.Remove (lastCell);
+        conectedValueCount[lastCell.Value]--;
+        if (conectedValueCount[lastCell.Value] == 0) conectedValueCount.Remove (lastCell.Value);
+        if (segmentCount >= 2) GameFlow.Instance.CalculateTotal (initValue, segmentCount);
     }
 
     private bool CanConect(Cell cell)
     {
-        if (conectedValue.Contains (cell.Value) && initValue == cell.Value) return true;
-        //var currentValue = GameFlow.Instance.TotalPoint;
-        if (cell.Value > initValue && conectedValue.Contains (cell.Value / 2))
+        if (conectedValueCount.ContainsKey (cell.Value) && initValue == cell.Value)
+        {
+            conectedValueCount[cell.Value]++;
+            return true;
+        }
+        if (!conectedValueCount.ContainsKey (cell.Value / 2)) return false;
+        var valueCount = conectedValueCount[cell.Value / 2];
+        if (cell.Value > initValue && !conectedValueCount.ContainsKey(cell.Value) && valueCount >= 1/* && Mathf.Log (cell.Value, 2) >= valueCount*/ && conectedCell.Count > 1)
         {
             initValue = cell.Value;
-            conectedValue.Add (cell.Value);
+            if (!conectedValueCount.ContainsKey (cell.Value))
+            {
+                conectedValueCount.Add (cell.Value, 1);
+            } else conectedValueCount[cell.Value]++;
             return true;
         }
         return false;
@@ -70,10 +119,14 @@ public class Player : MonoBehaviour
 
     public void ClearLine ()
     {
-        conectedValue.Clear ();
-        segments.Clear ();
+        foreach (var line in lines)
+        {
+            line.gameObject.SetActive (false);
+        }
+        lines.Clear ();
+        conectedValueCount.Clear ();
+        conectedCell.Clear ();
+        isDraging = false;
         segmentCount = 0;
-        lineRenderer.positionCount = 0;
-        init = false;
     }
 }
