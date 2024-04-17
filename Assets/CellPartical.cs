@@ -8,13 +8,12 @@ public class CellPartical : MonoBehaviour
     [SerializeField] private Vector3 localPos;
     [SerializeField] private float size;
     [SerializeField] private float rotation;
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
-    public void PlayEffectOut (float time)
+    public void PlayEffectOut (float time, Color startColor)
     {
-        var color = Color.white;
-        color.a = 0f;
-        spriteRenderer.color = color;
+        startColor.a = 0f;
+        spriteRenderer.color = startColor;
         transform.localPosition = Vector3.zero;
         transform.localScale = Vector3.zero;
         transform.localRotation = new Quaternion (0, 0, 0, 0);
@@ -24,12 +23,13 @@ public class CellPartical : MonoBehaviour
         transform.DOScale (size, time);
     }
 
-    public void PlayEffectIn(float time)
+    public void PlayEffectIn(float time, Color endColor)
     {
         transform.DOScale (0, time);
         transform.DOLocalMove (Vector3.zero, time);
         transform.DOLocalRotate (Vector3.zero, time);
         spriteRenderer.DOFade (0f, time);
+        spriteRenderer.DOColor (endColor, time);
     }
 
     [ContextMenu ("Get Info")]

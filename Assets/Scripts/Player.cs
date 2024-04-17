@@ -134,15 +134,10 @@ public class Player : MonoBehaviour
 
     public void ClearLine ()
     {
+        if(conectedCell.Count >=2 ) ExploseConectedCell ();
         foreach (var line in lines)
         {
             line.gameObject.SetActive (false);
-        }
-        for (int i = 0; i < conectedCell.Count; i++)
-        {
-            conectedCell[i].gameObject.SetActive (false);
-            var fx = PoolSystem.Instance.GetObject (effectPrefab, conectedCell[i].transform.position);
-            fx.Play (conectedCell, i);
         }
         lines.Clear ();
         conectedValueCount.Clear ();
@@ -151,5 +146,21 @@ public class Player : MonoBehaviour
         segmentCount = 0;
         countInitValue = 0;
         GameFlow.Instance.TotalPoint = 0;
+    }
+
+    private void ExploseConectedCell ()
+    {
+        var effectTime = 0f;
+        var lastCell = conectedCell[conectedCell.Count - 1];
+        var newValue = GameFlow.Instance.TotalPoint;
+        for (int i = 0; i < conectedCell.Count; i++)
+        {
+            conectedCell[i].gameObject.SetActive (false);
+            var fx = PoolSystem.Instance.GetObject (effectPrefab, conectedCell[i].transform.position);
+            fx.Play (conectedCell, i, conectedCell[i].spriteRenderer.color, lastCell.colorSet.GetColor(newValue));
+            effectTime = fx.time;
+        }
+
+        LeanTween.delayedCall (effectTime, () => GridManager.Instance.SpawnNewCell (lastCell.transform.position, newValue));
     }
 }
