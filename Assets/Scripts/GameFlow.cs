@@ -34,6 +34,7 @@ public class GameFlow : MonoBehaviour
     }
     int IndexCellCount(int cellCount)
     {
+        if (cellCount == 0) return -1;
         for(var index=0;index<=INIT_MULTILIER;index++)
         {
             if (cellCount == multiliers[index]) return index;
