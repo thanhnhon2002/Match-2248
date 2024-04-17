@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
     public Vector3 mousePos { get; private set; }
     [SerializeField] private Line linePrefab;
+    [SerializeField] private Effect effectPrefab;
     private List<Cell> conectedCell = new List<Cell> ();
     private List<Line> lines = new List<Line> ();
     private Dictionary<int, int> conectedValueCount = new Dictionary<int, int> ();
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
     public void InitLine (Cell cell)
     {
         if (conectedCell.Contains (cell)) return;
+        cell.OnInteract?.Invoke ();
         initValue = cell.Value;
         if (!conectedValueCount.ContainsKey (cell.Value)) conectedValueCount.Add (cell.Value, 0);
         conectedValueCount[cell.Value] = 1;
@@ -63,6 +66,7 @@ public class Player : MonoBehaviour
         var lastCell = conectedCell[conectedCell.Count - 1];
         if (!lastCell.nearbyCell.Contains (cell)) return;
         if (!CanConect (cell)) return;
+        cell.OnInteract?.Invoke ();
 
         //conect last line to cell
         var lastLine = lines[lines.Count - 1];
@@ -86,7 +90,7 @@ public class Player : MonoBehaviour
         var lastLine = lines[lines.Count - 1];
         lastLine.gameObject.SetActive (false);
         lines.Remove (lastLine);
-
+        lastCell.OnInteract?.Invoke ();
         var line = lines.Find (x => x.endCell.Equals (lastCell));
         line.SetLine(line.startCell, null);
         segmentCount -= lastCell.Value / initValue;
@@ -122,6 +126,12 @@ public class Player : MonoBehaviour
         foreach (var line in lines)
         {
             line.gameObject.SetActive (false);
+        }
+        for (int i = 0; i < conectedCell.Count; i++)
+        {
+            conectedCell[i].gameObject.SetActive (false);
+            var fx = PoolSystem.Instance.GetObject (effectPrefab, conectedCell[i].transform.position);
+            fx.Play (conectedCell, i);
         }
         lines.Clear ();
         conectedValueCount.Clear ();

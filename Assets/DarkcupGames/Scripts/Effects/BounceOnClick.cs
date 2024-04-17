@@ -13,13 +13,13 @@ namespace DarkcupGames
         private void Awake()
         {
             button = GetComponent<Button>();
-            button.onClick.AddListener(Bounce);
-            localScale = button.transform.localScale;
+            if(button != null) button.onClick.AddListener(Bounce);
+            localScale = transform.localScale;
         }
 
         public void Bounce()
         {
-            button.transform.localScale = localScale;
+            transform.localScale = localScale;
             EasyEffect.Bounce(gameObject, 0.1f, strength: 0.2f);
         }
     }

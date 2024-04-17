@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
 public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler
 {
     public SpriteRenderer spriteRenderer { get; private set; }
     [SerializeField] private TextMeshPro valueTxt;
-    [SerializeField] private int value;
     public List<Cell> nearbyCell = new List<Cell>();
     public GridPosition gridPosition;
-
+    public UnityEvent OnInteract;
+    private int value;
     public int Value
     {
         get { return value; }
