@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameFlow : MonoBehaviour
 {
     public static GameFlow Instance { get; private set; }
-    private const int INIT_MULTILIER = 6;
+    private const int INIT_MULTILIER = 30;
     public List<int> multiliers = new List<int>();
     [SerializeField] private int totalPoint;
     public int TotalPoint

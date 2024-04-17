@@ -111,27 +111,22 @@ public class Player : MonoBehaviour
     }
 
     private bool CanConect(Cell cell)
-    {
-        if (conectedValueCount.ContainsKey (cell.Value) && currentCellValue == cell.Value)
+    {       
+        if (!conectedValueCount.ContainsKey(cell.Value / 2)&&cell.Value>initValue) return false;
+        if (cell.Value < currentCellValue) return false;
+        else if (currentCellValue == cell.Value)
         {
             conectedValueCount[cell.Value]++;
             return true;
         }
-        if(cell.Value < currentCellValue) return false;
-        if (!conectedValueCount.ContainsKey (cell.Value / 2)) return false;
-        var valueCount = conectedValueCount[cell.Value / 2];
-        if (cell.Value > currentCellValue && !conectedValueCount.ContainsKey(cell.Value) && valueCount >= 1/* && Mathf.Log (cell.Value, 2) >= valueCount*/ && conectedCell.Count > 1)
+        else
         {
+            if(cell.Value > GameFlow.Instance.TotalPoint) return false;
             currentCellValue = cell.Value;
-            if (!conectedValueCount.ContainsKey (cell.Value))
-            {
-                conectedValueCount.Add (cell.Value, 1);
-            } else conectedValueCount[cell.Value]++;
+            conectedValueCount.Add (cell.Value, 1);
             return true;
         }
-        return false;
     }
-
     public void ClearLine ()
     {
         if(conectedCell.Count >=2 ) ExploseConectedCell ();
@@ -161,6 +156,7 @@ public class Player : MonoBehaviour
             effectTime = fx.time;
         }
 
-        LeanTween.delayedCall (effectTime, () => GridManager.Instance.SpawnNewCell (lastCell.transform.position, newValue));
+        LeanTween.delayedCall (effectTime, () => GridManager.Instance.SpawnNewCell (lastCell.transform.position));
     }
+    
 }

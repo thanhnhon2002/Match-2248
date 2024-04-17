@@ -16,6 +16,11 @@ public class GridManager : MonoBehaviour
     private Cell[] allCell;
     public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell> ();
 
+    private int minIndex;
+    private int maxIndex;
+    private int maxIndexRandom;
+
+
     private void Awake ()
     {
         Application.targetFrameRate = 60;
@@ -23,7 +28,12 @@ public class GridManager : MonoBehaviour
         UpdateCell ();
         LoadCells ();
     }
-
+    private void Start()
+    {
+        minIndex = 1;
+        maxIndex = 10;
+        maxIndexRandom = (int)(maxIndex + minIndex) / 2;
+    }
     private void UpdateCell ()
     {
         allCell = GetComponentsInChildren<Cell> ();
@@ -49,6 +59,13 @@ public class GridManager : MonoBehaviour
     {
         var newCell = PoolSystem.Instance.GetObject (cellPrefab, position);
         newCell.Value = value;
+        int index = (int)Mathf.Log(value, 2);
+        if(index>maxIndex)
+        {
+            minIndex++;
+            maxIndex++;
+            maxIndexRandom++;
+        }
     }
 
     public Cell GetCellAt(GridPosition position)
@@ -76,5 +93,10 @@ public class GridManager : MonoBehaviour
             pos.x += 1f;
             pos.y = (MAX_ROW / 2f) - 0.5f;
         }
+    }
+    public int ValueRandom()
+    {
+        int rad = Random.Range(minIndex, maxIndexRandom+1);
+        return (int)Mathf.Pow(2, rad);
     }
 }
