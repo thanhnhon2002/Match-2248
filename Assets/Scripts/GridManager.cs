@@ -18,13 +18,23 @@ public class GridManager : MonoBehaviour
 
     private void Awake ()
     {
+        Application.targetFrameRate = 60;
         Instance = this;
+        UpdateCell ();
+        LoadCells ();
+    }
+
+    private void UpdateCell ()
+    {
         allCell = GetComponentsInChildren<Cell> ();
         foreach (var item in allCell)
         {
-            cellDic.Add(item.gridPosition, item);
+            cellDic.Add (item.gridPosition, item);
         }
-        LoadCells ();
+        foreach (var item in allCell)
+        {
+            item.FindNearbyCells ();
+        }
     }
 
     private void LoadCells()
@@ -33,6 +43,12 @@ public class GridManager : MonoBehaviour
         {
             item.Value = (int)Mathf.Pow (2, Random.Range (1, 7));
         }
+    }
+
+    public void SpawnNewCell(Vector2 position, int value)
+    {
+        var newCell = PoolSystem.Instance.GetObject (cellPrefab, position);
+        newCell.Value = value;
     }
 
     public Cell GetCellAt(GridPosition position)

@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using System.Linq;
 
 public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler
 {
     public SpriteRenderer spriteRenderer { get; private set; }
     [SerializeField] private TextMeshPro valueTxt;
+    public ColorSet colorSet { get; private set; }
     public List<Cell> nearbyCell = new List<Cell>();
     public GridPosition gridPosition;
     public UnityEvent OnInteract;
@@ -20,6 +21,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         set {
             this.value = value;
             valueTxt.text = value.ToString ();
+            colorSet.SetColor ();
         }
     }
 
@@ -27,14 +29,10 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     private void Awake ()
     {
         spriteRenderer = GetComponent<SpriteRenderer> ();
+        colorSet = GetComponent<ColorSet> ();
     }
 
-    private void Start ()
-    {
-        FindNearbyCells ();
-    }
-
-    private void FindNearbyCells()
+    public void FindNearbyCells()
     {
         nearbyCell.Clear ();
         var listDirection = GridManager.neighbourGridPosition;
@@ -49,6 +47,8 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             var cell = GridManager.Instance.GetCellAt (new GridPosition (nearbyX, nearbyY));
             if(cell != null) nearbyCell.Add (cell);
         }
+        nearbyCell = nearbyCell.Distinct ().ToList();
+        if(nearbyCell.Contains(this)) nearbyCell.Remove (this);
     }
 
     public void OnPointerEnter (PointerEventData eventData)
@@ -75,4 +75,13 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         valueTxt.text = value.ToString ();
     }
+
+    //[ContextMenu("Highligth")]
+    //public void Highight()
+    //{
+    //    foreach (var item in nearbyCell)
+    //    {
+    //        item.spriteRenderer.color = Color.red;
+    //    }
+    //}
 }

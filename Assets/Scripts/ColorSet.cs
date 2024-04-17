@@ -7,8 +7,8 @@ using UnityEngine;
 public class ColorSet : MonoBehaviour
 {
     [SerializeField] private Color[] colors;
-    private SpriteRenderer spriteRenderer;
-    private Cell cell;
+    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private Cell cell;
 
     private void Awake ()
     {
@@ -16,10 +16,17 @@ public class ColorSet : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void Start ()
+    public void SetColor ()
     {
         var pow = (int)MathF.Log (cell.Value, 2);
         var index = pow % colors.Length;
         spriteRenderer.color = colors[index];
+    }
+
+    public Color GetColor(int value)
+    {
+        var pow = (int)MathF.Log (value, 2);
+        var index = pow % colors.Length;
+        return colors[index];
     }
 }
