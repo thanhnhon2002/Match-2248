@@ -6,7 +6,7 @@ public class GameFlow : MonoBehaviour
 {
     public static GameFlow Instance { get; private set; }
     private const int INIT_MULTILIER = 6;
-    private List<int> multiliers = new List<int>();
+    public List<int> multiliers = new List<int>();
     [SerializeField] private int totalPoint;
     public int TotalPoint
     {
@@ -21,19 +21,25 @@ public class GameFlow : MonoBehaviour
 
     private void InitMultilier()
     {
-        for (int i = 1; i < INIT_MULTILIER; i++)
+        for (int i = 0; i <= INIT_MULTILIER; i++)
         {
             var pow = Mathf.Pow (2, i);
-            for (int j = 0; j < pow; j++)
-            {
-                multiliers.Add ((int)pow);
-            }
+            multiliers.Add((int)pow);
         }
     }
 
     public void CalculateTotal (int initValue, int cellCount)
     {
-        var multilier = multiliers[cellCount - 2];
-        TotalPoint = initValue * multilier;
+        TotalPoint =(int)initValue * (int)Mathf.Pow(2,IndexCellCount(cellCount) + 1);
+    }
+    int IndexCellCount(int cellCount)
+    {
+        for(var index=0;index<=INIT_MULTILIER;index++)
+        {
+            if (cellCount == multiliers[index]) return index;
+            if (multiliers[index + 1] > cellCount && multiliers[index]<=cellCount)
+                return index;
+        }
+        return multiliers.Count-1;
     }
 }
