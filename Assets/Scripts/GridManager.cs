@@ -16,6 +16,8 @@ public class GridManager : MonoBehaviour
     private Cell[] allCell;
     public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell> ();
 
+    private const int Space_Index = 10;
+    private const int Space_MaxIndex = 13;
     private int minIndex;
     private int maxIndex;
     private int maxIndexRandom;
@@ -31,7 +33,7 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         minIndex = 1;
-        maxIndex = 10;
+        maxIndex = Space_Index;
         maxIndexRandom = (int)(maxIndex + minIndex) / 2;
     }
     private void UpdateCell ()
@@ -55,17 +57,23 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void SpawnNewCell(Vector2 position, int value)
+    public void SpawnCellSum(Vector2 position, int value)
     {
         var newCell = PoolSystem.Instance.GetObject (cellPrefab, position);
         newCell.Value = value;
-        int index = (int)Mathf.Log(value, 2);
-        if(index>maxIndex)
+        int index = (int) Mathf.Log(value, 2);
+        if (index > maxIndex)
         {
             minIndex++;
-            maxIndex++;
+            if (maxIndex - minIndex < Space_MaxIndex) maxIndex += 2;
+            else maxIndex += 1;
             maxIndexRandom++;
         }
+    }
+    public void SpawnCellNew(Vector2 position)
+    {
+        var newCell = PoolSystem.Instance.GetObject(cellPrefab, position);
+        newCell.Value = ValueRandom();
     }
 
     public Cell GetCellAt(GridPosition position)

@@ -156,7 +156,7 @@ public class Player : MonoBehaviour
             effectTime = fx.time;
         }
 
-        LeanTween.delayedCall (effectTime, () => GridManager.Instance.SpawnNewCell (lastCell.transform.position));
+        LeanTween.delayedCall(effectTime, () => GridManager.Instance.SpawnCellSum(lastCell.transform.position,GameFlow.Instance.TotalPoint));
     }
     
 }
