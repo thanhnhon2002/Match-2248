@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.Linq;
+using System.Numerics;
 
 public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler
 {
@@ -14,14 +15,14 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public List<Cell> nearbyCell = new List<Cell>();
     public GridPosition gridPosition;
     public UnityEvent OnInteract;
-    private int value;
-    public int Value
+    private BigInteger value;
+    public BigInteger Value
     {
         get { return value; }
         set {
             this.value = value;
-            valueTxt.text = value.ToString ();
-            colorSet.SetColor ();
+            valueTxt.text = BigIntegerConverter.ConverNameValue(value);
+            colorSet.SetColor();
         }
     }
 
@@ -68,12 +69,12 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag (PointerEventData eventData)
     {
-        Player.Instance.ClearLine ();
+        Player.Instance.ClearLine();
     }
 
     private void OnValidate ()
     {
-        valueTxt.text = value.ToString ();
+        valueTxt.text = BigIntegerConverter.ConverNameValue(Value);
     }
 
     //[ContextMenu("Highligth")]

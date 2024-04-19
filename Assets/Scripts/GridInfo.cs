@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using TMPro;
 using UnityEngine;
 
@@ -27,7 +28,7 @@ public class GridInfo : MonoBehaviour
     private void Awake ()
     {
         var cell = PoolSystem.Instance.GetObject (cellPrefab, transform.position);
-        cell.Value = (int)Mathf.Pow (2, Random.Range (1, 5));
+        //cell.Value = (BigInteger)Mathf.Pow (2, Random.Range (1, 5));
         cell.gridPosition = position;
         //manager.allCell.Add (cell);
     }

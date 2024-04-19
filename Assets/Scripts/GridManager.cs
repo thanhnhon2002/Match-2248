@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.UIElements;
+using Unity.Mathematics;
+using System.Numerics;
+using Random = UnityEngine.Random;
+using Vector2 = UnityEngine.Vector2;
+using Quaternion = UnityEngine.Quaternion;
 
 public class GridManager : MonoBehaviour
 {
@@ -27,14 +32,14 @@ public class GridManager : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         Instance = this;
-        UpdateCell ();
-        LoadCells ();
     }
     private void Start()
     {
         minIndex = 1;
         maxIndex = Space_Index;
         maxIndexRandom = (int)(maxIndex + minIndex) / 2;
+        UpdateCell();
+        LoadCells();
     }
     private void UpdateCell ()
     {
@@ -53,15 +58,16 @@ public class GridManager : MonoBehaviour
     {
         foreach (var item in allCell)
         {
-            item.Value = (int)Mathf.Pow (2, Random.Range (1, 7));
+            item.Value = (BigInteger)Mathf.Pow(2, Random.Range(1, 5));
         }
     }
 
-    public void SpawnCellSum(Vector2 position, int value)
+    public void SpawnCellSum(Vector2 position, BigInteger value)
     {
         var newCell = PoolSystem.Instance.GetObject (cellPrefab, position);
         newCell.Value = value;
-        int index = (int) Mathf.Log(value, 2);
+        Mathf mathf;
+        int index = mathf.LogBigInt(value,2);
         if (index > maxIndex)
         {
             minIndex++;
@@ -69,8 +75,9 @@ public class GridManager : MonoBehaviour
             else maxIndex += 1;
             maxIndexRandom++;
         }
+        GameFlow.Instance.TotalPoint = 0;
     }
-    public void SpawnCellNew(Vector2 position)
+    public void SpawnCellNew(UnityEngine.Vector2 position)
     {
         var newCell = PoolSystem.Instance.GetObject(cellPrefab, position);
         newCell.Value = ValueRandom();
@@ -102,9 +109,9 @@ public class GridManager : MonoBehaviour
             pos.y = (MAX_ROW / 2f) - 0.5f;
         }
     }
-    public int ValueRandom()
+    public BigInteger ValueRandom()
     {
-        int rad = Random.Range(minIndex, maxIndexRandom+1);
-        return (int)Mathf.Pow(2, rad);
+        int index = Random.Range(minIndex, maxIndexRandom+1);
+        return (BigInteger)Mathf.Pow(2, index);
     }
 }
