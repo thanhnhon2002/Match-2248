@@ -52,11 +52,6 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(nearbyCell.Contains(this)) nearbyCell.Remove (this);
     }
 
-    private void Update ()
-    {
-        debugTxt.text = $" x {gridPosition.x}, y = {gridPosition.y}";
-    }
-
     public void OnPointerEnter (PointerEventData eventData)
     {
         //for (int i = 0;i < nearbyCell.Count;i++)

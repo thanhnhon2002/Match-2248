@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.UIElements;
-using Unity.Mathematics;
+using UnityEngine;
+using DG.Tweening;
 using System.Numerics;
 using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 
 public class GridManager : MonoBehaviour
@@ -42,6 +43,9 @@ public class GridManager : MonoBehaviour
 
     private void Start ()
     {
+        minIndex = 1;
+        maxIndex = Space_Index;
+        maxIndexRandom = (int)(maxIndex + minIndex) / 2;
         allCell = GetComponentsInChildren<Cell> ();
         foreach (var item in allCell)
         {
@@ -50,14 +54,7 @@ public class GridManager : MonoBehaviour
         UpdateCell ();
         LoadCells ();
     }
-    private void Start()
-    {
-        minIndex = 1;
-        maxIndex = Space_Index;
-        maxIndexRandom = (int)(maxIndex + minIndex) / 2;
-        UpdateCell();
-        LoadCells();
-    }
+
     private void UpdateCell ()
     {
         allCell = GetComponentsInChildren<Cell> ();
@@ -101,6 +98,34 @@ public class GridManager : MonoBehaviour
     {
         var newCell = PoolSystem.Instance.GetObject(cellPrefab, position);
         newCell.Value = ValueRandom();
+    }
+
+    public void CheckToSpawnNewCell (List<Cell> conectedCell)
+    {
+        for (int i = 1; i <= MAX_COL; i++)
+        {
+            var list = allCellInCollom[i];
+            var spawnPos = new Vector2 (list[i].transform.localPosition.x, cellSpawnPos.transform.position.y);
+            list.RemoveAll (x => !x.gameObject.activeInHierarchy);
+            var count = conectedCell.Count (x => x.gridPosition.x == i && !x.Equals (conectedCell.Last ()));
+            for (int j = 0; j < count; j++)
+            {
+                var newCell = SpawnCell (spawnPos, (int)Mathf.Pow (2, Random.Range (1, 7)));
+                spawnPos.y++;
+                if (!list.Contains (newCell)) list.Add (newCell);
+            }
+            list = list.Distinct ().ToList ();
+            list.Sort ((a, b) => a.transform.localPosition.y.CompareTo (b.transform.localPosition.y));
+            Debug.Log ($"Collom {i} has {list.Count} cells");
+            var gridY = list.Count;
+            for (int a = 0; a < list.Count; a++)
+            {
+                list[a].gameObject.SetActive (true);
+                list[a].gridPosition = new GridPosition (i, gridY);
+                gridY--;
+            }
+        }
+        Drop ();
     }
 
     public void Drop()

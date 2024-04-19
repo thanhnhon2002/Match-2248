@@ -46,18 +46,4 @@ public class GameFlow : MonoBehaviour
         }
         return multiliers.Count - 1;
     }
-    //private void Start()
-    //{
-    //    Debug.Log(BigIntegerConverter.ConverNameValue(12));
-    //    Debug.Log(BigIntegerConverter.ConverNameValue(13422));
-    //    Debug.Log(BigIntegerConverter.ConverNameValue(3213422));
-    //    Debug.Log(BigIntegerConverter.ConverNameValue(4213213422));
-    //    Debug.Log(BigIntegerConverter.ConverNameValue(521321213422));
-    //    Debug.Log(BigIntegerConverter.ConverNameValue(72234231321213422));
-    //    Debug.Log(BigIntegerConverter.ConverNameValue(BigInteger.Parse("352522342325531235261661621213422")));
-    //    Debug.Log(BigIntegerConverter.ConverNameValue(BigInteger.Parse("55151156352522342325531235261661621213422")));
-    //    Debug.Log(BigIntegerConverter.ConverNameValue(BigInteger.Parse("18256651184851581529242312121185151156352522342325531235261661621213422")));
-    //    Debug.Log(BigIntegerConverter.ConverNameValue(BigInteger.Parse("99999984651321651321561325415153205415231651532185123154658413215413285132452024653210351321651215121812316520234156320513209999999999999918256651184851581529242312121185151156352522342325531235261661621213422")));
-    //}
-
 }
