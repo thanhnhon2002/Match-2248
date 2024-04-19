@@ -26,11 +26,17 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
     }
 
+    public TextMeshPro debugTxt;
 
     private void Awake ()
     {
         spriteRenderer = GetComponent<SpriteRenderer> ();
         colorSet = GetComponent<ColorSet> ();
+    }
+
+    private void Update()
+    {
+        debugTxt.text = $"x = {gridPosition.x}, y =  {gridPosition.y}";
     }
 
     public void FindNearbyCells()
