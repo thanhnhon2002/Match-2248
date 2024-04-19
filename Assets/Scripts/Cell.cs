@@ -6,15 +6,18 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.Linq;
 
-public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler
+public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public SpriteRenderer spriteRenderer { get; private set; }
-    [SerializeField] private TextMeshPro valueTxt;
+    public TextMeshPro valueTxt;
     public ColorSet colorSet { get; private set; }
     public List<Cell> nearbyCell = new List<Cell>();
     public GridPosition gridPosition;
     public UnityEvent OnInteract;
     private int value;
+
+
+    public TextMeshPro debugTxt;
     public int Value
     {
         get { return value; }
@@ -51,9 +54,25 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if(nearbyCell.Contains(this)) nearbyCell.Remove (this);
     }
 
+    private void Update ()
+    {
+        debugTxt.text = $" x {gridPosition.x}, y = {gridPosition.y}";
+    }
+
     public void OnPointerEnter (PointerEventData eventData)
     {
+        //for (int i = 0;i < nearbyCell.Count;i++)
+        //{
+        //    nearbyCell[i].spriteRenderer.color = Color.red;
+        //}
         Player.Instance.CheckCell (this);
+    }
+    public void OnPointerExit (PointerEventData eventData)
+    {
+        for (int i = 0; i < nearbyCell.Count; i++)
+        {
+            nearbyCell[i].colorSet.SetColor ();
+        }
     }
 
     public void OnBeginDrag (PointerEventData eventData)

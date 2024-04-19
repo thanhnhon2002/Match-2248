@@ -20,13 +20,17 @@ public class ColorSet : MonoBehaviour
     {
         var pow = (int)MathF.Log (cell.Value, 2);
         var index = pow % colors.Length;
-        spriteRenderer.color = colors[index];
+        var color = colors[index];
+        color.a = 1f;
+        spriteRenderer.color = color;
     }
 
     public Color GetColor(int value)
     {
         var pow = (int)MathF.Log (value, 2);
         var index = pow % colors.Length;
-        return colors[index];
+        var color = colors[index];
+        color.a = 1f;
+        return color;
     }
 }

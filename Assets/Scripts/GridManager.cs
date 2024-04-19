@@ -1,25 +1,43 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using UnityEngine.UIElements;
+using UnityEngine;
+using DG.Tweening;
+using Newtonsoft.Json.Linq;
+using UnityEditor.Animations;
 
 public class GridManager : MonoBehaviour
 {
+    private const float CELL_DROP_TIME = 0.5F;
     public readonly int MAX_ROW = 8;
     public readonly int MAX_COL = 5;
     public static GridManager Instance { get; private set; }
     public static readonly List<GridPosition> neighbourGridPosition = new List<GridPosition> ()
     { new GridPosition(0, 1), new GridPosition (1,1), new GridPosition(1, 0), new GridPosition(1,-1), new GridPosition(0, -1), new GridPosition(-1, -1), new GridPosition(-1, 0), new GridPosition(-1,1) };
     [SerializeField] private Cell cellPrefab;
+    [SerializeField] private Transform cellSpawnPos;
+    private Dictionary<int, List<Cell>> allCellInCollom = new Dictionary<int, List<Cell>>();
+    private Dictionary<GridPosition, Vector3> girdPosToLocal = new Dictionary<GridPosition, Vector3> ();
+    private Dictionary<Cell, int> spawnInfo = new Dictionary<Cell, int> ();
+    private List<Cell> conectedCellInCollom = new List<Cell> ();
+    private List<Cell> existedCellInCollom = new List<Cell> ();
 
     private Cell[] allCell;
     public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell> ();
 
     private void Awake ()
     {
+        DOTween.SetTweensCapacity (1500, 1500);
         Application.targetFrameRate = 60;
         Instance = this;
+    }
+
+    private void Start ()
+    {
+        allCell = GetComponentsInChildren<Cell> ();
+        foreach (var item in allCell)
+        {
+            girdPosToLocal.Add (item.gridPosition, item.transform.localPosition);
+        }
         UpdateCell ();
         LoadCells ();
     }
@@ -27,9 +45,12 @@ public class GridManager : MonoBehaviour
     private void UpdateCell ()
     {
         allCell = GetComponentsInChildren<Cell> ();
+        cellDic.Clear ();
         foreach (var item in allCell)
         {
             cellDic.Add (item.gridPosition, item);
+            if(!allCellInCollom.ContainsKey(item.gridPosition.x)) allCellInCollom.Add(item.gridPosition.x, new List<Cell> ());
+            allCellInCollom[item.gridPosition.x].Add(item);
         }
         foreach (var item in allCell)
         {
@@ -37,7 +58,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private void LoadCells()
+    private void LoadCells ()
     {
         foreach (var item in allCell)
         {
@@ -45,20 +66,74 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public void SpawnNewCell(Vector2 position, int value)
+    public void CheckToSpawnNewCell (List<Cell> conectedCell)
     {
-        var newCell = PoolSystem.Instance.GetObject (cellPrefab, position);
-        newCell.Value = value;
+        for (int i = 1; i <= MAX_COL; i++)
+        {
+            var list = allCellInCollom[i];
+            var spawnPos = new Vector2 (list[i].transform.localPosition.x, cellSpawnPos.transform.position.y);
+            list.RemoveAll (x => !x.gameObject.activeInHierarchy);
+            var count = conectedCell.Count (x => x.gridPosition.x == i && !x.Equals (conectedCell.Last ()));
+            for (int j = 0; j < count; j++)
+            {
+                var newCell = SpawnCell (spawnPos, (int)Mathf.Pow (2, Random.Range (1, 7)));
+                spawnPos.y++;
+                if (!list.Contains (newCell)) list.Add (newCell);
+            }
+            list = list.Distinct ().ToList ();
+            list.Sort ((a, b) => a.transform.localPosition.y.CompareTo (b.transform.localPosition.y));
+            Debug.Log ($"Collom {i} has {list.Count} cells");
+            var gridY = list.Count;
+            for (int a = 0; a < list.Count; a++)
+            {
+                list[a].gameObject.SetActive (true);
+                list[a].gridPosition = new GridPosition (i, gridY);
+                gridY--;
+            }
+        }
+        Drop ();
     }
 
-    public Cell GetCellAt(GridPosition position)
+    public void Drop()
+    {
+        for (int i = 1; i <= MAX_COL; i++)
+        {
+            var list = allCellInCollom[i];
+            foreach (var item in list)
+            {
+                //item.transform.localPosition = girdPosToLocal[item.gridPosition];
+                item.transform.DOLocalMoveY (girdPosToLocal[item.gridPosition].y, CELL_DROP_TIME);
+                item.colorSet.SetColor ();
+            }
+        }
+        LeanTween.delayedCall (CELL_DROP_TIME,UpdateCell);
+    }
+    public Cell SpawnCell (Vector2 position, int value)
+    {
+        var cell = PoolSystem.Instance.GetObject (cellPrefab, position);
+        cell.transform.SetParent (transform);
+        cell.Value = value;
+        return cell;
+    }
+
+    public Cell GetCellAt (GridPosition position)
     {
         if (!cellDic.ContainsKey (position)) return null;
         return cellDic[position];
     }
+    public Cell GetCellAt (GridPosition position, out bool outOfBound)
+    {
+        if (!cellDic.ContainsKey (position))
+        {
+            outOfBound = true;
+            return null;
+        }
+        outOfBound = false;
+        return cellDic[position];
+    }
 
-    [ContextMenu("Spawn")]
-    public void SpawnGrid()
+    [ContextMenu ("Spawn")]
+    public void SpawnGrid ()
     {
         var pos = new Vector2 ((int)(-MAX_COL / 2f), (MAX_ROW / 2f) - 0.5f);
         var gridPos = new GridPosition (1, 1);

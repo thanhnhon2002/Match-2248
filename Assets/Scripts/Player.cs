@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
     private int currentCellValue;
     private int initValue;
     private int countInitValue;
-
+    public Cell lastedCell;
 
     private void Awake ()
     {
@@ -134,7 +134,12 @@ public class Player : MonoBehaviour
 
     public void ClearLine ()
     {
-        if(conectedCell.Count >=2 ) ExploseConectedCell ();
+        if (conectedCell.Count >= 2) ExploseConectedCell ();
+        else ResetData ();
+    }
+
+    private void ResetData ()
+    {
         foreach (var line in lines)
         {
             line.gameObject.SetActive (false);
@@ -152,15 +157,34 @@ public class Player : MonoBehaviour
     {
         var effectTime = 0f;
         var lastCell = conectedCell[conectedCell.Count - 1];
+        lastedCell = lastCell;
         var newValue = GameFlow.Instance.TotalPoint;
+        var newColor = lastCell.colorSet.GetColor (newValue);
         for (int i = 0; i < conectedCell.Count; i++)
         {
-            conectedCell[i].gameObject.SetActive (false);
+            if (!conectedCell[i].Equals (lastCell)) conectedCell[i].gameObject.SetActive (false);
+            else
+            {
+                var color = lastCell.spriteRenderer.color;
+                color.a = 0;
+                lastCell.spriteRenderer.color = color;
+                lastCell.valueTxt.color = color;
+            }
             var fx = PoolSystem.Instance.GetObject (effectPrefab, conectedCell[i].transform.position);
-            fx.Play (conectedCell, i, conectedCell[i].spriteRenderer.color, lastCell.colorSet.GetColor(newValue));
+            fx.Play (conectedCell, i, conectedCell[i].spriteRenderer.color, newColor);
             effectTime = fx.time;
         }
 
-        LeanTween.delayedCall (effectTime, () => GridManager.Instance.SpawnNewCell (lastCell.transform.position, newValue));
+        LeanTween.delayedCall (effectTime, () =>
+        {
+            newColor.a = 1;
+            var textColor = Color.white;
+            textColor.a = 1;
+            lastCell.spriteRenderer.color = newColor;
+            lastCell.Value = newValue;
+            lastCell.valueTxt.color = textColor;
+            GridManager.Instance.CheckToSpawnNewCell (conectedCell);
+            ResetData ();
+        });
     }
 }
