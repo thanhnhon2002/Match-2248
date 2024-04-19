@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
-using DG.Tweening;
-using Newtonsoft.Json.Linq;
-using UnityEditor.Animations;
+using UnityEngine.UIElements;
+using Unity.Mathematics;
+using System.Numerics;
+using Random = UnityEngine.Random;
+using Vector2 = UnityEngine.Vector2;
+using Quaternion = UnityEngine.Quaternion;
 
 public class GridManager : MonoBehaviour
 {
@@ -24,6 +26,13 @@ public class GridManager : MonoBehaviour
     private Cell[] allCell;
     public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell> ();
 
+    private const int Space_Index = 10;
+    private const int Space_MaxIndex = 13;
+    private int minIndex;
+    private int maxIndex;
+    private int maxIndexRandom;
+
+
     private void Awake ()
     {
         DOTween.SetTweensCapacity (1500, 1500);
@@ -41,7 +50,14 @@ public class GridManager : MonoBehaviour
         UpdateCell ();
         LoadCells ();
     }
-
+    private void Start()
+    {
+        minIndex = 1;
+        maxIndex = Space_Index;
+        maxIndexRandom = (int)(maxIndex + minIndex) / 2;
+        UpdateCell();
+        LoadCells();
+    }
     private void UpdateCell ()
     {
         allCell = GetComponentsInChildren<Cell> ();
@@ -62,36 +78,29 @@ public class GridManager : MonoBehaviour
     {
         foreach (var item in allCell)
         {
-            item.Value = (int)Mathf.Pow (2, Random.Range (1, 7));
+            item.Value = (BigInteger)Mathf.Pow(2, Random.Range(1, 5));
         }
     }
 
-    public void CheckToSpawnNewCell (List<Cell> conectedCell)
+    public void SpawnCellSum(Vector2 position, BigInteger value)
     {
-        for (int i = 1; i <= MAX_COL; i++)
+        var newCell = PoolSystem.Instance.GetObject (cellPrefab, position);
+        newCell.Value = value;
+        Mathf mathf;
+        int index = mathf.LogBigInt(value,2);
+        if (index > maxIndex)
         {
-            var list = allCellInCollom[i];
-            var spawnPos = new Vector2 (list[i].transform.localPosition.x, cellSpawnPos.transform.position.y);
-            list.RemoveAll (x => !x.gameObject.activeInHierarchy);
-            var count = conectedCell.Count (x => x.gridPosition.x == i && !x.Equals (conectedCell.Last ()));
-            for (int j = 0; j < count; j++)
-            {
-                var newCell = SpawnCell (spawnPos, (int)Mathf.Pow (2, Random.Range (1, 7)));
-                spawnPos.y++;
-                if (!list.Contains (newCell)) list.Add (newCell);
-            }
-            list = list.Distinct ().ToList ();
-            list.Sort ((a, b) => a.transform.localPosition.y.CompareTo (b.transform.localPosition.y));
-            Debug.Log ($"Collom {i} has {list.Count} cells");
-            var gridY = list.Count;
-            for (int a = 0; a < list.Count; a++)
-            {
-                list[a].gameObject.SetActive (true);
-                list[a].gridPosition = new GridPosition (i, gridY);
-                gridY--;
-            }
+            minIndex++;
+            if (maxIndex - minIndex < Space_MaxIndex) maxIndex += 2;
+            else maxIndex += 1;
+            maxIndexRandom++;
         }
-        Drop ();
+        GameFlow.Instance.TotalPoint = 0;
+    }
+    public void SpawnCellNew(UnityEngine.Vector2 position)
+    {
+        var newCell = PoolSystem.Instance.GetObject(cellPrefab, position);
+        newCell.Value = ValueRandom();
     }
 
     public void Drop()
@@ -151,5 +160,10 @@ public class GridManager : MonoBehaviour
             pos.x += 1f;
             pos.y = (MAX_ROW / 2f) - 0.5f;
         }
+    }
+    public BigInteger ValueRandom()
+    {
+        int index = Random.Range(minIndex, maxIndexRandom+1);
+        return (BigInteger)Mathf.Pow(2, index);
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 [RequireComponent(typeof(Cell))]
@@ -18,16 +19,27 @@ public class ColorSet : MonoBehaviour
 
     public void SetColor ()
     {
-        var pow = (int)MathF.Log (cell.Value, 2);
+        Mathf mathf;
+        int pow;
+        if (cell.Value <2)
+        {
+            pow = mathf.LogBigInt(GameFlow.Instance.TotalPoint, 2);
+            Debug.Log(cell.Value + " " + GameFlow.Instance.TotalPoint);
+        }
+        else
+        {
+            pow = mathf.LogBigInt(cell.Value, 2);
+        }
         var index = pow % colors.Length;
         var color = colors[index];
         color.a = 1f;
         spriteRenderer.color = color;
     }
 
-    public Color GetColor(int value)
+    public Color GetColor(BigInteger value)
     {
-        var pow = (int)MathF.Log (value, 2);
+        Mathf mathf;
+        var pow = mathf.LogBigInt(cell.Value, 2);
         var index = pow % colors.Length;
         var color = colors[index];
         color.a = 1f;

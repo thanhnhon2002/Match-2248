@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using System.Numerics;
 using UnityEngine;
-using static UnityEditor.Progress;
+using Vector3 = UnityEngine.Vector3;
 
 public class Player : MonoBehaviour
 {
@@ -13,12 +13,12 @@ public class Player : MonoBehaviour
     private List<Cell> conectedCell = new List<Cell>();
     public List<Cell> ConectedCell =>conectedCell;
     private List<Line> lines = new List<Line> ();
-    private Dictionary<int, int> conectedValueCount = new Dictionary<int, int> ();
+    private Dictionary<BigInteger, int> conectedValueCount = new Dictionary<BigInteger, int> ();
     private Camera mainCam;
     public bool isDraging;
-    private int segmentCount;
-    private int currentCellValue;
-    private int initValue;
+    private BigInteger segmentCount;
+    private BigInteger currentCellValue;
+    private BigInteger initValue;
     private int countInitValue;
     public Cell lastedCell;
 
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
 
         conectedCell.Add (cell);
         segmentCount += cell.Value / currentCellValue;
-        countInitValue += cell.Value /initValue;
+        countInitValue += (int)(cell.Value /initValue);
         
         if (countInitValue >= 1) GameFlow.Instance.CalculateTotal (initValue, countInitValue);
     }
@@ -102,7 +102,7 @@ public class Player : MonoBehaviour
         line.SetLine(line.startCell, null);
 
         segmentCount -= lastCell.Value / currentCellValue;
-        countInitValue -= lastCell.Value / initValue;
+        countInitValue -= (int)(lastCell.Value / initValue);
 
         conectedCell.Remove (lastCell);
         conectedValueCount[lastCell.Value]--;
@@ -111,27 +111,22 @@ public class Player : MonoBehaviour
     }
 
     private bool CanConect(Cell cell)
-    {
-        if (conectedValueCount.ContainsKey (cell.Value) && currentCellValue == cell.Value)
+    {       
+        if (!conectedValueCount.ContainsKey(cell.Value / 2)&&cell.Value>initValue) return false;
+        if (cell.Value < currentCellValue) return false;
+        else if (currentCellValue == cell.Value)
         {
             conectedValueCount[cell.Value]++;
             return true;
         }
-        if(cell.Value < currentCellValue) return false;
-        if (!conectedValueCount.ContainsKey (cell.Value / 2)) return false;
-        var valueCount = conectedValueCount[cell.Value / 2];
-        if (cell.Value > currentCellValue && !conectedValueCount.ContainsKey(cell.Value) && valueCount >= 1/* && Mathf.Log (cell.Value, 2) >= valueCount*/ && conectedCell.Count > 1)
+        else
         {
+            if(cell.Value > GameFlow.Instance.TotalPoint) return false;
             currentCellValue = cell.Value;
-            if (!conectedValueCount.ContainsKey (cell.Value))
-            {
-                conectedValueCount.Add (cell.Value, 1);
-            } else conectedValueCount[cell.Value]++;
+            conectedValueCount.Add (cell.Value, 1);
             return true;
         }
-        return false;
     }
-
     public void ClearLine ()
     {
         if (conectedCell.Count >= 2) ExploseConectedCell ();
@@ -149,8 +144,7 @@ public class Player : MonoBehaviour
         conectedCell.Clear ();
         isDraging = false;
         segmentCount = 0;
-        countInitValue = 0;
-        GameFlow.Instance.TotalPoint = 0;
+        countInitValue = 0;      
     }
 
     private void ExploseConectedCell ()
@@ -187,4 +181,5 @@ public class Player : MonoBehaviour
             ResetData ();
         });
     }
+    
 }
