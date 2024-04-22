@@ -1,6 +1,10 @@
+using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using TMPro;
 using UnityEngine;
 
@@ -15,6 +19,34 @@ public struct GridPosition
     {
         this.x = x;
         this.y = y;
+    }
+
+    [MethodImpl (MethodImplOptions.AggressiveInlining)]
+    public override string ToString ()
+    {
+        return ToString (null, null);
+    }
+
+    [MethodImpl (MethodImplOptions.AggressiveInlining)]
+    public string ToString (string format)
+    {
+        return ToString (format, null);
+    }
+
+    [MethodImpl (MethodImplOptions.AggressiveInlining)]
+    public string ToString (string format, IFormatProvider formatProvider)
+    {
+        if (string.IsNullOrEmpty (format))
+        {
+            format = "F2";
+        }
+
+        if (formatProvider == null)
+        {
+            formatProvider = CultureInfo.InvariantCulture.NumberFormat;
+        }
+
+        return string.Format ("({0}, {1})", x.ToString (format, formatProvider), y.ToString (format, formatProvider));
     }
 }
 public class GridInfo : MonoBehaviour

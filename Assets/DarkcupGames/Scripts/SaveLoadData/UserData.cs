@@ -14,9 +14,9 @@ public class UserData
 {
     public float gold;
     public float diamond;
-    public BigInteger highestPoint;
-    public BigInteger currentPoint;
-    public Dictionary<GridPosition, BigInteger> cellDic = new Dictionary<GridPosition, BigInteger>();
+    public BigInteger highestScore;
+    public BigInteger currentScore;
+    public Dictionary<string, BigInteger> cellDic = new Dictionary<string, BigInteger>();
     public Dictionary<SettingKey, bool> dicSetting = new Dictionary<SettingKey, bool>();
     public List<string> boughtItems;
 

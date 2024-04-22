@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     private BigInteger currentCellValue;
     private BigInteger initValue;
     private int countInitValue;
+    private bool doingFx;
 
     private void Awake ()
     {
@@ -40,7 +41,9 @@ public class Player : MonoBehaviour
 
     public void InitLine (Cell cell)
     {
+        if (doingFx) return;
         if (conectedCell.Contains (cell)) return;
+        Debug.Log ("Init");
         cell.OnInteract?.Invoke ();
         currentCellValue = cell.Value;
         initValue = cell.Value;
@@ -59,6 +62,8 @@ public class Player : MonoBehaviour
     public void CheckCell(Cell cell)
     {
         if (!isDraging) return;
+        if (doingFx) return;
+        Debug.Log ("Check");
         if (conectedCell.Contains (cell) && conectedCell.Count > 1 && cell.Equals (conectedCell[conectedCell.Count - 2]))
         {
             RemoveCell (conectedCell[conectedCell.Count - 1]);
@@ -149,10 +154,11 @@ public class Player : MonoBehaviour
 
     private void ExploseConectedCell ()
     {
+        doingFx = true;
         var effectTime = 0f;
         var lastCell = conectedCell.Last () ;
         var newValue = GameFlow.Instance.TotalPoint;
-        var newColor = lastCell.colorSet.GetColor (newValue);
+        var newColor = GridManager.Instance.GetCellColor (newValue);
         for (int i = 0; i < conectedCell.Count; i++)
         {
             if (!conectedCell[i].Equals (lastCell)) conectedCell[i].gameObject.SetActive (false);
@@ -178,6 +184,8 @@ public class Player : MonoBehaviour
             lastCell.valueTxt.color = textColor;
             LeanTween.delayedCall (effectTime, () => 
             {
+                doingFx = false;
+                GameFlow.Instance.AddScore ();
                 GridManager.Instance.CheckToSpawnNewCell (conectedCell);
                 ResetData ();
             });

@@ -7,7 +7,6 @@ using UnityEngine;
 [RequireComponent(typeof(Cell))]
 public class ColorSet : MonoBehaviour
 {
-    [SerializeField] private Color[] colors;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Cell cell;
 
@@ -21,28 +20,19 @@ public class ColorSet : MonoBehaviour
     {
         Mathf mathf;
         int pow;
-        if (cell.Value <2)
-        {
-            pow = mathf.LogBigInt(GameFlow.Instance.TotalPoint, 2);
-            Debug.Log(cell.Value + " " + GameFlow.Instance.TotalPoint);
-        }
-        else
-        {
-            pow = mathf.LogBigInt(cell.Value, 2);
-        }
-        var index = pow % colors.Length;
-        var color = colors[index];
+        var color = GridManager.Instance.GetCellColor (cell.Value);
+        //if (cell.Value <2)
+        //{
+        //    pow = mathf.LogBigInt(GameFlow.Instance.TotalPoint, 2);
+        //    Debug.Log(cell.Value + " " + GameFlow.Instance.TotalPoint);
+        //}
+        //else
+        //{
+        //    pow = mathf.LogBigInt(cell.Value, 2);
+        //}
+        //var index = pow % colors.Length;
+        //var color = colors[index];
         color.a = 1f;
         spriteRenderer.color = color;
-    }
-
-    public Color GetColor(BigInteger value)
-    {
-        Mathf mathf;
-        var pow = mathf.LogBigInt(cell.Value, 2);
-        var index = pow % colors.Length;
-        var color = colors[index];
-        color.a = 1f;
-        return color;
     }
 }
