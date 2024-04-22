@@ -18,6 +18,11 @@ namespace DarkcupGames
         {
             Camera.main.orthographicSize = ratio * Screen.height / Screen.width;
         }
+
+        private void OnValidate ()
+        {
+            Camera.main.orthographicSize = ratio * Screen.height / Screen.width;
+        }
 #endif
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Numerics;
 using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
@@ -20,7 +21,6 @@ public class Player : MonoBehaviour
     private BigInteger currentCellValue;
     private BigInteger initValue;
     private int countInitValue;
-    public Cell lastedCell;
 
     private void Awake ()
     {
@@ -130,16 +130,16 @@ public class Player : MonoBehaviour
     }
     public void ClearLine ()
     {
+        foreach (var line in lines)
+        {
+            line.gameObject.SetActive (false);
+        }
         if (conectedCell.Count >= 2) ExploseConectedCell ();
         else ResetData ();
     }
 
     private void ResetData ()
     {
-        foreach (var line in lines)
-        {
-            line.gameObject.SetActive (false);
-        }
         lines.Clear ();
         conectedValueCount.Clear ();
         conectedCell.Clear ();
@@ -151,8 +151,7 @@ public class Player : MonoBehaviour
     private void ExploseConectedCell ()
     {
         var effectTime = 0f;
-        var lastCell = conectedCell[conectedCell.Count - 1];
-        lastedCell = lastCell;
+        var lastCell = conectedCell.Last () ;
         var newValue = GameFlow.Instance.TotalPoint;
         var newColor = lastCell.colorSet.GetColor (newValue);
         for (int i = 0; i < conectedCell.Count; i++)
@@ -178,8 +177,11 @@ public class Player : MonoBehaviour
             lastCell.spriteRenderer.color = newColor;
             lastCell.Value = newValue;
             lastCell.valueTxt.color = textColor;
-            GridManager.Instance.CheckToSpawnNewCell (conectedCell);
-            ResetData ();
+            LeanTween.delayedCall (effectTime, () => 
+            {
+                GridManager.Instance.CheckToSpawnNewCell (conectedCell);
+                ResetData ();
+            });
         });
     }
     

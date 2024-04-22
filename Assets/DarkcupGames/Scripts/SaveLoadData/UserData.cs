@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Numerics;
 
 public enum SettingKey
 {
@@ -13,8 +14,9 @@ public class UserData
 {
     public float gold;
     public float diamond;
-    public int level;
-    public int maxLevel;
+    public BigInteger highestPoint;
+    public BigInteger currentPoint;
+    public Dictionary<GridPosition, BigInteger> cellDic = new Dictionary<GridPosition, BigInteger>();
     public Dictionary<SettingKey, bool> dicSetting = new Dictionary<SettingKey, bool>();
     public List<string> boughtItems;
 
