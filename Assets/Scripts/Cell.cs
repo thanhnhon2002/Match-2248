@@ -6,7 +6,6 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.Linq;
 using System.Numerics;
-using DG.Tweening;
 
 public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -17,7 +16,6 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public GridPosition gridPosition;
     public UnityEvent OnInteract;
     private BigInteger value;
-    public int indexDrop;
     public BigInteger Value
     {
         get { return value; }
@@ -27,19 +25,18 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             colorSet.SetColor();
         }
     }
-    public void Drop()
-    {
-        if (indexDrop > 0) transform.DOMoveY(transform.position.y - 1, 0.2f).SetEase(Ease.Linear).OnComplete(()=>
-        {
-            indexDrop--;
-            Drop();
-        });
-    }
+
+    public TextMeshPro debugTxt;
 
     private void Awake ()
     {
         spriteRenderer = GetComponent<SpriteRenderer> ();
         colorSet = GetComponent<ColorSet> ();
+    }
+
+    private void Update()
+    {
+        debugTxt.text = $"x = {gridPosition.x}, y =  {gridPosition.y}";
     }
 
     public void FindNearbyCells()
@@ -91,12 +88,12 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         Player.Instance.ClearLine();
     }
-
+#if UNITY_EDITOR
     private void OnValidate ()
     {
         valueTxt.text = BigIntegerConverter.ConverNameValue(Value);
     }
-
+#endif
     //[ContextMenu("Highligth")]
     //public void Highight()
     //{
