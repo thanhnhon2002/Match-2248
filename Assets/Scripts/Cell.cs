@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using System.Linq;
 using System.Numerics;
 
-public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler/*, IPointerExitHandler*/
+public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler
 {
     public SpriteRenderer spriteRenderer { get; private set; }
     public TextMeshPro valueTxt;
@@ -60,22 +60,13 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnPointerEnter (PointerEventData eventData)
     {
-        //for (int i = 0;i < nearbyCell.Count;i++)
-        //{
-        //    nearbyCell[i].spriteRenderer.color = Color.red;
-        //}
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
         Player.Instance.CheckCell (this);
     }
-    //public void OnPointerExit (PointerEventData eventData)
-    //{
-    //    for (int i = 0; i < nearbyCell.Count; i++)
-    //    {
-    //        nearbyCell[i].colorSet.SetColor ();
-    //    }
-    //}
 
     public void OnBeginDrag (PointerEventData eventData)
     {
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
         Player.Instance.InitLine (this);
     }
 
@@ -86,6 +77,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag (PointerEventData eventData)
     {
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
         Player.Instance.ClearLine();
     }
 #if UNITY_EDITOR
