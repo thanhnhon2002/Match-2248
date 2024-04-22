@@ -37,11 +37,11 @@ public class GridManager : MonoBehaviour
     [SerializeField] private List<Cell> cellCol4 = new List<Cell>();
     [SerializeField] private List<Cell> cellCol5 = new List<Cell> ();
 
-    [SerializeField] private List<Cell> debugCellCol1 = new List<Cell> ();
-    [SerializeField] private List<Cell> debugCellCol2 = new List<Cell> ();
-    [SerializeField] private List<Cell> debugCellCol3 = new List<Cell> ();
-    [SerializeField] private List<Cell> debugCellCol4 = new List<Cell> ();
-    [SerializeField] private List<Cell> debugCellCol5 = new List<Cell> ();
+    //[SerializeField] private List<Cell> debugCellCol1 = new List<Cell> ();
+    //[SerializeField] private List<Cell> debugCellCol2 = new List<Cell> ();
+    //[SerializeField] private List<Cell> debugCellCol3 = new List<Cell> ();
+    //[SerializeField] private List<Cell> debugCellCol4 = new List<Cell> ();
+    //[SerializeField] private List<Cell> debugCellCol5 = new List<Cell> ();
 
 
     private void Awake()
@@ -65,28 +65,26 @@ public class GridManager : MonoBehaviour
         LoadCells();
     }
 
-    private void UpdateCell()
+    public Cell SpawnCell (Vector2 position, int value)
     {
-        allCell = GetComponentsInChildren<Cell>();
-        cellDic.Clear();
-        foreach (var item in allCell)
-        {
-            cellDic.Add(item.gridPosition, item);
-            if (!allCellInCollom.ContainsKey(item.gridPosition.x)) allCellInCollom.Add(item.gridPosition.x, new List<Cell>());
-            allCellInCollom[item.gridPosition.x].Add(item);
-        }
-        foreach (var item in allCell)
-        {
-            item.FindNearbyCells();
-        }
+        var cell = PoolSystem.Instance.GetObject (cellPrefab, position);
+        //var cell = Instantiate(cellPrefab, position, Quaternion.identity);
+        cell.gridPosition = new GridPosition (0, 0);
+        cell.transform.SetParent (transform);
+        cell.Value = value;
+        return cell;
     }
 
-    private void LoadCells()
+    public Cell GetCellAt (GridPosition position)
     {
-        foreach (var item in allCell)
-        {
-            item.Value = (BigInteger)Mathf.Pow(2, Random.Range(1, 5));
-        }
+        if (!cellDic.ContainsKey (position)) return null;
+        return cellDic[position];
+    }
+
+    public BigInteger ValueRandom ()
+    {
+        int index = Random.Range (minIndex, maxIndexRandom + 1);
+        return (BigInteger)Mathf.Pow (2, index);
     }
 
     public void SpawnCellSum(Vector2 position, BigInteger value)
@@ -104,106 +102,111 @@ public class GridManager : MonoBehaviour
         }
         GameFlow.Instance.TotalPoint = 0;
     }
-    public void SpawnCellNew(UnityEngine.Vector2 position)
+
+    public Cell SpawnCellNew(Vector2 position)
     {
         var newCell = PoolSystem.Instance.GetObject(cellPrefab, position);
+        newCell.gridPosition = new GridPosition (0, 0);
+        newCell.transform.SetParent (transform);
         newCell.Value = ValueRandom();
-    }
-
-    private void CollectConectedCell(List<Cell> conectedCell)
-    {
-        cellCol1.Clear();
-        cellCol2.Clear();
-        cellCol3.Clear();
-        cellCol4.Clear();
-        cellCol5.Clear();
-        foreach (var item in conectedCell)
-        {
-            if (item.Equals(conectedCell.Last())) continue;
-            switch (item.gridPosition.x)
-            {
-                case 1: cellCol1.Add(item); break;
-                case 2: cellCol2.Add(item); break;
-                case 3: cellCol3.Add(item); break;
-                case 4: cellCol4.Add(item); break;
-                case 5: cellCol5.Add(item); break;
-            }
-        }
+        return newCell;
     }
 
     public void CheckToSpawnNewCell(List<Cell> conectedCell)
     {
-        debugCellCol1.Clear ();
-        debugCellCol2.Clear ();
-        debugCellCol3.Clear ();
-        debugCellCol4.Clear ();
-        debugCellCol5.Clear ();
-        CollectConectedCell(conectedCell);
+        CollectConectedCell (conectedCell);
 
         for (int i = 1; i <= MAX_COL; i++)
         {
-            var spawnPos = new Vector2(girdPosToLocal[new GridPosition(i, 1)].x, cellSpawnPos.transform.position.y);
-            var list = allCellInCollom[i];
-            list.Clear();
-            foreach (var item in allCell)
-            {
-                if (item.gridPosition.x == i && item.gameObject.activeInHierarchy) list.Add(item);
-            }
+            var list = RecollectActiveCell (i);
             List<Cell> checkList;
-            switch(i)
+            switch (i)
             {
                 case 1: checkList = cellCol1; break;
                 case 2: checkList = cellCol2; break;
                 case 3: checkList = cellCol3; break;
                 case 4: checkList = cellCol4; break;
                 case 5: checkList = cellCol5; break;
-                default: checkList = null;break;
+                default: checkList = null; break;
             }
-            if(checkList == null)
+            if (checkList == null)
             {
-                Debug.LogError("Something wrong here !!!");
+                Debug.LogError ("Something wrong here !!!");
                 return;
             }
-            for (int j = 0; j < checkList.Count; j++)
-            {
-                if (list.Count >= MAX_ROW) continue;
-                var newCell = SpawnCell(spawnPos, (int)Mathf.Pow(2, Random.Range(1, 7)));
-                spawnPos.y++;
-                if (!list.Contains(newCell)) list.Add(newCell);
-            }
-
+            SpawnNewCellInCollom (i, list, checkList.Count);
         }
-        
+
         for (int i = 1; i <= MAX_COL; i++)
         {
             var cells = allCellInCollom[i];
 
-            cells.Sort((a, b) => a.transform.localPosition.y.CompareTo(b.transform.localPosition.y));
-            cells = allCellInCollom[i].Distinct().ToList();
+            cells.Sort ((a, b) => a.transform.localPosition.y.CompareTo (b.transform.localPosition.y));
+            cells = allCellInCollom[i].Distinct ().ToList ();
 
-            cells.RemoveAll(x => !x.gameObject.activeInHierarchy);
-            //cells = cells.GetRange(0, MAX_ROW);
-            var gridY = MAX_ROW;
-            for (int j = 0; j < cells.Count; j++)
-            {
-                cells[j].gridPosition = new GridPosition(i, gridY);
-                gridY--;
-            }
+            cells.RemoveAll (x => !x.gameObject.activeInHierarchy);
+            ReassignGridPos (i, cells);
             cells.RemoveAll (x => x.gridPosition.x != i); ;
-            switch (i)
-            {
-                case 1: debugCellCol1.AddRange (cells); break;
-                case 2: debugCellCol2.AddRange (cells); break;
-                case 3: debugCellCol3.AddRange (cells); break;
-                case 4: debugCellCol4.AddRange (cells); break;
-                case 5: debugCellCol5.AddRange (cells); break;
-            }
         }
         Drop ();
     }
 
-    [ContextMenu("Drop")]
-    public void Drop()
+    private void CollectConectedCell (List<Cell> conectedCell)
+    {
+        cellCol1.Clear ();
+        cellCol2.Clear ();
+        cellCol3.Clear ();
+        cellCol4.Clear ();
+        cellCol5.Clear ();
+        foreach (var item in conectedCell)
+        {
+            if (item.Equals (conectedCell.Last ())) continue;
+            switch (item.gridPosition.x)
+            {
+                case 1: cellCol1.Add (item); break;
+                case 2: cellCol2.Add (item); break;
+                case 3: cellCol3.Add (item); break;
+                case 4: cellCol4.Add (item); break;
+                case 5: cellCol5.Add (item); break;
+            }
+        }
+    }
+
+    private void ReassignGridPos (int collom, List<Cell> cells)
+    {
+        var gridY = MAX_ROW;
+        for (int j = 0; j < cells.Count; j++)
+        {
+            cells[j].gridPosition = new GridPosition (collom, gridY);
+            gridY--;
+        }
+    }
+
+    private void SpawnNewCellInCollom (int collom, List<Cell> cellsInCollom, int amount)
+    {
+        var spawnPos = new Vector2 (girdPosToLocal[new GridPosition (collom, 1)].x, cellSpawnPos.transform.position.y);
+        for (int j = 0; j < amount; j++)
+        {
+            if (cellsInCollom.Count >= MAX_ROW) continue;
+            var newCell = SpawnCellNew (spawnPos);
+            spawnPos.y++;
+            if (!cellsInCollom.Contains (newCell)) cellsInCollom.Add (newCell);
+        }
+    }
+
+    private List<Cell> RecollectActiveCell (int collom)
+    {
+        var list = allCellInCollom[collom];
+        list.Clear ();
+        foreach (var item in allCell)
+        {
+            if (item.gridPosition.x == collom && item.gameObject.activeInHierarchy) list.Add (item);
+        }
+
+        return list;
+    }
+
+    private void Drop()
     {
         for (int i = 1; i <= MAX_COL; i++)
         {
@@ -215,42 +218,50 @@ public class GridManager : MonoBehaviour
         }
         LeanTween.delayedCall(CELL_DROP_TIME, UpdateCell);
     }
-    public Cell SpawnCell(Vector2 position, int value)
-    {
-        var cell = PoolSystem.Instance.GetObject(cellPrefab, position);
-        //var cell = Instantiate(cellPrefab, position, Quaternion.identity);
-        cell.gridPosition = new GridPosition(0, 0);
-        cell.transform.SetParent(transform);
-        cell.Value = value;
-        return cell;
-    }
 
-    public Cell GetCellAt(GridPosition position)
+    private void UpdateCell ()
     {
-        if (!cellDic.ContainsKey(position)) return null;
-        return cellDic[position];
-    }
-    public Cell GetCellAt(GridPosition position, out bool outOfBound)
-    {
-        if (!cellDic.ContainsKey(position))
+        allCell = GetComponentsInChildren<Cell> ();
+        cellDic.Clear ();
+        foreach (var item in allCell)
         {
-            outOfBound = true;
-            return null;
+            cellDic.Add (item.gridPosition, item);
+            if (!allCellInCollom.ContainsKey (item.gridPosition.x)) allCellInCollom.Add (item.gridPosition.x, new List<Cell> ());
+            allCellInCollom[item.gridPosition.x].Add (item);
         }
-        outOfBound = false;
-        return cellDic[position];
+        foreach (var item in allCell)
+        {
+            item.FindNearbyCells ();
+        }
     }
 
-    [ContextMenu("Spawn")]
-    public void SpawnGrid()
+    private void LoadCells ()
     {
-        var pos = new Vector2((int)(-MAX_COL / 2f), (MAX_ROW / 2f) - 0.5f);
-        var gridPos = new GridPosition(1, 1);
+        var userCellDic = GameSystem.userdata.cellDic;
+        if (userCellDic != null && userCellDic.Count > 0)
+        {
+            foreach (var cell in allCell)
+            {
+                cell.Value = userCellDic[cell.gridPosition];
+            }
+            return;
+        }
+        foreach (var item in allCell)
+        {
+            item.Value = ValueRandom ();
+        }
+    }
+
+    [ContextMenu ("Spawn")]
+    public void SpawnGrid ()
+    {
+        var pos = new Vector2 ((int)(-MAX_COL / 2f), (MAX_ROW / 2f) - 0.5f);
+        var gridPos = new GridPosition (1, 1);
         for (int x = 0; x < MAX_COL; x++)
         {
             for (int y = 0; y < MAX_ROW; y++)
             {
-                var cell = Instantiate(cellPrefab, pos, Quaternion.identity);
+                var cell = Instantiate (cellPrefab, pos, Quaternion.identity);
                 cell.gridPosition = gridPos;
                 gridPos.y += 1;
                 pos.y -= 1f;
@@ -260,10 +271,5 @@ public class GridManager : MonoBehaviour
             pos.x += 1f;
             pos.y = (MAX_ROW / 2f) - 0.5f;
         }
-    }
-    public BigInteger ValueRandom()
-    {
-        int index = Random.Range(minIndex, maxIndexRandom + 1);
-        return (BigInteger)Mathf.Pow(2, index);
     }
 }

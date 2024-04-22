@@ -2,11 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using TMPro;
 using UnityEngine;
 
 public class GameFlow : MonoBehaviour
 {
     public static GameFlow Instance { get; private set; }
+
     private const int INIT_MULTILIER = 30;
     public List<int> multiliers = new List<int>();
     private BigInteger totalPoint;
