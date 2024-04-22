@@ -24,7 +24,6 @@ public class ColorSet : MonoBehaviour
         if (cell.Value <2)
         {
             pow = mathf.LogBigInt(GameFlow.Instance.TotalPoint, 2);
-            Debug.Log(cell.Value + " " + GameFlow.Instance.TotalPoint);
         }
         else
         {

@@ -237,15 +237,15 @@ public class GridManager : MonoBehaviour
 
     private void LoadCells ()
     {
-        var userCellDic = GameSystem.userdata.cellDic;
-        if (userCellDic != null && userCellDic.Count > 0)
-        {
-            foreach (var cell in allCell)
-            {
-                cell.Value = userCellDic[cell.gridPosition];
-            }
-            return;
-        }
+        //var userCellDic = GameSystem.userdata.cellDic;
+        //if (userCellDic != null && userCellDic.Count > 0)
+        //{
+        //    foreach (var cell in allCell)
+        //    {
+        //        cell.Value = userCellDic[cell.gridPosition];
+        //    }
+        //    return;
+        //}
         foreach (var item in allCell)
         {
             item.Value = ValueRandom ();

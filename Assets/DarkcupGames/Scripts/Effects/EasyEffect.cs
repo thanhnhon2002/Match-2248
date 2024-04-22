@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine.UI;
+using DG.Tweening;
 
 namespace DarkcupGames
 {
@@ -20,22 +22,25 @@ namespace DarkcupGames
         public static void Appear(GameObject obj, float startScale, float endScale, float speed = 0.1f, float maxScale = 1.2f)
         {
             obj.SetActive(true);
-            obj.transform.localScale = new Vector3(startScale, startScale);
-            LeanTween.scale(obj, new Vector3(maxScale, maxScale, maxScale) * endScale, speed).setOnComplete(() =>
+            Vector3 originScale = obj.transform.localScale;
+            obj.transform.localScale = new Vector3(startScale*originScale.x, startScale*originScale.y);
+            LeanTween.scale(obj, new Vector3(maxScale * originScale.x, maxScale * originScale.y,maxScale * originScale.z), speed).setOnComplete(() =>
             {
-                LeanTween.scale(obj, new Vector3(1f, 1f, 1f) * endScale, speed);
+                LeanTween.scale(obj, new Vector3(endScale * originScale.x, endScale * originScale.y, endScale * originScale.z), speed);
             });
         }
 
         public static void Disappear(GameObject obj, float startScale, float endScale, float speed = 0.1f, float maxScale = 1.2f, Action doneAction = null)
         {
-            obj.transform.localScale = new Vector3(startScale, startScale);
-            LeanTween.scale(obj, new Vector3(maxScale, maxScale, maxScale) * startScale, speed).setOnComplete(() =>
+            Vector3 originScale = obj.transform.localScale;
+            obj.transform.localScale = new Vector3(startScale * obj.transform.localScale.x, startScale * obj.transform.localScale.y);
+            LeanTween.scale(obj, new Vector3(maxScale * originScale.x, maxScale * originScale.y, maxScale * originScale.z) , speed).setOnComplete(() =>
             {
-                LeanTween.scale(obj, new Vector3(1f, 1f, 1f) * endScale, speed).setOnComplete(() =>
+                LeanTween.scale(obj, new Vector3(endScale * originScale.x, endScale * originScale.y, endScale * originScale.z), speed).setOnComplete(() =>
                 {
                     doneAction?.Invoke();
                     obj.SetActive(false);
+                    obj.transform.localScale = originScale;
                 });
             });
         }
@@ -93,6 +98,14 @@ namespace DarkcupGames
                 yield return new WaitForEndOfFrame();
             }
             txtNumber.text = endGold.ToString() + endText;
+        }
+        public static void Fade(GameObject obj, float startFade, float endFade, bool statusEnd, float speed = 0.1f)
+        {
+            Color color = obj.GetComponent<Image>().color;
+            color.a = startFade;
+            obj.GetComponent<Image>().color = color;
+            obj.GetComponent<Image>().DOFade(endFade, speed);
+            obj.SetActive(statusEnd);
         }
     }
 }
