@@ -14,6 +14,7 @@ public class GridManager : MonoBehaviour
     public readonly int MAX_ROW = 8;
     public readonly int MAX_COL = 5;
     public static GridManager Instance { get; private set; }
+    [SerializeField] private Color[] cellColors;
     public static readonly List<GridPosition> neighbourGridPosition = new List<GridPosition>()
     { new GridPosition(0, 1), new GridPosition (1,1), new GridPosition(1, 0), new GridPosition(1,-1), new GridPosition(0, -1), new GridPosition(-1, -1), new GridPosition(-1, 0), new GridPosition(-1,1) };
     [SerializeField] private Cell cellPrefab;
@@ -31,11 +32,11 @@ public class GridManager : MonoBehaviour
     private int maxIndexRandom;
 
     //Only use to check Conected Cell
-    [SerializeField] private List<Cell> cellCol1 = new List<Cell>();
-    [SerializeField] private List<Cell> cellCol2 = new List<Cell>();
-    [SerializeField] private List<Cell> cellCol3 = new List<Cell>();
-    [SerializeField] private List<Cell> cellCol4 = new List<Cell>();
-    [SerializeField] private List<Cell> cellCol5 = new List<Cell> ();
+    private List<Cell> cellCol1 = new List<Cell>();
+    private List<Cell> cellCol2 = new List<Cell>();
+    private List<Cell> cellCol3 = new List<Cell>();
+    private List<Cell> cellCol4 = new List<Cell>();
+    private List<Cell> cellCol5 = new List<Cell> ();
 
     //[SerializeField] private List<Cell> debugCellCol1 = new List<Cell> ();
     //[SerializeField] private List<Cell> debugCellCol2 = new List<Cell> ();
@@ -151,6 +152,16 @@ public class GridManager : MonoBehaviour
         Drop ();
     }
 
+    public Color GetCellColor (BigInteger value)
+    {
+        Mathf mathf;
+        var pow = mathf.LogBigInt (value, 2);
+        var index = pow % cellColors.Length;
+        var color = cellColors[index];
+        color.a = 1f;
+        return color;
+    }
+
     private void CollectConectedCell (List<Cell> conectedCell)
     {
         cellCol1.Clear ();
@@ -216,10 +227,13 @@ public class GridManager : MonoBehaviour
                 item.transform.DOLocalMoveY (girdPosToLocal[item.gridPosition].y, CELL_DROP_TIME);
             }
         }
-        LeanTween.delayedCall(CELL_DROP_TIME, UpdateCell);
+        LeanTween.delayedCall(CELL_DROP_TIME,() => 
+        {
+            UpdateCell (true);
+        });
     }
 
-    private void UpdateCell ()
+    private void UpdateCell (bool saveData = false)
     {
         allCell = GetComponentsInChildren<Cell> ();
         cellDic.Clear ();
@@ -229,27 +243,34 @@ public class GridManager : MonoBehaviour
             if (!allCellInCollom.ContainsKey (item.gridPosition.x)) allCellInCollom.Add (item.gridPosition.x, new List<Cell> ());
             allCellInCollom[item.gridPosition.x].Add (item);
         }
+        var userCellDic = GameSystem.userdata.cellDic;
         foreach (var item in allCell)
         {
             item.FindNearbyCells ();
+            if(saveData) userCellDic[item.gridPosition.ToString ()] = item.Value;
         }
+        if (saveData) GameSystem.SaveUserDataToLocal ();
     }
+
 
     private void LoadCells ()
     {
-        //var userCellDic = GameSystem.userdata.cellDic;
-        //if (userCellDic != null && userCellDic.Count > 0)
-        //{
-        //    foreach (var cell in allCell)
-        //    {
-        //        cell.Value = userCellDic[cell.gridPosition];
-        //    }
-        //    return;
-        //}
+        var userCellDic = GameSystem.userdata.cellDic;
+        if (userCellDic != null && userCellDic.Count > 0)
+        {
+            foreach (var cell in allCell)
+            {
+                cell.Value = userCellDic[cell.gridPosition.ToString()];
+            }
+            return;
+        }
+        //userCellDic = new Dictionary<GridPosition, BigInteger> ();
         foreach (var item in allCell)
         {
             item.Value = ValueRandom ();
+            userCellDic.Add(item.gridPosition.ToString (), item.Value);
         }
+        GameSystem.SaveUserDataToLocal ();
     }
 
     [ContextMenu ("Spawn")]

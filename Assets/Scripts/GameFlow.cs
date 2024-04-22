@@ -4,14 +4,35 @@ using System.Collections.Generic;
 using System.Numerics;
 using TMPro;
 using UnityEngine;
+using DG.Tweening;
 
 public class GameFlow : MonoBehaviour
 {
     public static GameFlow Instance { get; private set; }
-
+    [SerializeField] private TextMeshProUGUI scoreTxt;
+    [SerializeField] private TextMeshProUGUI highScoreTxt;
     private const int INIT_MULTILIER = 30;
     public List<int> multiliers = new List<int>();
+    private BigInteger gameScore;
     private BigInteger totalPoint;
+
+    public BigInteger GameScore
+    {
+        get { return gameScore; }
+        set { 
+            gameScore = value;
+            scoreTxt.text = value.ToString ();
+            var userData = GameSystem.userdata;
+            userData.currentScore = gameScore;
+            if (gameScore > userData.highestScore)
+            {
+                userData.highestScore = gameScore;
+                highScoreTxt.text = gameScore.ToString ();
+            }
+            GameSystem.SaveUserDataToLocal ();
+        }
+    }
+
     public BigInteger TotalPoint
     {
         get { return totalPoint; }
@@ -23,6 +44,19 @@ public class GameFlow : MonoBehaviour
         InitMultilier ();
     }
 
+    private void Start ()
+    {
+        LoadUserData ();
+    }
+
+    private void LoadUserData ()
+    {
+        var userData = GameSystem.userdata;
+        GameScore = userData.currentScore;
+        highScoreTxt.text = userData.highestScore.ToString ();
+    }
+
+
     private void InitMultilier ()
     {
         for (int i = 0; i <= INIT_MULTILIER; i++)
@@ -30,6 +64,14 @@ public class GameFlow : MonoBehaviour
             var pow = Mathf.Pow (2, i);
             multiliers.Add ((int)pow);
         }
+    }
+
+    public void AddScore()
+    {
+        LeanTween.value ((float)GameScore, (float)(GameScore + TotalPoint), 0.5f).setOnUpdate ((x) => 
+        {
+            GameScore = (BigInteger)x;
+        });
     }
 
     public void CalculateTotal (BigInteger initValue, int cellCount)
