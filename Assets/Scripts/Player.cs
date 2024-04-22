@@ -59,12 +59,12 @@ public class Player : MonoBehaviour
     public void CheckCell(Cell cell)
     {
         if (!isDraging) return;
-        //if (conectedCell.Contains (cell) && conectedCell.Count > 1 && cell.Equals (conectedCell[conectedCell.Count - 2]))
-        //{
-        //    RemoveCell (conectedCell[conectedCell.Count - 1]);
-        //    currentCellValue = conectedCell[conectedCell.Count - 1].Value;
-        //} else if (!conectedCell.Contains (cell)) AddCell (cell);
-        if(CanConect(cell))AddCell (cell);
+        if (conectedCell.Contains(cell) && conectedCell.Count > 1 && cell.Equals(conectedCell[conectedCell.Count - 2]))
+        {
+            RemoveCell(conectedCell[conectedCell.Count - 1]);
+            currentCellValue = conectedCell[conectedCell.Count - 1].Value;
+        }
+        else if (!conectedCell.Contains(cell)) AddCell(cell);
     }
 
     public void AddCell(Cell cell)
@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
             effectTime = fx.time;
         }
 
-        LeanTween.delayedCall (0.5f, () =>
+        LeanTween.delayedCall (effectTime, () =>
         {
             newColor.a = 1;
             var textColor = Color.white;
@@ -178,8 +178,7 @@ public class Player : MonoBehaviour
             lastCell.spriteRenderer.color = newColor;
             lastCell.Value = newValue;
             lastCell.valueTxt.color = textColor;
-            //GridManager.Instance.CheckToSpawnNewCell (conectedCell);
-            GridManager.Instance.SpawnCellLastExplosion();
+            GridManager.Instance.CheckToSpawnNewCell (conectedCell);
             ResetData ();
         });
     }
