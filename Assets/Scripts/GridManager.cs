@@ -35,13 +35,13 @@ public class GridManager : MonoBehaviour
     [SerializeField] private List<Cell> cellCol2 = new List<Cell>();
     [SerializeField] private List<Cell> cellCol3 = new List<Cell>();
     [SerializeField] private List<Cell> cellCol4 = new List<Cell>();
-    [SerializeField] private List<Cell> cellCol5 = new List<Cell>();
+    [SerializeField] private List<Cell> cellCol5 = new List<Cell> ();
 
-    //[SerializeField] private List<Cell> debugCellCol1 = new List<Cell>();
-    //[SerializeField] private List<Cell> debugCellCol2 = new List<Cell>();
-    //[SerializeField] private List<Cell> debugCellCol3 = new List<Cell>();
-    //[SerializeField] private List<Cell> debugCellCol4 = new List<Cell>();
-    //[SerializeField] private List<Cell> debugCellCol5 = new List<Cell>();
+    [SerializeField] private List<Cell> debugCellCol1 = new List<Cell> ();
+    [SerializeField] private List<Cell> debugCellCol2 = new List<Cell> ();
+    [SerializeField] private List<Cell> debugCellCol3 = new List<Cell> ();
+    [SerializeField] private List<Cell> debugCellCol4 = new List<Cell> ();
+    [SerializeField] private List<Cell> debugCellCol5 = new List<Cell> ();
 
 
     private void Awake()
@@ -133,6 +133,11 @@ public class GridManager : MonoBehaviour
 
     public void CheckToSpawnNewCell(List<Cell> conectedCell)
     {
+        debugCellCol1.Clear ();
+        debugCellCol2.Clear ();
+        debugCellCol3.Clear ();
+        debugCellCol4.Clear ();
+        debugCellCol5.Clear ();
         CollectConectedCell(conectedCell);
 
         for (int i = 1; i <= MAX_COL; i++)
@@ -142,7 +147,7 @@ public class GridManager : MonoBehaviour
             list.Clear();
             foreach (var item in allCell)
             {
-                if (item.gridPosition.x == i) list.Add(item);
+                if (item.gridPosition.x == i && item.gameObject.activeInHierarchy) list.Add(item);
             }
             List<Cell> checkList;
             switch(i)
@@ -161,31 +166,43 @@ public class GridManager : MonoBehaviour
             }
             for (int j = 0; j < checkList.Count; j++)
             {
+                if (list.Count >= MAX_ROW) continue;
                 var newCell = SpawnCell(spawnPos, (int)Mathf.Pow(2, Random.Range(1, 7)));
                 spawnPos.y++;
                 if (!list.Contains(newCell)) list.Add(newCell);
             }
+
         }
         
         for (int i = 1; i <= MAX_COL; i++)
         {
-            var item = allCellInCollom[i];
+            var cells = allCellInCollom[i];
 
-            item.Sort((a, b) => a.transform.localPosition.y.CompareTo(b.transform.localPosition.y));
-            item = allCellInCollom[i].Distinct().ToList();
+            cells.Sort((a, b) => a.transform.localPosition.y.CompareTo(b.transform.localPosition.y));
+            cells = allCellInCollom[i].Distinct().ToList();
 
-            item.RemoveAll(x => !x.gameObject.activeInHierarchy);
-            item = item.GetRange(0, MAX_ROW);
+            cells.RemoveAll(x => !x.gameObject.activeInHierarchy);
+            //cells = cells.GetRange(0, MAX_ROW);
             var gridY = MAX_ROW;
-            for (int j = 0; j < item.Count; j++)
+            for (int j = 0; j < cells.Count; j++)
             {
-                item[j].gridPosition = new GridPosition(i, gridY);
+                cells[j].gridPosition = new GridPosition(i, gridY);
                 gridY--;
             }
+            cells.RemoveAll (x => x.gridPosition.x != i); ;
+            switch (i)
+            {
+                case 1: debugCellCol1.AddRange (cells); break;
+                case 2: debugCellCol2.AddRange (cells); break;
+                case 3: debugCellCol3.AddRange (cells); break;
+                case 4: debugCellCol4.AddRange (cells); break;
+                case 5: debugCellCol5.AddRange (cells); break;
+            }
         }
-        Drop();
+        Drop ();
     }
 
+    [ContextMenu("Drop")]
     public void Drop()
     {
         for (int i = 1; i <= MAX_COL; i++)
@@ -193,7 +210,7 @@ public class GridManager : MonoBehaviour
             var list = allCellInCollom[i];
             foreach (var item in list)
             {
-                item.transform.DOLocalMoveY(girdPosToLocal[item.gridPosition].y, CELL_DROP_TIME);
+                item.transform.DOLocalMoveY (girdPosToLocal[item.gridPosition].y, CELL_DROP_TIME);
             }
         }
         LeanTween.delayedCall(CELL_DROP_TIME, UpdateCell);

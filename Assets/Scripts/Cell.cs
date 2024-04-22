@@ -88,12 +88,12 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         Player.Instance.ClearLine();
     }
-
+#if UNITY_EDITOR
     private void OnValidate ()
     {
         valueTxt.text = BigIntegerConverter.ConverNameValue(Value);
     }
-
+#endif
     //[ContextMenu("Highligth")]
     //public void Highight()
     //{
