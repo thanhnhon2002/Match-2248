@@ -24,8 +24,11 @@ public class GridInfo : MonoBehaviour
     [SerializeField] private Cell cellPrefab;
     private List<GridPosition> neighbourGridPosition = new List<GridPosition> ()
     { new GridPosition(0, 1), new GridPosition (1,1), new GridPosition(1, 0), new GridPosition(1,-1), new GridPosition(0, -1), new GridPosition(-1, -1), new GridPosition(-1, 0), new GridPosition(-1,1) };
-
-    private void Awake ()
+    private void Awake()
+    {
+        this.OnEnable();
+    }
+    private void OnEnable ()
     {
         var cell = PoolSystem.Instance.GetObject (cellPrefab, transform.position);
         //cell.Value = (BigInteger)Mathf.Pow (2, Random.Range (1, 5));

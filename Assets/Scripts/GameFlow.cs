@@ -33,7 +33,6 @@ public class GameFlow : MonoBehaviour
     public void CalculateTotal (BigInteger initValue, int cellCount)
     {
         TotalPoint = initValue * (BigInteger)Mathf.Pow(2, IndexCellCount(cellCount) + 1);
-        Debug.Log(TotalPoint);
     }
     private int IndexCellCount (int cellCount)
     {
