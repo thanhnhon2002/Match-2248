@@ -1,68 +1,20 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
-using DarkcupGames;
 
-public class AnimationPanel : MonoBehaviour
+public abstract class AnimationPanel : MonoBehaviour
 {
-    Image[] images = new Image[10];
-    Sequence sequence;
-    [SerializeField] RectTransform rectTransform;
-    public Image crown;
-    public Image close;
-    private void Awake()
+    protected Sequence sequence;
+    [SerializeField] protected RectTransform rectTransform;
+
+    protected virtual void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         sequence = DOTween.Sequence();
-        int index=0;
-        foreach (Transform child in transform)
-        {
-            images[index] = child.GetComponent<Image>();
-            index++;
-        }
     }
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         Animation();
     }
-    public void Animation()
-    {
-        sequence = DOTween.Sequence();
-        rectTransform.anchoredPosition = new Vector2(340, rectTransform.anchoredPosition.y);
-        ///
-        crown?.transform.SetParent(images[0].transform);
-        if(crown!=null) crown.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-        ///
-        close?.gameObject.SetActive(false);
-        ///
-        sequence.AppendCallback(() =>
-        {
-            rectTransform.DOAnchorPosX(125, 0.3f);
-            images[0].rectTransform.DOSizeDelta(new Vector2(235, 235), 0.25f);
-        });
-        sequence.AppendInterval(0.65f);
-        sequence.AppendCallback(()=>
-        {
-            ///
-            crown?.transform.SetParent(images[1].transform);
-            if (crown != null)
-            {
-                EasyEffect.Appear(crown.gameObject, 0.5f, 1, 0.2f);
-                crown.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
-            }
-            ///
-            if (close != null) EasyEffect.Appear(close.gameObject, 0.5f, 1, 0.2f);
-            ///
-            rectTransform.DOAnchorPosX(0, 0.3f);
-            images[0].rectTransform.DOSizeDelta(new Vector2(175, 175), 0.25f);
-            images[1].rectTransform.DOSizeDelta(new Vector2(235, 235), 0.25f);
-        });
-    }
-    private void OnDisable()
-    {
-        rectTransform.anchoredPosition = new Vector2(340, rectTransform.anchoredPosition.y);
-        images[0].rectTransform.sizeDelta = new Vector2(175, 175);
-        images[1].rectTransform.sizeDelta = new Vector2(175, 175);
-        images[2].rectTransform.sizeDelta = new Vector2(175, 175);
-    }
+    public virtual void Animation() { sequence = DOTween.Sequence(); }
+    protected virtual void OnDisable() { }
 }

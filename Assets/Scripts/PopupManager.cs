@@ -69,5 +69,7 @@ public class PopupManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F)) HidePopup(PopupOptions.BlockAdded);
         if (Input.GetKeyDown(KeyCode.G)) ShowPopup(PopupOptions.LockElinimated);
         if (Input.GetKeyDown(KeyCode.H)) HidePopup(PopupOptions.LockElinimated);
+        if (Input.GetKeyDown(KeyCode.J)) ShowPopup(PopupOptions.RaseGame);
+        if (Input.GetKeyDown(KeyCode.K)) HidePopup(PopupOptions.RaseGame);
     }
 }
