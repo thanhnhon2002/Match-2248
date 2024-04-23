@@ -26919,7 +26919,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   comboTxt: {fileID: 1767642482}
-  moveSpeed: 50
+  moveSpeed: 80
 --- !u!114 &1767642482
 MonoBehaviour:
   m_ObjectHideFlags: 0
