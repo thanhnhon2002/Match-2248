@@ -22,9 +22,8 @@ public class GridManager : MonoBehaviour
     { new GridPosition(0, 1), new GridPosition (1,1), new GridPosition(1, 0), new GridPosition(1,-1), new GridPosition(0, -1), new GridPosition(-1, -1), new GridPosition(-1, 0), new GridPosition(-1,1) };
     [SerializeField] private Cell cellPrefab;
     [SerializeField] private Transform cellSpawnPos;
-    private Dictionary<int, List<Cell>> allCellInCollom = new Dictionary<int, List<Cell>>();
+    public Dictionary<int, List<Cell>> allCellInCollom = new Dictionary<int, List<Cell>>();
     private Dictionary<GridPosition, Vector3> girdPosToLocal = new Dictionary<GridPosition, Vector3>();
-
     private Cell[] allCell;
     public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell>();
 
@@ -187,7 +186,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    private void ReassignGridPos (int collom, List<Cell> cells)
+    public void ReassignGridPos (int collom, List<Cell> cells)
     {
         var gridY = MAX_ROW;
         for (int j = 0; j < cells.Count; j++)
@@ -221,7 +220,7 @@ public class GridManager : MonoBehaviour
         return list;
     }
 
-    private void Drop()
+    public void Drop()
     {
         for (int i = 1; i <= MAX_COL; i++)
         {
@@ -231,20 +230,22 @@ public class GridManager : MonoBehaviour
                 item.transform.DOLocalMoveY (girdPosToLocal[item.gridPosition].y, CELL_DROP_TIME);
             }
         }
-        LeanTween.delayedCall(CELL_DROP_TIME,() => 
-        {
-            UpdateCell (true);
-            if (HasLose ())
-            {
-                GameFlow.Instance.ShowLosePopup ();
-                return;
-            }
-            GameSystem.SaveUserDataToLocal ();
-            GameFlow.Instance.gameState = GameState.Playing;
-        });
+        LeanTween.delayedCall (CELL_DROP_TIME, OnDoneCellMove);
     }
 
-    private void UpdateCell (bool saveData = false)
+    public void OnDoneCellMove ()
+    {
+        UpdateCell (true);
+        if (HasLose ())
+        {
+            GameFlow.Instance.ShowLosePopup ();
+            return;
+        }
+        GameSystem.SaveUserDataToLocal ();
+        GameFlow.Instance.gameState = GameState.Playing;
+    }
+
+    public void UpdateCell (bool saveData = false)
     {
         allCell = GetComponentsInChildren<Cell> ();
         cellDic.Clear ();

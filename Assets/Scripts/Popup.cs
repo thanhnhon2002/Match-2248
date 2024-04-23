@@ -4,6 +4,7 @@ using DG.Tweening;
 
 public class Popup : MonoBehaviour
 {
+    public PopupOptions option;
     public virtual void Appear()
     {
         EasyEffect.Fade(PopupManager.Instance.blackBackground.gameObject, 0.3f, 0.9f, true,0.2f);

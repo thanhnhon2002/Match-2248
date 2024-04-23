@@ -9,7 +9,7 @@ using DarkcupGames;
 
 public enum GameState
 {
-    Playing, Fx, Pause
+    Playing, Fx, Smash, Swap,Pause
 }
 
 public class GameFlow : MonoBehaviour
@@ -18,6 +18,7 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreTxt;
     [SerializeField] private TextMeshProUGUI highScoreTxt;
     [SerializeField] private ConectedPointDisplay pointDisplay;
+    public GameObject bottomGroup;
     public GameState gameState;
     private const int INIT_MULTILIER = 30;
     public List<int> multiliers = new List<int>();

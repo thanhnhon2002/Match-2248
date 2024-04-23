@@ -6,45 +6,45 @@ using UnityEngine;
 [Serializable]
 public static class BigIntegerConverter
 {
-    public static string ConverNameValue(BigInteger value)
+    public static string ConverNameValue (BigInteger value)
     {
-        if (value < 10000) return value.ToString();
-        string nameResult="";
-        for(int i=1;i<int.MaxValue;i++)
+        if (value < 10000) return value.ToString ();
+        string nameResult = "";
+        for (int i = 1; i < int.MaxValue; i++)
         {
-           if(value/(BigInteger)Math.Pow(10,i*3)>0&&value/(BigInteger)Math.Pow(10,(i+1)*3)==0)
+            if (value / (BigInteger)Math.Pow (10, i * 3) > 0 && value / (BigInteger)Math.Pow (10, (i + 1) * 3) == 0)
             {
-                nameResult = (value / (BigInteger)Math.Pow(10, i*3)).ToString();
-                NameExtension nameExtension = new NameExtension(i);
+                nameResult = (value / (BigInteger)Math.Pow (10, i * 3)).ToString ();
+                NameExtension nameExtension = new NameExtension (i);
                 nameResult += nameExtension.name;
                 break;
-            } 
+            }
         }
         return nameResult;
     }
-    public static int LogBigInt(this Mathf mathf, BigInteger num,int index)
+    public static int LogBigInt (this Mathf mathf, BigInteger num, int index)
     {
         if (num == 1) return 0;
-        BigInteger bigInteger=1;
-        for(int i=1;i<int.MaxValue;i++)
+        BigInteger bigInteger = 1;
+        for (int i = 1; i < int.MaxValue; i++)
         {
             bigInteger *= index;
-            if(bigInteger==num) return i;
+            if (bigInteger == num) return i;
             else if (bigInteger > num)
             {
-               break;
+                break;
             }
         }
         return -1;
     }
-   
+
 }
 public class NameExtension
 {
     public string name;
-    public NameExtension(int index)
+    public NameExtension (int index)
     {
-        switch(index)
+        switch (index)
         {
             case 1:
                 name = "K";
@@ -56,31 +56,30 @@ public class NameExtension
                 name = "B";
                 break;
             default:
-                name = Convert(index);
+                name = Convert (index);
                 break;
         }
     }
-    string Convert(int index)
+    string Convert (int index)
     {
         string nameResult = "";
         int indexPow = index - 4;
         int thuong = indexPow / 26;
         if (indexPow > 25)
         {
-            nameResult += ExtensionByIndex(thuong-1);
+            nameResult += ExtensionByIndex (thuong - 1);
             int du = indexPow % 26;
-            nameResult += ExtensionByIndex(du);
+            nameResult += ExtensionByIndex (du);
             return nameResult;
-        }
-        else return ExtensionByIndex(indexPow);
+        } else return ExtensionByIndex (indexPow);
 
 
     }
-    string ExtensionByIndex(int index)
+    string ExtensionByIndex (int index)
     {
         for (char c = 'a'; c <= 'z'; c++)
         {
-            if (index == c - 'a') return c.ToString();
+            if (index == c - 'a') return c.ToString ();
         }
         return "";
     }
