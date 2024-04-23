@@ -14,16 +14,17 @@ public class AnimationPanelRaseGame : AnimationPanel
     public override void Animation()
     {
         base.Animation();
-        for (int i=0;i<images.Length;i+=2)
+        AppendAnimation(0);
+    }
+    void AppendAnimation(int i)
+    {
+        sequence.AppendCallback(() =>
         {
-            sequence.AppendCallback(()=>
-            {
-                //EasyEffect.Appear(images[i].gameObject, 0.3f, 1, 0.2f);                
-                images[i].gameObject.SetActive(false);
-                images[i+1].gameObject.SetActive(false);
-            });
-            sequence.AppendInterval(0.15f);
-        }
+            EasyEffect.Appear(images[i].gameObject, 0.3f, 1, 0.2f);
+            images[i + 1].gameObject.SetActive(false);
+        });
+        sequence.AppendInterval(0.15f);
+        if (i+2 < images.Length) AppendAnimation(i + 2);
     }
     protected override void OnDisable()
     {

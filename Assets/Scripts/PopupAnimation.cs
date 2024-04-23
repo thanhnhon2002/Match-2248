@@ -11,7 +11,11 @@ public class PopupAnimation : Popup
     [SerializeField] AnimationPanel panel;
     [SerializeField] GameObject reward;
     [SerializeField] Button btnClaim;
-
+    private void Awake()
+    {
+        panel.Awake();
+        btnClaim.onClick.AddListener(()=>Disappear());
+    }
     public override void Appear()
     {
         base.Appear();

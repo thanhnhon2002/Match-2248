@@ -55,8 +55,8 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        minIndex = 1;
-        maxIndex = Space_Index;
+        minIndex = 15;
+        maxIndex = Space_Index+minIndex-1;
         maxIndexRandom = (int)(maxIndex + minIndex) / 2;
         allCell = GetComponentsInChildren<Cell>();
         foreach (var item in allCell)
