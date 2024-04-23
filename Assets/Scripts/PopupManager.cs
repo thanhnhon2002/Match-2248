@@ -21,6 +21,7 @@ public class PopupManager : MonoBehaviour
     public Popup popupLockElinimated;
     public Popup popupRaseGame;
     public Image blackBackground;
+    public event Action<PopupOptions> popupShow;
     private void Awake()
     {
         Instance = this;
