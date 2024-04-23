@@ -8,7 +8,7 @@ public class PopupBlockAdded : Popup
 {
     [SerializeField] TextMeshProUGUI topic;
     [SerializeField] TextMeshProUGUI content;
-    [SerializeField] AnimationPanel panel;
+    [SerializeField] AnimationPanelBlock panel;
     [SerializeField] Button btnOK;
 
     public override void Appear()
