@@ -311,7 +311,6 @@ namespace DarkcupGames
                         json = decrypt;
                     }
                 }
-                Debug.Log (json);
                 data = JsonConvert.DeserializeObject<T>(json);
                 return data;
             }

@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 1493268574856304880}
   - component: {fileID: -7451634869034520407}
   - component: {fileID: 2160770750714727104}
+  - component: {fileID: 2237143661049902465}
   m_Layer: 0
   m_Name: Cell
   m_TagString: Untagged
@@ -293,6 +294,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2237143661049902465}
+        m_TargetAssemblyTypeName: CellSound, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   debugTxt: {fileID: 3488160225023943538}
 --- !u!61 &1493268574856304880
 BoxCollider2D:
@@ -351,13 +364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06c7a7e4a3f4e6a4fb1844a7637486fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0.95294124, g: 0.43529415, b: 0.12941177, a: 1}
-  - {r: 0.5803922, g: 0.3137255, b: 0.627451, a: 1}
-  - {r: 0.82745105, g: 0.14901961, b: 0.3019608, a: 1}
-  - {r: 0.34117648, g: 0.43137258, b: 0.7058824, a: 1}
-  - {r: 0.2627451, g: 0.7372549, b: 0.5372549, a: 1}
-  - {r: 0.8980393, g: 0.42352945, b: 0.6666667, a: 1}
   spriteRenderer: {fileID: 3303452530278903298}
   cell: {fileID: 4051405606102863096}
 --- !u!114 &2160770750714727104
@@ -372,6 +378,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fba9bb62f46b734c999a9467417591f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2237143661049902465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1695920829774527129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a3c83364d45fec468306a2a559c75d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 810798c06cb8458418b042acf96e0d9f, type: 3}
+  - {fileID: 8300000, guid: 0dbd981b8afc2d3468f77dc0b5345a27, type: 3}
+  - {fileID: 8300000, guid: d2ca42c07ae559845a66438949547340, type: 3}
+  - {fileID: 8300000, guid: e77debe00bace294b8ccca3accbac708, type: 3}
+  - {fileID: 8300000, guid: 9538b81887200c344af27f0ba84e6e20, type: 3}
+  - {fileID: 8300000, guid: 7d263c4fedd41bd479afddc39e26450b, type: 3}
+  - {fileID: 8300000, guid: 06c973232b0d22841836e8ab6aaaaeac, type: 3}
+  - {fileID: 8300000, guid: 02e3d43e62273b245a76d7e9d44146db, type: 3}
+  - {fileID: 8300000, guid: 7daccc77150fd3344a7a68f9f4c56a32, type: 3}
 --- !u!1 &2127309564538735043
 GameObject:
   m_ObjectHideFlags: 0
