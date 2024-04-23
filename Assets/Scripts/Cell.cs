@@ -77,8 +77,19 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnBeginDrag (PointerEventData eventData)
     {
-        if (GameFlow.Instance.gameState != GameState.Playing) return;
-        Player.Instance.InitLine (this);
+        switch(GameFlow.Instance.gameState)
+        {
+            case GameState.Playing: Player.Instance.InitLine (this);
+                break;
+            case GameState.Swap:
+                Swap.Instance.ChoseCell (this);
+                break;
+            case GameState.Smash:
+                Hammer.Instance.Smash(this);
+                break;
+            default: return;
+        }
+
     }
 
     public void OnDrag (PointerEventData eventData)

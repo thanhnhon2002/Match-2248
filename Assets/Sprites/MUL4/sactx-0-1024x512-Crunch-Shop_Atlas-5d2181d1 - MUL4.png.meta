@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0ba844a4f71ef4441b37251d852699a1
+guid: 8836fdbe5045e6a4abd01c93a4b9a3e9
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 350
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -134,7 +134,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_19
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 258
+        height: 255
+      alignment: 9
+      pivot: {x: 0.46966678, y: 0.5188864}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58a621597de583f4cbc4bcd78e08e034
+      internalID: 1466449490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -145,7 +166,41 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_0: -907206621
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_1: 402686610
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_10: 1697015184
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_11: 961377287
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_12: -2097275144
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_13: 745829890
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_14: -347167867
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_15: 559419302
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_16: -707479048
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_17: -1245272028
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_18: 1650213503
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_19: 1466449490
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_2: -302636176
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_20: 1692198370
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_21: 1295547279
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_22: -1020767277
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_23: -2000956193
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_24: 723932247
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_25: 529577862
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_26: 1429603244
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_27: 1128101483
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_28: -456819280
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_29: -348201971
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_3: 1984881259
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_30: -407593505
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_31: 1138870980
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_32: 1008322748
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_33: -1167033466
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_4: 530055264
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_5: 1743222967
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_6: -1854706873
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_7: -1984738063
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_8: 313233923
+      sactx-0-1024x512-Crunch-Shop_Atlas-5d2181d1 - MUL4_9: -1684439320
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
     public List<Cell> ConectedCell =>conectedCell;
     private List<Line> lines = new List<Line> ();
     private Dictionary<BigInteger, int> conectedValueCount = new Dictionary<BigInteger, int> ();
-    private Camera mainCam;
+    public Camera mainCam;
     public bool isDraging;
     private BigInteger segmentCount;
     private BigInteger currentCellValue;
