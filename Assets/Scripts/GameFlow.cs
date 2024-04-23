@@ -6,11 +6,17 @@ using TMPro;
 using UnityEngine;
 using DG.Tweening;
 
+public enum GameState
+{
+    Playing, Fx, Pause
+}
+
 public class GameFlow : MonoBehaviour
 {
     public static GameFlow Instance { get; private set; }
     [SerializeField] private TextMeshProUGUI scoreTxt;
     [SerializeField] private TextMeshProUGUI highScoreTxt;
+    public GameState gameState;
     private const int INIT_MULTILIER = 30;
     public List<int> multiliers = new List<int>();
     private BigInteger gameScore;

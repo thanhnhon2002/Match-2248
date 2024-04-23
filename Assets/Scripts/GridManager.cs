@@ -230,6 +230,7 @@ public class GridManager : MonoBehaviour
         LeanTween.delayedCall(CELL_DROP_TIME,() => 
         {
             UpdateCell (true);
+            GameFlow.Instance.gameState = GameState.Playing;
         });
     }
 

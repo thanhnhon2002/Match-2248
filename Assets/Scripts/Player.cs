@@ -21,7 +21,6 @@ public class Player : MonoBehaviour
     private BigInteger currentCellValue;
     private BigInteger initValue;
     private int countInitValue;
-    private bool doingFx;
 
     private void Awake ()
     {
@@ -41,7 +40,7 @@ public class Player : MonoBehaviour
 
     public void InitLine (Cell cell)
     {
-        if (doingFx) return;
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
         if (conectedCell.Contains (cell)) return;
         Debug.Log ("Init");
         cell.OnInteract?.Invoke ();
@@ -61,8 +60,8 @@ public class Player : MonoBehaviour
 
     public void CheckCell(Cell cell)
     {
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
         if (!isDraging) return;
-        if (doingFx) return;
         Debug.Log ("Check");
         if (conectedCell.Contains (cell) && conectedCell.Count > 1 && cell.Equals (conectedCell[conectedCell.Count - 2]))
         {
@@ -74,6 +73,7 @@ public class Player : MonoBehaviour
 
     public void AddCell(Cell cell)
     {
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
         var lastCell = conectedCell[conectedCell.Count - 1];
         if (!lastCell.nearbyCell.Contains (cell)) return;
         if (!CanConect (cell)) return;
@@ -98,6 +98,7 @@ public class Player : MonoBehaviour
 
     public void RemoveCell(Cell lastCell)
     {
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
         if (!isDraging) return;
         if (conectedCell.Count <= 1) return;
         var lastLine = lines[lines.Count - 1];
@@ -155,7 +156,6 @@ public class Player : MonoBehaviour
 
     private void ExploseConectedCell ()
     {
-        doingFx = true;
         var effectTime = 0f;
         var lastCell = conectedCell.Last () ;
         var newValue = GameFlow.Instance.TotalPoint;
@@ -170,6 +170,7 @@ public class Player : MonoBehaviour
                 lastCell.spriteRenderer.color = color;
                 lastCell.valueTxt.color = color;
             }
+            GameFlow.Instance.gameState = GameState.Fx;
             var fx = PoolSystem.Instance.GetObject (effectPrefab, conectedCell[i].transform.position);
             fx.Play (conectedCell, i, conectedCell[i].spriteRenderer.color, newColor);
             effectTime = fx.time;
@@ -185,7 +186,6 @@ public class Player : MonoBehaviour
             lastCell.valueTxt.color = textColor;
             LeanTween.delayedCall (effectTime, () => 
             {
-                doingFx = false;
                 GameFlow.Instance.AddScore ();
                 GridManager.Instance.CheckToSpawnNewCell (conectedCell);
                 ResetData ();
