@@ -6,7 +6,7 @@ public abstract class AnimationPanel : MonoBehaviour
     protected Sequence sequence;
     [SerializeField] protected RectTransform rectTransform;
 
-    protected virtual void Awake()
+    public virtual void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         sequence = DOTween.Sequence();
