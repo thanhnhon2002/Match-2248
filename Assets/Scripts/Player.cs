@@ -42,7 +42,6 @@ public class Player : MonoBehaviour
     {
         if (GameFlow.Instance.gameState != GameState.Playing) return;
         if (conectedCell.Contains (cell)) return;
-        Debug.Log ("Init");
         cell.OnInteract?.Invoke ();
         currentCellValue = cell.Value;
         initValue = cell.Value;
@@ -62,7 +61,6 @@ public class Player : MonoBehaviour
     {
         if (GameFlow.Instance.gameState != GameState.Playing) return;
         if (!isDraging) return;
-        Debug.Log ("Check");
         if (conectedCell.Contains (cell) && conectedCell.Count > 1 && cell.Equals (conectedCell[conectedCell.Count - 2]))
         {
             RemoveCell(conectedCell[conectedCell.Count - 1]);
@@ -184,9 +182,10 @@ public class Player : MonoBehaviour
             lastCell.spriteRenderer.color = newColor;
             lastCell.Value = newValue;
             lastCell.valueTxt.color = textColor;
+            GridManager.Instance.SetSumValue (newValue);
             LeanTween.delayedCall (effectTime, () => 
             {
-                GameFlow.Instance.AddScore ();
+                GameFlow.Instance.AddScore (newValue);
                 GridManager.Instance.CheckToSpawnNewCell (conectedCell);
                 ResetData ();
             });

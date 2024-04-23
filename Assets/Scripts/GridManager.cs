@@ -13,6 +13,9 @@ public class GridManager : MonoBehaviour
     private const float CELL_DROP_TIME = 0.5F;
     public readonly int MAX_ROW = 8;
     public readonly int MAX_COL = 5;
+    private const int Space_Index = 10;
+    private const int Space_MaxIndex = 13;
+
     public static GridManager Instance { get; private set; }
     [SerializeField] private Color[] cellColors;
     public static readonly List<GridPosition> neighbourGridPosition = new List<GridPosition>()
@@ -25,8 +28,6 @@ public class GridManager : MonoBehaviour
     private Cell[] allCell;
     public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell>();
 
-    private const int Space_Index = 10;
-    private const int Space_MaxIndex = 13;
     private int minIndex;
     private int maxIndex;
     private int maxIndexRandom;
@@ -88,10 +89,8 @@ public class GridManager : MonoBehaviour
         return (BigInteger)Mathf.Pow (2, index);
     }
 
-    public void SpawnCellSum(Vector2 position, BigInteger value)
+    public void SetSumValue(BigInteger value)
     {
-        var newCell = PoolSystem.Instance.GetObject(cellPrefab, position);
-        newCell.Value = value;
         Mathf mathf;
         int index = mathf.LogBigInt(value, 2);
         if (index > maxIndex)

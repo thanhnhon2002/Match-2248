@@ -12,7 +12,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public SpriteRenderer spriteRenderer { get; private set; }
     public TextMeshPro valueTxt;
     public ColorSet colorSet { get; private set; }
-    public List<Cell> nearbyCell = new List<Cell>();
+    public List<Cell> nearbyCell = new List<Cell> ();
     public GridPosition gridPosition;
     public UnityEvent OnInteract;
     private BigInteger value;
@@ -21,8 +21,8 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         get { return value; }
         set {
             this.value = value;
-            valueTxt.text = BigIntegerConverter.ConverNameValue(value);
-            colorSet.SetColor();
+            valueTxt.text = BigIntegerConverter.ConverNameValue (value);
+            colorSet.SetColor ();
         }
     }
 
@@ -32,14 +32,18 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         spriteRenderer = GetComponent<SpriteRenderer> ();
         colorSet = GetComponent<ColorSet> ();
+#if !UNITY_EDITOR
+        debugTxt.gameObject.SetActive (false);
+#endif
     }
 
-    private void Update()
+#if UNITY_EDITOR
+    private void Update ()
     {
         debugTxt.text = $"x = {gridPosition.x}, y =  {gridPosition.y}";
     }
-
-    public void FindNearbyCells()
+#endif
+    public void FindNearbyCells ()
     {
         nearbyCell.Clear ();
         var listDirection = GridManager.neighbourGridPosition;
@@ -50,12 +54,12 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             var nearbyX = gridPosition.x + dir.x;
             if (nearbyX < 1) nearbyX = 1;
             var nearbyY = gridPosition.y + dir.y;
-            if(nearbyY < 1) nearbyY = 1;
+            if (nearbyY < 1) nearbyY = 1;
             var cell = GridManager.Instance.GetCellAt (new GridPosition (nearbyX, nearbyY));
-            if(cell != null) nearbyCell.Add (cell);
+            if (cell != null) nearbyCell.Add (cell);
         }
-        nearbyCell = nearbyCell.Distinct ().ToList();
-        if(nearbyCell.Contains(this)) nearbyCell.Remove (this);
+        nearbyCell = nearbyCell.Distinct ().ToList ();
+        if (nearbyCell.Contains (this)) nearbyCell.Remove (this);
     }
 
     public void OnPointerEnter (PointerEventData eventData)
@@ -78,12 +82,12 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void OnEndDrag (PointerEventData eventData)
     {
         if (GameFlow.Instance.gameState != GameState.Playing) return;
-        Player.Instance.ClearLine();
+        Player.Instance.ClearLine ();
     }
 #if UNITY_EDITOR
     private void OnValidate ()
     {
-        valueTxt.text = BigIntegerConverter.ConverNameValue(Value);
+        valueTxt.text = BigIntegerConverter.ConverNameValue (Value);
     }
 #endif
     //[ContextMenu("Highligth")]

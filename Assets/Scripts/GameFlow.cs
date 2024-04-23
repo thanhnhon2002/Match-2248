@@ -16,6 +16,7 @@ public class GameFlow : MonoBehaviour
     public static GameFlow Instance { get; private set; }
     [SerializeField] private TextMeshProUGUI scoreTxt;
     [SerializeField] private TextMeshProUGUI highScoreTxt;
+    [SerializeField] private ConectedPointDisplay pointDisplay;
     public GameState gameState;
     private const int INIT_MULTILIER = 30;
     public List<int> multiliers = new List<int>();
@@ -42,12 +43,25 @@ public class GameFlow : MonoBehaviour
     public BigInteger TotalPoint
     {
         get { return totalPoint; }
-        set { totalPoint = value; }
+        set { 
+            totalPoint = value;
+            if (value != 0)
+            {
+                pointDisplay.Show (value);
+                scoreTxt.gameObject.SetActive (false);
+            } else
+            {
+                pointDisplay.gameObject.SetActive (false);
+                scoreTxt.gameObject.SetActive (true);
+            }
+
+        }
     }
     private void Awake ()
     {
         Instance = this;
         InitMultilier ();
+        pointDisplay.gameObject.SetActive (false);
     }
 
     private void Start ()
@@ -72,9 +86,9 @@ public class GameFlow : MonoBehaviour
         }
     }
 
-    public void AddScore()
+    public void AddScore(BigInteger score)
     {
-        LeanTween.value ((float)GameScore, (float)(GameScore + TotalPoint), 0.5f).setOnUpdate ((x) => 
+        LeanTween.value ((float)GameScore, (float)(GameScore + score), 0.5f).setOnUpdate ((x) => 
         {
             GameScore = (BigInteger)x;
         });
