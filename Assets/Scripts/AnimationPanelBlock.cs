@@ -9,7 +9,7 @@ public class AnimationPanelBlock : AnimationPanel
     Image[] images = new Image[3];
     public Image crown;
     public Image close;
-    protected override void Awake()
+    public override void Awake()
     {
         base.Awake();
         int index=0;
