@@ -11,7 +11,8 @@ public enum PopupOptions
     NewBlock,
     BlockAdded,
     LockElinimated,
-    RateGame
+    RateGame,
+    Pause
 }
 public class PopupManager : MonoBehaviour
 {
@@ -19,14 +20,26 @@ public class PopupManager : MonoBehaviour
     public Popup[] popups;
     private Dictionary<PopupOptions, Popup> popupDic = new Dictionary<PopupOptions, Popup>();
     public Image blackBackground;
-    public event Action<PopupOptions> popupShow;
+    private List<Action<PopupOptions>>listShow=new List<Action<PopupOptions>>();
     private void Awake()
     {
         Instance = this;
-        popups = GetComponentsInChildren<Popup>();
+        popups = GetComponentsInChildren<Popup>(true);
         foreach (var item in popups)
         {
-            popupDic.Add (item.option, item);
+            popupDic.Add(item.option, item);
+        }
+    }
+    public void AddActionShowPopup(Action<PopupOptions> action,PopupOptions option)
+    {
+        listShow.Add(action);
+        this.Show();
+    }
+    private void Show()
+    {
+        foreach(var action in listShow)
+        {
+            //action?.Invoke();
         }
     }
     public void ShowPopup(PopupOptions option)
@@ -44,14 +57,14 @@ public class PopupManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A)) ShowPopup(PopupOptions.NewBlock);
         if (Input.GetKeyDown(KeyCode.S)) HidePopup(PopupOptions.NewBlock);
 
-        if (Input.GetKeyDown(KeyCode.D)) ShowPopup(PopupOptions.BlockAdded);
-        if (Input.GetKeyDown(KeyCode.F)) HidePopup(PopupOptions.BlockAdded);
+        if (Input.GetKeyDown(KeyCode.D)) ShowPopup(PopupOptions.RateGame);
+        if (Input.GetKeyDown(KeyCode.F)) HidePopup(PopupOptions.RateGame);
 
         if (Input.GetKeyDown(KeyCode.G)) ShowPopup(PopupOptions.LockElinimated);
         if (Input.GetKeyDown(KeyCode.H)) HidePopup(PopupOptions.LockElinimated);
 
-        if (Input.GetKeyDown(KeyCode.J)) ShowPopup(PopupOptions.RateGame);
-        if (Input.GetKeyDown(KeyCode.K)) HidePopup(PopupOptions.RateGame);
+        if (Input.GetKeyDown(KeyCode.J)) ShowPopup(PopupOptions.Pause);
+        if (Input.GetKeyDown(KeyCode.K)) HidePopup(PopupOptions.Pause);
     }
 #endif
 }

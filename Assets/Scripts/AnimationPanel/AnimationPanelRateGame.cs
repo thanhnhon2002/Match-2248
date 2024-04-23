@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using DarkcupGames;
 
-public class AnimationPanelRaseGame : AnimationPanel
+public class AnimationPanelRateGame : AnimationPanel
 {
     public Image[] images = new Image[10];
     public override void Awake()
