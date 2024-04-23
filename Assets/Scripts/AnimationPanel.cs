@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using DarkcupGames;
 
 public class AnimationPanel : MonoBehaviour
 {
@@ -44,9 +45,13 @@ public class AnimationPanel : MonoBehaviour
         {
             ///
             crown?.transform.SetParent(images[1].transform);
-            if(crown!=null) crown.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            if (crown != null)
+            {
+                EasyEffect.Appear(crown.gameObject, 0.5f, 1, 0.2f);
+                crown.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            }
             ///
-            close?.gameObject.SetActive(true);
+            if (close != null) EasyEffect.Appear(close.gameObject, 0.5f, 1, 0.2f);
             ///
             rectTransform.DOAnchorPosX(0, 0.3f);
             images[0].rectTransform.DOSizeDelta(new Vector2(175, 175), 0.25f);

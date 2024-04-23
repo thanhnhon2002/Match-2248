@@ -61,4 +61,13 @@ public class PopupManager : MonoBehaviour
                 break;
         }
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.A)) ShowPopup(PopupOptions.NewBlock);
+        if (Input.GetKeyDown(KeyCode.S)) HidePopup(PopupOptions.NewBlock);
+        if (Input.GetKeyDown(KeyCode.D)) ShowPopup(PopupOptions.BlockAdded);
+        if (Input.GetKeyDown(KeyCode.F)) HidePopup(PopupOptions.BlockAdded);
+        if (Input.GetKeyDown(KeyCode.G)) ShowPopup(PopupOptions.LockElinimated);
+        if (Input.GetKeyDown(KeyCode.H)) HidePopup(PopupOptions.LockElinimated);
+    }
 }
