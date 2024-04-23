@@ -1,3 +1,4 @@
+using DarkcupGames;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
     public Vector3 mousePos { get; private set; }
     [SerializeField] private Line linePrefab;
     [SerializeField] private Effect effectPrefab;
+    [SerializeField] private AudioClip[] conectedSound;
     private List<Cell> conectedCell = new List<Cell>();
     public List<Cell> ConectedCell =>conectedCell;
     private List<Line> lines = new List<Line> ();
@@ -182,6 +184,7 @@ public class Player : MonoBehaviour
             lastCell.spriteRenderer.color = newColor;
             lastCell.Value = newValue;
             lastCell.valueTxt.color = textColor;
+            AudioSystem.Instance.PlaySound (conectedSound.RandomElement ());
             GridManager.Instance.SetSumValue (newValue);
             LeanTween.delayedCall (effectTime, () => 
             {

@@ -50,7 +50,6 @@ namespace DarkcupGames
 
         public void Close()
         {
-            AudioSystem.Instance.PlayButtonSound();
             EasyEffect.Appear(popupBody, 1f, 0f);
         }
 

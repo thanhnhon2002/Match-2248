@@ -161,6 +161,11 @@ public class GridManager : MonoBehaviour
         return color;
     }
 
+    private bool HasLose()
+    {
+        return allCell.All (x => x.ConectableCount == 0);
+    }
+
     private void CollectConectedCell (List<Cell> conectedCell)
     {
         cellCol1.Clear ();
@@ -229,6 +234,12 @@ public class GridManager : MonoBehaviour
         LeanTween.delayedCall(CELL_DROP_TIME,() => 
         {
             UpdateCell (true);
+            if (HasLose ())
+            {
+                GameFlow.Instance.ShowLosePopup ();
+                return;
+            }
+            GameSystem.SaveUserDataToLocal ();
             GameFlow.Instance.gameState = GameState.Playing;
         });
     }

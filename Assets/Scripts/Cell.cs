@@ -26,6 +26,13 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         }
     }
 
+    public int ConectableCount
+    {
+        get {
+            return nearbyCell.Count (x => x.Value == value);
+        }
+    }
+
     public TextMeshPro debugTxt;
 
     private void Awake ()

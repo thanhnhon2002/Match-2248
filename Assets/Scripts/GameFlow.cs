@@ -5,6 +5,7 @@ using System.Numerics;
 using TMPro;
 using UnityEngine;
 using DG.Tweening;
+using DarkcupGames;
 
 public enum GameState
 {
@@ -67,6 +68,7 @@ public class GameFlow : MonoBehaviour
     private void Start ()
     {
         LoadUserData ();
+        AudioSystem.Instance.PlaySound ("Game_Open");
     }
 
     private void LoadUserData ()
@@ -84,6 +86,11 @@ public class GameFlow : MonoBehaviour
             var pow = Mathf.Pow (2, i);
             multiliers.Add ((int)pow);
         }
+    }
+
+    public void ShowLosePopup()
+    {
+
     }
 
     public void AddScore(BigInteger score)
