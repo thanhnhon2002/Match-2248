@@ -21,7 +21,7 @@ public class Hammer : Power
     public void Smash(Cell cell)
     {
         hammer.SetBool ("Play", false);
-        var destination = Player.Instance.mainCam.WorldToScreenPoint (cell.transform.position);
+        var destination = GameFlow.Instance.mainCam.WorldToScreenPoint (cell.transform.position);
         var position = hamerImg.position;
         var sq = DOTween.Sequence ();
         sq.AppendCallback (() => 

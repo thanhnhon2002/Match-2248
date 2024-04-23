@@ -54,7 +54,11 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
+#if UNITY_EDITOR
         minIndex = 15;
+#else
+        minIndex = 1;
+#endif
         maxIndex = Space_Index+minIndex-1;
         maxIndexRandom = (int)(maxIndex + minIndex) / 2;
         allCell = GetComponentsInChildren<Cell>();

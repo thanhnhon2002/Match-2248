@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public List<Cell> ConectedCell =>conectedCell;
     private List<Line> lines = new List<Line> ();
     private Dictionary<BigInteger, int> conectedValueCount = new Dictionary<BigInteger, int> ();
-    public Camera mainCam;
     public bool isDraging;
     private BigInteger segmentCount;
     private BigInteger currentCellValue;
@@ -27,12 +26,11 @@ public class Player : MonoBehaviour
     private void Awake ()
     {
         Instance = this;
-        mainCam = Camera.main;
     }
 
     private void Update ()
     {
-        mousePos = mainCam.ScreenToWorldPoint (Input.mousePosition);
+        mousePos = GameFlow.Instance.mainCam.ScreenToWorldPoint (Input.mousePosition);
         if (lines.Count > 0)
         {
             var lastLine = lines[lines.Count - 1];
@@ -160,6 +158,7 @@ public class Player : MonoBehaviour
         var lastCell = conectedCell.Last () ;
         var newValue = GameFlow.Instance.TotalPoint;
         var newColor = GridManager.Instance.GetCellColor (newValue);
+        var combo = conectedCell.Count;
         for (int i = 0; i < conectedCell.Count; i++)
         {
             if (!conectedCell[i].Equals (lastCell)) conectedCell[i].gameObject.SetActive (false);
@@ -188,6 +187,7 @@ public class Player : MonoBehaviour
             GridManager.Instance.SetSumValue (newValue);
             LeanTween.delayedCall (effectTime, () => 
             {
+                GameFlow.Instance.CheckCombo (combo, GameFlow.Instance.mainCam.WorldToScreenPoint (lastCell.transform.position));
                 GameFlow.Instance.AddScore (newValue);
                 GridManager.Instance.CheckToSpawnNewCell (conectedCell);
                 ResetData ();

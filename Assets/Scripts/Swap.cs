@@ -50,10 +50,10 @@ public class Swap : Power
             var sq = DOTween.Sequence ();
             sq.AppendCallback (() => 
             {
-                chosenCell[0].transform.DOLocalMove (pos1, 0.5f);
-                chosenCell[1].transform.DOLocalMove (pos0, 0.5f);
+                chosenCell[0].transform.DOLocalMove (pos1, Const.DEFAULT_TWEEN_TIME);
+                chosenCell[1].transform.DOLocalMove (pos0, Const.DEFAULT_TWEEN_TIME);
                 var rotation = Vector3.zero;
-                LeanTween.value (360f, 0f, 0.5f).setOnUpdate (x => 
+                LeanTween.value (360f, 0f, Const.DEFAULT_TWEEN_TIME).setOnUpdate (x => 
                 {
                     for (int i = 0; i < chosenCell.Count; i++)
                     {

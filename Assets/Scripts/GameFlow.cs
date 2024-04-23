@@ -18,6 +18,8 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreTxt;
     [SerializeField] private TextMeshProUGUI highScoreTxt;
     [SerializeField] private ConectedPointDisplay pointDisplay;
+    [SerializeField] private Combo combo;
+    public Camera mainCam;
     public GameObject bottomGroup;
     public GameState gameState;
     private const int INIT_MULTILIER = 30;
@@ -62,6 +64,7 @@ public class GameFlow : MonoBehaviour
     private void Awake ()
     {
         Instance = this;
+        mainCam = Camera.main;
         InitMultilier ();
         pointDisplay.gameObject.SetActive (false);
     }
@@ -94,9 +97,23 @@ public class GameFlow : MonoBehaviour
 
     }
 
+    public void CheckCombo (int count, UnityEngine.Vector3 position)
+    {
+        if (count < 5) return;
+        combo.gameObject.SetActive (true);
+        combo.ShowCombo (count, position, out var effectTime);
+        var diamond = count / Const.COMBO_PER_DIAMON;
+        if (diamond == 0) return;
+        LeanTween.delayedCall (effectTime, () => 
+        {
+            //
+        });
+
+    }
+
     public void AddScore(BigInteger score)
     {
-        LeanTween.value ((float)GameScore, (float)(GameScore + score), 0.5f).setOnUpdate ((x) => 
+        LeanTween.value ((float)GameScore, (float)(GameScore + score), Const.DEFAULT_TWEEN_TIME).setOnUpdate ((x) => 
         {
             GameScore = (BigInteger)x;
         });
