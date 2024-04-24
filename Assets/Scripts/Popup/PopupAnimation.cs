@@ -11,14 +11,12 @@ public class PopupAnimation : Popup
     [SerializeField] AnimationPanel panel;
     [SerializeField] GameObject reward;
     [SerializeField] Button btnClaim;
-    private void Awake()
-    {
-        panel.Awake();
-        btnClaim.onClick.AddListener(() => Disappear());
-    }
+    [SerializeField] SetTextPanel textPanel;
+    [SerializeField] GameObject[] listAppear;
     public override void Appear()
     {
         base.Appear();
+        if (textPanel != null) textPanel.SetText();
         StartCoroutine(AnimationAppear());
     }
     public override void Disappear()
@@ -41,8 +39,20 @@ public class PopupAnimation : Popup
         {
             EasyEffect.Appear(reward, 0.5f, 1, 0.2f);
             yield return new WaitForSeconds(0.15f);
-        }        
+        }
+        if(listAppear.Length>0)
+        {
+            foreach(var child in listAppear)
+            {
+                EasyEffect.Appear(child, 0.5f, 1, 0.2f);
+                yield return new WaitForSeconds(0.15f);
+            }
+        }
         EasyEffect.Appear(btnClaim.gameObject, 0.5f, 1, 0.2f);
+        btnClaim.onClick.RemoveAllListeners();
+        btnClaim.onClick.AddListener(() => Disappear());
+        btnClaim.onClick.AddListener(PopupManager.Instance.DeQueue);
+
     }
     IEnumerator AnimationDisappear()
     {
@@ -51,7 +61,15 @@ public class PopupAnimation : Popup
         if (reward != null)
         {
             EasyEffect.Disappear(reward, 1, 0, 0.2f);
-        }            
+        }
+        if (listAppear.Length > 0)
+        {
+            foreach (var child in listAppear)
+            {
+                EasyEffect.Disappear(child, 1, 0, 0.2f);
+                yield return new WaitForSeconds(0.15f);
+            }
+        }
         EasyEffect.Disappear(btnClaim.gameObject, 1, 0, 0.2f);
         yield return new WaitForSeconds(0.15f);
         if (panel != null) panel.gameObject.SetActive(false);

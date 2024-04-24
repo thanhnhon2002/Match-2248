@@ -38,9 +38,9 @@ namespace DarkcupGames
             {
                 LeanTween.scale(obj, new Vector3(endScale * originScale.x, endScale * originScale.y, endScale * originScale.z), speed).setOnComplete(() =>
                 {
-                    doneAction?.Invoke();
-                    obj.SetActive(false);
+                    doneAction?.Invoke();                 
                     obj.transform.localScale = originScale;
+                    obj.SetActive(false);
                 });
             });
         }
