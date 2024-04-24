@@ -40,7 +40,7 @@ public class PopupAnimation : Popup
             EasyEffect.Appear(reward, 0.5f, 1, 0.2f);
             yield return new WaitForSeconds(0.15f);
         }
-        if(listAppear.Length>0)
+        if(listAppear != null && listAppear.Length>0)
         {
             foreach(var child in listAppear)
             {
@@ -62,7 +62,7 @@ public class PopupAnimation : Popup
         {
             EasyEffect.Disappear(reward, 1, 0, 0.2f);
         }
-        if (listAppear.Length > 0)
+        if (listAppear != null && listAppear.Length > 0)
         {
             foreach (var child in listAppear)
             {
