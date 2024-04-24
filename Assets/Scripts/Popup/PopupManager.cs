@@ -13,7 +13,8 @@ public enum PopupOptions
     LockElinimated,
     RateGame,
     Pause,
-    MakeSure
+    MakeSure,
+    Lose
 }
 public class PopupManager : MonoBehaviour
 {

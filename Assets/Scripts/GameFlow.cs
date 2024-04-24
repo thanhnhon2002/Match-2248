@@ -10,7 +10,7 @@ using UnityEngine.SceneManagement;
 
 public enum GameState
 {
-    Playing, Fx, Smash, Swap,Pause
+    Playing, Fx, Smash, Swap, Pause, GameOver
 }
 
 public class GameFlow : MonoBehaviour
@@ -96,9 +96,14 @@ public class GameFlow : MonoBehaviour
         }
     }
 
+    [ContextMenu("Lose")]
     public void ShowLosePopup()
     {
-
+        gameState = GameState.GameOver;
+        PopupManager.Instance.ShowPopup (PopupOptions.Lose);
+        var userData = GameSystem.userdata;
+        userData.cellDic.Clear ();
+        GameSystem.SaveUserDataToLocal ();
     }
 
     public void PauseGame()
@@ -149,6 +154,11 @@ public class GameFlow : MonoBehaviour
         {
             GameScore = (BigInteger)x;
         });
+    }
+
+    public void ShootRocket()
+    {
+
     }
 
     public void CalculateTotal (BigInteger initValue, int cellCount)

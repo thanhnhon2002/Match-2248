@@ -23,7 +23,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform cellSpawnPos;
     public Dictionary<int, List<Cell>> allCellInCollom = new Dictionary<int, List<Cell>>();
     private Dictionary<GridPosition, Vector3> girdPosToLocal = new Dictionary<GridPosition, Vector3>();
-    private Cell[] allCell;
+    public Cell[] allCell { get; private set; }
     public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell>();
 
     private int minIndex;
@@ -167,7 +167,7 @@ public class GridManager : MonoBehaviour
         cellCol5.Clear ();
         foreach (var item in conectedCell)
         {
-            if (item.Equals (conectedCell.Last ())) continue;
+            if (item == null || item.Equals (conectedCell.Last ())) continue;
             switch (item.gridPosition.x)
             {
                 case 1: cellCol1.Add (item); break;

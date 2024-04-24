@@ -71,12 +71,10 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnPointerEnter (PointerEventData eventData)
     {
+#if UNITY_EDITOR
         if (GameFlow.Instance.gameState != GameState.Playing) return;
         Player.Instance.CheckCell (this);
-    }
-
-    public void OnBeginDrag (PointerEventData eventData)
-    {
+#else
         switch(GameFlow.Instance.gameState)
         {
             case GameState.Playing: Player.Instance.InitLine (this);
@@ -89,7 +87,28 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 break;
             default: return;
         }
+#endif
+    }
 
+    public void OnBeginDrag (PointerEventData eventData)
+    {
+#if UNITY_EDITOR
+        switch(GameFlow.Instance.gameState)
+        {
+            case GameState.Playing: Player.Instance.InitLine (this);
+                break;
+            case GameState.Swap:
+                Swap.Instance.ChoseCell (this);
+                break;
+            case GameState.Smash:
+                Hammer.Instance.Smash(this);
+                break;
+            default: return;
+        }
+#else
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
+        Player.Instance.InitLine (this);
+#endif
     }
 
     public void OnDrag (PointerEventData eventData)

@@ -63,13 +63,9 @@ public class Hammer : Power
         var newCell = GridManager.Instance.SpawnCellNew (spawnPos);
         cellsInSameCol.Add (newCell);
 
-        for (int i = 0; i <= cellsInSameCol.Count; i++)
-        {
+        cellsInSameCol.Sort ((a, b) => a.transform.localPosition.y.CompareTo (b.transform.localPosition.y));
 
-            cellsInSameCol.Sort ((a, b) => a.transform.localPosition.y.CompareTo (b.transform.localPosition.y));
-
-            GridManager.Instance.ReassignGridPos (cell.gridPosition.x, cellsInSameCol);
-        }
+        GridManager.Instance.ReassignGridPos (cell.gridPosition.x, cellsInSameCol);
         debug.Clear ();
         debug.AddRange(cellsInSameCol);
         LeanTween.delayedCall (0.5f, () => GridManager.Instance.Drop ());
