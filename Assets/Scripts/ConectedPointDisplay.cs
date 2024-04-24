@@ -19,6 +19,6 @@ public class ConectedPointDisplay : MonoBehaviour
     {
         gameObject.SetActive(true);
         valueTtx.text = BigIntegerConverter.ConverNameValue (point);
-        image.color = GridManager.Instance.GetCellColor(point);
+        image.color = CellColor.Instance.GetCellColor(point);
     }
 }

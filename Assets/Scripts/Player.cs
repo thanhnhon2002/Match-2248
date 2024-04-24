@@ -154,12 +154,18 @@ public class Player : MonoBehaviour
 
     private void ExploseConectedCell ()
     {
+        var userData = GameSystem.userdata;
         var effectTime = 0f;
         var lastCell = conectedCell.Last () ;
         var newValue = GameFlow.Instance.TotalPoint;
-        var newColor = GridManager.Instance.GetCellColor (newValue);
+        var newColor = CellColor.Instance.GetCellColor (newValue);
         var combo = conectedCell.Count;
-        for (int i = 0; i < conectedCell.Count; i++)
+        if (newValue > userData.highestCellValue)
+        {
+            userData.highestCellValue = newValue;
+            GameSystem.SaveUserDataToLocal ();
+        }
+            for (int i = 0; i < conectedCell.Count; i++)
         {
             if (!conectedCell[i].Equals (lastCell)) conectedCell[i].gameObject.SetActive (false);
             else
