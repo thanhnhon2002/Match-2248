@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using DG.Tweening;
 using DarkcupGames;
+using UnityEngine.SceneManagement;
 
 public enum GameState
 {
@@ -19,6 +20,8 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreTxt;
     [SerializeField] private ConectedPointDisplay pointDisplay;
     [SerializeField] private Combo combo;
+    [SerializeField] private DiamondGroup diamondGroup;
+    [SerializeField] private BonusDiamond bonusDiamond;
     public Camera mainCam;
     public GameObject bottomGroup;
     public GameState gameState;
@@ -67,6 +70,7 @@ public class GameFlow : MonoBehaviour
         mainCam = Camera.main;
         InitMultilier ();
         pointDisplay.gameObject.SetActive (false);
+        bonusDiamond.gameObject.SetActive (false);
     }
 
     private void Start ()
@@ -97,6 +101,22 @@ public class GameFlow : MonoBehaviour
 
     }
 
+    public void PauseGame()
+    {
+        gameState = GameState.Pause;
+        PopupManager.Instance.ShowPopup (PopupOptions.Pause);
+    }
+
+    public void ContinueGame () => gameState = GameState.Playing;
+
+    public void Replay()
+    {
+        var userData = GameSystem.userdata;
+        userData.cellDic.Clear ();
+        GameSystem.SaveUserDataToLocal ();
+        SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+    }
+
     public void CheckCombo (int count, UnityEngine.Vector3 position)
     {
         if (count < 5) return;
@@ -104,9 +124,16 @@ public class GameFlow : MonoBehaviour
         combo.ShowCombo (count, position, out var effectTime);
         var diamond = count / Const.COMBO_PER_DIAMON;
         if (diamond == 0) return;
-        LeanTween.delayedCall (effectTime, () => 
+        LeanTween.delayedCall (effectTime, () =>
         {
-            //
+            bonusDiamond.transform.position = position;
+            bonusDiamond.DisplayBonus (diamond, position);
+            bonusDiamond.transform.DOMove (diamondGroup.transform.position, Const.DEFAULT_TWEEN_TIME).OnComplete (() => 
+            {
+                AudioSystem.Instance.PlaySound ("Coins_collect");
+                bonusDiamond.gameObject.SetActive (false);
+                diamondGroup.AddDiamond (diamond, true);
+            });
         });
 
     }

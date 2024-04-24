@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using DG.Tweening;
+using DarkcupGames;
 
 public class Combo : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Combo : MonoBehaviour
     [SerializeField] private TextMeshProUGUI comboTxt;
     private float lifeTime;
     [SerializeField] private float moveSpeed;
+    [SerializeField] private AudioClip comboSound;
 
     private void Update ()
     {
@@ -22,6 +24,7 @@ public class Combo : MonoBehaviour
 
     public void ShowCombo (int amount, Vector3 position, out float effectTime, float lifeTime = 2f)
     {
+        AudioSystem.Instance.PlaySound (comboSound);
         effectTime = lifeTime;
         var color = Color.white;
         color.a = 0f;

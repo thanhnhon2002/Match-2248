@@ -10,6 +10,7 @@ namespace DarkcupGames
         public static AudioSystem Instance;
 
         public const int CHANEL_AMOUNT = 20;
+        public const float VOLUME = 1f;
 
         [SerializeField] private List<AudioClip> fxSounds = new List<AudioClip> ();
 
@@ -41,7 +42,7 @@ namespace DarkcupGames
             }
         }
 
-        public void PlaySound (AudioClip clip)
+        public void PlaySound (AudioClip clip, float volume = VOLUME)
         {
             if (GameSystem.userdata.dicSetting[SettingKey.Sound] == false) return;
 
@@ -50,13 +51,14 @@ namespace DarkcupGames
                 if (!item.isPlaying)
                 {
                     item.clip = clip;
+                    item.volume = volume;
                     item.Play ();
                     break;
                 }
             }
         }
 
-        public void PlaySound(string soundName)
+        public void PlaySound(string soundName, float volume = VOLUME)
         {
             if (GameSystem.userdata.dicSetting[SettingKey.Sound] == false) return;
             var clip = clips[soundName];
@@ -65,6 +67,7 @@ namespace DarkcupGames
                 if (!item.isPlaying)
                 {
                     item.clip = clip;
+                    item.volume = volume;
                     item.Play ();
                     break;
                 }

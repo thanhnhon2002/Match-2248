@@ -1,12 +1,17 @@
+using DarkcupGames;
 using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Hammer : Power
 {
     public static Hammer Instance { get; private set; }
     [SerializeField] private Animator hammer;
-    [SerializeField] private Transform hamerImg;
+    [SerializeField] private RectTransform hamerImg;
     [SerializeField] private ParticalSystemController smashFx;
+    [SerializeField] private AudioClip cellSmashSound;
+
+    public List<Cell> debug;
     private void Awake ()
     {
         Instance = this;
@@ -34,6 +39,7 @@ public class Hammer : Power
             RemoveCell (cell);
             displayGroup.DOFade (0f, 1f).OnComplete(() => 
             {
+                hamerImg.anchoredPosition = Vector3.zero;
                 GameFlow.Instance.bottomGroup.SetActive (true);
                 displayGroup.gameObject.SetActive (false);
                 displayGroup.alpha = 1f;
@@ -45,12 +51,12 @@ public class Hammer : Power
 
     private void RemoveCell (Cell cell)
     {
+        var cellsInSameCol = GridManager.Instance.allCellInCollom[cell.gridPosition.x];
         var fx = PoolSystem.Instance.GetObject(smashFx, cell.transform.position); 
         fx.ChangeColor(cell.spriteRenderer.color);
         cell.gameObject.SetActive (false);
-
-        var cellsInSameCol = GridManager.Instance.allCellInCollom[cell.gridPosition.x];
-        var spawnPos = GridManager.Instance.GetCellAt (new GridPosition (cell.gridPosition.x, 1)).transform.localPosition;
+        AudioSystem.Instance.PlaySound (cellSmashSound);
+        var spawnPos = GridManager.Instance.GetCellAt (new GridPosition (cell.gridPosition.x, 1)).transform.position;
         spawnPos.y++;
 
         cellsInSameCol.Remove (cell);
@@ -64,6 +70,8 @@ public class Hammer : Power
 
             GridManager.Instance.ReassignGridPos (cell.gridPosition.x, cellsInSameCol);
         }
-        LeanTween.delayedCall(0.5f,() => GridManager.Instance.Drop ());
+        debug.Clear ();
+        debug.AddRange(cellsInSameCol);
+        LeanTween.delayedCall (0.5f, () => GridManager.Instance.Drop ());
     }
 }

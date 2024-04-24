@@ -257,7 +257,9 @@ public class GridManager : MonoBehaviour
         {
             cellDic.Add (item.gridPosition, item);
             if (!allCellInCollom.ContainsKey (item.gridPosition.x)) allCellInCollom.Add (item.gridPosition.x, new List<Cell> ());
-            allCellInCollom[item.gridPosition.x].Add (item);
+            var list = allCellInCollom[item.gridPosition.x];
+            list.Clear ();
+            if(!list.Contains(item)) list.Add (item);
         }
         var userCellDic = GameSystem.userdata.cellDic;
         foreach (var item in allCell)
