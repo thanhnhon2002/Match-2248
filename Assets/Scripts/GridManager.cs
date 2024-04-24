@@ -17,7 +17,6 @@ public class GridManager : MonoBehaviour
     private const int Space_MaxIndex = 13;
 
     public static GridManager Instance { get; private set; }
-    [SerializeField] private Color[] cellColors;
     public static readonly List<GridPosition> neighbourGridPosition = new List<GridPosition>()
     { new GridPosition(0, 1), new GridPosition (1,1), new GridPosition(1, 0), new GridPosition(1,-1), new GridPosition(0, -1), new GridPosition(-1, -1), new GridPosition(-1, 0), new GridPosition(-1,1) };
     [SerializeField] private Cell cellPrefab;
@@ -152,16 +151,6 @@ public class GridManager : MonoBehaviour
             cells.RemoveAll (x => x.gridPosition.x != i); ;
         }
         Drop ();
-    }
-
-    public Color GetCellColor (BigInteger value)
-    {
-        Mathf mathf;
-        var pow = mathf.LogBigInt (value, 2);
-        var index = pow % cellColors.Length;
-        var color = cellColors[index];
-        color.a = 1f;
-        return color;
     }
 
     private bool HasLose()

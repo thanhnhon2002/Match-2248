@@ -20,7 +20,7 @@ public class ColorSet : MonoBehaviour
     {
         Mathf mathf;
         int pow;
-        var color = GridManager.Instance.GetCellColor (cell.Value);
+        var color = CellColor.Instance.GetCellColor (cell.Value);
         //if (cell.Value <2)
         //{
         //    pow = mathf.LogBigInt(GameFlow.Instance.TotalPoint, 2);

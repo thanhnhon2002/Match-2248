@@ -16,6 +16,7 @@ public class UserData
     public float diamond;
     public BigInteger highestScore;
     public BigInteger currentScore;
+    public BigInteger highestCellValue;
     public Dictionary<string, BigInteger> cellDic = new Dictionary<string, BigInteger>();
     public Dictionary<SettingKey, bool> dicSetting = new Dictionary<SettingKey, bool>();
     public List<string> boughtItems;
