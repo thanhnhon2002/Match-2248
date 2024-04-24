@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DarkcupGames;
+using DG.Tweening;
 
 [Serializable]
 public enum PopupOptions
@@ -12,15 +13,27 @@ public enum PopupOptions
     BlockAdded,
     LockElinimated,
     RateGame,
-    Pause
+    Pause,
+    MakeSure
 }
+public class DataEventPopup : EventArgs
+{
+    public Action<PopupOptions> action;
+    public PopupOptions option;
+    public DataEventPopup(Action<PopupOptions> action, PopupOptions option)
+    {
+        this.action = action;
+        this.option = option;
+    }
+}
+
 public class PopupManager : MonoBehaviour
 {
     public static PopupManager Instance;
     public Popup[] popups;
     private Dictionary<PopupOptions, Popup> popupDic = new Dictionary<PopupOptions, Popup>();
     public Image blackBackground;
-    private List<Action<PopupOptions>>listShow=new List<Action<PopupOptions>>();
+    private Queue<DataEventPopup>queueShow=new Queue<DataEventPopup>();
     private void Awake()
     {
         Instance = this;
@@ -30,17 +43,26 @@ public class PopupManager : MonoBehaviour
             popupDic.Add(item.option, item);
         }
     }
-    public void AddActionShowPopup(Action<PopupOptions> action,PopupOptions option)
+    public void SubShowPopup(DataEventPopup data)
     {
-        listShow.Add(action);
-        this.Show();
-    }
-    private void Show()
-    {
-        foreach(var action in listShow)
+        queueShow.Enqueue(data);
+        Debug.Log("Queue Count "+queueShow.Count);
+        if (queueShow.Count == 1)
         {
-            //action?.Invoke();
+            DOVirtual.DelayedCall(0.5f, () => this.ShowAllQueue());       
         }
+    }
+    public void ShowAllQueue()
+    {
+       if(queueShow.Count!=0) queueShow?.Peek()?.action?.Invoke(queueShow.Peek().option);       
+    }
+    public void DeQueue()
+    {
+        if (queueShow.Count != 0)
+        {
+            queueShow?.Dequeue();
+            this.ShowAllQueue();
+        }     
     }
     public void ShowPopup(PopupOptions option)
     {
@@ -50,21 +72,4 @@ public class PopupManager : MonoBehaviour
     {
         popupDic[option].Disappear ();
     }
-
-#if UNITY_EDITOR
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A)) ShowPopup(PopupOptions.NewBlock);
-        if (Input.GetKeyDown(KeyCode.S)) HidePopup(PopupOptions.NewBlock);
-
-        if (Input.GetKeyDown(KeyCode.D)) ShowPopup(PopupOptions.RateGame);
-        if (Input.GetKeyDown(KeyCode.F)) HidePopup(PopupOptions.RateGame);
-
-        if (Input.GetKeyDown(KeyCode.G)) ShowPopup(PopupOptions.LockElinimated);
-        if (Input.GetKeyDown(KeyCode.H)) HidePopup(PopupOptions.LockElinimated);
-
-        if (Input.GetKeyDown(KeyCode.J)) ShowPopup(PopupOptions.Pause);
-        if (Input.GetKeyDown(KeyCode.K)) HidePopup(PopupOptions.Pause);
-    }
-#endif
 }

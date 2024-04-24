@@ -13,7 +13,7 @@ public class GridManager : MonoBehaviour
     private const float CELL_DROP_TIME = 0.5F;
     public readonly int MAX_ROW = 8;
     public readonly int MAX_COL = 5;
-    private const int Space_Index = 10;
+    private const int Space_Index = 5;
     private const int Space_MaxIndex = 13;
 
     public static GridManager Instance { get; private set; }
@@ -28,8 +28,13 @@ public class GridManager : MonoBehaviour
     public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell>();
 
     private int minIndex;
+    public int MinIndex =>minIndex;
     private int maxIndex;
     private int maxIndexRandom;
+    public int MaxIndexRandom => maxIndexRandom;
+    private int indexPlayer;
+    public int IndexPlayer=>indexPlayer;
+
 
     //Only use to check Conected Cell
     private List<Cell> cellCol1 = new List<Cell>();
@@ -55,12 +60,13 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
 #if UNITY_EDITOR
-        minIndex = 15;
+        minIndex = 1;
 #else
         minIndex = 1;
 #endif
         maxIndex = Space_Index+minIndex-1;
         maxIndexRandom = (int)(maxIndex + minIndex) / 2;
+        indexPlayer = maxIndexRandom;
         allCell = GetComponentsInChildren<Cell>();
         foreach (var item in allCell)
         {
@@ -96,12 +102,24 @@ public class GridManager : MonoBehaviour
     {
         Mathf mathf;
         int index = mathf.LogBigInt(value, 2);
+        if(index > indexPlayer)
+        {
+            indexPlayer = index;
+            Debug.Log("New Block 2^" + indexPlayer);
+            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
+        }
         if (index > maxIndex)
         {
+            Debug.Log("Lock 2^" + minIndex);
             minIndex++;
             if (maxIndex - minIndex < Space_MaxIndex) maxIndex += 2;
             else maxIndex += 1;
             maxIndexRandom++;
+            Debug.Log("AddBlock 2^" + maxIndexRandom);
+
+            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
+            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
+
         }
         GameFlow.Instance.TotalPoint = 0;
     }

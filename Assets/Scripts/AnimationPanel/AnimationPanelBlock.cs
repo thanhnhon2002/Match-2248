@@ -2,7 +2,8 @@
 using UnityEngine.UI;
 using DG.Tweening;
 using DarkcupGames;
-using Unity.VisualScripting;
+using System;
+using Vector2 = UnityEngine.Vector2;
 
 public class AnimationPanelBlock : AnimationPanel
 {
@@ -46,7 +47,7 @@ public class AnimationPanelBlock : AnimationPanel
                 crown.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             }
             ///
-            if (close != null) EasyEffect.Appear(close.gameObject, 0.5f, 1, 0.2f);
+            if (close != null) EasyEffect.Appear(close.gameObject, 0.5f, 1, 1f);
             ///
             rectTransform.DOAnchorPosX(0, 0.3f);
             images[0].rectTransform.DOSizeDelta(new Vector2(175, 175), 0.25f);
