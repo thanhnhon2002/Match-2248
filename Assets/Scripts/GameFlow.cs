@@ -117,6 +117,11 @@ public class GameFlow : MonoBehaviour
         SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
     }
 
+    public void ToHome()
+    {
+        SceneManager.LoadScene ("UI Popup");
+    }
+
     public void CheckCombo (int count, UnityEngine.Vector3 position)
     {
         if (count < 5) return;
