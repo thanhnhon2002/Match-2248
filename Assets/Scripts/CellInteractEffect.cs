@@ -12,7 +12,6 @@ public class CellInteractEffect : MonoBehaviour
     {
         var clip = clips.RandomElement ();
         AudioSystem.Instance.PlaySound(clip, CELL_VOLUME);
-        var userData = GameSystem.userdata;
-        if (userData.dicSetting[SettingKey.Vibration]) Handheld.Vibrate ();
+        Vibration.Vibrate (50);
     }
 }

@@ -77,7 +77,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 #else
         switch(GameFlow.Instance.gameState)
         {
-            case GameState.Playing: Player.Instance.InitLine (this);
+            case GameState.Playing: Player.Instance.CheckCell (this);
                 break;
             case GameState.Swap:
                 Swap.Instance.ChoseCell (this);
