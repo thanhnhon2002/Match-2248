@@ -17,6 +17,10 @@ public class UserData
     public BigInteger highestScore;
     public BigInteger currentScore;
     public BigInteger highestCellValue;
+    public int indexPlayer;
+    public int minIndex;
+    public int maxIndex;
+    public int maxIndexRandom;
     public Dictionary<string, BigInteger> cellDic = new Dictionary<string, BigInteger>();
     public Dictionary<SettingKey, bool> dicSetting = new Dictionary<SettingKey, bool>();
     public List<string> boughtItems;

@@ -58,23 +58,31 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-#if UNITY_EDITOR
-        minIndex = 1;
-#else
-        minIndex = 1;
-#endif
-        maxIndex = Space_Index+minIndex-1;
-        maxIndexRandom = (int)(maxIndex + minIndex) / 2;
-        indexPlayer = maxIndexRandom;
+        var userData = GameSystem.userdata;
+        if (userData.minIndex == 0)
+        {
+            minIndex = 1;
+            maxIndex = Space_Index + minIndex - 1;
+            maxIndexRandom = (int)(maxIndex + minIndex) / 2;
+            indexPlayer = maxIndexRandom;
+        }
+        else LoadDataIndex();
         allCell = GetComponentsInChildren<Cell>();
         foreach (var item in allCell)
         {
             girdPosToLocal.Add(item.gridPosition, item.transform.localPosition);
-        }
+        }       
         UpdateCell();
         LoadCells();
     }
-
+    public void LoadDataIndex()
+    {
+        var userData = GameSystem.userdata;
+        indexPlayer= userData.indexPlayer;
+        minIndex =userData.minIndex;
+        maxIndex = userData.maxIndex;
+        maxIndexRandom = userData.maxIndexRandom;
+    }
     public Cell SpawnCell (Vector2 position, int value)
     {
         var cell = PoolSystem.Instance.GetObject (cellPrefab, position);
@@ -120,6 +128,12 @@ public class GridManager : MonoBehaviour
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
 
         }
+        var userData = GameSystem.userdata;
+        userData.indexPlayer = indexPlayer;
+        userData.minIndex = minIndex;
+        userData.maxIndex = maxIndex;
+        userData.maxIndexRandom = maxIndexRandom;
+        GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.TotalPoint = 0;
     }
 
