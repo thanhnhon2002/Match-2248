@@ -40,7 +40,7 @@ public class Swap : Power
             cellHighlight.Add (highligt);
         }
         if (chosenCell.Count < 2) return;
-
+        backButton.gameObject.SetActive (false);
         GameFlow.Instance.gameState = GameState.Fx;
         var pos0 = chosenCell[0].transform.localPosition;
         var gridPos0 = chosenCell[0].gridPosition;
@@ -83,5 +83,16 @@ public class Swap : Power
             chosenCell.Clear ();
             cellHighlight.Clear ();
         });
+    }
+
+    public override void Back ()
+    {
+        base.Back ();
+        chosenCell.Clear ();
+        for (int i = 0; i < cellHighlight.Count; i++)
+        {
+            cellHighlight[i].gameObject.SetActive (false);
+        }
+        cellHighlight.Clear ();
     }
 }

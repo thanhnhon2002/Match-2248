@@ -26,10 +26,12 @@ public class Player : MonoBehaviour
     private void Awake ()
     {
         Instance = this;
+        Input.multiTouchEnabled = false;
     }
 
     private void Update ()
     {
+        GameFlow.Instance.SetButtonInteractacble (!isDraging);
         mousePos = GameFlow.Instance.mainCam.ScreenToWorldPoint (Input.mousePosition);
         if (lines.Count > 0)
         {

@@ -23,8 +23,8 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private DiamondGroup diamondGroup;
     [SerializeField] private BonusDiamond bonusDiamond;
     public Camera mainCam;
-    public GameObject bottomGroup;
-    public GameObject topGroup;
+    public ButtonGroup bottomGroup;
+    public ButtonGroup topGroup;
     public GameState gameState;
     private const int INIT_MULTILIER = 30;
     public List<int> multiliers = new List<int>();
@@ -97,7 +97,12 @@ public class GameFlow : MonoBehaviour
         }
     }
 
-    [ContextMenu("Lose")]
+    public void SetButtonInteractacble(bool interactable)
+    {
+        bottomGroup.SetInteract(interactable);
+        topGroup.SetInteract(interactable);
+    }
+
     public void ShowLosePopup()
     {
         gameState = GameState.GameOver;

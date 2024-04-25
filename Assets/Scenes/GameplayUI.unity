@@ -9875,6 +9875,7 @@ GameObject:
   - component: {fileID: 495516499}
   - component: {fileID: 495516498}
   - component: {fileID: 495516500}
+  - component: {fileID: 495516501}
   m_Layer: 5
   m_Name: BottomGroup
   m_TagString: Untagged
@@ -9969,6 +9970,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &495516501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495516496}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a07af9d0f661424db5bd288b4797754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &496804644
 GameObject:
   m_ObjectHideFlags: 0
@@ -17396,6 +17409,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1821798362}
+        m_TargetAssemblyTypeName: GridManager, Assembly-CSharp
+        m_MethodName: RemoveAllLowestCells
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &803765037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18435,7 +18460,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 111, y: -116}
+  m_AnchoredPosition: {x: 161, y: -154}
   m_SizeDelta: {x: 99.42857, y: 99.42857}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &856437567
@@ -21094,6 +21119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayGroup: {fileID: 1230699047}
+  backButton: {fileID: 1847572202}
   hammer: {fileID: 1116716346}
   hamerImg: {fileID: 678115498}
   smashFx: {fileID: 1316882755971972130, guid: 7f0e7a4c9e226324ebde4cc57c855a5c, type: 3}
@@ -22144,6 +22170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1063682130}
+  - component: {fileID: 1063682131}
   m_Layer: 5
   m_Name: TopGroup
   m_TagString: Untagged
@@ -22172,6 +22199,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -157.99994}
   m_SizeDelta: {x: 0, y: 154.08997}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1063682131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063682129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a07af9d0f661424db5bd288b4797754, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1067588434
 GameObject:
   m_ObjectHideFlags: 0
@@ -31803,6 +31842,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayGroup: {fileID: 792856996}
+  backButton: {fileID: 856437567}
   highlightPre: {fileID: 5962770623641434231, guid: b3decc7d3b34953438887f3b22737c90, type: 3}
   interactSound: {fileID: 8300000, guid: 20ba79af998c5d247bfecf06f6230661, type: 3}
 --- !u!4 &1609789564
@@ -34160,6 +34200,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 4051405606102863096, guid: c0f95bba4914da340ba315a1151c93d5, type: 3}
   cellSpawnPos: {fileID: 1987728705}
+  removeCellFx: {fileID: 0}
 --- !u!4 &1821798363
 Transform:
   m_ObjectHideFlags: 0
@@ -34593,8 +34634,8 @@ MonoBehaviour:
   diamondGroup: {fileID: 704832205}
   bonusDiamond: {fileID: 68550177}
   mainCam: {fileID: 0}
-  bottomGroup: {fileID: 495516496}
-  topGroup: {fileID: 1063682129}
+  bottomGroup: {fileID: 495516501}
+  topGroup: {fileID: 1063682131}
   gameState: 0
   multiliers: 
 --- !u!4 &1842024311
@@ -34648,7 +34689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 111.000015, y: -116}
+  m_AnchoredPosition: {x: 161, y: -154.00006}
   m_SizeDelta: {x: 99.42857, y: 99.42857}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1847572202

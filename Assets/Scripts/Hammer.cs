@@ -10,7 +10,7 @@ public class Hammer : Power
     [SerializeField] private RectTransform hamerImg;
     [SerializeField] private ParticalSystemController smashFx;
     [SerializeField] private AudioClip cellSmashSound;
-
+    private bool chose;
     public List<Cell> debug;
     private void Awake ()
     {
@@ -21,10 +21,14 @@ public class Hammer : Power
         base.UsePower ();
         GameFlow.Instance.gameState = GameState.Smash;
         hammer.SetBool ("Play", true);
+        chose = false;
     }
 
     public void Smash(Cell cell)
     {
+        if (chose) return;
+        chose = true;
+        backButton.gameObject.SetActive (false); 
         hammer.SetBool ("Play", false);
         var destination = GameFlow.Instance.mainCam.WorldToScreenPoint (cell.transform.position);
         var position = hamerImg.position;
@@ -40,8 +44,8 @@ public class Hammer : Power
             displayGroup.DOFade (0f, 1f).OnComplete(() => 
             {
                 hamerImg.anchoredPosition = Vector3.zero;
-                GameFlow.Instance.bottomGroup.SetActive (true);
-                GameFlow.Instance.topGroup.SetActive (true);
+                GameFlow.Instance.bottomGroup.gameObject.SetActive (true);
+                GameFlow.Instance.topGroup.gameObject.SetActive (true);
                 displayGroup.gameObject.SetActive (false);
                 displayGroup.alpha = 1f;
             });

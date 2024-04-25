@@ -23,6 +23,7 @@ public class RocketLauncher : MonoBehaviour
     [ContextMenu("Test")]
     public void LaunchRocket()
     {
+        GameFlow.Instance.gameState = GameState.Fx; 
         targets.Clear();
         allCells.Clear();
         var allCell = GridManager.Instance.allCell;

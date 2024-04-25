@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 using System.Linq;
 using System.Numerics;
 
-public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler
+public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerClickHandler
 {
     public SpriteRenderer spriteRenderer { get; private set; }
     public TextMeshPro valueTxt;
@@ -69,46 +69,30 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         if (nearbyCell.Contains (this)) nearbyCell.Remove (this);
     }
 
-    public void OnPointerEnter (PointerEventData eventData)
+    public void OnPointerClick (PointerEventData eventData)
     {
-#if UNITY_EDITOR
-        if (GameFlow.Instance.gameState != GameState.Playing) return;
-        Player.Instance.CheckCell (this);
-#else
-        switch(GameFlow.Instance.gameState)
+        switch (GameFlow.Instance.gameState)
         {
-            case GameState.Playing: Player.Instance.CheckCell (this);
-                break;
             case GameState.Swap:
                 Swap.Instance.ChoseCell (this);
                 break;
             case GameState.Smash:
-                Hammer.Instance.Smash(this);
+                Hammer.Instance.Smash (this);
                 break;
             default: return;
         }
-#endif
+    }
+
+    public void OnPointerEnter (PointerEventData eventData)
+    {
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
+        Player.Instance.CheckCell (this);
     }
 
     public void OnBeginDrag (PointerEventData eventData)
     {
-#if UNITY_EDITOR
-        switch(GameFlow.Instance.gameState)
-        {
-            case GameState.Playing: Player.Instance.InitLine (this);
-                break;
-            case GameState.Swap:
-                Swap.Instance.ChoseCell (this);
-                break;
-            case GameState.Smash:
-                Hammer.Instance.Smash(this);
-                break;
-            default: return;
-        }
-#else
         if (GameFlow.Instance.gameState != GameState.Playing) return;
         Player.Instance.InitLine (this);
-#endif
     }
 
     public void OnDrag (PointerEventData eventData)

@@ -12,6 +12,8 @@ public enum SettingKey
 [System.Serializable]
 public class UserData
 {
+    public string nickName;
+    public int avatarIndex;
     public float gold;
     public float diamond;
     public BigInteger highestScore;
@@ -27,6 +29,7 @@ public class UserData
 
     public UserData()
     {
+        nickName = $"Guest{UnityEngine.Random.Range (1, int.MaxValue)}";
         boughtItems = new List<string>();
     }
     public void CheckValid()
