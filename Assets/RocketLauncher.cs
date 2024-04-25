@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using DG.Tweening;
 using System.Net.Sockets;
+using DarkcupGames;
 
 public class RocketLauncher : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class RocketLauncher : MonoBehaviour
     private List<Cell> allCells = new List<Cell>();
     [SerializeField] private Rocket rocketPre;
     [SerializeField] private ParticalSystemController smashFx;
+    [SerializeField] private AudioClip explosedSound;
     private void Awake ()
     {
         Instance = this;
@@ -44,6 +46,7 @@ public class RocketLauncher : MonoBehaviour
         sq.AppendInterval (ROCKET_MOVE_TIME * 1.5f);
         sq.AppendCallback (() => 
         {
+            AudioSystem.Instance.PlaySound (explosedSound);
             for (int i = 0; i < TARGET_AMOUNT; i++)
             {
                 allCells[i].gameObject.SetActive (false);
