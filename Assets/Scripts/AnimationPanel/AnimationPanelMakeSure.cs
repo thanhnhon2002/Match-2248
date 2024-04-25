@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AnimationMakeSure : AnimationPanel
+public class AnimationPanelMakeSure : AnimationPanel
 {
     private readonly WaitForSeconds wait = new WaitForSeconds (0.1f);
     [SerializeField] private CanvasGroup[] buttons;

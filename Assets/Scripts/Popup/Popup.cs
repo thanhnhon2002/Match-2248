@@ -3,6 +3,7 @@ using DarkcupGames;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Popup : MonoBehaviour
 {
@@ -34,7 +35,6 @@ public class Popup : MonoBehaviour
     }
     public void LockButton()
     {
-        Debug.Log("Lock Button " + transform.name);
         foreach(Button button in buttons)
         {
             button.interactable = false;
@@ -53,6 +53,7 @@ public class Popup : MonoBehaviour
     }
     IEnumerator TimeUnLockButton()
     {
+        if (buttons[0].interactable == false) yield break;
         LockButton();
         yield return new WaitForSeconds(0.3f);
         UnLockButton();
