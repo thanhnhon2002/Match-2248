@@ -13,7 +13,7 @@ public class GridManager : MonoBehaviour
     private const float CELL_DROP_TIME = 0.5F;
     public readonly int MAX_ROW = 8;
     public readonly int MAX_COL = 5;
-    private const int Space_Index = 5;
+    private const int Space_Index = 10;
     private const int Space_MaxIndex = 13;
 
     public static GridManager Instance { get; private set; }
@@ -63,7 +63,7 @@ public class GridManager : MonoBehaviour
         {
             minIndex = 1;
             maxIndex = Space_Index + minIndex - 1;
-            maxIndexRandom = (int)(maxIndex + minIndex) / 2;
+            maxIndexRandom = (int)(maxIndex + minIndex)/2 +2;
             indexPlayer = maxIndexRandom;
         }
         else LoadDataIndex();
