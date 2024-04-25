@@ -118,6 +118,11 @@ public class GameFlow : MonoBehaviour
     {
         var userData = GameSystem.userdata;
         userData.cellDic.Clear ();
+        userData.currentScore = 0;
+        userData.indexPlayer = 0;
+        userData.minIndex = 0;
+        userData.maxIndex = 0;
+        userData.maxIndexRandom = 0;
         GameSystem.SaveUserDataToLocal ();
         SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
     }

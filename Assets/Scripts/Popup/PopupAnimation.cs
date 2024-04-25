@@ -56,22 +56,22 @@ public class PopupAnimation : Popup
     }
     IEnumerator AnimationDisappear()
     {
-        EasyEffect.Disappear(topic.gameObject, 1, 0, 0.2f);
-        EasyEffect.Disappear(content.gameObject, 1, 0, 0.2f);
+        EasyEffect.Disappear(topic.gameObject, 1, 0, 0.1f);
+        EasyEffect.Disappear(content.gameObject, 1, 0, 0.1f);
         if (reward != null)
         {
-            EasyEffect.Disappear(reward, 1, 0, 0.2f);
+            EasyEffect.Disappear(reward, 1, 0, 0.1f);
         }
         if (listAppear != null && listAppear.Length > 0)
         {
             foreach (var child in listAppear)
             {
-                EasyEffect.Disappear(child, 1, 0, 0.2f);
-                yield return new WaitForSeconds(0.15f);
+                EasyEffect.Disappear(child, 1, 0, 0.1f);
+                yield return new WaitForSeconds(0.1f);
             }
         }
-        EasyEffect.Disappear(btnClaim.gameObject, 1, 0, 0.2f);
-        yield return new WaitForSeconds(0.15f);
+        EasyEffect.Disappear(btnClaim.gameObject, 1, 0, 0.1f);
+        yield return new WaitForSeconds(0.1f);
         if (panel != null) panel.gameObject.SetActive(false);
     }
 }

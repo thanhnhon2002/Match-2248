@@ -47,7 +47,6 @@ public class PopupManager : MonoBehaviour
     public void SubShowPopup(DataEventPopup data)
     {
         queueShow.Enqueue(data);
-        Debug.Log("Queue Count "+queueShow.Count);
         if (queueShow.Count == 1)
         {
             DOVirtual.DelayedCall(0.5f, () => this.ShowAllQueue());       
