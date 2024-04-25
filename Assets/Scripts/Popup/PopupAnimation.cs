@@ -51,8 +51,7 @@ public class PopupAnimation : Popup
                 yield return new WaitForSeconds(0.15f);
             }
         }
-        EasyEffect.Appear(btnClaim.gameObject, 0.5f, 1, 0.2f);
-        this.UnLockButton();
+        EasyEffect.Appear(btnClaim.gameObject, 0.5f, 1, 0.2f,1.2f, this.UnLockButton);      
         btnClaim.onClick.RemoveAllListeners();
         btnClaim.onClick.AddListener(() => Disappear());
         btnClaim.onClick.AddListener(PopupManager.Instance.DeQueue);

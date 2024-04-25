@@ -19,14 +19,14 @@ namespace DarkcupGames
             Instance = this;
         }
 
-        public static void Appear(GameObject obj, float startScale, float endScale, float speed = 0.1f, float maxScale = 1.2f)
+        public static void Appear(GameObject obj, float startScale, float endScale, float speed = 0.1f, float maxScale = 1.2f,Action callback =null)
         {
             obj.SetActive(true);
             Vector3 originScale = obj.transform.localScale;
             obj.transform.localScale = new Vector3(startScale*originScale.x, startScale*originScale.y);
             LeanTween.scale(obj, new Vector3(maxScale * originScale.x, maxScale * originScale.y,maxScale * originScale.z), speed).setOnComplete(() =>
             {
-                LeanTween.scale(obj, new Vector3(endScale * originScale.x, endScale * originScale.y, endScale * originScale.z), speed);
+                LeanTween.scale(obj, new Vector3(endScale * originScale.x, endScale * originScale.y, endScale * originScale.z), speed).setOnComplete(()=>callback?.Invoke());
             });
         }
 

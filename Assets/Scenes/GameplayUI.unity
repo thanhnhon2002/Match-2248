@@ -3123,6 +3123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: 5
+  originSize: {x: 0, y: 0, z: 0}
   topic: {fileID: 714909679}
   content: {fileID: 759223123}
   panel: {fileID: 290370811}
@@ -3972,6 +3973,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: 0
+  originSize: {x: 0, y: 0, z: 0}
   topic: {fileID: 546132781}
   content: {fileID: 1262599984}
   panel: {fileID: 1163207244}
@@ -6826,6 +6828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: 4
+  originSize: {x: 0, y: 0, z: 0}
   topic: {fileID: 1502026847}
   btns: []
 --- !u!114 &359371518
@@ -8617,6 +8620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: 6
+  originSize: {x: 0, y: 0, z: 0}
   topic: {fileID: 220646689}
   content: {fileID: 231060710}
   panel: {fileID: 1550806263}
@@ -14364,6 +14368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: 3
+  originSize: {x: 0, y: 0, z: 0}
   topic: {fileID: 308947967}
   content: {fileID: 152615566}
   panel: {fileID: 2003726593}
@@ -31602,6 +31607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: 2
+  originSize: {x: 0, y: 0, z: 0}
   topic: {fileID: 1498152672}
   content: {fileID: 1451644778}
   panel: {fileID: 1576245087}
@@ -34142,7 +34148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellPrefab: {fileID: 4051405606102863096, guid: c0f95bba4914da340ba315a1151c93d5, type: 3}
   cellSpawnPos: {fileID: 1987728705}
-  removeCellFx: {fileID: 0}
+  removeCellFx: {fileID: 1316882755971972130, guid: 7f0e7a4c9e226324ebde4cc57c855a5c, type: 3}
 --- !u!4 &1821798363
 Transform:
   m_ObjectHideFlags: 0
@@ -40192,6 +40198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: 1
+  originSize: {x: 0, y: 0, z: 0}
   topic: {fileID: 757873421}
   content: {fileID: 1962505044}
   panel: {fileID: 1733822451}
