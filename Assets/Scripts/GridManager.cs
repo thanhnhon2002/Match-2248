@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
+using System;
 
 public class GridManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class GridManager : MonoBehaviour
     { new GridPosition(0, 1), new GridPosition (1,1), new GridPosition(1, 0), new GridPosition(1,-1), new GridPosition(0, -1), new GridPosition(-1, -1), new GridPosition(-1, 0), new GridPosition(-1,1) };
     [SerializeField] private Cell cellPrefab;
     [SerializeField] private Transform cellSpawnPos;
+    [SerializeField] private ParticalSystemController removeCellFx;
     public Dictionary<int, List<Cell>> allCellInCollom = new Dictionary<int, List<Cell>>();
     private Dictionary<GridPosition, Vector3> girdPosToLocal = new Dictionary<GridPosition, Vector3>();
     public Cell[] allCell { get; private set; }
@@ -34,6 +36,7 @@ public class GridManager : MonoBehaviour
     private int indexPlayer;
     public int IndexPlayer=>indexPlayer;
 
+    private List<Cell>lowestCells = new List<Cell>();
 
     //Only use to check Conected Cell
     private List<Cell> cellCol1 = new List<Cell>();
@@ -41,6 +44,7 @@ public class GridManager : MonoBehaviour
     private List<Cell> cellCol3 = new List<Cell>();
     private List<Cell> cellCol4 = new List<Cell>();
     private List<Cell> cellCol5 = new List<Cell> ();
+
 
     //[SerializeField] private List<Cell> debugCellCol1 = new List<Cell> ();
     //[SerializeField] private List<Cell> debugCellCol2 = new List<Cell> ();
@@ -117,6 +121,7 @@ public class GridManager : MonoBehaviour
         }
         if (index > maxIndex)
         {
+            GetLowestCells ();
             Debug.Log("Lock 2^" + minIndex);
             minIndex++;
             if (maxIndex - minIndex < Space_MaxIndex) maxIndex += 2;
@@ -183,6 +188,31 @@ public class GridManager : MonoBehaviour
             cells.RemoveAll (x => x.gridPosition.x != i); ;
         }
         Drop ();
+    }
+
+    public void RemoveAllLowestCells ()
+    {
+        for (int i = 0; i < lowestCells.Count; i++)
+        {
+            if (lowestCells[i] == null) continue;
+            lowestCells[i].gameObject.SetActive (false);
+            var fx = PoolSystem.Instance.GetObject (removeCellFx, lowestCells[i].transform.position);
+            fx.ChangeColor (lowestCells[i].spriteRenderer.color);
+        }
+        CheckToSpawnNewCell (lowestCells);
+    }
+
+    private void GetLowestCells()
+    {
+        lowestCells.Clear ();
+        foreach(var cell in allCell)
+        {
+            if(cell.Value == (BigInteger)Mathf.Pow(2,minIndex))
+            {
+                lowestCells.Add (cell);
+            }
+        }
+        lowestCells.Add (null);
     }
 
     private bool HasLose()
