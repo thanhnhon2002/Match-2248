@@ -8,8 +8,8 @@ public class Popup : MonoBehaviour
 {
     public PopupOptions option;
     public Vector3 originSize;
-    Button[] buttons;
-    private void Awake()
+    public Button[] buttons;
+    protected virtual void Awake()
     {
         originSize = transform.localScale;
         buttons = GetComponentsInChildren<Button>(true);
@@ -32,18 +32,19 @@ public class Popup : MonoBehaviour
         EasyEffect.Fade(PopupManager.Instance.blackBackground.gameObject, 0.9f, 0f, false,0.2f);
         EasyEffect.Disappear(gameObject, 1 , 0,0.2f);
     }
-    protected void LockButton()
-    { 
+    public void LockButton()
+    {
+        Debug.Log("Lock Button " + transform.name);
         foreach(Button button in buttons)
         {
-            button.enabled = false;
+            button.interactable = false;
         }
     }
-    protected void UnLockButton()
+    public void UnLockButton()
     {
         foreach (Button button in buttons)
         {
-            button.enabled = true;
+            button.interactable = true;
         }
     }
     public void StartUnLock()

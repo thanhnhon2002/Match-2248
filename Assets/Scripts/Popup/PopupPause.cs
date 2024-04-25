@@ -7,11 +7,6 @@ using System.Collections;
 public class PopupPause : Popup
 {
     [SerializeField] TextMeshProUGUI topic;
-    public Button[] btns;
-    private void Awake()
-    {
-        btns = GetComponentsInChildren<Button>(true);
-    }
 
     public override void Appear()
     {
@@ -27,7 +22,7 @@ public class PopupPause : Popup
     {
         EasyEffect.Appear(topic.gameObject, 0.2f, 1, 0.2f);
         yield return new WaitForSeconds(0.15f);
-        foreach(var btn in btns)
+        foreach(var btn in buttons)
         {
             EasyEffect.Appear(btn.gameObject, 0.2f, 1, 0.2f);
             yield return new WaitForSeconds(0.15f);
@@ -39,7 +34,7 @@ public class PopupPause : Popup
     {
         EasyEffect.Disappear(topic.gameObject, 1, 0, 0.2f);
         yield return new WaitForEndOfFrame();
-        foreach (var btn in btns)
+        foreach (var btn in buttons)
         {
             EasyEffect.Disappear(btn.gameObject, 1, 0, 0.2f);
         }
