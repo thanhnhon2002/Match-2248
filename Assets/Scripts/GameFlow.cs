@@ -24,6 +24,7 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private BonusDiamond bonusDiamond;
     public Camera mainCam;
     public GameObject bottomGroup;
+    public GameObject topGroup;
     public GameState gameState;
     private const int INIT_MULTILIER = 30;
     public List<int> multiliers = new List<int>();
@@ -130,6 +131,11 @@ public class GameFlow : MonoBehaviour
     public void ToHome()
     {
         SceneManager.LoadScene ("UI Popup");
+    }
+
+    public void DelayToHome (float delay)
+    {
+        LeanTween.delayedCall (delay, ToHome);
     }
 
     public void CheckCombo (int count, UnityEngine.Vector3 position)
