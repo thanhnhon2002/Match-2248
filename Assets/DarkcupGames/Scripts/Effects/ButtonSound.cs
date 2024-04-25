@@ -7,9 +7,13 @@ using DarkcupGames;
 public class ButtonSound : MonoBehaviour
 {
     public AudioClip buttonSound;
-
+    public float volume;
     bool addedSound = false;
 
+    private void Awake()
+    {
+        volume = AudioSystem.VOLUME;
+    }
     private void Start() {
         AddButtonSounds();
     }
@@ -29,7 +33,8 @@ public class ButtonSound : MonoBehaviour
     }
 
     public void PlayButtonSound() {
+        if(volume == 0) volume = AudioSystem.VOLUME;
         //AudioSystem.Instance.PlaySound(buttonSound);
-        AudioSystem.Instance.PlaySound(buttonSound);
+        AudioSystem.Instance.PlaySound(buttonSound,volume);
     }
 }

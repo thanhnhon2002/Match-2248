@@ -13,9 +13,12 @@ public class PopupAnimation : Popup
     [SerializeField] Button btnClaim;
     [SerializeField] SetTextPanel textPanel;
     [SerializeField] GameObject[] listAppear;
+    SoundPopup soundPopup;
     public override void Appear()
     {
+        if (gameObject.activeInHierarchy) return;
         base.Appear();
+        if(transform.TryGetComponent<SoundPopup>(out soundPopup)) soundPopup.PlayPopupSound();
         if (textPanel != null) textPanel.SetText();
         StartCoroutine(AnimationAppear());
     }

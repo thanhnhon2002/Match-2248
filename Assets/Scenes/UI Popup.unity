@@ -1586,6 +1586,8 @@ MonoBehaviour:
   panel: {fileID: 1485144633}
   reward: {fileID: 0}
   btnClaim: {fileID: 1848807445}
+  textPanel: {fileID: 0}
+  listAppear: []
 --- !u!224 &188104464
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2495,6 +2497,8 @@ MonoBehaviour:
   panel: {fileID: 460039837}
   reward: {fileID: 0}
   btnClaim: {fileID: 751761093}
+  textPanel: {fileID: 0}
+  listAppear: []
 --- !u!224 &359282432
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3872,6 +3876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 8300000, guid: adec76438cc628d42a9ff2e5bf37a48b, type: 3}
+  volume: 0
 --- !u!1 &593127542
 GameObject:
   m_ObjectHideFlags: 0
@@ -4037,7 +4042,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -4649,6 +4654,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 8300000, guid: adec76438cc628d42a9ff2e5bf37a48b, type: 3}
+  volume: 0
 --- !u!1 &751761092
 GameObject:
   m_ObjectHideFlags: 0
@@ -5848,6 +5854,8 @@ MonoBehaviour:
   panel: {fileID: 367077548}
   reward: {fileID: 0}
   btnClaim: {fileID: 935645376}
+  textPanel: {fileID: 0}
+  listAppear: []
 --- !u!224 &939635685
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6395,6 +6403,8 @@ MonoBehaviour:
   panel: {fileID: 1449199354}
   reward: {fileID: 2017436058}
   btnClaim: {fileID: 19061007}
+  textPanel: {fileID: 0}
+  listAppear: []
 --- !u!224 &1146564013
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6766,6 +6776,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 8300000, guid: adec76438cc628d42a9ff2e5bf37a48b, type: 3}
+  volume: 0
 --- !u!1 &1245201085
 GameObject:
   m_ObjectHideFlags: 0
@@ -9331,6 +9342,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 8300000, guid: adec76438cc628d42a9ff2e5bf37a48b, type: 3}
+  volume: 0
 --- !u!1 &1644513225
 GameObject:
   m_ObjectHideFlags: 0
@@ -9837,6 +9849,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 8300000, guid: adec76438cc628d42a9ff2e5bf37a48b, type: 3}
+  volume: 0
 --- !u!1 &1720182344
 GameObject:
   m_ObjectHideFlags: 0
@@ -10529,6 +10542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 8300000, guid: adec76438cc628d42a9ff2e5bf37a48b, type: 3}
+  volume: 0
 --- !u!1 &1848807444
 GameObject:
   m_ObjectHideFlags: 0
