@@ -32,6 +32,7 @@ public class PopupPause : Popup
             EasyEffect.Appear(btn.gameObject, 0.2f, 1, 0.2f);
             yield return new WaitForSeconds(0.15f);
         }
+        UnLockButton();
     }
     IEnumerator AnimationDisappear()
     {

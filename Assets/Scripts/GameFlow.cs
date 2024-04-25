@@ -135,7 +135,7 @@ public class GameFlow : MonoBehaviour
 
     public void ToHome()
     {
-        SceneManager.LoadScene ("UI Popup");
+        SceneManager.LoadScene ("UI Home");
     }
 
     public void DelayToHome (float delay)
