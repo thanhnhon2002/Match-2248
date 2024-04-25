@@ -79,6 +79,7 @@ public class Swap : Power
             GridManager.Instance.OnDoneCellMove ();
             displayGroup.gameObject.SetActive (false);
             GameFlow.Instance.bottomGroup.gameObject.SetActive (true);
+            GameFlow.Instance.topGroup.gameObject.SetActive (true);
             chosenCell.Clear ();
             cellHighlight.Clear ();
         });

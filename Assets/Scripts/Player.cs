@@ -63,10 +63,9 @@ public class Player : MonoBehaviour
         if (!isDraging) return;
         if (conectedCell.Contains (cell) && conectedCell.Count > 1 && cell.Equals (conectedCell[conectedCell.Count - 2]))
         {
-            RemoveCell(conectedCell[conectedCell.Count - 1]);
+            RemoveCell (conectedCell[conectedCell.Count - 1]);
             currentCellValue = conectedCell[conectedCell.Count - 1].Value;
-        }
-        else if (!conectedCell.Contains(cell)) AddCell(cell);
+        } else if (!conectedCell.Contains (cell)) AddCell (cell);
     }
 
     public void AddCell(Cell cell)
@@ -139,7 +138,11 @@ public class Player : MonoBehaviour
             line.gameObject.SetActive (false);
         }
         if (conectedCell.Count >= 2) ExploseConectedCell ();
-        else ResetData ();
+        else
+        {
+            ResetData ();
+            GameFlow.Instance.TotalPoint = 0;
+        }
     }
 
     private void ResetData ()
