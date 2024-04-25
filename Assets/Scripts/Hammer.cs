@@ -41,6 +41,7 @@ public class Hammer : Power
             {
                 hamerImg.anchoredPosition = Vector3.zero;
                 GameFlow.Instance.bottomGroup.SetActive (true);
+                GameFlow.Instance.topGroup.SetActive (true);
                 displayGroup.gameObject.SetActive (false);
                 displayGroup.alpha = 1f;
             });
