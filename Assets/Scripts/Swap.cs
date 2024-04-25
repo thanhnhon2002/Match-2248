@@ -41,6 +41,11 @@ public class Swap : Power
         }
         if (chosenCell.Count < 2) return;
         backButton.gameObject.SetActive (false);
+        for (int i = 0; i < chosenCell.Count; i++)
+        {
+            var list = GridManager.Instance.allCellInCollom[chosenCell[i].gridPosition.x];
+            list.Remove (chosenCell[i]);
+        }
         GameFlow.Instance.gameState = GameState.Fx;
         var pos0 = chosenCell[0].transform.localPosition;
         var gridPos0 = chosenCell[0].gridPosition;

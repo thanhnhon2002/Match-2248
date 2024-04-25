@@ -8,6 +8,7 @@ using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using System;
+using Unity.VisualScripting;
 
 public class GridManager : MonoBehaviour
 {
@@ -44,7 +45,6 @@ public class GridManager : MonoBehaviour
     private List<Cell> cellCol3 = new List<Cell>();
     private List<Cell> cellCol4 = new List<Cell>();
     private List<Cell> cellCol5 = new List<Cell> ();
-
 
     //[SerializeField] private List<Cell> debugCellCol1 = new List<Cell> ();
     //[SerializeField] private List<Cell> debugCellCol2 = new List<Cell> ();
@@ -311,6 +311,7 @@ public class GridManager : MonoBehaviour
             var list = allCellInCollom[item.gridPosition.x];
             if(!list.Contains(item)) list.Add (item);
         }
+
         var userCellDic = GameSystem.userdata.cellDic;
         foreach (var item in allCell)
         {
