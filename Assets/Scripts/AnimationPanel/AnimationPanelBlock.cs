@@ -10,13 +10,14 @@ public class AnimationPanelBlock : AnimationPanel
     Image[] images = new Image[3];
     public Image crown;
     public Image close;
+    [SerializeField] GameObject lightRotate;
     public override void Awake()
     {
         base.Awake();
         int index=0;
         foreach (Transform child in transform)
         {
-            images[index] = child.GetComponent<Image>();
+            images[index] = child.GetComponentInChildren<Image>();
             index++;
         }
     }
@@ -53,9 +54,11 @@ public class AnimationPanelBlock : AnimationPanel
             images[0].rectTransform.DOSizeDelta(new Vector2(175, 175), 0.25f);
             images[1].rectTransform.DOSizeDelta(new Vector2(235, 235), 0.25f);
         });
+        sequence.AppendCallback(()=> { if (lightRotate != null) lightRotate.gameObject.SetActive(true);});
     }
     protected override void OnDisable()
     {
+        if (lightRotate != null) lightRotate.gameObject.SetActive(false);
         rectTransform.anchoredPosition = new Vector2(340, rectTransform.anchoredPosition.y);
         images[0].rectTransform.sizeDelta = new Vector2(175, 175);
         images[1].rectTransform.sizeDelta = new Vector2(175, 175);
