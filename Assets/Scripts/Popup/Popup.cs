@@ -55,7 +55,7 @@ public class Popup : MonoBehaviour
     {
         if (buttons[0].interactable == false) yield break;
         LockButton();
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.2f);
         UnLockButton();
     }
 }

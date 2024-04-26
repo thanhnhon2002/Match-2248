@@ -4431,6 +4431,7 @@ GameObject:
   - component: {fileID: 1719846578}
   - component: {fileID: 1719846577}
   - component: {fileID: 1719846580}
+  - component: {fileID: 1719846581}
   m_Layer: 5
   m_Name: ButtonStart
   m_TagString: Untagged
@@ -4565,6 +4566,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonSound: {fileID: 8300000, guid: adec76438cc628d42a9ff2e5bf37a48b, type: 3}
   volume: 0
+--- !u!114 &1719846581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719846575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fba9bb62f46b734c999a9467417591f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 0}
 --- !u!1 &1759349247
 GameObject:
   m_ObjectHideFlags: 0

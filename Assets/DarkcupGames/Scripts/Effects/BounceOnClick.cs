@@ -7,7 +7,7 @@ namespace DarkcupGames
 {
     public class BounceOnClick : MonoBehaviour
     {
-        private Button button;
+        [SerializeField] private Button button;
         private Vector2 localScale;
 
         private void Awake()
