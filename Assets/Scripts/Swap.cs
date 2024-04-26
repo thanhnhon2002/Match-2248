@@ -45,15 +45,24 @@ public class Swap : Power
         {
             var list = GridManager.Instance.allCellInCollom[chosenCell[i].gridPosition.x];
             list.Remove (chosenCell[i]);
+
         }
         GameFlow.Instance.gameState = GameState.Fx;
-        var pos0 = chosenCell[0].transform.localPosition;
-        var gridPos0 = chosenCell[0].gridPosition;
-        var pos1 = chosenCell[1].transform.localPosition;
-        var gridPos1 = chosenCell[1].gridPosition;
+        var firstCell = chosenCell[0];
+        var otherCell = chosenCell[1];
 
-        chosenCell[0].gridPosition = gridPos1;
-        chosenCell[1].gridPosition = gridPos0;
+        var firstList = GridManager.Instance.allCellInCollom[firstCell.gridPosition.x];
+        var otherList = GridManager.Instance.allCellInCollom[otherCell.gridPosition.x];
+
+        firstList.Add (otherCell);
+        otherList.Add (firstCell);
+        var pos0 = firstCell.transform.localPosition;
+        var gridPos0 = firstCell.gridPosition;
+        var pos1 = otherCell.transform.localPosition;
+        var gridPos1 = otherCell.gridPosition;
+
+        firstCell.gridPosition = gridPos1;
+        otherCell.gridPosition = gridPos0;
 
         var sq = DOTween.Sequence ();
         sq.AppendCallback (() =>

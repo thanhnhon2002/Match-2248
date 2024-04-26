@@ -56,12 +56,13 @@ public class Hammer : Power
 
     private void RemoveCell (Cell cell)
     {
-        var cellsInSameCol = GridManager.Instance.allCellInCollom[cell.gridPosition.x];
+        var collomIndex = cell.gridPosition.x;
+        var cellsInSameCol = GridManager.Instance.allCellInCollom[collomIndex];
         var fx = PoolSystem.Instance.GetObject(smashFx, cell.transform.position); 
         fx.ChangeColor(cell.spriteRenderer.color);
         cell.gameObject.SetActive (false);
         AudioSystem.Instance.PlaySound (cellSmashSound);
-        var spawnPos = GridManager.Instance.GetCellAt (new GridPosition (cell.gridPosition.x, 1)).transform.position;
+        var spawnPos = GridManager.Instance.GetCellAt (new GridPosition (collomIndex, 1)).transform.position;
         spawnPos.y++;
 
         cellsInSameCol.Remove (cell);
@@ -70,7 +71,7 @@ public class Hammer : Power
 
         cellsInSameCol.Sort ((a, b) => a.transform.localPosition.y.CompareTo (b.transform.localPosition.y));
 
-        GridManager.Instance.ReassignGridPos (cell.gridPosition.x, cellsInSameCol);
+        GridManager.Instance.ReassignGridPos (collomIndex, cellsInSameCol);
         debug.Clear ();
         debug.AddRange(cellsInSameCol);
         LeanTween.delayedCall (0.5f, () => GridManager.Instance.Drop ());
