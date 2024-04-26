@@ -31,8 +31,11 @@ public class PopupAnimation : Popup
     {
         EasyEffect.Appear(topic.gameObject, 0.2f, 1, 0.15f);
         yield return new WaitForSeconds(0.15f);
-        EasyEffect.Appear(content.gameObject, 0.2f, 1, 0.15f);
-        yield return new WaitForSeconds(0.15f);
+        if (content != null)
+        {
+            EasyEffect.Appear(content.gameObject, 0.2f, 1, 0.15f);
+            yield return new WaitForSeconds(0.15f);
+        }
         if(panel != null)
         {
             panel.gameObject.SetActive(true);
@@ -64,7 +67,7 @@ public class PopupAnimation : Popup
     IEnumerator AnimationDisappear()
     {
         EasyEffect.Disappear(topic.gameObject, 1, 0, 0.1f);
-        EasyEffect.Disappear(content.gameObject, 1, 0, 0.1f);
+        if (content != null) EasyEffect.Disappear(content.gameObject, 1, 0, 0.1f);
         if (reward != null)
         {
             EasyEffect.Disappear(reward, 1, 0, 0.1f);
