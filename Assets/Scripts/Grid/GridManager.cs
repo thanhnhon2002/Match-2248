@@ -46,11 +46,11 @@ public class GridManager : MonoBehaviour
     private List<Cell> cellCol4 = new List<Cell>();
     private List<Cell> cellCol5 = new List<Cell> ();
 
-    [SerializeField] private List<Cell> debugCellCol1 = new List<Cell> ();
-    [SerializeField] private List<Cell> debugCellCol2 = new List<Cell> ();
-    [SerializeField] private List<Cell> debugCellCol3 = new List<Cell> ();
-    [SerializeField] private List<Cell> debugCellCol4 = new List<Cell> ();
-    [SerializeField] private List<Cell> debugCellCol5 = new List<Cell> ();
+    //[SerializeField] private List<Cell> debugCellCol1 = new List<Cell> ();
+    //[SerializeField] private List<Cell> debugCellCol2 = new List<Cell> ();
+    //[SerializeField] private List<Cell> debugCellCol3 = new List<Cell> ();
+    //[SerializeField] private List<Cell> debugCellCol4 = new List<Cell> ();
+    //[SerializeField] private List<Cell> debugCellCol5 = new List<Cell> ();
 
 
     private void Awake()
@@ -311,16 +311,16 @@ public class GridManager : MonoBehaviour
             var list = allCellInCollom[item.gridPosition.x];
             if(!list.Contains(item)) list.Add (item);
         }
-        debugCellCol1.Clear ();
-        debugCellCol2.Clear ();
-        debugCellCol3.Clear ();
-        debugCellCol4.Clear ();
-        debugCellCol5.Clear ();
-        debugCellCol1.AddRange (allCellInCollom[1]);
-        debugCellCol2.AddRange (allCellInCollom[2]);
-        debugCellCol3.AddRange (allCellInCollom[3]);
-        debugCellCol4.AddRange (allCellInCollom[4]);
-        debugCellCol5.AddRange (allCellInCollom[5]);
+        //debugCellCol1.Clear ();
+        //debugCellCol2.Clear ();
+        //debugCellCol3.Clear ();
+        //debugCellCol4.Clear ();
+        //debugCellCol5.Clear ();
+        //debugCellCol1.AddRange (allCellInCollom[1]);
+        //debugCellCol2.AddRange (allCellInCollom[2]);
+        //debugCellCol3.AddRange (allCellInCollom[3]);
+        //debugCellCol4.AddRange (allCellInCollom[4]);
+        //debugCellCol5.AddRange (allCellInCollom[5]);
         var userCellDic = GameSystem.userdata.cellDic;
         foreach (var item in allCell)
         {
