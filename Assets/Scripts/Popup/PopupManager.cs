@@ -15,7 +15,9 @@ public enum PopupOptions
     RateGame,
     Pause,
     MakeSure,
-    Lose
+    Lose,
+    Duplicate,
+    StartFrom
 }
 public class DataEventPopup : EventArgs
 {
@@ -35,6 +37,10 @@ public class PopupManager : MonoBehaviour
     private Dictionary<PopupOptions, Popup> popupDic = new Dictionary<PopupOptions, Popup>();
     public Image blackBackground;
     private Queue<DataEventPopup>queueShow=new Queue<DataEventPopup>();
+    private void Start()
+    {
+        SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.StartFrom));
+    }
     private void Awake()
     {
         Instance = this;

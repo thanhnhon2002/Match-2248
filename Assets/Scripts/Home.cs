@@ -21,6 +21,10 @@ public class Home : MonoBehaviour
 
     public void ToGameplay()
     {
-        SceneManager.LoadScene ("GameplayUI");
+        Invoke(nameof(MoveToGamePlay), 0.25f);
+    }
+    public void MoveToGamePlay()
+    {
+        SceneManager.LoadScene("GameplayUI");
     }
 }

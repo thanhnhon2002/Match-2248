@@ -118,6 +118,7 @@ public class GridManager : MonoBehaviour
             indexPlayer = index;
             Debug.Log("New Block 2^" + indexPlayer);
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
+            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }
         if (index > maxIndex)
         {
