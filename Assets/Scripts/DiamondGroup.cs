@@ -32,4 +32,10 @@ public class DiamondGroup : MonoBehaviour
         GameSystem.SaveUserDataToLocal ();
         diamondTxt.text = userData.diamond.ToString ();
     }
+
+    public void Display()
+    {
+        var userData = GameSystem.userdata;
+        diamondTxt.text = userData.diamond.ToString();
+    }
 }

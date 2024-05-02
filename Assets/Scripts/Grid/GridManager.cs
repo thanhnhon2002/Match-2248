@@ -63,7 +63,7 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         var userData = GameSystem.userdata;
-        if (userData.minIndex == 0)
+        if (userData.gameData.minIndex == 0)
         {
             minIndex = 1;
             maxIndex = Space_Index + minIndex - 1;
@@ -82,10 +82,10 @@ public class GridManager : MonoBehaviour
     public void LoadDataIndex()
     {
         var userData = GameSystem.userdata;
-        indexPlayer= userData.indexPlayer;
-        minIndex =userData.minIndex;
-        maxIndex = userData.maxIndex;
-        maxIndexRandom = userData.maxIndexRandom;
+        indexPlayer= userData.gameData.indexPlayer;
+        minIndex =userData.gameData.minIndex;
+        maxIndex = userData.gameData.maxIndex;
+        maxIndexRandom = userData.gameData.maxIndexRandom;
     }
     public Cell SpawnCell (Vector2 position, int value)
     {
@@ -117,6 +117,7 @@ public class GridManager : MonoBehaviour
         {
             indexPlayer = index;
             Debug.Log("New Block 2^" + indexPlayer);
+            FirebaseManager.Instance.LogEvent(AnalyticsEvent.level_passed, $"level {index}, time_spent {GameFlow.Instance.timeCount}");
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }
@@ -135,10 +136,10 @@ public class GridManager : MonoBehaviour
 
         }
         var userData = GameSystem.userdata;
-        userData.indexPlayer = indexPlayer;
-        userData.minIndex = minIndex;
-        userData.maxIndex = maxIndex;
-        userData.maxIndexRandom = maxIndexRandom;
+        userData.gameData.indexPlayer = indexPlayer;
+        userData.gameData.minIndex = minIndex;
+        userData.gameData.maxIndex = maxIndex;
+        userData.gameData.maxIndexRandom = maxIndexRandom;
         GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.TotalPoint = 0;
     }
@@ -322,7 +323,7 @@ public class GridManager : MonoBehaviour
         //debugCellCol3.AddRange (allCellInCollom[3]);
         //debugCellCol4.AddRange (allCellInCollom[4]);
         //debugCellCol5.AddRange (allCellInCollom[5]);
-        var userCellDic = GameSystem.userdata.cellDic;
+        var userCellDic = GameSystem.userdata.gameData.cellDic;
         foreach (var item in allCell)
         {
             item.FindNearbyCells ();
@@ -334,7 +335,7 @@ public class GridManager : MonoBehaviour
 
     private void LoadCells ()
     {
-        var userCellDic = GameSystem.userdata.cellDic;
+        var userCellDic = GameSystem.userdata.gameData.cellDic;
         if (userCellDic != null && userCellDic.Count > 0)
         {
             foreach (var cell in allCell)

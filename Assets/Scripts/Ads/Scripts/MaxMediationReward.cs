@@ -44,16 +44,18 @@ namespace DarkcupGames
             MaxSdk.LoadRewardedAd(REWARD_ID);
         }
 
-        public override void ShowAds(Action onShowAdsComplete)
+        public override void ShowAds(Action onShowAdsComplete, out bool available)
         {
+            available = MaxSdk.IsRewardedAdReady(REWARD_ID);
             this.onShowAdsComplete = onShowAdsComplete;
-            if (MaxSdk.IsInterstitialReady(REWARD_ID) == false)
+            if (MaxSdk.IsRewardedAdReady(REWARD_ID) == false)
             {
                 onShowAdsComplete?.Invoke();
             } else
             {
-                MaxSdk.ShowInterstitial(REWARD_ID);
+                MaxSdk.ShowRewardedAd(REWARD_ID);
             }
+
         }
     }
 }

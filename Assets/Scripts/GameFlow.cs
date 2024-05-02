@@ -31,6 +31,8 @@ public class GameFlow : MonoBehaviour
     private BigInteger gameScore;
     private BigInteger totalPoint;
 
+    public float timeCount { get; private set; }
+
     public BigInteger GameScore
     {
         get { return gameScore; }
@@ -38,7 +40,7 @@ public class GameFlow : MonoBehaviour
             gameScore = value;
             scoreTxt.text = value.ToString ();
             var userData = GameSystem.userdata;
-            userData.currentScore = gameScore;
+            userData.gameData.currentScore = gameScore;
             if (gameScore > userData.highestScore)
             {
                 userData.highestScore = gameScore;
@@ -76,14 +78,21 @@ public class GameFlow : MonoBehaviour
 
     private void Start ()
     {
+        timeCount = 0;
         LoadUserData ();
-        AudioSystem.Instance.PlaySound ("Game_Open");
+        if (GameSystem.userdata.replay) PopupManager.Instance.ShowPopup(PopupOptions.StartFrom);
+        else AudioSystem.Instance.PlaySound ("Game_Open");
+    }
+
+    private void Update()
+    {
+        timeCount += Time.deltaTime;
     }
 
     private void LoadUserData ()
     {
         var userData = GameSystem.userdata;
-        GameScore = userData.currentScore;
+        GameScore = userData.gameData.currentScore;
         highScoreTxt.text = userData.highestScore.ToString ();
     }
 
@@ -105,10 +114,11 @@ public class GameFlow : MonoBehaviour
 
     public void ShowLosePopup()
     {
+        FirebaseManager.Instance.LogEvent(AnalyticsEvent.level_failed, $"level {GridManager.Instance.MinIndex}, time_spent {timeCount}");
         gameState = GameState.GameOver;
         PopupManager.Instance.ShowPopup (PopupOptions.Lose);
         var userData = GameSystem.userdata;
-        userData.cellDic.Clear ();
+        userData.gameData.cellDic.Clear ();
         GameSystem.SaveUserDataToLocal ();
     }
 
@@ -123,12 +133,13 @@ public class GameFlow : MonoBehaviour
     public void Replay()
     {
         var userData = GameSystem.userdata;
-        userData.cellDic.Clear ();
-        userData.currentScore = 0;
-        userData.indexPlayer = 0;
-        userData.minIndex = 0;
-        userData.maxIndex = 0;
-        userData.maxIndexRandom = 0;
+        userData.replay = true;
+        userData.gameData.cellDic.Clear ();
+        userData.gameData.currentScore = 0;
+        userData.gameData.indexPlayer = 0;
+        userData.gameData.minIndex = 0;
+        userData.gameData.maxIndex = 0;
+        userData.gameData.maxIndexRandom = 0;
         GameSystem.SaveUserDataToLocal ();
         SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
     }
@@ -172,11 +183,6 @@ public class GameFlow : MonoBehaviour
         });
     }
 
-    public void ShootRocket()
-    {
-
-    }
-
     public void CalculateTotal (BigInteger initValue, int cellCount)
     {
         TotalPoint = initValue * (BigInteger)Mathf.Pow(2, IndexCellCount(cellCount) + 1);
@@ -192,5 +198,13 @@ public class GameFlow : MonoBehaviour
                 return index;
         }
         return multiliers.Count - 1;
+    }
+
+    public void GetDiamond()
+    {
+        FirebaseManager.Instance.LogEvent(AnalyticsEvent.will_show_rewarded,
+            $"internet_available {Application.internetReachability}, placement GetDiamond Gameplay, has_ads {AdManagerMax.Instance.isCurrentAdAvaiable}");
+        GameSystem.userdata.diamond += 20;
+        GameSystem.SaveUserDataToLocal();
     }
 }

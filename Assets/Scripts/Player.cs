@@ -165,9 +165,10 @@ public class Player : MonoBehaviour
         var newValue = GameFlow.Instance.TotalPoint;
         var newColor = CellColor.Instance.GetCellColor (newValue);
         var combo = conectedCell.Count;
-        if (newValue > userData.highestCellValue)
+        if (newValue > userData.gameData.currentHighestCellValue)
         {
-            userData.highestCellValue = newValue;
+            userData.gameData.currentHighestCellValue = newValue;
+            if (userData.gameData.currentHighestCellValue > userData.highestCellValue) userData.highestCellValue = userData.gameData.currentHighestCellValue;
             GameSystem.SaveUserDataToLocal ();
         }
             for (int i = 0; i < conectedCell.Count; i++)

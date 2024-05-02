@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DarkcupGames;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public enum PopupOptions
@@ -37,10 +38,7 @@ public class PopupManager : MonoBehaviour
     private Dictionary<PopupOptions, Popup> popupDic = new Dictionary<PopupOptions, Popup>();
     public Image blackBackground;
     private Queue<DataEventPopup>queueShow=new Queue<DataEventPopup>();
-    private void Start()
-    {
-        SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.StartFrom));
-    }
+    
     private void Awake()
     {
         Instance = this;
@@ -73,6 +71,7 @@ public class PopupManager : MonoBehaviour
     public void ShowPopup(PopupOptions option)
     {
         popupDic[option].Appear ();
+        FirebaseManager.Instance.LogEvent(AnalyticsEvent.ui_appear, $"screen_name {SceneManager.GetActiveScene().name}, name {option}");
     }
     public void HidePopup(PopupOptions option)
     {
