@@ -12,9 +12,9 @@ public class UIManager : MonoBehaviour
             Instance = this;
         else Destroy(gameObject);
     }
-    public void SpawnEffectReward(Vector2 spawner)
+    public void SpawnEffectReward(Transform spawner)
     {
-        var obj = PoolSystem.Instance.GetObject(prefabReward, spawner, PopupManager.Instance.transform);
+        var obj = PoolSystem.Instance.GetObject(prefabReward, spawner.position, PopupManager.Instance.transform);
         obj.GetComponent<SoundPopup>().PlayPopupSound();
         LeanTween.value(0, 1, MoveBenzier.timeDafault+0.3f).setOnComplete(()=>
         {

@@ -12,13 +12,11 @@ public class Reward : MonoBehaviour
 
     public void GetReward()
     {
-        if(index > 0) FirebaseManager.Instance.LogEvent(AnalyticsEvent.will_show_rewarded,
-            $"internet_available {Application.internetReachability}, placement daily reward {index}, has_ads {AdManagerMax.Instance.isCurrentAdAvaiable}");
         Home.Instance.dailyReward.gameObject.SetActive(false);
         var userData = GameSystem.userdata;
         userData.dailyRewardInfo.hasClaim[index] = true;
         userData.diamond += amount;
         GameSystem.SaveUserDataToLocal();
-        UIManager.Instance.SpawnEffectReward(claimButton.transform.position);
+        UIManager.Instance.SpawnEffectReward(claimButton.transform);
     }
 }

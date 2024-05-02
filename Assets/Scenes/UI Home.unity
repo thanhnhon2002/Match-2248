@@ -1199,6 +1199,7 @@ GameObject:
   - component: {fileID: 159185722}
   - component: {fileID: 159185721}
   - component: {fileID: 159185724}
+  - component: {fileID: 159185725}
   m_Layer: 5
   m_Name: Reward 3
   m_TagString: Untagged
@@ -1292,6 +1293,19 @@ MonoBehaviour:
   amount: 30
   claimButton: {fileID: 1418483053}
   index: 2
+--- !u!114 &159185725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 159185719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c499df1a93db2f41b4e78a5e4618942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placement: Daily Reward 3
 --- !u!1 &177826450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1457,6 +1471,7 @@ GameObject:
   - component: {fileID: 197967039}
   - component: {fileID: 197967038}
   - component: {fileID: 197967041}
+  - component: {fileID: 197967042}
   m_Layer: 5
   m_Name: Reward 4
   m_TagString: Untagged
@@ -1550,6 +1565,19 @@ MonoBehaviour:
   amount: 40
   claimButton: {fileID: 860838651}
   index: 3
+--- !u!114 &197967042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197967036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c499df1a93db2f41b4e78a5e4618942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placement: Daily Reward 4
 --- !u!1 &201002801
 GameObject:
   m_ObjectHideFlags: 0
@@ -4630,6 +4658,7 @@ GameObject:
   - component: {fileID: 952370981}
   - component: {fileID: 952370980}
   - component: {fileID: 952370983}
+  - component: {fileID: 952370984}
   m_Layer: 5
   m_Name: Reward 2
   m_TagString: Untagged
@@ -4723,6 +4752,19 @@ MonoBehaviour:
   amount: 20
   claimButton: {fileID: 36363014}
   index: 1
+--- !u!114 &952370984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952370978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c499df1a93db2f41b4e78a5e4618942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placement: Daily Reward 2
 --- !u!1 &960586412
 GameObject:
   m_ObjectHideFlags: 0
@@ -4736,6 +4778,7 @@ GameObject:
   - component: {fileID: 960586415}
   - component: {fileID: 960586414}
   - component: {fileID: 960586417}
+  - component: {fileID: 960586418}
   m_Layer: 5
   m_Name: Reward 5
   m_TagString: Untagged
@@ -4829,6 +4872,19 @@ MonoBehaviour:
   amount: 50
   claimButton: {fileID: 1242281889}
   index: 4
+--- !u!114 &960586418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 960586412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c499df1a93db2f41b4e78a5e4618942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placement: Daily Reward 5
 --- !u!1 &968529555
 GameObject:
   m_ObjectHideFlags: 0
@@ -9819,8 +9875,16 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4139760099496374076, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5030684159142953040}
   m_SourcePrefab: {fileID: 100100000, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
+--- !u!1 &2386177024166852964 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4139760099496374076, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
+  m_PrefabInstance: {fileID: 2386177024166852963}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2594564407223537978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10017,12 +10081,25 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3703926588103778069, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
   m_PrefabInstance: {fileID: 2386177024166852963}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2386177024166852964}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5030684159142953040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2386177024166852964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c499df1a93db2f41b4e78a5e4618942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placement: GetDiamond Home
 --- !u!224 &5083241389815217288
 RectTransform:
   m_ObjectHideFlags: 0

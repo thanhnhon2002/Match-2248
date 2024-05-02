@@ -19,6 +19,9 @@ public class Swap : Power
 
     public override void UsePower ()
     {
+        if (GameSystem.userdata.diamond < cost) return;
+        GameSystem.userdata.diamond -= cost;
+        GameFlow.Instance.diamondGroup.Display();
         base.UsePower ();
         GameFlow.Instance.gameState = GameState.Swap;
     }

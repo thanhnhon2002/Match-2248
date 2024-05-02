@@ -44,9 +44,8 @@ namespace DarkcupGames
             MaxSdk.LoadRewardedAd(REWARD_ID);
         }
 
-        public override void ShowAds(Action onShowAdsComplete, out bool available)
+        public override void ShowAds(Action onShowAdsComplete)
         {
-            available = MaxSdk.IsRewardedAdReady(REWARD_ID);
             this.onShowAdsComplete = onShowAdsComplete;
             if (MaxSdk.IsRewardedAdReady(REWARD_ID) == false)
             {
@@ -56,6 +55,11 @@ namespace DarkcupGames
                 MaxSdk.ShowRewardedAd(REWARD_ID);
             }
 
+        }
+
+        public override bool IsAdAvailable()
+        {
+            return MaxSdk.IsRewardedAdReady(REWARD_ID);
         }
     }
 }

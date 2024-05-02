@@ -1,4 +1,5 @@
 using DarkcupGames;
+using Firebase.Analytics;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -30,16 +31,13 @@ public class Home : MonoBehaviour
     }
     public void MoveToGamePlay()
     {
-        FirebaseManager.Instance.LogEvent(AnalyticsEvent.level_start, "restart false");
         SceneManager.LoadScene("GameplayUI");
     }
     public void GetDiamond()
-    {
-        FirebaseManager.Instance.LogEvent(AnalyticsEvent.will_show_rewarded, 
-            $"internet_available {Application.internetReachability}, placement GetDiamond Home, has_ads {AdManagerMax.Instance.isCurrentAdAvaiable}");
+    {        
         GameSystem.userdata.diamond += 20;
         GameSystem.SaveUserDataToLocal();
-        UIManager.Instance.SpawnEffectReward(diamondAdButton.transform.position);
+        UIManager.Instance.SpawnEffectReward(diamondAdButton.transform);
     }
 
     private void LogEventButton()
@@ -47,7 +45,10 @@ public class Home : MonoBehaviour
         var button = FindObjectsOfType<Button>(true);
         foreach (var item in button)
         {
-            item.onClick.AddListener(() => FirebaseManager.Instance.LogEvent(AnalyticsEvent.button_click, $"Home, name {item.name}"));
+            item.onClick.AddListener(() =>
+            {
+                FirebaseManager.Instance.LogButtonClick(item.name);
+            });
         }
     }
 }

@@ -71,7 +71,7 @@ public class PopupManager : MonoBehaviour
     public void ShowPopup(PopupOptions option)
     {
         popupDic[option].Appear ();
-        FirebaseManager.Instance.LogEvent(AnalyticsEvent.ui_appear, $"screen_name {SceneManager.GetActiveScene().name}, name {option}");
+        FirebaseManager.Instance.LogUIAppear(option.ToString());
     }
     public void HidePopup(PopupOptions option)
     {
