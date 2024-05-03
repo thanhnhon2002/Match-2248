@@ -7,6 +7,7 @@ using UnityEngine;
 using DG.Tweening;
 using DarkcupGames;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public enum GameState
 {
@@ -20,7 +21,7 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreTxt;
     [SerializeField] private ConectedPointDisplay pointDisplay;
     [SerializeField] private Combo combo;
-    [SerializeField] private DiamondGroup diamondGroup;
+    public DiamondGroup diamondGroup;
     [SerializeField] private BonusDiamond bonusDiamond;
     public Camera mainCam;
     public ButtonGroup bottomGroup;
@@ -78,10 +79,10 @@ public class GameFlow : MonoBehaviour
     private void Start ()
     {
         timeCount = 0;
-        LoadUserData ();
-        if (GameSystem.userdata.replay) 
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.StartFrom));
-        else AudioSystem.Instance.PlaySound ("Game_Open");
+        LoadUserData();
+        LogEventButton();
+        if (GameSystem.userdata.replay) PopupManager.Instance.ShowPopup(PopupOptions.StartFrom);
+        else AudioSystem.Instance.PlaySound("Game_Open");
     }
 
     private void Update()
@@ -112,15 +113,17 @@ public class GameFlow : MonoBehaviour
         topGroup.SetInteract(interactable);
     }
 
+    [ContextMenu("Lose")]
     public void ShowLosePopup()
     {
-        FirebaseManager.Instance.LogEvent(AnalyticsEvent.level_failed, $"level {GridManager.Instance.MinIndex}, time_spent {timeCount}");
+        FirebaseManager.Instance.LogLevelFail(GridManager.Instance.MaxIndex, timeCount);
         gameState = GameState.GameOver;
-        PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup,PopupOptions.Lose));
+        PopupManager.Instance.ShowPopup(PopupOptions.Lose);
         var userData = GameSystem.userdata;
-        userData.gameData.cellDic.Clear ();
-        GameSystem.SaveUserDataToLocal ();
+        userData.gameData.cellDic.Clear();
+        GameSystem.SaveUserDataToLocal();
     }
+
 
     public void PauseGame()
     {
@@ -202,9 +205,28 @@ public class GameFlow : MonoBehaviour
 
     public void GetDiamond()
     {
-        FirebaseManager.Instance.LogEvent(AnalyticsEvent.will_show_rewarded,
-            $"internet_available {Application.internetReachability}, placement GetDiamond Gameplay, has_ads {AdManagerMax.Instance.isCurrentAdAvaiable}");
         GameSystem.userdata.diamond += 20;
         GameSystem.SaveUserDataToLocal();
+        diamondGroup.Display();
+    }
+
+    public void GetDiamond(Transform spawner)
+    {
+        GameSystem.userdata.diamond += 20;
+        GameSystem.SaveUserDataToLocal();
+        diamondGroup.Display();
+        UIManager.Instance.SpawnEffectReward(spawner);
+    }
+
+    private void LogEventButton()
+    {
+        var button = FindObjectsOfType<Button>(true);
+        foreach (var item in button)
+        {
+            item.onClick.AddListener(() =>
+            {
+                FirebaseManager.Instance.LogButtonClick(item.name);
+            });
+        }
     }
 }

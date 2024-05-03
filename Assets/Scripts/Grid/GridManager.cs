@@ -32,6 +32,7 @@ public class GridManager : MonoBehaviour
     private int minIndex;
     public int MinIndex =>minIndex;
     private int maxIndex;
+    public int MaxIndex => maxIndex;
     private int maxIndexRandom;
     public int MaxIndexRandom => maxIndexRandom;
     private int indexPlayer;
@@ -145,17 +146,17 @@ public class GridManager : MonoBehaviour
     {
         Mathf mathf;
         int index = mathf.LogBigInt(value, 2);
-        if(index > indexPlayer)
+        if (index > indexPlayer)
         {
             indexPlayer = index;
             Debug.Log("New Block 2^" + indexPlayer);
-            FirebaseManager.Instance.LogEvent(AnalyticsEvent.level_passed, $"level {index}, time_spent {GameFlow.Instance.timeCount}");
+            FirebaseManager.Instance.LogLevelPass(index, GameFlow.Instance.timeCount);
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }
         if (index > maxIndex)
         {
-            GetLowestCells ();
+            GetLowestCells();
             Debug.Log("Lock 2^" + minIndex);
             minIndex++;
             if (maxIndex - minIndex < Space_MaxIndex) maxIndex += 2;
@@ -175,6 +176,7 @@ public class GridManager : MonoBehaviour
         GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.TotalPoint = 0;
     }
+
 
     public Cell SpawnCellNew(Vector2 position)
     {
@@ -365,7 +367,7 @@ public class GridManager : MonoBehaviour
     }
 
 
-    private void LoadCells ()
+    public void LoadCells ()
     {
         var userCellDic = GameSystem.userdata.gameData.cellDic;
         if (userCellDic != null && userCellDic.Count > 0)
