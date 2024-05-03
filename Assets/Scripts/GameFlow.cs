@@ -96,7 +96,7 @@ public class GameFlow : MonoBehaviour
         timeCount += Time.deltaTime;
     }
 
-    private void LoadUserData ()
+    private void LoadUserData()
     {
         var userData = GameSystem.userdata;
         GameScore = userData.gameData.currentScore;
