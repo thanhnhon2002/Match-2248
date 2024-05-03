@@ -13,6 +13,5 @@ public class AnimationBtnPanel : MonoBehaviour
     public void OnClickBtn()
     {
         boder.transform.position = transform.position;
-        ///////////
     }
 }

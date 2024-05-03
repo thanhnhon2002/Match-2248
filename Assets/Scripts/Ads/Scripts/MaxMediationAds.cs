@@ -8,6 +8,7 @@ namespace DarkcupGames
         [SerializeField] protected bool showDebug = false;
         public abstract void Init();
         public abstract void LoadAds();
-        public abstract void ShowAds(Action onShowAdsComplete, out bool available);
+        public abstract void ShowAds(Action onShowAdsComplete);
+        public abstract bool IsAdAvailable();
     }
 }

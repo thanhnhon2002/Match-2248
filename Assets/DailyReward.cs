@@ -16,7 +16,7 @@ public class DailyReward : MonoBehaviour
 
     private void OnEnable()
     {
-        FirebaseManager.Instance.LogEvent(AnalyticsEvent.ui_appear, $"screen_name {SceneManager.GetActiveScene().name}, name {gameObject.name}");
+        FirebaseManager.Instance.LogUIAppear(gameObject.name);
         CheckData();
         transform.localScale = Vector3.one;
         var userData = GameSystem.userdata.dailyRewardInfo;

@@ -3,16 +3,11 @@ using UnityEngine.UI;
 
 public class ButtonClaimReward : MonoBehaviour
 {
-    Button button;
     public MoveLeftRight player;
     public DiamondGroup diamondGroup;
-    private void Awake()
+    public void OnClickClaim()
     {
-        button = GetComponent<Button>();
-        button.onClick.AddListener(OnClickClaim);
-    }
-    void OnClickClaim()
-    {
-        diamondGroup.AddDiamond(player.multiple*5);
+        UIManager.Instance.SpawnEffectReward(transform);
+        diamondGroup.AddDiamond(player.multiple * player.multiple);
     }
 }

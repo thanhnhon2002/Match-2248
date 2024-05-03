@@ -10,31 +10,40 @@ namespace DarkcupGames
         public static AdManagerMax Instance { get; private set; }
         public List<UnityEvent> events;
         [SerializeField] private GameObject loadingAdPopup;
+        [SerializeField] private AdBreak adBreak;
         private MaxMediationIntertistial intertistial;
         private MaxMediationReward rewarded;
-        public bool isCurrentAdAvaiable;
+        public float lastInterTime;
+        public float interInterval = 300f;
 
         private void Awake()
         {
             Instance = this;
         }
-        public void ShowIntertistial(Action onWatchAdsComplete, out bool available)
+        public void ShowIntertistial(Action onWatchAdsComplete)
         {
-            MaxMediationManager.intertistial.ShowAds(onWatchAdsComplete, out available);
+            adBreak.gameObject.SetActive(true);
+            LeanTween.delayedCall(1f, () =>
+            {
+                adBreak.gameObject.SetActive(false);
+                MaxMediationManager.intertistial.ShowAds(onWatchAdsComplete);
+            });
         }
+
         public void ShowAds(int id)
         {
+            bool haveAds = MaxMediationManager.rewarded.IsAdAvailable();
+
             loadingAdPopup.SetActive(true);
             LeanTween.delayedCall(1f, () =>
             {
+                loadingAdPopup.SetActive(false);
                 var onWatchAdsFinished = events[id];
                 MaxMediationManager.rewarded.ShowAds(() =>
                 {
-                    loadingAdPopup.SetActive(false);
                     onWatchAdsFinished?.Invoke();
-                }, out isCurrentAdAvaiable);
+                });
             });
-
         }
     }
 }

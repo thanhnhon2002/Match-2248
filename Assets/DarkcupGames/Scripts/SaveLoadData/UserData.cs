@@ -11,6 +11,16 @@ public enum SettingKey
 }
 
 [System.Serializable]
+public class UserProperty
+{
+    public int level_max;
+    public int last_level;
+    public string last_placement;
+    public int total_interstitial_ads;
+    public int total_rewarded_ads;
+}
+
+[System.Serializable]
 public class DailyRewardInfo
 {
     public long lastRewardTick;
@@ -61,12 +71,14 @@ public class UserData
     public BigInteger highestScore;
     public BigInteger highestCellValue;
     public GameData gameData;
+    public UserProperty property;
     public DailyRewardInfo dailyRewardInfo;
     public Dictionary<SettingKey, bool> dicSetting = new Dictionary<SettingKey, bool>();
     public List<string> boughtItems;
 
     public UserData()
     {
+        property = new UserProperty();
         gameData = new GameData();
         dailyRewardInfo = new DailyRewardInfo();
         nickName = $"Guest{UnityEngine.Random.Range (1, int.MaxValue)}";

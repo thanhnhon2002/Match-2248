@@ -8,7 +8,8 @@ using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using System;
-using System.Collections;
+using Unity.VisualScripting;
+using DarkcupGames;
 
 public class GridManager : MonoBehaviour
 {
@@ -32,12 +33,11 @@ public class GridManager : MonoBehaviour
     private int minIndex;
     public int MinIndex =>minIndex;
     private int maxIndex;
+    public int MaxIndex => maxIndex;
     private int maxIndexRandom;
     public int MaxIndexRandom => maxIndexRandom;
     private int indexPlayer;
     public int IndexPlayer=>indexPlayer;
-    public int indexStart;
-    public int indexChose;
 
     private List<Cell>lowestCells = new List<Cell>();
 
@@ -64,53 +64,14 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        var userData = GameSystem.userdata;
-        if(userData.replay)
-        {
-            StartCoroutine(WaitChoseStart());
-            return;
-        }
-        SetUpCell();
-    }
-    void SetUpCell()
-    {
-        var userData = GameSystem.userdata;
-        if (userData.gameData.minIndex == 0)
-        {
-            minIndex = 1;
-            maxIndex = Space_Index + minIndex - 1;
-            maxIndexRandom = (int)(maxIndex + minIndex) / 2 + 2;
-            indexPlayer = maxIndexRandom;
-        }
-        else LoadDataIndex();
         allCell = GetComponentsInChildren<Cell>();
         foreach (var item in allCell)
         {
             girdPosToLocal.Add(item.gridPosition, item.transform.localPosition);
-        }
+        }       
         UpdateCell();
-        LoadCells();
     }
-    IEnumerator WaitChoseStart()
-    {
-        while(indexStart==0)
-        {
-            yield return null;
-        }
-        SetUpCell();
-        indexChose = 0;
-        indexStart = 0;
-        GameSystem.userdata.replay = false;
-        GameSystem.SaveUserDataToLocal();
-    }
-    public void SetStartIndex()
-    {
-        indexStart =indexChose;
-    }
-    public void SetIndexChose(int index)
-    {
-        indexChose = index;
-    }
+
     public void LoadDataIndex()
     {
         var userData = GameSystem.userdata;
@@ -149,7 +110,7 @@ public class GridManager : MonoBehaviour
         {
             indexPlayer = index;
             Debug.Log("New Block 2^" + indexPlayer);
-            FirebaseManager.Instance.LogEvent(AnalyticsEvent.level_passed, $"level {index}, time_spent {GameFlow.Instance.timeCount}");
+            FirebaseManager.Instance.LogLevelPass(index, GameFlow.Instance.timeCount);
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }
@@ -309,7 +270,7 @@ public class GridManager : MonoBehaviour
         return list;
     }
 
-    public void Drop()
+    public void Drop(bool showAd = false)
     {
         for (int i = 1; i <= MAX_COL; i++)
         {
@@ -319,7 +280,16 @@ public class GridManager : MonoBehaviour
                 item.transform.DOLocalMoveY (girdPosToLocal[item.gridPosition].y, CELL_DROP_TIME);
             }
         }
-        LeanTween.delayedCall (CELL_DROP_TIME, OnDoneCellMove);
+        LeanTween.delayedCall (CELL_DROP_TIME,() => 
+        {
+            OnDoneCellMove();
+            if (!showAd) return;
+            if (Time.time - AdManagerMax.Instance.lastInterTime >= AdManagerMax.Instance.interInterval)
+            {
+                AdManagerMax.Instance.ShowIntertistial(null);
+                FirebaseManager.Instance.LogIntertisial("Gameplay");
+            }
+        });
     }
 
     public void OnDoneCellMove ()
@@ -365,9 +335,17 @@ public class GridManager : MonoBehaviour
     }
 
 
-    private void LoadCells ()
+    public void LoadCells ()
     {
-        var userCellDic = GameSystem.userdata.gameData.cellDic;
+        var userData = GameSystem.userdata;
+        if (userData.gameData.minIndex == 0)
+        {
+            minIndex = 1;
+            maxIndex = Space_Index + minIndex - 1;
+            maxIndexRandom = (int)(maxIndex + minIndex) / 2 + 2;
+            indexPlayer = maxIndexRandom;
+        } else LoadDataIndex();
+        var userCellDic = userData.gameData.cellDic;
         if (userCellDic != null && userCellDic.Count > 0)
         {
             foreach (var cell in allCell)
@@ -376,18 +354,13 @@ public class GridManager : MonoBehaviour
             }
             return;
         }
-        int posRandStart = Random.Range(0, allCell.Length);
-        for(int i=0;i<allCell.Length;i++)
+        //userCellDic = new Dictionary<GridPosition, BigInteger> ();
+        foreach (var item in allCell)
         {
-            if(indexStart==0||i!=posRandStart) allCell[i].Value = ValueRandom();
-            else
-            {
-                allCell[i].Value =(BigInteger) Mathf.Pow(2, indexStart);               
-                indexStart = 0;
-            }
-            userCellDic.Add(allCell[i].gridPosition.ToString (), allCell[i].Value);
+            item.Value = ValueRandom ();
+            userCellDic.Add(item.gridPosition.ToString (), item.Value);
         }
-        GameSystem.SaveUserDataToLocal();
+        GameSystem.SaveUserDataToLocal ();
     }
 
     [ContextMenu ("Spawn")]

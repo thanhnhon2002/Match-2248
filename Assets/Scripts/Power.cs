@@ -8,6 +8,7 @@ public abstract class Power : MonoBehaviour
 {
     [SerializeField] protected CanvasGroup displayGroup;
     [SerializeField] protected Button backButton;
+    [SerializeField] protected float cost;
     public virtual void UsePower()
     {
         displayGroup.alpha = 1f;

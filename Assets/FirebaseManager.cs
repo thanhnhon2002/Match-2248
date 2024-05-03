@@ -3,10 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Extensions;
 using Firebase;
+using Firebase.Analytics;
+using DarkcupGames;
+using UnityEngine.SceneManagement;
+using System;
 
 public enum AnalyticsEvent
 {
     level_start, level_passed, level_failed, will_show_interstitial, will_show_rewarded, ui_appear, button_click
+}
+
+public enum UserPopertyKey
+{
+    level_max, last_level, last_placement, total_interstitial_ads, total_rewarded_ads
 }
 
 public class FirebaseManager : MonoBehaviour
@@ -40,13 +49,66 @@ public class FirebaseManager : MonoBehaviour
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
             }
         });
+        var keys = (UserPopertyKey[])Enum.GetValues(typeof(UserPopertyKey));
+        for (int i = 0; i < keys.Length; i++)
+        {
+            SetProperty(keys[i], string.Empty);
+        }
     }
 
-    public void LogEvent(AnalyticsEvent type, string parameter)
+    public void LogLevelStart(int level, bool restart)
     {
-        Firebase.Analytics.FirebaseAnalytics.LogEvent(
-            Firebase.Analytics.FirebaseAnalytics.EventJoinGroup,
-            Firebase.Analytics.FirebaseAnalytics.ParameterGroupId,
-            $"{type} {parameter}");
+        var param1 = new Parameter("level", level);
+        var param2 = new Parameter("restart", restart.ToString());
+        FirebaseAnalytics.LogEvent(AnalyticsEvent.level_start.ToString(), param1, param2);
+    }
+
+    public void LogLevelPass(int level, float time)
+    {
+        var param1 = new Parameter("level", level);
+        var param2 = new Parameter("time_spent", time);
+        FirebaseAnalytics.LogEvent(AnalyticsEvent.level_passed.ToString(), param1, param2);
+    }
+
+    public void LogLevelFail(int level, float time)
+    {
+        var param1 = new Parameter("level", level);
+        var param2 = new Parameter("time_spent", time);
+        FirebaseAnalytics.LogEvent(AnalyticsEvent.level_failed.ToString(), param1, param2);
+    }
+
+    public void LogIntertisial(string placement)
+    {
+        var param1 = new Parameter("internet_available", Application.internetReachability.ToString());
+        var param2 = new Parameter("placement", placement);
+        var param3 = new Parameter("has_ads", MaxMediationManager.intertistial.IsAdAvailable().ToString());
+        FirebaseAnalytics.LogEvent(AnalyticsEvent.will_show_interstitial.ToString(), param1, param2, param3);
+    }
+
+    public void LogReward(string placement)
+    {
+        var param1 = new Parameter("internet_available", Application.internetReachability.ToString());
+        var param2 = new Parameter("placement", placement);
+        var param3 = new Parameter("has_ads", MaxMediationManager.rewarded.IsAdAvailable().ToString());
+        FirebaseAnalytics.LogEvent(AnalyticsEvent.will_show_rewarded.ToString(), param1, param2, param3);
+    }
+
+    public void LogUIAppear(string name)
+    {
+        var param1 = new Parameter("screen_name", SceneManager.GetActiveScene().name);
+        var param2 = new Parameter("name", name);
+        FirebaseAnalytics.LogEvent(AnalyticsEvent.ui_appear.ToString(), param1, param2);
+    }
+
+    public void LogButtonClick(string name)
+    {
+        var param1 = new Parameter("screen_name", SceneManager.GetActiveScene().name);
+        var param2 = new Parameter("name", name);
+        FirebaseAnalytics.LogEvent(AnalyticsEvent.button_click.ToString(), param1, param2);
+    }
+
+    public void SetProperty(UserPopertyKey key, string value)
+    {
+        FirebaseAnalytics.SetUserProperty(key.ToString(), value);
     }
 }

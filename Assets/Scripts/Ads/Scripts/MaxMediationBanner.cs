@@ -23,14 +23,11 @@ namespace DarkcupGames
             MaxSdk.SetBannerBackgroundColor(BANNER_ID, bannerBackgroundColor);
         }
 
-        public override void ShowAds(Action onShowAdsComplete, out bool available)
+        public override void ShowAds(Action onShowAdsComplete)
         {
             throw new NotImplementedException();
         }
-        public  void ShowAds(Action onShowAdsComplete)
-        {
-            SetBannerVisible(true);
-        }
+
         public void SetBannerVisible(bool visible)
         {
             if (visible)
@@ -40,6 +37,11 @@ namespace DarkcupGames
             {
                 MaxSdk.HideBanner(BANNER_ID);
             }
+        }
+
+        public override bool IsAdAvailable()
+        {
+            throw new NotImplementedException();
         }
     }
 }
