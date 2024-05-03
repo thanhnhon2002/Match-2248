@@ -366,7 +366,6 @@ public class GridManager : MonoBehaviour
         if (saveData) GameSystem.SaveUserDataToLocal ();
     }
 
-
     public void LoadCells ()
     {
         var userCellDic = GameSystem.userdata.gameData.cellDic;
