@@ -14,7 +14,6 @@ namespace DarkcupGames
         private MaxMediationIntertistial intertistial;
         private MaxMediationReward rewarded;
         public float lastInterTime;
-        public float interInterval = 300f;
 
         private void Awake()
         {
@@ -22,27 +21,29 @@ namespace DarkcupGames
         }
         public void ShowIntertistial(Action onWatchAdsComplete)
         {
+            onWatchAdsComplete += ()=> adBreak.gameObject.SetActive(false);
             adBreak.gameObject.SetActive(true);
             LeanTween.delayedCall(1f, () =>
-            {
-                adBreak.gameObject.SetActive(false);
+            {           
                 MaxMediationManager.intertistial.ShowAds(onWatchAdsComplete);
+                GameSystem.userdata.property.total_interstitial_ads++;
+                FirebaseManager.Instance.SetProperty(UserPopertyKey.total_interstitial_ads, GameSystem.userdata.property.total_interstitial_ads.ToString());
             });
         }
 
         public void ShowAds(int id)
         {
-            bool haveAds = MaxMediationManager.rewarded.IsAdAvailable();
-
             loadingAdPopup.SetActive(true);
             LeanTween.delayedCall(1f, () =>
             {
-                loadingAdPopup.SetActive(false);
                 var onWatchAdsFinished = events[id];
                 MaxMediationManager.rewarded.ShowAds(() =>
                 {
+                    loadingAdPopup.SetActive(false);
                     onWatchAdsFinished?.Invoke();
                 });
+                GameSystem.userdata.property.total_rewarded_ads++;
+                FirebaseManager.Instance.SetProperty(UserPopertyKey.total_rewarded_ads, GameSystem.userdata.property.total_rewarded_ads.ToString());
             });
         }
     }

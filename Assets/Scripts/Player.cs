@@ -168,7 +168,13 @@ public class Player : MonoBehaviour
         if (newValue > userData.gameData.currentHighestCellValue)
         {
             userData.gameData.currentHighestCellValue = newValue;
-            if (userData.gameData.currentHighestCellValue > userData.highestCellValue) userData.highestCellValue = userData.gameData.currentHighestCellValue;
+            if (userData.gameData.currentHighestCellValue > userData.highestCellValue)
+            {
+                userData.highestCellValue = userData.gameData.currentHighestCellValue;
+                Mathf math;
+                userData.property.level_max = math.LogBigInt(userData.highestCellValue, 2);
+                FirebaseManager.Instance.SetProperty(UserPopertyKey.level_max, userData.property.level_max.ToString());
+            }
             GameSystem.SaveUserDataToLocal ();
         }
             for (int i = 0; i < conectedCell.Count; i++)

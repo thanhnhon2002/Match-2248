@@ -13,6 +13,7 @@ public class RocketLauncher : MonoBehaviour
     public static RocketLauncher Instance { get; private set;}
     private List<Cell> targets = new List<Cell>();
     private List<Cell> allCells = new List<Cell>();
+    [SerializeField] private float cost;
     [SerializeField] private Rocket rocketPre;
     [SerializeField] private ParticalSystemController smashFx;
     [SerializeField] private AudioClip explosedSound;
@@ -20,7 +21,7 @@ public class RocketLauncher : MonoBehaviour
     {
         Instance = this;
     }
-    [ContextMenu("Test")]
+
     public void LaunchRocket()
     {
         GameFlow.Instance.gameState = GameState.Fx; 
@@ -57,5 +58,15 @@ public class RocketLauncher : MonoBehaviour
         });
         sq.AppendInterval (1f);
         sq.AppendCallback (() => GridManager.Instance.CheckToSpawnNewCell (targets));
+    }
+
+    public void PayToLaunchRocket()
+    {
+        var userData = GameSystem.userdata;
+        if (userData.diamond < cost) return;
+        userData.diamond -= cost;
+        PopupManager.Instance.HidePopup(PopupOptions.Lose);
+        LaunchRocket();
+        GameFlow.Instance.diamondGroup.Display();
     }
 }

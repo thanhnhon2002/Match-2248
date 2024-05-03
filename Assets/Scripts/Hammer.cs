@@ -18,6 +18,7 @@ public class Hammer : Power
     }
     public override void UsePower ()
     {
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
         if (GameSystem.userdata.diamond < cost) return;
         GameSystem.userdata.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();

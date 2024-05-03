@@ -78,6 +78,7 @@ public class UserData
 
     public UserData()
     {
+        diamond = 500;
         property = new UserProperty();
         gameData = new GameData();
         dailyRewardInfo = new DailyRewardInfo();

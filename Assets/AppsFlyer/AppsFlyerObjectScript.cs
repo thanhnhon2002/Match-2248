@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AppsFlyerSDK;
-
+using AppsFlyerConnector;
 // This class is intended to be used the the AppsFlyerObject.prefab
 
 public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
@@ -32,8 +32,14 @@ public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
         AppsFlyer.initSDK(devKey, appID, getConversionData ? this : null);
 #endif
         //******************************/
- 
+        AppsFlyerPurchaseConnector.init(this, AppsFlyerConnector.Store.GOOGLE);
+        AppsFlyerPurchaseConnector.setIsSandbox(true);
+        AppsFlyerPurchaseConnector.setAutoLogPurchaseRevenue(AppsFlyerAutoLogPurchaseRevenueOptions.AppsFlyerAutoLogPurchaseRevenueOptionsAutoRenewableSubscriptions, AppsFlyerAutoLogPurchaseRevenueOptions.AppsFlyerAutoLogPurchaseRevenueOptionsInAppPurchases);
+        AppsFlyerPurchaseConnector.build();
+
         AppsFlyer.startSDK();
+        AppsFlyerAdRevenue.start();
+        DontDestroyOnLoad(gameObject);
     }
 
 

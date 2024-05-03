@@ -7,6 +7,7 @@ using Firebase.Analytics;
 using DarkcupGames;
 using UnityEngine.SceneManagement;
 using System;
+using Firebase.Crashlytics;
 
 public enum AnalyticsEvent
 {
@@ -22,6 +23,7 @@ public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager Instance;
     public FirebaseApp app;
+    public RemoteConfig remoteConfig { get; private set; }
     public bool ready;
 
     private void Awake()
@@ -30,7 +32,12 @@ public class FirebaseManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-        } else Destroy(gameObject);
+        } else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        remoteConfig = GetComponent<RemoteConfig>();
     }
 
     IEnumerator Start()
@@ -40,7 +47,9 @@ public class FirebaseManager : MonoBehaviour
             var dependencyStatus = task.Result;
             if (dependencyStatus == DependencyStatus.Available)
             {
+                Crashlytics.ReportUncaughtExceptionsAsFatal = true;
                 app = FirebaseApp.DefaultInstance;
+                remoteConfig.InitializeRemoteConfig();
                 ready = true;
                 Debug.Log("Firebas is ready");
             } else
@@ -49,11 +58,6 @@ public class FirebaseManager : MonoBehaviour
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
             }
         });
-        var keys = (UserPopertyKey[])Enum.GetValues(typeof(UserPopertyKey));
-        for (int i = 0; i < keys.Length; i++)
-        {
-            SetProperty(keys[i], string.Empty);
-        }
     }
 
     public void LogLevelStart(int level, bool restart)

@@ -1497,32 +1497,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 581494554}
         m_TargetAssemblyTypeName: RocketLauncher, Assembly-CSharp
-        m_MethodName: LaunchRocket
+        m_MethodName: PayToLaunchRocket
         m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 704832205}
-        m_TargetAssemblyTypeName: DiamondGroup, Assembly-CSharp
-        m_MethodName: AddDiamond
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: -60
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 451907086}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1812,6 +1788,7 @@ GameObject:
   - component: {fileID: 105856300}
   - component: {fileID: 105856299}
   - component: {fileID: 105856298}
+  - component: {fileID: 105856302}
   m_Layer: 5
   m_Name: ButtonPlay
   m_TagString: Untagged
@@ -1897,9 +1874,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 421881404}
-        m_TargetAssemblyTypeName: PopupNewBlock, Assembly-CSharp
-        m_MethodName: Disappear
+      - m_Target: {fileID: 105856298}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1909,9 +1886,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 105856298}
-        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
-        m_MethodName: PlayButtonSound
+      - m_Target: {fileID: 105856302}
+        m_TargetAssemblyTypeName: ClaimStartFrom, Assembly-CSharp
+        m_MethodName: Onclick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1971,6 +1948,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105856296}
   m_CullTransparentMesh: 1
+--- !u!114 &105856302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105856296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ccf2e78d2e05049bf5efcf50ba56fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cost: 0
+  popup: {fileID: 421881404}
 --- !u!1 &113046650
 GameObject:
   m_ObjectHideFlags: 0
@@ -2218,63 +2209,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113151551}
   m_CullTransparentMesh: 1
---- !u!1001 &114132524
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 6207133488976360133, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6207133488976360133, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6207133488976360133, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6207133488976360133, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6207133488976360133, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6207133488976360133, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6207133488976360133, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6207133488976360133, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6207133488976360133, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6207133488976360133, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7315102894599890749, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
-      propertyPath: m_Name
-      value: AppsFlyerObject
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0bfe3b149145747cc92dc53bb4df4e9b, type: 3}
 --- !u!1 &117979834
 GameObject:
   m_ObjectHideFlags: 0
@@ -7482,6 +7416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56cc7adfa7d5f44aa110b418504df5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 40
+  claimButton: {fileID: 105856302}
   boder: {fileID: 1567863213}
 --- !u!114 &331564423
 MonoBehaviour:
@@ -14438,6 +14374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f503bce3dd74d1b44b4a82be57366f36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
   rocketPre: {fileID: 5274121991992065227, guid: cb9825b9afc1b5f4499ac9fe3b321e78, type: 3}
   smashFx: {fileID: 1316882755971972130, guid: 7f0e7a4c9e226324ebde4cc57c855a5c, type: 3}
   explosedSound: {fileID: 0}
@@ -20629,6 +20566,7 @@ GameObject:
   - component: {fileID: 810627986}
   - component: {fileID: 810627985}
   - component: {fileID: 810627984}
+  - component: {fileID: 810627988}
   m_Layer: 5
   m_Name: ButtonClaim
   m_TagString: Untagged
@@ -20680,50 +20618,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1123301602}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: SpawnEffectReward
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 810627987}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1515496637}
-        m_TargetAssemblyTypeName: PopupAnimation, Assembly-CSharp
-        m_MethodName: Disappear
+      - m_Target: {fileID: 810627988}
+        m_TargetAssemblyTypeName: ClaimDuplicate, Assembly-CSharp
+        m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 11103951}
-        m_TargetAssemblyTypeName: PopupManager, Assembly-CSharp
-        m_MethodName: DeQueue
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 704832205}
-        m_TargetAssemblyTypeName: DiamondGroup, Assembly-CSharp
-        m_MethodName: AddDiamond
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: -50
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -20773,21 +20675,35 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 810627982}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0424, y: 1.0424, z: 1.0424}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.39620125}
+  m_LocalScale: {x: 0.41300017, y: 0.41300017, z: 0.41300017}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2041185098}
   - {fileID: 1364943309}
   - {fileID: 160613713}
-  m_Father: {fileID: 1515496636}
+  m_Father: {fileID: 1598919678}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -136}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 113.85339}
   m_SizeDelta: {x: 350, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &810627988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810627982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5097882e875e26742b54ead7c07cabca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  popup: {fileID: 1515496637}
+  cost: 50
 --- !u!1 &821366302
 GameObject:
   m_ObjectHideFlags: 0
@@ -24001,6 +23917,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4288865165257920620, guid: 61bcf5ecdf1acb24fa578a7505b4e543, type: 3}
+      propertyPath: adBreak
+      value: 
+      objectReference: {fileID: 733324667}
+    - target: {fileID: 4288865165257920620, guid: 61bcf5ecdf1acb24fa578a7505b4e543, type: 3}
       propertyPath: loadingAdPopup
       value: 
       objectReference: {fileID: 334518749}
@@ -24341,7 +24261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayGroup: {fileID: 1230699047}
   backButton: {fileID: 1847572202}
-  cost: 0
+  cost: 50
   hammer: {fileID: 1116716346}
   hamerImg: {fileID: 678115498}
   smashFx: {fileID: 1316882755971972130, guid: 7f0e7a4c9e226324ebde4cc57c855a5c, type: 3}
@@ -33772,6 +33692,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56cc7adfa7d5f44aa110b418504df5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 20
+  claimButton: {fileID: 105856302}
   boder: {fileID: 1567863213}
 --- !u!114 &1439990789
 MonoBehaviour:
@@ -35660,9 +35582,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1598919678}
-  - {fileID: 1869564612}
-  - {fileID: 810627987}
-  - {fileID: 2117345521}
   m_Father: {fileID: 11103955}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -37087,6 +37006,9 @@ RectTransform:
   - {fileID: 1129892002}
   - {fileID: 1085747044}
   - {fileID: 1990273668}
+  - {fileID: 1869564612}
+  - {fileID: 810627987}
+  - {fileID: 2117345521}
   m_Father: {fileID: 1515496636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -37270,7 +37192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayGroup: {fileID: 792856996}
   backButton: {fileID: 856437567}
-  cost: 0
+  cost: 50
   highlightPre: {fileID: 5962770623641434231, guid: b3decc7d3b34953438887f3b22737c90, type: 3}
   interactSound: {fileID: 8300000, guid: 20ba79af998c5d247bfecf06f6230661, type: 3}
 --- !u!4 &1609789564
@@ -39044,6 +38966,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56cc7adfa7d5f44aa110b418504df5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 0
+  claimButton: {fileID: 105856302}
   boder: {fileID: 1567863213}
 --- !u!114 &1757181724
 MonoBehaviour:
@@ -42194,7 +42118,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1515496636}
+    m_TransformParent: {fileID: 1598919678}
     m_Modifications:
     - target: {fileID: 3703926588103778069, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -42298,7 +42222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -42306,7 +42230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_AnchorMin.y
@@ -42322,15 +42246,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.3606
+      value: 0.5390714
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.3606
+      value: 0.5390714
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.3606
+      value: 0.5390714
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -42342,7 +42266,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.39620125
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -42362,11 +42286,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 868
+      value: -52.045975
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 682
+      value: 57.592712
       objectReference: {fileID: 0}
     - target: {fileID: 4844921972854428984, guid: 50bc0001603515048b34ece6aee0c50c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -45794,6 +45718,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56cc7adfa7d5f44aa110b418504df5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cost: 60
+  claimButton: {fileID: 105856302}
   boder: {fileID: 1567863213}
 --- !u!114 &2015913581
 MonoBehaviour:
@@ -47597,17 +47523,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117345520}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1414, y: 1.1414, z: 1.1414}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.39620125}
+  m_LocalScale: {x: 0.45222408, y: 0.45222408, z: 0.45222408}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 525609589}
-  m_Father: {fileID: 1515496636}
+  m_Father: {fileID: 1598919678}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -300}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 48.876404}
   m_SizeDelta: {x: 350, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2117345522
@@ -49201,6 +49127,5 @@ SceneRoots:
   - {fileID: 984207521}
   - {fileID: 509243033}
   - {fileID: 581494555}
-  - {fileID: 114132524}
   - {fileID: 7660074852558014808}
   - {fileID: 980238257}

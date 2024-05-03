@@ -15,6 +15,9 @@ public class RewardEventLog : MonoBehaviour
         button.onClick.AddListener(() =>
         {
             FirebaseManager.Instance.LogReward(placement);
+            GameSystem.userdata.property.last_placement = placement;
+            FirebaseManager.Instance.SetProperty(UserPopertyKey.last_placement, placement);
+            GameSystem.SaveUserDataToLocal();
         });
     }
 }
