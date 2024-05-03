@@ -30,7 +30,6 @@ public class GameFlow : MonoBehaviour
     public List<int> multiliers = new List<int>();
     private BigInteger gameScore;
     private BigInteger totalPoint;
-
     public float timeCount { get; private set; }
 
     public BigInteger GameScore
@@ -80,7 +79,8 @@ public class GameFlow : MonoBehaviour
     {
         timeCount = 0;
         LoadUserData ();
-        if (GameSystem.userdata.replay) PopupManager.Instance.ShowPopup(PopupOptions.StartFrom);
+        if (GameSystem.userdata.replay) 
+            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.StartFrom));
         else AudioSystem.Instance.PlaySound ("Game_Open");
     }
 
@@ -116,7 +116,7 @@ public class GameFlow : MonoBehaviour
     {
         FirebaseManager.Instance.LogEvent(AnalyticsEvent.level_failed, $"level {GridManager.Instance.MinIndex}, time_spent {timeCount}");
         gameState = GameState.GameOver;
-        PopupManager.Instance.ShowPopup (PopupOptions.Lose);
+        PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup,PopupOptions.Lose));
         var userData = GameSystem.userdata;
         userData.gameData.cellDic.Clear ();
         GameSystem.SaveUserDataToLocal ();
@@ -141,7 +141,7 @@ public class GameFlow : MonoBehaviour
         userData.gameData.maxIndex = 0;
         userData.gameData.maxIndexRandom = 0;
         GameSystem.SaveUserDataToLocal ();
-        SceneManager.LoadScene (SceneManager.GetActiveScene ().name);
+        SceneManager.LoadScene (SceneManager.GetActiveScene().name);
     }
 
     public void ToHome()

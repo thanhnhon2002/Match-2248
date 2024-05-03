@@ -5,9 +5,13 @@ public class AnimationPanelDublicate : AnimationPanel
 {
     [SerializeField] GameObject image;
     Vector3 originScalse;
+    public override void Awake()
+    {
+        base.Awake();
+        originScalse = image.transform.localScale;
+    }
     protected override void OnEnable()
     {
-        originScalse = image.transform.localScale;
         base.OnEnable();       
     }
     public override void Animation()
@@ -16,11 +20,11 @@ public class AnimationPanelDublicate : AnimationPanel
         LeanTween.delayedCall(0.2f, () => {
             image.transform.localScale = new Vector3(originScalse.x * -1, originScalse.y, originScalse.z);
             image.transform.DOScaleX(originScalse.x, 1f);
-        });
-        
+        });        
     }
     protected override void OnDisable()
     {
+        image.transform.localScale = originScalse;
         base.OnDisable();
     }
 }

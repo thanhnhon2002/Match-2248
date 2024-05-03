@@ -8,7 +8,7 @@ using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
 using System;
-using Unity.VisualScripting;
+using System.Collections;
 
 public class GridManager : MonoBehaviour
 {
@@ -36,6 +36,8 @@ public class GridManager : MonoBehaviour
     public int MaxIndexRandom => maxIndexRandom;
     private int indexPlayer;
     public int IndexPlayer=>indexPlayer;
+    public int indexStart;
+    public int indexChose;
 
     private List<Cell>lowestCells = new List<Cell>();
 
@@ -63,11 +65,21 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         var userData = GameSystem.userdata;
+        if(userData.replay)
+        {
+            StartCoroutine(WaitChoseStart());
+            return;
+        }
+        SetUpCell();
+    }
+    void SetUpCell()
+    {
+        var userData = GameSystem.userdata;
         if (userData.gameData.minIndex == 0)
         {
             minIndex = 1;
             maxIndex = Space_Index + minIndex - 1;
-            maxIndexRandom = (int)(maxIndex + minIndex)/2 +2;
+            maxIndexRandom = (int)(maxIndex + minIndex) / 2 + 2;
             indexPlayer = maxIndexRandom;
         }
         else LoadDataIndex();
@@ -75,9 +87,29 @@ public class GridManager : MonoBehaviour
         foreach (var item in allCell)
         {
             girdPosToLocal.Add(item.gridPosition, item.transform.localPosition);
-        }       
+        }
         UpdateCell();
         LoadCells();
+    }
+    IEnumerator WaitChoseStart()
+    {
+        while(indexStart==0)
+        {
+            yield return null;
+        }
+        SetUpCell();
+        indexChose = 0;
+        indexStart = 0;
+        GameSystem.userdata.replay = false;
+        GameSystem.SaveUserDataToLocal();
+    }
+    public void SetStartIndex()
+    {
+        indexStart =indexChose;
+    }
+    public void SetIndexChose(int index)
+    {
+        indexChose = index;
     }
     public void LoadDataIndex()
     {
@@ -344,13 +376,18 @@ public class GridManager : MonoBehaviour
             }
             return;
         }
-        //userCellDic = new Dictionary<GridPosition, BigInteger> ();
-        foreach (var item in allCell)
+        int posRandStart = Random.Range(0, allCell.Length);
+        for(int i=0;i<allCell.Length;i++)
         {
-            item.Value = ValueRandom ();
-            userCellDic.Add(item.gridPosition.ToString (), item.Value);
+            if(indexStart==0||i!=posRandStart) allCell[i].Value = ValueRandom();
+            else
+            {
+                allCell[i].Value =(BigInteger) Mathf.Pow(2, indexStart);               
+                indexStart = 0;
+            }
+            userCellDic.Add(allCell[i].gridPosition.ToString (), allCell[i].Value);
         }
-        GameSystem.SaveUserDataToLocal ();
+        GameSystem.SaveUserDataToLocal();
     }
 
     [ContextMenu ("Spawn")]
