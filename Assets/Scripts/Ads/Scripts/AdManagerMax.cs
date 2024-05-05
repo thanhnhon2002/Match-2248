@@ -21,12 +21,19 @@ namespace DarkcupGames
         }
         public void ShowIntertistial(Action onWatchAdsComplete)
         {
+            bool haveAds = MaxMediationManager.intertistial.IsAdAvailable();
+            if (haveAds == false)
+            {
+                onWatchAdsComplete?.Invoke();
+                return;
+            }
             onWatchAdsComplete += ()=> adBreak.gameObject.SetActive(false);
             adBreak.gameObject.SetActive(true);
             LeanTween.delayedCall(1f, () =>
             {           
                 MaxMediationManager.intertistial.ShowAds(onWatchAdsComplete);
                 GameSystem.userdata.property.total_interstitial_ads++;
+                GameSystem.SaveUserDataToLocal();
                 FirebaseManager.Instance.SetProperty(UserPopertyKey.total_interstitial_ads, GameSystem.userdata.property.total_interstitial_ads.ToString());
             });
         }

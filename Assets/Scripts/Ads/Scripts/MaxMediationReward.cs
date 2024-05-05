@@ -8,6 +8,8 @@ namespace DarkcupGames
         public string REWARD_ID;
         private Action onShowAdsComplete;
         private int retryCount = 0;
+        private bool isShowingAds;
+
         public override void Init()
         {
             MaxSdkCallbacks.Rewarded.OnAdLoadedEvent += OnRewardedAdLoadedEvent;
@@ -24,6 +26,7 @@ namespace DarkcupGames
         private void OnRewardedAdHiddenEvent(string arg1, MaxSdkBase.AdInfo info)
         {
             LoadAds();
+            isShowingAds = false;
         }
 
         private void OnRewardedAdLoadFailedEvent(string arg1, MaxSdkBase.ErrorInfo info)
@@ -50,9 +53,11 @@ namespace DarkcupGames
             if (MaxSdk.IsRewardedAdReady(REWARD_ID) == false)
             {
                 onShowAdsComplete?.Invoke();
+                isShowingAds = false;
             } else
             {
                 MaxSdk.ShowRewardedAd(REWARD_ID);
+                isShowingAds = true;
             }
 
         }
@@ -60,6 +65,11 @@ namespace DarkcupGames
         public override bool IsAdAvailable()
         {
             return MaxSdk.IsRewardedAdReady(REWARD_ID);
+        }
+
+        public override bool IsShowingAds()
+        {
+            return isShowingAds;
         }
     }
 }

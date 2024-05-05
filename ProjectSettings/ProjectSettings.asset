@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DarkcupGames
-  productName: 2048Connect
+  productName: 2248 Puzzle-2048 Number Game
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -76,6 +76,7 @@ PlayerSettings:
   androidMinimumWindowWidth: 400
   androidMinimumWindowHeight: 300
   androidFullscreenMode: 1
+  androidAutoRotationBehavior: 1
   defaultIsNativeResolution: 1
   macRetinaSupport: 1
   runInBackground: 0
@@ -136,6 +137,8 @@ PlayerSettings:
   vulkanEnableLateAcquireNextImage: 0
   vulkanEnableCommandBufferRecycling: 1
   loadStoreDebugModeEnabled: 0
+  visionOSBundleVersion: 1.0
+  tvOSBundleVersion: 1.0
   bundleVersion: 1.0
   preloadedAssets: []
   metroInputSource: 0
@@ -231,6 +234,7 @@ PlayerSettings:
   iOSMetalForceHardShadows: 0
   metalEditorSupport: 1
   metalAPIValidation: 1
+  metalCompileShaderBinary: 0
   iOSRenderExtraFrameOnPause: 0
   iosCopyPluginsCodeInsteadOfSymlink: 0
   appleDeveloperTeamID: 
@@ -254,7 +258,7 @@ PlayerSettings:
   useCustomLauncherGradleManifest: 0
   useCustomBaseGradleTemplate: 0
   useCustomGradlePropertiesTemplate: 1
-  useCustomGradleSettingsTemplate: 0
+  useCustomGradleSettingsTemplate: 1
   useCustomProguardFile: 1
   AndroidTargetArchitectures: 3
   AndroidTargetDevices: 0
@@ -401,48 +405,6 @@ PlayerSettings:
   - m_BuildTarget: Android
     m_Icons:
     - m_Textures:
-      - {fileID: 2800000, guid: 22eac8cb38a98ae45bf2abad7382c2b2, type: 3}
-      - {fileID: 2800000, guid: be12ca10a91fd6442b87c6286d904f98, type: 3}
-      m_Width: 432
-      m_Height: 432
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures:
-      - {fileID: 2800000, guid: 1a2cb067f613e814e92a621a07c68a53, type: 3}
-      - {fileID: 2800000, guid: a916b43e775d6d24ebc97a99e390d464, type: 3}
-      m_Width: 324
-      m_Height: 324
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures:
-      - {fileID: 2800000, guid: 1e6d295bd89551c45b5d6a4dfc5758cc, type: 3}
-      - {fileID: 2800000, guid: 3ad7dd2213cce0b448fe4dad676e2ba2, type: 3}
-      m_Width: 216
-      m_Height: 216
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures:
-      - {fileID: 2800000, guid: 06c9737fd458ff242a569be3bea1db2d, type: 3}
-      - {fileID: 2800000, guid: ac0f0c118c458b641a7e9fb20f44bcb5, type: 3}
-      m_Width: 162
-      m_Height: 162
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures:
-      - {fileID: 2800000, guid: 7cf6dd40aea56b4418d28dfefe9842f6, type: 3}
-      - {fileID: 2800000, guid: 2dd8825dd1bf211449b3d07bb0774317, type: 3}
-      m_Width: 108
-      m_Height: 108
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures:
-      - {fileID: 2800000, guid: effb2a4f005907d4b8d3b7e0408d4083, type: 3}
-      - {fileID: 2800000, guid: 096165eb4bb656540838c87c54039a83, type: 3}
-      m_Width: 81
-      m_Height: 81
-      m_Kind: 2
-      m_SubKind: 
-    - m_Textures:
       - {fileID: 2800000, guid: 817f717dc61c5fc428a835e01bc0f2f6, type: 3}
       m_Width: 192
       m_Height: 192
@@ -513,6 +475,48 @@ PlayerSettings:
       m_Width: 36
       m_Height: 36
       m_Kind: 1
+      m_SubKind: 
+    - m_Textures:
+      - {fileID: 2800000, guid: 22eac8cb38a98ae45bf2abad7382c2b2, type: 3}
+      - {fileID: 2800000, guid: be12ca10a91fd6442b87c6286d904f98, type: 3}
+      m_Width: 432
+      m_Height: 432
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures:
+      - {fileID: 2800000, guid: 1a2cb067f613e814e92a621a07c68a53, type: 3}
+      - {fileID: 2800000, guid: a916b43e775d6d24ebc97a99e390d464, type: 3}
+      m_Width: 324
+      m_Height: 324
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures:
+      - {fileID: 2800000, guid: 1e6d295bd89551c45b5d6a4dfc5758cc, type: 3}
+      - {fileID: 2800000, guid: 3ad7dd2213cce0b448fe4dad676e2ba2, type: 3}
+      m_Width: 216
+      m_Height: 216
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures:
+      - {fileID: 2800000, guid: 06c9737fd458ff242a569be3bea1db2d, type: 3}
+      - {fileID: 2800000, guid: ac0f0c118c458b641a7e9fb20f44bcb5, type: 3}
+      m_Width: 162
+      m_Height: 162
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures:
+      - {fileID: 2800000, guid: 7cf6dd40aea56b4418d28dfefe9842f6, type: 3}
+      - {fileID: 2800000, guid: 2dd8825dd1bf211449b3d07bb0774317, type: 3}
+      m_Width: 108
+      m_Height: 108
+      m_Kind: 2
+      m_SubKind: 
+    - m_Textures:
+      - {fileID: 2800000, guid: effb2a4f005907d4b8d3b7e0408d4083, type: 3}
+      - {fileID: 2800000, guid: 096165eb4bb656540838c87c54039a83, type: 3}
+      m_Width: 81
+      m_Height: 81
+      m_Kind: 2
       m_SubKind: 
   m_BuildTargetBatching: []
   m_BuildTargetShaderSettings: []
@@ -898,6 +902,7 @@ PlayerSettings:
   metroTileBackgroundColor: {r: 0.13333334, g: 0.17254902, b: 0.21568628, a: 0}
   metroSplashScreenBackgroundColor: {r: 0.12941177, g: 0.17254902, b: 0.21568628, a: 1}
   metroSplashScreenUseBackgroundColor: 0
+  syncCapabilities: 0
   platformCapabilities: {}
   metroTargetDeviceFamilies: {}
   metroFTAName: 

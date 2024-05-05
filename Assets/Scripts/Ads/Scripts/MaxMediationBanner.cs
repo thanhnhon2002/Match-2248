@@ -8,12 +8,18 @@ namespace DarkcupGames
         public string BANNER_ID;
         public Color bannerBackgroundColor;
         public MaxSdkBase.BannerPosition position = MaxSdkBase.BannerPosition.BottomCenter;
-
+        private bool showing = false;
+        private bool available = false;
         public override void Init()
         {
             MaxSdkCallbacks.Banner.OnAdLoadedEvent += (arg1, info) =>
             {
-                SetBannerVisible(true);
+                CollapsibleBannerFlow.Instance.OnCollapsibleAdsLoaded();
+                available = true;
+            };
+            MaxSdkCallbacks.Banner.OnAdLoadFailedEvent += (arg1, info) =>
+            {
+                available = false;
             };
         }
 
@@ -25,7 +31,7 @@ namespace DarkcupGames
 
         public override void ShowAds(Action onShowAdsComplete)
         {
-            throw new NotImplementedException();
+            SetBannerVisible(true);
         }
 
         public void SetBannerVisible(bool visible)
@@ -37,11 +43,17 @@ namespace DarkcupGames
             {
                 MaxSdk.HideBanner(BANNER_ID);
             }
+            showing = visible;
         }
 
         public override bool IsAdAvailable()
         {
-            throw new NotImplementedException();
+            return available;
+        }
+
+        public override bool IsShowingAds()
+        {
+            return showing;
         }
     }
 }

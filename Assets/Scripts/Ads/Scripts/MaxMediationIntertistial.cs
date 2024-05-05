@@ -8,6 +8,8 @@ namespace DarkcupGames
         public string INTERTISTIAL_ID;
         private Action onShowAdsComplete;
         private int retryCount = 0;
+        private bool isShowingAds;
+
         public override void Init()
         {
             MaxSdkCallbacks.Interstitial.OnAdLoadedEvent += OnInterstitialLoadedEvent;
@@ -37,6 +39,7 @@ namespace DarkcupGames
         {
             onShowAdsComplete?.Invoke();
             LoadAds();
+            isShowingAds = false;
         }
 
         public override void LoadAds()
@@ -50,15 +53,22 @@ namespace DarkcupGames
             if (MaxSdk.IsInterstitialReady(INTERTISTIAL_ID) == false)
             {
                 onShowAdsComplete?.Invoke();
+                isShowingAds = false;
             } else
             {
                 MaxSdk.ShowInterstitial(INTERTISTIAL_ID);
+                isShowingAds = true;
             }
         }
 
         public override bool IsAdAvailable()
         {
             return MaxSdk.IsInterstitialReady(INTERTISTIAL_ID);
+        }
+
+        public override bool IsShowingAds()
+        {
+            return isShowingAds;
         }
     }
 }

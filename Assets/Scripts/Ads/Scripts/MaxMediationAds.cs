@@ -10,5 +10,6 @@ namespace DarkcupGames
         public abstract void LoadAds();
         public abstract void ShowAds(Action onShowAdsComplete);
         public abstract bool IsAdAvailable();
+        public abstract bool IsShowingAds();
     }
 }

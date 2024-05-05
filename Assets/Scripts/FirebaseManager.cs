@@ -23,7 +23,7 @@ public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager Instance;
     public FirebaseApp app;
-    public RemoteConfig remoteConfig { get; private set; }
+    public static RemoteConfig remoteConfig { get; private set; }
     public bool ready;
 
     private void Awake()
@@ -32,12 +32,12 @@ public class FirebaseManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            remoteConfig = GetComponentInChildren<RemoteConfig>();
         } else
         {
             Destroy(gameObject);
             return;
         }
-        remoteConfig = GetComponent<RemoteConfig>();
     }
 
     IEnumerator Start()
@@ -62,6 +62,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void LogLevelStart(int level, bool restart)
     {
+        if (!ready) return;
         var param1 = new Parameter("level", level);
         var param2 = new Parameter("restart", restart.ToString());
         FirebaseAnalytics.LogEvent(AnalyticsEvent.level_start.ToString(), param1, param2);
@@ -69,6 +70,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void LogLevelPass(int level, float time)
     {
+        if (!ready) return;
         var param1 = new Parameter("level", level);
         var param2 = new Parameter("time_spent", time);
         FirebaseAnalytics.LogEvent(AnalyticsEvent.level_passed.ToString(), param1, param2);
@@ -76,6 +78,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void LogLevelFail(int level, float time)
     {
+        if (!ready) return;
         var param1 = new Parameter("level", level);
         var param2 = new Parameter("time_spent", time);
         FirebaseAnalytics.LogEvent(AnalyticsEvent.level_failed.ToString(), param1, param2);
@@ -83,6 +86,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void LogIntertisial(string placement)
     {
+        if (!ready) return;
         var param1 = new Parameter("internet_available", Application.internetReachability.ToString());
         var param2 = new Parameter("placement", placement);
         var param3 = new Parameter("has_ads", MaxMediationManager.intertistial.IsAdAvailable().ToString());
@@ -91,6 +95,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void LogReward(string placement)
     {
+        if (!ready) return;
         var param1 = new Parameter("internet_available", Application.internetReachability.ToString());
         var param2 = new Parameter("placement", placement);
         var param3 = new Parameter("has_ads", MaxMediationManager.rewarded.IsAdAvailable().ToString());
@@ -99,6 +104,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void LogUIAppear(string name)
     {
+        if (!ready) return;
         var param1 = new Parameter("screen_name", SceneManager.GetActiveScene().name);
         var param2 = new Parameter("name", name);
         FirebaseAnalytics.LogEvent(AnalyticsEvent.ui_appear.ToString(), param1, param2);
@@ -106,6 +112,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void LogButtonClick(string name)
     {
+        if (!ready) return;
         var param1 = new Parameter("screen_name", SceneManager.GetActiveScene().name);
         var param2 = new Parameter("name", name);
         FirebaseAnalytics.LogEvent(AnalyticsEvent.button_click.ToString(), param1, param2);
@@ -113,6 +120,7 @@ public class FirebaseManager : MonoBehaviour
 
     public void SetProperty(UserPopertyKey key, string value)
     {
+        if (!ready) return;
         FirebaseAnalytics.SetUserProperty(key.ToString(), value);
     }
 }
