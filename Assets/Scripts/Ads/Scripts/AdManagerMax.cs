@@ -19,6 +19,10 @@ namespace DarkcupGames
         {
             Instance = this;
         }
+        private void Start()
+        {
+            lastInterTime = Time.time;
+        }
         public void ShowIntertistial(Action onWatchAdsComplete)
         {
             bool haveAds = MaxMediationManager.intertistial.IsAdAvailable();

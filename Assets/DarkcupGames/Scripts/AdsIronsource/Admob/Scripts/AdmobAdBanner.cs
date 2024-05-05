@@ -33,6 +33,11 @@ public class AdmobAdBanner : AdmobAds
 
     public override void LoadAds()
     {
+        if (AdmobManager.isReady == false)
+        {
+            Debug.LogError("admob is not ready for load banner");
+            return;
+        }
         var adRequest = new AdRequest();
         if (useCollapsible)
         {

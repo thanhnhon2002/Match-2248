@@ -28,12 +28,16 @@ public class AdmobAppOpen : AdmobAds
 
     public override void LoadAds()
     {
+        if (AdmobManager.isReady == false)
+        {
+            Debug.LogError("admob is not ready for load app open!");
+            return;
+        }
         if (appOpenAd != null)
         {
             appOpenAd.Destroy();
             appOpenAd = null;
         }
-
         if (showDebug) Debug.Log("Loading the app open ad.");
         var adRequest = new AdRequest();
         AppOpenAd.Load(APPOPEN_ID, adRequest, (AppOpenAd ad, LoadAdError error) =>

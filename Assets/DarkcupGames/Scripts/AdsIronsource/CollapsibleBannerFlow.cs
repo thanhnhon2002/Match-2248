@@ -73,10 +73,10 @@ namespace DarkcupGames
         {
             if (Time.time > lastChangeUUID)
             {
+                lastChangeUUID = Time.time + FirebaseManager.remoteConfig.COLLAPSIBLE_BANNER_INTERVAL;
                 if (showDebug) Debug.Log($"load new uuid collapsible");
                 admobBanner.GenerateNewUUID();
                 admobBanner.LoadAds();
-                lastChangeUUID = Time.time + FirebaseManager.remoteConfig.COLLAPSIBLE_BANNER_INTERVAL;
             }
         }
     }
