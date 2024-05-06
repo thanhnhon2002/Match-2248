@@ -25,7 +25,6 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
             colorSet.SetColor ();
         }
     }
-
     public int ConectableCount
     {
         get {
@@ -36,9 +35,10 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public TextMeshPro debugTxt;
 
     private void Awake ()
-    {
+    {     
         spriteRenderer = GetComponent<SpriteRenderer> ();
         colorSet = GetComponent<ColorSet> ();
+        
 #if !UNITY_EDITOR
         debugTxt.gameObject.SetActive (false);
 #endif

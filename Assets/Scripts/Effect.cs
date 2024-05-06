@@ -1,3 +1,4 @@
+using DarkcupGames;
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
@@ -41,6 +42,40 @@ public class Effect : MonoBehaviour
         });
         sq.AppendInterval (time);
         sq.AppendCallback (() => gameObject.SetActive (false));
+    }
+    public void Play (List<CellTutorial> path, int index, Color startColor, Color endColor)
+    {
+        pos.Clear ();
+        for (int i = index; i < path.Count; i++)
+        {
+            pos.Add (path[i].transform.position);
+        }
+        startColor.a = 0;
+        for (int i = 0; i < cellPartcals.Length; i++)
+        {
+            startColor.a = 1f;  
+            cellPartcals[i].spriteRenderer.color = startColor;
+        }
+        sq = DOTween.Sequence ();
+        sq.AppendCallback (() =>
+        {
+            for (int i = 0; i < cellPartcals.Length; i++)
+            {
+                cellPartcals[i].PlayEffectOut (time, startColor);
+            }
+        });
+        sq.AppendInterval (time);
+        sq.AppendCallback (() =>
+        {
+            for (int i = 0; i < cellPartcals.Length; i++)
+            {
+                cellPartcals[i].PlayEffectIn (time, endColor);
+            }
+            transform.DOPath (pos.ToArray (), time);
+        });
+        sq.AppendInterval (time);
+        sq.AppendCallback (() => gameObject.SetActive (false));
+        
     }
 
     [ContextMenu ("Set up")]
