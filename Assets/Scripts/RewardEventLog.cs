@@ -18,6 +18,7 @@ public class RewardEventLog : MonoBehaviour
             GameSystem.userdata.property.last_placement = placement;
             FirebaseManager.Instance.SetProperty(UserPopertyKey.last_placement, placement);
             GameSystem.SaveUserDataToLocal();
+            MaxMediationReward.placement = placement;
         });
     }
 }

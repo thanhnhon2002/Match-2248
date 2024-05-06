@@ -21,6 +21,21 @@ namespace DarkcupGames
             {
                 available = false;
             };
+            MaxSdkCallbacks.Banner.OnAdRevenuePaidEvent += OnBannerPaidEvent;
+        }
+
+        private void OnBannerPaidEvent(string agr1, MaxSdkBase.AdInfo info)
+        {
+            AppsFlyerObjectScript.Instance.LogAdRevenue(info.NetworkName, info.AdUnitIdentifier, "banner", info.Placement, info.Revenue);
+            double revenue = info.Revenue;
+            var impressionParameters = new[] {
+                                        new Firebase.Analytics.Parameter("ad_platform", "AppLovin"),
+                                        new Firebase.Analytics.Parameter("ad_source", info.NetworkName),
+                                        new Firebase.Analytics.Parameter("ad_unit_name", info.AdUnitIdentifier),
+                                        new Firebase.Analytics.Parameter("ad_format", info.AdFormat),
+                                        new Firebase.Analytics.Parameter("value", revenue),
+                                        new Firebase.Analytics.Parameter("currency", "USD"), };
+            Firebase.Analytics.FirebaseAnalytics.LogEvent("ad_impression", impressionParameters);
         }
 
         public override void LoadAds()

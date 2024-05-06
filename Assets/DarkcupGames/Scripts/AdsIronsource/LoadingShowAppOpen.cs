@@ -27,6 +27,7 @@ public class LoadingShowAppOpen : MonoBehaviour
             if (showDebug) Debug.Log("try showing app open");
             if (appOpen.IsAdsAvailable())
             {
+                AdmobAppOpen.placement = "loading";
                 if (showDebug) Debug.Log("app open available, showing ads");
                 appOpen.ShowAds(() =>
                 {
