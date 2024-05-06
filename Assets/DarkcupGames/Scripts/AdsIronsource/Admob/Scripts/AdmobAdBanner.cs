@@ -2,6 +2,8 @@
 using System;
 using UnityEngine;
 using DarkcupGames;
+using Firebase.Analytics;
+using UnityEditor.Experimental.GraphView;
 
 public class AdmobAdBanner : AdmobAds
 {
@@ -28,6 +30,16 @@ public class AdmobAdBanner : AdmobAds
             available = false;
             CollapsibleBannerFlow.Instance.OnCollapsibleAdsFailed();
         };
+        bannerView.OnAdPaid += (AdValue adValue) => AppsFlyerObjectScript.Instance.LogAdRevenue("admob", bannerView.GetAdUnitID(), "default", string.Empty, adValue.Value);
+        bannerView.OnAdImpressionRecorded += () => 
+        {
+            var param = new Parameter[]
+            {
+                    new Parameter("ad_platform", "admob"),
+                    new Parameter("placement", "default"),
+            };
+            FirebaseAnalytics.LogEvent("collap_banner_show_success", param);
+        };
         GenerateNewUUID();
     }
 
@@ -44,7 +56,7 @@ public class AdmobAdBanner : AdmobAds
             adRequest.Extras.Add("collapsible", "bottom");
             adRequest.Extras.Add("collapsible_request_id", uuid);
         }
-        bannerView.LoadAd(adRequest);
+        bannerView.LoadAd(adRequest);        
     }
 
     public override bool ShowAds(Action onShowAdsComplete)

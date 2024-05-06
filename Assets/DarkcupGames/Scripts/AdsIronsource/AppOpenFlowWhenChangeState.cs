@@ -46,6 +46,7 @@ public class AppOpenFlowWhenChangeState : MonoBehaviour
                 if (showDebug) Debug.Log("showing app open, available = " + appOpen.IsAdsAvailable());
                 if (appOpen.IsAdsAvailable())
                 {
+                    AdmobAppOpen.placement = "resume_game";
                     appOpen.ShowAds(null);
                 }
             }
