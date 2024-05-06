@@ -7,6 +7,7 @@ using AppsFlyerConnector;
 
 public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
 {
+    public static AppsFlyerObjectScript Instance { get; private set; }
 
     // These fields are set from the editor so do not modify!
     //******************************//
@@ -18,11 +19,21 @@ public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
     public bool getConversionData;
     //******************************//
 
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        } else Destroy(gameObject);
+   
+    }
 
     void Start()
     {
         // These fields are set from the editor so do not modify!
         //******************************//
+        AppsFlyerAdRevenue.start();
         AppsFlyer.setIsDebug(isDebug);
 #if UNITY_WSA_10_0 && !UNITY_EDITOR
         AppsFlyer.initSDK(devKey, UWPAppID, getConversionData ? this : null);
@@ -39,7 +50,6 @@ public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
 
         AppsFlyer.startSDK();
         AppsFlyerAdRevenue.start();
-        DontDestroyOnLoad(gameObject);
     }
 
 
@@ -73,4 +83,21 @@ public class AppsFlyerObjectScript : MonoBehaviour , IAppsFlyerConversionData
         AppsFlyer.AFLog("onAppOpenAttributionFailure", error);
     }
 
+
+    public void LogAdRevenue(string network, string unit, string type, string placement, double revenue)
+    {
+        Dictionary<string, string> additionalParams = new Dictionary<string, string>
+        {
+            { AFAdRevenueEvent.COUNTRY, "US" },
+            { AFAdRevenueEvent.AD_UNIT, unit },
+            { AFAdRevenueEvent.AD_TYPE, type },
+            { AFAdRevenueEvent.PLACEMENT, placement }
+        };
+
+        AppsFlyerAdRevenue.logAdRevenue(network,
+                                        AppsFlyerAdRevenueMediationNetworkType.AppsFlyerAdRevenueMediationNetworkTypeApplovinMax,
+                                        revenue,
+                                        "USD",
+                                        additionalParams);
+    }
 }

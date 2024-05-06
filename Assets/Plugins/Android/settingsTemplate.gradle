@@ -36,6 +36,9 @@ dependencyResolutionManagement {
         maven {
             url "https://dl-maven-android.mintegral.com/repository/mbridge_android_sdk_oversea" // Assets/MaxSdk/Mediation/Mintegral/Editor/Dependencies.xml:8
         }
+        maven {
+            url "https://maven.ogury.co" // Assets/MaxSdk/Mediation/OguryPresage/Editor/Dependencies.xml:8
+        }
         mavenLocal()
 // Android Resolver Repos End
         flatDir {

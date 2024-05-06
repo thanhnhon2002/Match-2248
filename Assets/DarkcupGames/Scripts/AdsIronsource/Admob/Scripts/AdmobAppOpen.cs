@@ -3,6 +3,7 @@ using GoogleMobileAds.Common;
 using System;
 using UnityEngine;
 using DarkcupGames;
+using Firebase.Analytics;
 
 [RequireComponent(typeof(MainThreadScriptRunner))]
 public class AdmobAppOpen : AdmobAds
@@ -15,6 +16,7 @@ public class AdmobAppOpen : AdmobAds
     private MainThreadScriptRunner mainThread;
     private bool available;
     private bool isShowingAds;
+    public static string placement;
 
     private void Awake()
     {
@@ -63,6 +65,16 @@ public class AdmobAppOpen : AdmobAds
                 LoadAds();
                 mainThread.Run(onShowAdsCompleted);
                 isShowingAds = false;
+            };
+            appOpenAd.OnAdPaid += (AdValue value) => AppsFlyerObjectScript.Instance.LogAdRevenue("admob", appOpenAd.GetAdUnitID(), "app open", string.Empty, value.Value);
+            appOpenAd.OnAdImpressionRecorded += () =>
+            {
+                var param = new Parameter[]
+                {
+                    new Parameter("ad_platform", "admob"),
+                    new Parameter("placement", placement),
+                };
+                FirebaseAnalytics.LogEvent("aoa_show_success", param);
             };
         });
     }
