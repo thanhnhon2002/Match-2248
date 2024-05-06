@@ -75,9 +75,8 @@ public class GridManager : MonoBehaviour
                 item.gameObject.SetActive(false);
             }
             //StartCoroutine(WaitChoseStart());
-            return;
         }
-        SetUpCell();
+        else SetUpCell();
         FirebaseManager.Instance.SetProperty(UserPopertyKey.last_level, maxIndex.ToString());
     }
     void SetUpCell()
@@ -415,7 +414,7 @@ public class GridManager : MonoBehaviour
             else
             {
                 allCell[i].Value = (BigInteger)Mathf.Pow(2, indexStart);
-                indexStart = 0;
+                //indexStart = 0;
             }
             userCellDic.Add(allCell[i].gridPosition.ToString(), allCell[i].Value);
         }

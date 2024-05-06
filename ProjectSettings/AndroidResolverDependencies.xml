@@ -5,6 +5,7 @@
     <package>com.android.installreferrer:installreferrer:2.1</package>
     <package>com.android.support:customtabs:28.+</package>
     <package>com.android.support:recyclerview-v7:28.+</package>
+    <package>com.applovin.mediation:bidmachine-adapter:2.6.0.1</package>
     <package>com.applovin.mediation:bytedance-adapter:5.9.0.4.0</package>
     <package>com.applovin.mediation:fyber-adapter:8.2.7.1</package>
     <package>com.applovin.mediation:google-adapter:[23.0.0.1]</package>

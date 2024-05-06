@@ -1,5 +1,6 @@
 ﻿using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadingShowAppOpen : MonoBehaviour
@@ -9,6 +10,15 @@ public class LoadingShowAppOpen : MonoBehaviour
     public float LOADING_TIME = 7f;
     public PopupLoading popupLoading;
     public AdmobAppOpen appOpen;
+    public Canvas canvasLoading;
+
+    private void Awake()
+    {
+        StartLoadingAndShowAppOpen(() =>
+        {
+            SceneManager.LoadScene("UI Home");
+        });
+    }
 
     public void StartLoadingAndShowAppOpen(System.Action onLoadFinished)
     {
@@ -21,14 +31,14 @@ public class LoadingShowAppOpen : MonoBehaviour
                 appOpen.ShowAds(() =>
                 {
                     if (showDebug) Debug.Log("this is app open closed");
-                    popupLoading.Close();
+                    //popupLoading.Close();
                     onLoadFinished?.Invoke();
                 });
             }
             else
             {
                 if (showDebug) Debug.Log("app open available failed");
-                popupLoading.Close();
+                //popupLoading.Close();
                 onLoadFinished?.Invoke();
             }
         });

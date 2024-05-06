@@ -1898,18 +1898,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1821798362}
-        m_TargetAssemblyTypeName: GridManager, Assembly-CSharp
-        m_MethodName: SetStartIndex
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &105856300
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36090,18 +36078,6 @@ MonoBehaviour:
       - m_Target: {fileID: 485387343}
         m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
         m_MethodName: PlayButtonSound
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 359371517}
-        m_TargetAssemblyTypeName: PopupPause, Assembly-CSharp
-        m_MethodName: Disappear
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
