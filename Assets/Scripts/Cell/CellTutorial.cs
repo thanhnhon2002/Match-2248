@@ -76,7 +76,6 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
             return;
         }
         ExploseConectedCell();
-        
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -98,7 +97,7 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
             listCell.Add(this);
             countInitValue += (int) (value / initValue);
             lines.Last().SetPosition(1, transform.position);
-            var line = PoolSystem.Instance.GetObject(linePrefab, this.transform.position);
+            var line = PoolSystem.Instance.GetObject(linePrefab, this.transform.position,transform.parent);
             lines.Add(line);
             line.SetPosition(0, transform.position);
             line.SetColors(spriteRenderer.color, spriteRenderer.color);
@@ -131,20 +130,21 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
             foreach (var cell in listCell) cell.gameObject.SetActive(false);
             foreach (var cell in listCell) cell.added = false;
             listCell.Last().gameObject.SetActive(true);
+            CheckNextPart(listCell.Last());
             listCell.Last().Value = CalculateTotal(initValue,countInitValue);
             listCell.Clear();
             foreach (var line in lines) line.gameObject.SetActive(false);
             lines.Clear();
             cellInteractEffect.PlaySound();
-            countInitValue = 0;
+            countInitValue = 0;            
         });
     }
-    BigInteger CalculateTotal(BigInteger initValue, int cellCount)
+    static BigInteger CalculateTotal(BigInteger initValue, int cellCount)
     {
         return initValue * (BigInteger)Mathf.Pow(2, IndexCellCount(cellCount) + 1);
    
     }
-    private int IndexCellCount(int cellCount)
+    static private int IndexCellCount(int cellCount)
     {
         if (cellCount == 0) return -1;
         for (var index = 0; index <= 30; index++)
@@ -155,12 +155,17 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
         }
         return multiliers.Count - 1;
     }
-    private void InitMultilier()
+    static private void InitMultilier()
     {
         for (int i = 0; i <= 30; i++)
         {
             var pow = Mathf.Pow(2, i);
             multiliers.Add((int)pow);
         }
+    }
+    void CheckNextPart(CellTutorial cell)
+    {
+        CellTutorial[] cells = cell.transform.parent.GetComponentsInChildren<CellTutorial>();
+        if (cells.Length <= 2) Tutorial.instance.NextPart();
     }
 }

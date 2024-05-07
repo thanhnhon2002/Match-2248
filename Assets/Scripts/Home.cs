@@ -27,7 +27,12 @@ public class Home : MonoBehaviour
 
     public void ToGameplay()
     {
-        Invoke(nameof(MoveToGamePlay), 0.25f);
+        var userData = GameSystem.userdata;
+        if (!userData.firstPlayGame)
+        {
+            Tutorial.instance.StartTutorial();
+        }
+        else Invoke(nameof(MoveToGamePlay), 0.25f);
     }
     public void MoveToGamePlay()
     {

@@ -68,6 +68,7 @@ public class UserData
     public float gold;
     public float diamond;
     public bool replay;
+    public bool firstPlayGame;
     public BigInteger highestScore;
     public BigInteger highestCellValue;
     public GameData gameData;
