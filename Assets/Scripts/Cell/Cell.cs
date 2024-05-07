@@ -12,6 +12,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public SpriteRenderer spriteRenderer { get; private set; }
     public TextMeshPro valueTxt;
     public ColorSet colorSet { get; private set; }
+    public HighCellEffect highCellEffect { get; private set; }
     public List<Cell> nearbyCell = new List<Cell> ();
     public GridPosition gridPosition;
     public UnityEvent OnInteract;
@@ -38,7 +39,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {     
         spriteRenderer = GetComponent<SpriteRenderer> ();
         colorSet = GetComponent<ColorSet> ();
-        
+        highCellEffect = GetComponent<HighCellEffect> ();
 #if !UNITY_EDITOR
         debugTxt.gameObject.SetActive (false);
 #endif

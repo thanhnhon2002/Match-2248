@@ -10,7 +10,7 @@ public class SettingButton : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private Sprite[] icons;
 
-    private void Awake ()
+    private void OnEnable ()
     {
         var userData = GameSystem.userdata;
         var index = userData.dicSetting[key] ? 1 : 0;

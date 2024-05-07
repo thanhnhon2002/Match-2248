@@ -63,7 +63,11 @@ public class RocketLauncher : MonoBehaviour
     public void PayToLaunchRocket()
     {
         var userData = GameSystem.userdata;
-        if (userData.diamond < cost) return;
+        if (userData.diamond < cost)
+        {
+            GameFlow.Instance.shop.SetActive(true);
+            return;
+        }
         userData.diamond -= cost;
         PopupManager.Instance.HidePopup(PopupOptions.Lose);
         LaunchRocket();

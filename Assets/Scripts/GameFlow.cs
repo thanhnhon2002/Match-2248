@@ -21,8 +21,9 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private TextMeshProUGUI highScoreTxt;
     [SerializeField] private ConectedPointDisplay pointDisplay;
     [SerializeField] private Combo combo;
-    public DiamondGroup diamondGroup;
     [SerializeField] private BonusDiamond bonusDiamond;
+    public GameObject shop;
+    public DiamondGroup diamondGroup;
     public Camera mainCam;
     public ButtonGroup bottomGroup;
     public ButtonGroup topGroup;

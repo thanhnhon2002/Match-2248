@@ -10,6 +10,7 @@ using Quaternion = UnityEngine.Quaternion;
 using System;
 using System.Collections;
 using DarkcupGames;
+using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
 {
@@ -75,8 +76,11 @@ public class GridManager : MonoBehaviour
                 item.gameObject.SetActive(false);
             }
             //StartCoroutine(WaitChoseStart());
+        } else
+        {
+            SetUpCell();
+            HighlightHighestCell();
         }
-        else SetUpCell();
         FirebaseManager.Instance.SetProperty(UserPopertyKey.last_level, maxIndex.ToString());
     }
     void SetUpCell()
@@ -390,13 +394,22 @@ public class GridManager : MonoBehaviour
         foreach (var item in allCell)
         {
             item.FindNearbyCells();
+            HighlightHighestCell();
             if (saveData) userCellDic[item.gridPosition.ToString()] = item.Value;
         }
         if (saveData) GameSystem.SaveUserDataToLocal();
     }
 
+    public void HighlightHighestCell()
+    {
+        foreach (var item in allCell)
+        {
+            if (item.Value == GameSystem.userdata.gameData.currentHighestCellValue) item.highCellEffect.ShowEffect();
+            else item.highCellEffect.StopEffect();
+        }
+    }
 
-    public void LoadCells()
+    private void LoadCells()
     {
         var userCellDic = GameSystem.userdata.gameData.cellDic;
         if (userCellDic != null && userCellDic.Count > 0)

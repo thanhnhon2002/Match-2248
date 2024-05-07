@@ -79,7 +79,7 @@ public class UserData
 
     public UserData()
     {
-        highestCellValue = 2;
+        highestCellValue = 128;
         property = new UserProperty();
         gameData = new GameData();
         dailyRewardInfo = new DailyRewardInfo();

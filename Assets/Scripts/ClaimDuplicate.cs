@@ -9,7 +9,11 @@ public class ClaimDuplicate : MonoBehaviour
     public void OnClick()
     {
         var userData = GameSystem.userdata;
-        if (userData.diamond < cost) return;
+        if (userData.diamond < cost)
+        {
+            GameFlow.Instance.shop.SetActive(true);
+            return;
+        }
         userData.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();
         GridManager.Instance.DoubleHightCellValue();

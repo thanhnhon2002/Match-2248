@@ -20,7 +20,7 @@ public class AnimationBtnPanel : MonoBehaviour
     public void OnClickBtn()
     {
         boder.transform.position = transform.position;
-        claimButton.cost = cost;
+        claimButton.Cost = cost;
         BigInteger.TryParse(textMesh.text, out var value);
         Mathf math;
         GridManager.Instance.SetIndexChose(math.LogBigInt(value,2));
