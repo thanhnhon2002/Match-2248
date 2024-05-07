@@ -13,7 +13,7 @@ public class DiamondGroup : MonoBehaviour
 
     private void Start ()
     {
-        diamondTxt.text = GameSystem.userdata.diamond.ToString ();
+        Display();
     }
 
     public void AddDiamond(int amount, bool doEffect = false)
