@@ -36,4 +36,9 @@ public class MoveHand : MonoBehaviour
         yield return new WaitForSeconds(0.55f);
         yield return StartCoroutine(Animation());
     }
+    private void OnDisable()
+    {
+        Tutorial.instance.hand.transform.DOComplete();
+        Tutorial.instance.hand.SetActive(false);
+    }
 }
