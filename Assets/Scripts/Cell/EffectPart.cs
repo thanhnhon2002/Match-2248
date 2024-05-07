@@ -29,8 +29,9 @@ public class EffectPart : MonoBehaviour
                 sequence.AppendCallback(()=>Tutorial.instance.effects[Tutorial.instance.currentPart-1].part.gameObject.SetActive(false));
             }
             sequence.AppendCallback(()=> part.SetActive(true));
-        }       
-        sequence.Append(Tutorial.instance.background.transform.DOScale(listScale[i], speed).SetEase(Ease.Linear));
+            sequence.Append(Tutorial.instance.background.transform.DOScale(listScale[i], speed*2).SetEase(Ease.Linear));
+        }
+        else sequence.Append(Tutorial.instance.background.transform.DOScale(listScale[i], speed).SetEase(Ease.Linear));
         if (i == 0)
         {          
             sequence.AppendCallback(() =>
