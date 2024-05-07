@@ -12,13 +12,20 @@ public class PlayerInfo : MonoBehaviour
     [SerializeField] private Image avatar;
     [SerializeField] private TextMeshProUGUI nameTxt;
     [SerializeField] private TextMeshProUGUI bestScoreTxt;
+    [SerializeField] private PopupChangeName changeName;
 
     private void OnEnable ()
+    {
+        changeName.gameObject.SetActive(false);
+        DisplayInfo();
+    }
+
+    public void DisplayInfo()
     {
         var userData = GameSystem.userdata;
         avatar.sprite = avatarSprites[userData.avatarIndex];
         nameTxt.text = userData.nickName;
-        LeanTween.value (0f, (float)userData.highestScore, Const.DEFAULT_TWEEN_TIME).setOnUpdate (x =>
+        LeanTween.value(0f, (float)userData.highestScore, Const.DEFAULT_TWEEN_TIME).setOnUpdate(x =>
         {
             bestScoreTxt.text = ((int)x).ToString();
         });

@@ -15,6 +15,7 @@ public class InfiniteScroll : MonoBehaviour
     [SerializeField] private Button upButton;
     [SerializeField] private Button downButton;
     [SerializeField] private CanvasGroup group;
+    [SerializeField] private Transform content;
     private Road displayRoad;
     public int lastUpdateIndex = 1;
 
@@ -41,7 +42,7 @@ public class InfiniteScroll : MonoBehaviour
         upButton.interactable = false;
         downButton.interactable = false;
         var newRoad = PoolSystem.Instance.GetObject(roadPre, Vector3.zero);
-        newRoad.transform.SetParent(transform, false);
+        newRoad.transform.SetParent(content, false);
         newRoad.transform.localScale = Vector3.one;
         newRoad.rectTransform.anchoredPosition = new Vector2(0, -displayRoad.rectTransform.rect.height);
         newRoad.rectTransform.DOAnchorPosY(0, Const.DEFAULT_TWEEN_TIME);
@@ -61,7 +62,7 @@ public class InfiniteScroll : MonoBehaviour
         upButton.interactable = false;
         downButton.interactable = false;
         var newRoad = PoolSystem.Instance.GetObject(roadPre, Vector3.zero);
-        newRoad.transform.SetParent(transform, false);
+        newRoad.transform.SetParent(content, false);
         newRoad.transform.localScale = Vector3.one;
         newRoad.rectTransform.anchoredPosition = new Vector2(0, displayRoad.rectTransform.rect.height);
         newRoad.rectTransform.DOAnchorPosY(0, Const.DEFAULT_TWEEN_TIME);
