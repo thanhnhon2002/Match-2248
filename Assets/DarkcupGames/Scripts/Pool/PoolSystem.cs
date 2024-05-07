@@ -770,7 +770,8 @@ public class PoolSystem : MonoBehaviour
         var key = SliptKey (obj.name);
         if (!allPool.ContainsKey (key))
         {
-            var newObject = Instantiate (obj, position, Quaternion.identity, parent);
+            var newObject = Instantiate (obj, position, Quaternion.identity);
+            newObject.transform.SetParent(parent);
             var newPool = new List<GameObject> ();
             newPool.Add (newObject.gameObject);
             allPool.Add (key, newPool);
