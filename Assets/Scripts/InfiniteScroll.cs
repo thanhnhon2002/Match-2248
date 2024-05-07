@@ -1,50 +1,84 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using Vector3 = UnityEngine.Vector3;
+using Vector2 = UnityEngine.Vector2;
 
-public class InfiniteScroll : MonoBehaviour,IEndDragHandler, IDragHandler, IBeginDragHandler, IPointerDownHandler
+public class InfiniteScroll : MonoBehaviour
 {
-    [SerializeField] private Road[] roads;
-    private Vector2 lastPos;
-    private Vector2 beginPos;
-    private float delta;
-    private void Awake ()
+    [SerializeField] private Road roadPre;
+    [SerializeField] private Button upButton;
+    [SerializeField] private Button downButton;
+    [SerializeField] private CanvasGroup group;
+    private Road displayRoad;
+    public int lastUpdateIndex = 1;
+
+    private void Awake()
     {
-        roads = GetComponentsInChildren<Road>();
+        displayRoad = GetComponentInChildren<Road>();
     }
 
-    public void OnPointerDown (PointerEventData eventData)
+    private void OnEnable()
     {
-        for (int i = 0; i < roads.Length; i++)
-        {
-            roads[i].Move (0f, Vector2.zero);
-        }
+        group.alpha = 0f;
+        group.DOFade(1f, Const.DEFAULT_TWEEN_TIME);
+        upButton.interactable = IsNotLowest();
     }
 
-    public void OnBeginDrag (PointerEventData eventData)
+    private void Start()
     {
-        beginPos = eventData.position;   
-        lastPos = eventData.position;   
+        StartCoroutine(displayRoad.UpdateDisplay());
+        upButton.interactable = IsNotLowest();
     }
 
-    public void OnDrag (PointerEventData eventData)
+    public void Up()
     {
-        delta = eventData.position.y - lastPos.y;
-        for (int i = 0; i < roads.Length; i++)
+        upButton.interactable = false;
+        downButton.interactable = false;
+        var newRoad = PoolSystem.Instance.GetObject(roadPre, Vector3.zero);
+        newRoad.transform.SetParent(transform, false);
+        newRoad.transform.localScale = Vector3.one;
+        newRoad.rectTransform.anchoredPosition = new Vector2(0, -displayRoad.rectTransform.rect.height);
+        newRoad.rectTransform.DOAnchorPosY(0, Const.DEFAULT_TWEEN_TIME);
+        displayRoad.rectTransform.DOAnchorPosY(displayRoad.rectTransform.rect.height, Const.DEFAULT_TWEEN_TIME).OnComplete(() =>
         {
-            var pos = roads[i].rectTransform.anchoredPosition;
-            pos = new Vector2 (0, pos.y + delta);
-            roads[i].rectTransform.anchoredPosition = pos;
-        }
-        lastPos = eventData.position;
+            displayRoad.gameObject.SetActive(false);
+            displayRoad = newRoad;
+            lastUpdateIndex -= newRoad.checkPoints.Length *2;
+            StartCoroutine(newRoad.UpdateDisplay());
+            upButton.interactable = IsNotLowest();
+            downButton.interactable = true;
+        });
     }
-    public void OnEndDrag (PointerEventData eventData)
+
+    public void Down()
     {
-        var direction = eventData.position - beginPos;
-        for (int i = 0; i < roads.Length; i++)
+        upButton.interactable = false;
+        downButton.interactable = false;
+        var newRoad = PoolSystem.Instance.GetObject(roadPre, Vector3.zero);
+        newRoad.transform.SetParent(transform, false);
+        newRoad.transform.localScale = Vector3.one;
+        newRoad.rectTransform.anchoredPosition = new Vector2(0, displayRoad.rectTransform.rect.height);
+        newRoad.rectTransform.DOAnchorPosY(0, Const.DEFAULT_TWEEN_TIME);
+        displayRoad.rectTransform.DOAnchorPosY(-displayRoad.rectTransform.rect.height, Const.DEFAULT_TWEEN_TIME).OnComplete(() =>
         {
-            roads[i].Move (direction.magnitude, direction.normalized);
-        }
+            displayRoad.gameObject.SetActive(false);
+            displayRoad = newRoad;
+            StartCoroutine(newRoad.UpdateDisplay());
+            upButton.interactable = true;
+            downButton.interactable = true;
+        });
+    }
+
+    private bool IsNotLowest() => displayRoad.checkPoints.All(x => x.dislayValue > 2);
+
+    public void Close()
+    {
+        group.DOFade(0f, Const.DEFAULT_TWEEN_TIME).OnComplete(() => gameObject.SetActive(false));
     }
 }
