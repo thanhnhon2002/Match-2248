@@ -1,35 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Road : MonoBehaviour
 {
     public RectTransform rectTransform;
-    [SerializeField] private float speed;
-    private Vector2 direction;
-    private int offset;
+    public CheckPoint[] checkPoints;
+    private InfiniteScroll scroll;
     private void Awake ()
     {
         rectTransform = (RectTransform)transform;
-        offset = 1;
+        scroll = GetComponentInParent<InfiniteScroll>();
     }
 
-    private void Update ()
+    public IEnumerator UpdateDisplay()
     {
-        speed -= Time.deltaTime;
-        if (speed <= 0) speed = 0;
-        rectTransform.anchoredPosition += new Vector2 (0, speed * Time.deltaTime * direction.y);
-        if (rectTransform.anchoredPosition.y *2 < -rectTransform.rect.height)
+        if(scroll == null) scroll = GetComponentInParent<InfiniteScroll>();
+        for (int i = 0; i < checkPoints.Length; i++)
         {
-            rectTransform.anchoredPosition = new Vector2 (rectTransform.anchoredPosition.x, Screen.height /2f);
-            if (offset == 1) offset = 2;
-            else offset = 1;
+            var value = (BigInteger)Mathf.Pow(2, scroll.lastUpdateIndex);
+            checkPoints[i].Display(value);
+            scroll.lastUpdateIndex += 1;
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
-    public void Move (float speed, Vector2 dir)
+    public IEnumerator UpdateDisplayRevres()
     {
-        direction = dir;
-        this.speed = speed;
+        if (scroll == null) scroll = GetComponentInParent<InfiniteScroll>();
+        for (int i = checkPoints.Length - 1; i >= 0; i--)
+        {
+            var value = (BigInteger)Mathf.Pow(2, scroll.lastUpdateIndex);
+            checkPoints[i].Display(value);
+            scroll.lastUpdateIndex -= 1;
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
