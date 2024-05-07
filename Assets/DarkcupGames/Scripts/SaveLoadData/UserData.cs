@@ -79,7 +79,7 @@ public class UserData
 
     public UserData()
     {
-        diamond = 500;
+        highestCellValue = 2;
         property = new UserProperty();
         gameData = new GameData();
         dailyRewardInfo = new DailyRewardInfo();
