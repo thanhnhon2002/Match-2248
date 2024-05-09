@@ -3,10 +3,11 @@ using UnityEngine.Purchasing;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Purchasing.Extension;
 
 namespace DarkcupGames
 {
-    public class MyIAPManager : IStoreListener
+    public class MyIAPManager : IDetailedStoreListener
     {
         public bool initSuccess = false;
         public static string currentBuySKU;
@@ -86,6 +87,11 @@ namespace DarkcupGames
         public void OnInitializeFailed(InitializationFailureReason error, string message)
         {
 
+        }
+
+        public void OnPurchaseFailed(Product product, PurchaseFailureDescription failureDescription)
+        {
+            Debug.LogError("Purchase failed at product " + product + " for reason: " + failureDescription);
         }
     }
 }

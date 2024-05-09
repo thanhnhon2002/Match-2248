@@ -122,12 +122,13 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
     {
         foreach(var cell in listCell)
         {
+            cell.gameObject.SetActive(false);
             var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
             fx.Play(listCell,listCell.IndexOf(cell), cell.spriteRenderer.color, listCell.Last().spriteRenderer.color);    
         }
         DOVirtual.DelayedCall(0.5f, () =>
         {
-            foreach (var cell in listCell) cell.gameObject.SetActive(false);
+            //foreach (var cell in listCell) cell.gameObject.SetActive(false);
             foreach (var cell in listCell) cell.added = false;
             listCell.Last().gameObject.SetActive(true);
             CheckNextPart(listCell.Last());

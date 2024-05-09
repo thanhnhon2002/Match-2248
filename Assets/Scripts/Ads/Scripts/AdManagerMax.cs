@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,7 +27,7 @@ namespace DarkcupGames
         public void ShowIntertistial(Action onWatchAdsComplete)
         {
             bool haveAds = MaxMediationManager.intertistial.IsAdAvailable();
-            if (haveAds == false)
+            if (haveAds == false || GameSystem.userdata.boughtItems.Contains(IAP_ID.no_ads.ToString()))
             {
                 onWatchAdsComplete?.Invoke();
                 return;

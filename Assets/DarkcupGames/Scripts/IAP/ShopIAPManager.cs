@@ -5,8 +5,9 @@ using TMPro;
 using UnityEngine.Purchasing;
 using System;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
-public enum IAP_ID { no_ads, vip1, unlock_all_hero, beginer }
+public enum IAP_ID { no_ads, diamond_100, diamond_300, diamond_500, diamond_1k1, diamond_2k5, diamond_5k, diamond_10k }
 
 namespace DarkcupGames
 {
@@ -14,6 +15,8 @@ namespace DarkcupGames
     {
         public static ShopIAPManager Instance;
         public static MyIAPManager iap;
+        public Transform clickedButton;
+        [SerializeField] private TextMeshProUGUI diamondTxt;
 
         private void Awake()
         {
@@ -28,11 +31,22 @@ namespace DarkcupGames
             }
         }
 
+        private void OnEnable()
+        {
+            var userData = GameSystem.userdata;
+            diamondTxt.text = userData.diamond.ToString();
+        }
+
         public void Init()
         {
             iap = new MyIAPManager();
             var builder = ConfigurationBuilder.Instance(StandardPurchasingModule.Instance());
-            builder.AddProduct("no_ads", ProductType.NonConsumable);
+            var ids = (IAP_ID[])Enum.GetValues(typeof(IAP_ID));
+            foreach ( var id in ids)
+            {
+                if (id == IAP_ID.no_ads) builder.AddProduct(id.ToString(), ProductType.NonConsumable);
+                else builder.AddProduct(id.ToString(), ProductType.Consumable);
+            }
             UnityPurchasing.Initialize(iap, builder);
         }
 
@@ -72,15 +86,10 @@ namespace DarkcupGames
             if (boughNoAds) return;
             iap.OnPurchaseClicked(id, () =>
             {
-                int DIAMOND_AMOUNT = 0;
-                int GOLD_AMOUNT = 0;
-
                 if (GameSystem.userdata.boughtItems == null) GameSystem.userdata.boughtItems = new List<string>();
                 if (GameSystem.userdata.boughtItems.Contains(id) == false)
                 {
                     GameSystem.userdata.boughtItems.Add(id);
-                    GameSystem.userdata.diamond += DIAMOND_AMOUNT;
-                    GameSystem.userdata.gold += GOLD_AMOUNT;
                     GameSystem.SaveUserDataToLocal();
                 }
                 string currentScene = SceneManager.GetActiveScene().name;
@@ -88,30 +97,35 @@ namespace DarkcupGames
             });
         }
 
-        public void BuyUnlockAllHeroPackage()
+        public void BuyDiamond(IAP_ID id)
         {
-            if (IsInitDone() == false) return;
-            if (GameSystem.userdata.boughtItems == null) GameSystem.userdata.boughtItems = new List<string>();
-            bool boughAllHero = GameSystem.userdata.boughtItems.Contains(IAP_ID.unlock_all_hero.ToString());
-            if (boughAllHero) return;
-
-            string id = IAP_ID.unlock_all_hero.ToString();
-            iap.OnPurchaseClicked(id, () =>
+            if (IsInitDone() == false)
             {
-                int DIAMOND_AMOUNT = 0;
-                int GOLD_AMOUNT = 0;
-                if (GameSystem.userdata.boughtItems == null) GameSystem.userdata.boughtItems = new List<string>();
-                if (GameSystem.userdata.boughtItems.Contains(id) == false)
-                {
-                    GameSystem.userdata.boughtItems.Add(id);
-                    GameSystem.userdata.diamond += DIAMOND_AMOUNT;
-                    GameSystem.userdata.gold += GOLD_AMOUNT;
-                    GameSystem.SaveUserDataToLocal();
-                }
-                LeanTween.delayedCall(2f, () =>
-                {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                });
+                return;
+            }
+            var amount = id switch
+            {
+                IAP_ID.diamond_100 =>  100,
+                IAP_ID.diamond_300 =>  300,
+                IAP_ID.diamond_500 =>  500,
+                IAP_ID.diamond_1k1 =>  1100,
+                IAP_ID.diamond_2k5 =>  2500,
+                IAP_ID.diamond_5k =>  5000,
+                IAP_ID.diamond_10k =>  10000,
+                _=> 0
+            };
+
+            if(amount == 0)
+            {
+                Debug.LogError("Wrong id");
+                return;
+            }
+
+            iap.OnPurchaseClicked(id.ToString(), () =>
+            {
+                GameSystem.userdata.diamond += amount;
+                GameSystem.SaveUserDataToLocal();
+                UIManager.Instance.SpawnEffectReward(clickedButton);
             });
         }
     }
