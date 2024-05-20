@@ -12,7 +12,7 @@ public class EffectOnOpen : MonoBehaviour
 
     private void OnEnable ()
     {
-        transform.localScale = Vector3.zero;
+        transform.localScale = new Vector3(0.5f,0.5f,0.5f);
         parent.alpha = 0f;
         for (int i = 0; i < fadeElenemt.Length; i++)
         {
@@ -23,7 +23,7 @@ public class EffectOnOpen : MonoBehaviour
 
     private IEnumerator DoEffect()
     {
-        transform.DOScale (1f, fadeTime);
+        transform.DOScale (1f, fadeTime).SetEase(Ease.OutBack);
         parent.DOFade (1f, fadeTime);
         yield return new WaitForSeconds (fadeTime);
         for (int i = 0; i < fadeElenemt.Length; i++)

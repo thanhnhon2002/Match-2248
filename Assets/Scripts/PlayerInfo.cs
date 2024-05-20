@@ -30,10 +30,4 @@ public class PlayerInfo : MonoBehaviour
             bestScoreTxt.text = ((int)x).ToString();
         });
     }
-
-    public void Close()
-    {
-        transform.DOScale (0f, Const.DEFAULT_TWEEN_TIME);
-        group.DOFade (0f, Const.DEFAULT_TWEEN_TIME).OnComplete (() => gameObject.SetActive (false));
-    }
 }

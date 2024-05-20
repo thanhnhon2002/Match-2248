@@ -26,9 +26,14 @@ public class InfiniteScroll : MonoBehaviour
 
     private void OnEnable()
     {
-        group.alpha = 0f;
-        group.DOFade(1f, Const.DEFAULT_TWEEN_TIME);
-        upButton.interactable = IsNotLowest();
+        //0.1f because of the BounceOnClick script animation run 0.1 seccond
+        DOVirtual.DelayedCall(0.1f, () =>
+        {
+            group.alpha = 0f;
+            group.DOFade(1f, Const.DEFAULT_TWEEN_TIME);
+            upButton.interactable = IsNotLowest();
+        });
+        
     }
 
     private void Start()
