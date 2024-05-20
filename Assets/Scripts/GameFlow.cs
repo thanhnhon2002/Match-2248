@@ -210,16 +210,12 @@ public class GameFlow : MonoBehaviour
 
     public void GetDiamond()
     {
-        GameSystem.userdata.diamond += 20;
-        GameSystem.SaveUserDataToLocal();
-        diamondGroup.Display();
+        diamondGroup.AddDiamond(20);
     }
 
     public void GetDiamond(Transform spawner)
     {
-        GameSystem.userdata.diamond += 20;
-        GameSystem.SaveUserDataToLocal();
-        diamondGroup.Display();
+        diamondGroup.AddDiamond(20);
         UIManager.Instance.SpawnEffectReward(spawner);
     }
 
