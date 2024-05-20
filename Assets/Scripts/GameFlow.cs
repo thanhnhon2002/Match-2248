@@ -181,7 +181,11 @@ public class GameFlow : MonoBehaviour
 
     public void AddScore(BigInteger score)
     {
-        LeanTween.value ((float)GameScore, (float)(GameScore + score), Const.DEFAULT_TWEEN_TIME).setOnUpdate ((x) => 
+        //LeanTween.value((float)GameScore, (float)(GameScore + score), Const.DEFAULT_TWEEN_TIME).setOnUpdate((x) =>
+        //{
+        //    GameScore = (BigInteger)x;
+        //});
+        DOVirtual.Float((float)GameScore, (float)(GameScore + score), Const.DEFAULT_TWEEN_TIME, x =>
         {
             GameScore = (BigInteger)x;
         });

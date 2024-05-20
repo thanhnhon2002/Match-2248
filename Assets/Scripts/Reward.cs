@@ -15,8 +15,7 @@ public class Reward : MonoBehaviour
         Home.Instance.dailyReward.gameObject.SetActive(false);
         var userData = GameSystem.userdata;
         userData.dailyRewardInfo.hasClaim[index] = true;
-        userData.diamond += amount;
-        GameSystem.SaveUserDataToLocal();
+        DiamondGroup.Instance.AddDiamond(amount,false);
         UIManager.Instance.SpawnEffectReward(claimButton.transform);
     }
 }

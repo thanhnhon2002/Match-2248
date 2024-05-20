@@ -1,36 +1,48 @@
 using DarkcupGames;
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DiamondGroup : MonoBehaviour
 {
+    public static DiamondGroup Instance;
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI diamondTxt;
 
     private void Start ()
     {
+        Instance = this;
         Display();
     }
 
     public void AddDiamond(int amount, bool doEffect = false)
     {
         var userData = GameSystem.userdata;
-        userData.diamond += amount;
+        DOVirtual.Float(userData.diamond, userData.diamond + amount, Const.DEFAULT_TWEEN_TIME, x =>
+        {
+            userData.diamond = x;
+            diamondTxt.text = "" + (BigInteger)x;
+        });
         GameSystem.SaveUserDataToLocal ();
-        diamondTxt.text = userData.diamond.ToString ();
         if (!doEffect) return;
         EasyEffect.Bounce (icon.gameObject, 0.1f) ;
     }
     public void AddDiamond(int amount)
     {
         var userData = GameSystem.userdata;
-        userData.diamond += amount;
-        GameSystem.SaveUserDataToLocal ();
-        diamondTxt.text = userData.diamond.ToString ();
+        DOVirtual.Float(userData.diamond, userData.diamond + amount, Const.DEFAULT_TWEEN_TIME, x =>
+        {
+            userData.diamond = x;
+            diamondTxt.text = ""+(BigInteger)x;
+        });
+        
+        GameSystem.SaveUserDataToLocal();
+        
     }
 
     public void Display()

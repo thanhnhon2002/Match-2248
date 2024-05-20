@@ -2359,6 +2359,7 @@ MonoBehaviour:
   scoreTxt: {fileID: 2063272895}
   dailyReward: {fileID: 2059104150}
   diamondAdButton: {fileID: 5030684159142953039}
+  diamondGroup: {fileID: 991176196}
 --- !u!4 &267486058
 Transform:
   m_ObjectHideFlags: 0

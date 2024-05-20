@@ -13,6 +13,7 @@ public class Home : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreTxt;
     public DailyReward dailyReward;
     public Button diamondAdButton;
+    public DiamondGroup diamondGroup;
     private void Awake ()
     {
         Instance = this;
@@ -39,9 +40,8 @@ public class Home : MonoBehaviour
         SceneManager.LoadScene("GameplayUI");
     }
     public void GetDiamond()
-    {        
-        GameSystem.userdata.diamond += 20;
-        GameSystem.SaveUserDataToLocal();
+    {
+        diamondGroup.AddDiamond(20,false);
         UIManager.Instance.SpawnEffectReward(diamondAdButton.transform);
     }
 
