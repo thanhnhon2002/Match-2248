@@ -10,6 +10,7 @@ using Quaternion = UnityEngine.Quaternion;
 using System;
 using System.Collections;
 using DarkcupGames;
+using DeepTrackSDK;
 using UnityEngine.UIElements;
 
 public class GridManager : MonoBehaviour
@@ -76,7 +77,8 @@ public class GridManager : MonoBehaviour
                 item.gameObject.SetActive(false);
             }
             //StartCoroutine(WaitChoseStart());
-        } else
+        }
+        else
         {
             SetUpCell();
             HighlightHighestCell();
@@ -92,7 +94,10 @@ public class GridManager : MonoBehaviour
             maxIndex = Space_Index + minIndex - 1;
             maxIndexRandom = (int)(maxIndex + minIndex) / 2 + 2;
             indexPlayer = maxIndexRandom;
-        } else LoadDataIndex();
+            FirebaseManager.Instance.LogLevelStart(maxIndexRandom, false);
+            DeepTrack.LogLevelStart(maxIndexRandom);
+        }
+        else LoadDataIndex();
         foreach (var item in allCell)
         {
             girdPosToLocal.Add(item.gridPosition, item.transform.localPosition);
@@ -142,6 +147,8 @@ public class GridManager : MonoBehaviour
         minIndex = userData.gameData.minIndex;
         maxIndex = userData.gameData.maxIndex;
         maxIndexRandom = userData.gameData.maxIndexRandom;
+        FirebaseManager.Instance.LogLevelStart(maxIndexRandom, true);
+        DeepTrack.LogLevelStart(maxIndexRandom);
     }
 
     public Cell SpawnCell(Vector2 position, int value)
@@ -175,6 +182,7 @@ public class GridManager : MonoBehaviour
             indexPlayer = index;
             Debug.Log("New Block 2^" + indexPlayer);
             FirebaseManager.Instance.LogLevelPass(index, GameFlow.Instance.timeCount);
+            DeepTrack.LogLevelWin(index);
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }

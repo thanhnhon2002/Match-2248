@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeepTrackSDK;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,10 +33,14 @@ namespace DarkcupGames
                 onWatchAdsComplete?.Invoke();
                 return;
             }
-            onWatchAdsComplete += ()=> adBreak.gameObject.SetActive(false);
+            onWatchAdsComplete += () =>
+            {
+                DeepTrack.LogEvent(DeepTrackEvent.inter_success);
+                adBreak.gameObject.SetActive(false);
+            };
             adBreak.gameObject.SetActive(true);
             LeanTween.delayedCall(1f, () =>
-            {           
+            {
                 MaxMediationManager.intertistial.ShowAds(onWatchAdsComplete);
                 GameSystem.userdata.property.total_interstitial_ads++;
                 GameSystem.SaveUserDataToLocal();
@@ -51,6 +56,7 @@ namespace DarkcupGames
                 var onWatchAdsFinished = events[id];
                 MaxMediationManager.rewarded.ShowAds(() =>
                 {
+                    DeepTrack.LogEvent(DeepTrackEvent.reward_success);
                     loadingAdPopup.SetActive(false);
                     onWatchAdsFinished?.Invoke();
                 });

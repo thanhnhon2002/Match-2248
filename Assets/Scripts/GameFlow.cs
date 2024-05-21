@@ -8,6 +8,7 @@ using DG.Tweening;
 using DarkcupGames;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using DeepTrackSDK;
 
 public enum GameState
 {
@@ -118,6 +119,7 @@ public class GameFlow : MonoBehaviour
     public void ShowLosePopup()
     {
         FirebaseManager.Instance.LogLevelFail(GridManager.Instance.MaxIndex, timeCount);
+        DeepTrack.LogLevelLose(GridManager.Instance.MaxIndex);
         gameState = GameState.GameOver;
         PopupManager.Instance.ShowPopup(PopupOptions.Lose);
         var userData = GameSystem.userdata;
