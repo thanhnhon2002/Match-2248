@@ -11,7 +11,7 @@ public class RewardEventLog : MonoBehaviour
     [SerializeField] private string placement;
     private void Awake()
     {
-        var button = GetComponent<Button>();
+        var button = GetComponentInChildren<Button>();
         button.onClick.AddListener(() =>
         {
             FirebaseManager.Instance.LogReward(placement);
