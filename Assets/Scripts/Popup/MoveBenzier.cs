@@ -8,7 +8,7 @@ public class MoveBenzier : MonoBehaviour
     public Transform onePos;
     public Transform twoPos;
     Transform threePos;
-    public static float timeDafault = 1.2f;
+    public static float timeDafault = 1f;
     float time;
     Vector3 towPosRandom;
     Vector3 firstTarget;
