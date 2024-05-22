@@ -24,5 +24,6 @@ public class SettingButton : MonoBehaviour
         var index = userData.dicSetting[key] ? 1 : 0;
         icon.sprite = icons[index];
         GameSystem.SaveUserDataToLocal ();
+        Vibration.Vibrate(100);
     }
 }

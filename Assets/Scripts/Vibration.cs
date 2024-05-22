@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-
 public static class Vibration
 {
 
@@ -53,7 +52,7 @@ public static class Vibration
             vibrator.Call("cancel");
     }
 
-    private static bool isAndroid()
+    public static bool isAndroid()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
 	return true;

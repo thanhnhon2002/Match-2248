@@ -26,7 +26,7 @@ namespace DarkcupGames
         {
             var impressionParameters = new[] {
                                         new Firebase.Analytics.Parameter("ad_platform", "AppLovin"),
-                                        new Firebase.Analytics.Parameter("placement", placement), 
+                                        new Firebase.Analytics.Parameter("placement", placement),
             };
             Firebase.Analytics.FirebaseAnalytics.LogEvent("rewarded_show_success", impressionParameters);
         }
@@ -81,7 +81,8 @@ namespace DarkcupGames
             {
                 onShowAdsComplete?.Invoke();
                 isShowingAds = false;
-            } else
+            }
+            else
             {
                 MaxSdk.ShowRewardedAd(REWARD_ID);
                 isShowingAds = true;

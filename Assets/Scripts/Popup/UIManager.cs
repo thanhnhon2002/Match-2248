@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class UIManager : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class UIManager : MonoBehaviour
     public GameObject prefabReward;
     public Transform uiReward;
     public DiamondGroup diamondGroup;
+    float timeCount;
     private void Awake()
     {
         if (Instance == null)
@@ -14,12 +16,19 @@ public class UIManager : MonoBehaviour
     }
     public void SpawnEffectReward(Transform spawner)
     {
+        timeCount = 0;
+        StartCoroutine(ISpawnEffectReward(spawner));
+
+    }
+    public IEnumerator ISpawnEffectReward(Transform spawner)
+    {
         var obj = PoolSystem.Instance.GetObject(prefabReward, spawner.position, PopupManager.Instance.transform);
         obj.GetComponent<SoundPopup>().PlayPopupSound();
-        LeanTween.value(0, 1, MoveBenzier.timeDafault+0.3f).setOnComplete(()=>
+        while (timeCount <= MoveBenzier.timeDafault + 0.3f)
         {
-            diamondGroup.Display();
-            obj.SetActive(false);
-        });
+            timeCount += Time.deltaTime;
+            yield return null;
+        }
+        diamondGroup.Display();
     }
 }
