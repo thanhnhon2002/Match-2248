@@ -48,6 +48,10 @@ public class PopupManager : MonoBehaviour
             popupDic.Add(item.option, item);
         }
     }
+    public Popup GetPopup(PopupOptions option)
+    {
+        return popupDic[option];
+    }
     public void SubShowPopup(DataEventPopup data)
     {
         queueShow.Enqueue(data);

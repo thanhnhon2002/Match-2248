@@ -130,6 +130,8 @@ public class GameFlow : MonoBehaviour
 
     public void PauseGame()
     {
+        if (PopupManager.Instance.GetPopup(PopupOptions.Pause).gameObject.activeInHierarchy)
+            return;
         gameState = GameState.Pause;
         PopupManager.Instance.ShowPopup (PopupOptions.Pause);
     }
