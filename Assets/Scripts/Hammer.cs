@@ -19,13 +19,6 @@ public class Hammer : Power
     public override void UsePower ()
     {
         if (GameFlow.Instance.gameState != GameState.Playing) return;
-        if (GameSystem.userdata.diamond < cost)
-        {
-            GameFlow.Instance.shop.SetActive (true);
-            return;
-        }
-        GameSystem.userdata.diamond -= cost;
-        GameFlow.Instance.diamondGroup.Display();
         base.UsePower ();
         GameFlow.Instance.gameState = GameState.Smash;
         hammer.SetBool ("Play", true);
@@ -34,6 +27,13 @@ public class Hammer : Power
 
     public void Smash(Cell cell)
     {
+        if (GameSystem.userdata.diamond < cost)
+        {
+            GameFlow.Instance.shop.SetActive(true);
+            return;
+        }
+        GameSystem.userdata.diamond -= cost;
+        GameFlow.Instance.diamondGroup.Display();
         if (chose) return;
         chose = true;
         backButton.gameObject.SetActive (false); 
