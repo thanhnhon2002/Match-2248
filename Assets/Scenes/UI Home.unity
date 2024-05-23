@@ -3328,7 +3328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.8117647}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.7058824}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3366,7 +3366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   option: 9
-  originSize: {x: 0, y: 0, z: 0}
+  originSize: {x: 1, y: 1, z: 1}
   buttons: []
   topic: {fileID: 0}
   content: {fileID: 0}
@@ -3375,7 +3375,6 @@ MonoBehaviour:
   btnClaim: {fileID: 0}
   textPanel: {fileID: 0}
   listAppear:
-  - {fileID: 1204535926}
   - {fileID: 752896234}
 --- !u!1 &367916574
 GameObject:
@@ -6236,7 +6235,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &752896235
 RectTransform:
   m_ObjectHideFlags: 0
