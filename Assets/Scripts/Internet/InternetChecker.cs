@@ -15,7 +15,6 @@ public class InternetChecker : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
     private void Start()
     {
         InitCheckInternetConnection();
@@ -41,7 +40,6 @@ public class InternetChecker : MonoBehaviour
 
         wasConnected = isConnected;
     }
-
     private void OnInternetDisconnected()
     {
         Debug.Log("Internet connection lost.");
@@ -49,8 +47,8 @@ public class InternetChecker : MonoBehaviour
     }
     private void ShowNoInternetConnectionPopup()
     {
-        PopupManager.Instance.ShowPopup(PopupOptions.NoInternet);
         Debug.Log("Please check your internet connection.");
+        PopupManager.Instance.ShowPopup(PopupOptions.NoInternet);
     }
     private void OnInternetReconnected()
     {
@@ -59,8 +57,8 @@ public class InternetChecker : MonoBehaviour
     }
     private void HideNoInternetConnectionPopup()
     {
-        PopupManager.Instance.HidePopup(PopupOptions.NoInternet);
         Debug.Log("Internet connection is back.");
+        PopupManager.Instance.HidePopup(PopupOptions.NoInternet);
     }
 }
 
