@@ -66,7 +66,7 @@ public class PopupAnimation : Popup
     }
     IEnumerator AnimationDisappear()
     {
-        EasyEffect.Disappear(topic.gameObject, 1, 0, 0.1f);
+        if (topic != null) EasyEffect.Disappear(topic.gameObject, 1, 0, 0.1f);
         if (content != null) EasyEffect.Disappear(content.gameObject, 1, 0, 0.1f);
         if (reward != null)
         {
