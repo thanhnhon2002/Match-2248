@@ -46,7 +46,7 @@ public class GameFlow : MonoBehaviour
             if (gameScore > userData.highestScore)
             {
                 userData.highestScore = gameScore;
-                highScoreTxt.text = gameScore.ToString ();
+                highScoreTxt.text = BigIntegerConverter.ConverNameValue(gameScore);
             }
             GameSystem.SaveUserDataToLocal ();
         }

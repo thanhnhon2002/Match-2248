@@ -20,6 +20,7 @@ public class GridManager : MonoBehaviour
     public readonly int MAX_COL = 5;
     private const int Space_Index = 10;
     private const int Space_MaxIndex = 13;
+    private const int MIN_HIGHLIGHT_VALUE = 128;
 
     public static GridManager Instance { get; private set; }
     public static readonly List<GridPosition> neighbourGridPosition = new List<GridPosition>()
@@ -412,7 +413,7 @@ public class GridManager : MonoBehaviour
     {
         foreach (var item in allCell)
         {
-            if (item.Value == GameSystem.userdata.gameData.currentHighestCellValue) item.highCellEffect.ShowEffect();
+            if (item.Value == GameSystem.userdata.gameData.currentHighestCellValue && item.Value > MIN_HIGHLIGHT_VALUE) item.highCellEffect.ShowEffect();
             else item.highCellEffect.StopEffect();
         }
     }
