@@ -18,7 +18,8 @@ public enum PopupOptions
     MakeSure,
     Lose,
     Duplicate,
-    StartFrom
+    StartFrom,
+    NoInternet,
 }
 public class DataEventPopup : EventArgs
 {

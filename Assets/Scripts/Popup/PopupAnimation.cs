@@ -18,7 +18,7 @@ public class PopupAnimation : Popup
     {
         if (gameObject.activeInHierarchy) return;
         base.Appear();
-        if(transform.TryGetComponent<SoundPopup>(out soundPopup)) soundPopup.PlayPopupSound();
+        if (transform.TryGetComponent<SoundPopup>(out soundPopup)) soundPopup.PlayPopupSound();
         if (textPanel != null) textPanel.SetText();
         StartCoroutine(AnimationAppear());
     }
@@ -29,26 +29,26 @@ public class PopupAnimation : Popup
     }
     IEnumerator AnimationAppear()
     {
-        EasyEffect.Appear(topic.gameObject, 0.2f, 1, 0.15f);
+        if (topic != null) EasyEffect.Appear(topic.gameObject, 0.2f, 1, 0.15f);
         yield return new WaitForSeconds(0.15f);
         if (content != null)
         {
             EasyEffect.Appear(content.gameObject, 0.2f, 1, 0.15f);
             yield return new WaitForSeconds(0.15f);
         }
-        if(panel != null)
+        if (panel != null)
         {
             panel.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.1f);
-        }      
-        if(reward != null)
+        }
+        if (reward != null)
         {
             EasyEffect.Appear(reward, 0.5f, 1, 0.15f);
             yield return new WaitForSeconds(0.15f);
         }
-        if(listAppear != null && listAppear.Length>0)
+        if (listAppear != null && listAppear.Length > 0)
         {
-            foreach(var child in listAppear)
+            foreach (var child in listAppear)
             {
                 EasyEffect.Appear(child, 0.5f, 1, 0.2f);
                 yield return new WaitForSeconds(0.15f);
@@ -59,8 +59,8 @@ public class PopupAnimation : Popup
             this.UnLockButton();
             yield break;
         }
-        EasyEffect.Appear(btnClaim.gameObject, 0.5f, 1, 0.15f,1.2f, this.UnLockButton);      
-        btnClaim?.onClick.RemoveAllListeners();       
+        EasyEffect.Appear(btnClaim.gameObject, 0.5f, 1, 0.15f, 1.2f, this.UnLockButton);
+        btnClaim?.onClick.RemoveAllListeners();
         btnClaim?.onClick.AddListener(PopupManager.Instance.DeQueue);
         btnClaim?.onClick.AddListener(() => Disappear());
     }
@@ -80,7 +80,7 @@ public class PopupAnimation : Popup
                 yield return new WaitForSeconds(0.1f);
             }
         }
-        if(btnClaim!=null) EasyEffect.Disappear(btnClaim.gameObject, 1, 0, 0.1f);
+        if (btnClaim != null) EasyEffect.Disappear(btnClaim.gameObject, 1, 0, 0.1f);
         yield return new WaitForSeconds(0.1f);
         if (panel != null) panel.gameObject.SetActive(false);
     }
