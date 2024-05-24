@@ -9,6 +9,7 @@ namespace DarkcupGames
 {
     public class AdManagerMax : MonoBehaviour
     {
+        private const float DELAY_SHOW_INTER = 0.5f;
         public static AdManagerMax Instance { get; private set; }
         public List<UnityEvent> events;
         [SerializeField] private GameObject loadingAdPopup;
@@ -39,7 +40,7 @@ namespace DarkcupGames
                 adBreak.gameObject.SetActive(false);
             };
             adBreak.gameObject.SetActive(true);
-            LeanTween.delayedCall(1f, () =>
+            LeanTween.delayedCall(DELAY_SHOW_INTER, () =>
             {
                 MaxMediationManager.intertistial.ShowAds(onWatchAdsComplete);
                 GameSystem.userdata.property.total_interstitial_ads++;
