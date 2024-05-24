@@ -9,7 +9,7 @@ using Vector3 = UnityEngine.Vector3;
 public class Player : MonoBehaviour
 {
     public static Player Instance { get; private set; }
-    public Vector3 mousePos { get; private set; }
+    public UnityEngine.Vector2 mousePos { get; private set; }
     [SerializeField] private Line linePrefab;
     [SerializeField] private Effect effectPrefab;
     [SerializeField] private AudioClip[] conectedSound;
