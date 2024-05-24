@@ -20,19 +20,17 @@ public class Swap : Power
     public override void UsePower ()
     {
         if (GameFlow.Instance.gameState != GameState.Playing) return;
+        if (GameSystem.userdata.diamond < cost)
+        {
+            GameFlow.Instance.shop.SetActive(true);
+            return;
+        }
         base.UsePower ();
         GameFlow.Instance.gameState = GameState.Swap;
     }
 
     public void ChoseCell (Cell cell)
     {
-        if (GameSystem.userdata.diamond < cost)
-        {
-            GameFlow.Instance.shop.SetActive(true);
-            return;
-        }
-        GameSystem.userdata.diamond -= cost;
-        GameFlow.Instance.diamondGroup.Display();
         AudioSystem.Instance.PlaySound(interactSound);
         if (chosenCell.Contains (cell))
         {
@@ -48,6 +46,8 @@ public class Swap : Power
             cellHighlight.Add (highligt);
         }
         if (chosenCell.Count < 2) return;
+        GameSystem.userdata.diamond -= cost;
+        GameFlow.Instance.diamondGroup.Display();
         backButton.gameObject.SetActive (false);
         for (int i = 0; i < chosenCell.Count; i++)
         {

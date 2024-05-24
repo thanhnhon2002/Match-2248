@@ -11,7 +11,7 @@ public class Hammer : Power
     [SerializeField] private ParticalSystemController smashFx;
     [SerializeField] private AudioClip cellSmashSound;
     private bool chose;
-    public List<Cell> debug;
+    private Cell cell;
     private void Awake ()
     {
         Instance = this;
@@ -19,6 +19,12 @@ public class Hammer : Power
     public override void UsePower ()
     {
         if (GameFlow.Instance.gameState != GameState.Playing) return;
+        if (GameSystem.userdata.diamond < cost)
+        {
+            GameFlow.Instance.shop.SetActive(true);
+            return;
+        }
+        cell = null;
         base.UsePower ();
         GameFlow.Instance.gameState = GameState.Smash;
         hammer.SetBool ("Play", true);
@@ -27,11 +33,8 @@ public class Hammer : Power
 
     public void Smash(Cell cell)
     {
-        if (GameSystem.userdata.diamond < cost)
-        {
-            GameFlow.Instance.shop.SetActive(true);
-            return;
-        }
+        if (this.cell != null) return;
+        this.cell = cell;
         GameSystem.userdata.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();
         if (chose) return;
@@ -80,8 +83,6 @@ public class Hammer : Power
         cellsInSameCol.Sort ((a, b) => a.transform.localPosition.y.CompareTo (b.transform.localPosition.y));
 
         GridManager.Instance.ReassignGridPos (collomIndex, cellsInSameCol);
-        debug.Clear ();
-        debug.AddRange(cellsInSameCol);
         LeanTween.delayedCall (0.5f, () => GridManager.Instance.Drop ());
     }
 }
