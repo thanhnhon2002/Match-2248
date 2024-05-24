@@ -24,18 +24,6 @@ public class InfiniteScroll : MonoBehaviour
         displayRoad = GetComponentInChildren<Road>();
     }
 
-    private void OnEnable()
-    {
-        //0.1f because of the BounceOnClick script animation run 0.1 seccond
-        DOVirtual.DelayedCall(0.1f, () =>
-        {
-            group.alpha = 0f;
-            group.DOFade(1f, Const.DEFAULT_TWEEN_TIME);
-            upButton.interactable = IsNotLowest();
-        });
-        
-    }
-
     private void Start()
     {
         StartCoroutine(displayRoad.UpdateDisplay());
@@ -83,8 +71,4 @@ public class InfiniteScroll : MonoBehaviour
 
     private bool IsNotLowest() => displayRoad.checkPoints.All(x => x.dislayValue > 2);
 
-    public void Close()
-    {
-        group.DOFade(0f, Const.DEFAULT_TWEEN_TIME).OnComplete(() => gameObject.SetActive(false));
-    }
 }
