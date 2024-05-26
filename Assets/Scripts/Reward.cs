@@ -12,10 +12,11 @@ public class Reward : MonoBehaviour
 
     public void GetReward()
     {
-        Home.Instance.dailyReward.gameObject.SetActive(false);
         var userData = GameSystem.userdata;
         userData.dailyRewardInfo.hasClaim[index] = true;
+        PlayerPrefs.SetInt(DailyReward.HAS_CLAIM + index, 1);
         DiamondGroup.Instance.AddDiamond(amount,false);
         UIManager.Instance.SpawnEffectReward(claimButton.transform);
+        Home.Instance.dailyReward.gameObject.SetActive(false);
     }
 }
