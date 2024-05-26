@@ -37,7 +37,6 @@ public class DailyReward : MonoBehaviour
         if (DateTime.Now.Ticks - userData.dailyRewardInfo.lastRewardTick >= TimeSpan.TicksPerDay)
         {
             userData.dailyRewardInfo.lastRewardTick = DateTime.Now.Ticks;
-            PlayerPrefs.SetString(LAST_REWARD_TICK, userData.dailyRewardInfo.lastRewardTick.ToString());
             var claimList = userData.dailyRewardInfo.hasClaim;
             for (int i = 0; i < claimList.Count; i++)
             {
