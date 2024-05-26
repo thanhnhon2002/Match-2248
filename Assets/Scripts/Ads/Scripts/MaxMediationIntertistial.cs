@@ -33,7 +33,7 @@ namespace DarkcupGames
             }
             retryCount++;
             float time = Mathf.Pow(2, retryCount);
-            if (time > 64) time = 64;
+            if (time > AdManagerMax.MAX_RETRY_TIME) time = AdManagerMax.MAX_RETRY_TIME;
             Invoke(nameof(LoadAds), time);
         }
 

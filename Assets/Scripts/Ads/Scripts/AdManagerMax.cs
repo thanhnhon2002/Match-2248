@@ -10,6 +10,7 @@ namespace DarkcupGames
     public class AdManagerMax : MonoBehaviour
     {
         private const float DELAY_SHOW_INTER = 0.5f;
+        public static readonly float MAX_RETRY_TIME = 64f;
         public static AdManagerMax Instance { get; private set; }
         public List<UnityEvent> events;
         [SerializeField] private GameObject loadingAdPopup;

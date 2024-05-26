@@ -50,7 +50,7 @@ public class AdmobAppOpen : AdmobAds
                 available = false;
                 retryCount++;
                 float time = Mathf.Pow(2, retryCount);
-                if (time > 64) time = 64;
+                if (time > AdmobManager.MAX_RETRY_TIME) time = AdmobManager.MAX_RETRY_TIME;
                 Invoke(nameof(LoadAds), time);
                 return;
             }
