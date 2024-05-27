@@ -4374,7 +4374,7 @@ MonoBehaviour:
   _collapsibleBannerEnabled: 1
   _collapsibleBannerFallbackEnabled: 1
   _collapsibleBannerInterval: 40
-  _timeBetweenAds: 30
+  _timeBetweenAds: 120
 --- !u!114 &1853896789
 MonoBehaviour:
   m_ObjectHideFlags: 0
