@@ -112,8 +112,8 @@ namespace DeepTrackSDK
 
         private static void SetCurrentLevel(int level)
         {
-            Debug.LogError(level + "level");
-            Debug.LogError(userData.level + "userlevel");
+            //Debug.LogError(level + "level");
+            //Debug.LogError(userData.level + "userlevel");
             userData.level = level;
 
             if (userData.maxLevel < level)

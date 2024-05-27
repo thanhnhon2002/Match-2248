@@ -10,10 +10,13 @@ public class RemoteConfig : MonoBehaviour
     [SerializeField] private bool _collapsibleBannerFallbackEnabled = true;
     [SerializeField] private float _collapsibleBannerInterval = 40f;
     [SerializeField] private float _timeBetweenAds = 120f;
+    [SerializeField] private float _giftInterval = 120f;
     public bool COLLAPSIBLE_BANNER_ENABLED => _collapsibleBannerEnabled;
     public bool COLLAPSIBLE_FALLBACK_ENABLED => _collapsibleBannerFallbackEnabled;
     public float COLLAPSIBLE_BANNER_INTERVAL => _collapsibleBannerInterval;
     public float TIME_BETWEEN_ADS => _timeBetweenAds;
+
+    public float GIFT_INTERVAL => _giftInterval;
 
     public void InitializeRemoteConfig()
     {
@@ -23,6 +26,8 @@ public class RemoteConfig : MonoBehaviour
             { "collapsible_banner_fallback_enabled", _collapsibleBannerFallbackEnabled},
             { "collapsible_banner_interval", _collapsibleBannerInterval},
             { "show_interstitial_ads_interval", _timeBetweenAds},
+            { "gif interval", _giftInterval }
+
         };
         FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults).ContinueWithOnMainThread(task =>
         {
@@ -45,6 +50,7 @@ public class RemoteConfig : MonoBehaviour
                 var currentBannerFallbackEnabled = FirebaseRemoteConfig.DefaultInstance.GetValue("collapsible_banner_fallback_enabled").BooleanValue;
                 var currentBannerInterval = FirebaseRemoteConfig.DefaultInstance.GetValue("collapsible_banner_interval").DoubleValue;
                 var currentInterval = FirebaseRemoteConfig.DefaultInstance.GetValue("show_interstitial_ads_interval").DoubleValue;
+                var gifInterval = FirebaseRemoteConfig.DefaultInstance.GetValue("gif interval").DoubleValue;
                 if (_showDebug)
                 {
                     Debug.Log("Current banner enabled: " + currentBannerEnabled);
@@ -56,6 +62,7 @@ public class RemoteConfig : MonoBehaviour
                 _collapsibleBannerFallbackEnabled = currentBannerFallbackEnabled;
                 _collapsibleBannerInterval = (float)currentBannerInterval;
                 _timeBetweenAds = (float)currentInterval;
+                _giftInterval = (float)gifInterval;
             }
             else
             {

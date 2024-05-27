@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.coffee.ui-particle": "https://github.com/mob-sakai/ParticleEffectForUGUI.git",
     "com.unity.addressables": "1.21.20",
     "com.unity.collab-proxy": "2.3.1",
     "com.unity.feature.2d": "2.0.0",
@@ -47,7 +48,9 @@
     {
       "name": "Game Package Registry by Google",
       "url": "https://unityregistry-pa.googleapis.com",
-      "scopes": ["com.google"]
+      "scopes": [
+        "com.google"
+      ]
     }
   ]
 }

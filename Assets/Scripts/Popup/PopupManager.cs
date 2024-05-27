@@ -20,6 +20,7 @@ public enum PopupOptions
     Duplicate,
     StartFrom,
     NoInternet,
+    Gift
 }
 public class DataEventPopup : EventArgs
 {
