@@ -16,7 +16,7 @@ public class Home : MonoBehaviour
     public DiamondGroup diamondGroup;
     private void Awake ()
     {
-        Instance = this;
+        Instance = this;   
     }
 
     private void Start ()

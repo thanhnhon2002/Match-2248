@@ -43,7 +43,7 @@ public class CellInLoadingManager : MonoBehaviour
     {
         foreach (GameObject obj in prefabEffectUIs)
         {
-            obj.SetActive(true);
+            obj.GetComponent<EffectUIAnimManager>().MoveToTarget();
         }
     }
 

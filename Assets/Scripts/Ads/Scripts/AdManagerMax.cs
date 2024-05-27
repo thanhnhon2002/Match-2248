@@ -29,6 +29,11 @@ namespace DarkcupGames
         }
         public void ShowIntertistial(Action onWatchAdsComplete)
         {
+            if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS)
+            {
+                onWatchAdsComplete?.Invoke();
+                return;
+            }
             bool haveAds = MaxMediationManager.intertistial.IsAdAvailable();
             if (haveAds == false || GameSystem.userdata.boughtItems.Contains(IAP_ID.no_ads.ToString()))
             {

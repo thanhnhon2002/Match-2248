@@ -13,6 +13,7 @@ public class DiamondGroup : MonoBehaviour
     public static DiamondGroup Instance;
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI diamondTxt;
+    private float oldDiamondAmount;
 
     private void Start()
     {
@@ -23,17 +24,21 @@ public class DiamondGroup : MonoBehaviour
     public void AddDiamond(int amount, bool doEffect = false)
     {
         var userData = GameSystem.userdata;
-        DOVirtual.Float(userData.diamond, userData.diamond + amount, Const.DEFAULT_TWEEN_TIME, x =>
-        {
-            userData.diamond = x;
-            diamondTxt.text = "" + x;
-        }).OnComplete(GameSystem.SaveUserDataToLocal);
+        oldDiamondAmount = userData.diamond;
+        userData.diamond += amount;
+        GameSystem.SaveUserDataToLocal ();
         if (!doEffect) return;
         EasyEffect.Bounce(icon.gameObject, 0.1f);
     }
+
     public void Display()
     {
         var userData = GameSystem.userdata;
-        diamondTxt.text = userData.diamond.ToString();
+
+        DOVirtual.Float(oldDiamondAmount, userData.diamond, Const.DEFAULT_TWEEN_TIME, x =>
+        {
+            diamondTxt.text = ""+(BigInteger)x;
+        });
+       
     }
 }

@@ -2497,9 +2497,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listScale:
   - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 0.8, z: 1}
-  - {x: 0.5, y: 0.6, z: 1}
   - {x: 0.3, y: 0.4, z: 1}
+  speed: 0.5
   part: {fileID: 2139511714}
   topic: {fileID: 824369908}
 --- !u!1 &301030264
@@ -2951,8 +2950,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listScale:
   - {x: 1, y: 1, z: 1}
-  - {x: 1, y: 0.3, z: 1}
   - {x: 0.5, y: 0.15, z: 1}
+  speed: 0.5
   part: {fileID: 106779375}
   topic: {fileID: 1857601995}
 --- !u!1 &355622703
@@ -4081,6 +4080,7 @@ MonoBehaviour:
   listScale:
   - {x: 1, y: 1, z: 1}
   - {x: 0.7, y: 0.52, z: 1}
+  speed: 0.5
   part: {fileID: 618230211}
   topic: {fileID: 2114399390}
 --- !u!1 &513740986
@@ -7249,8 +7249,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -9703,6 +9703,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RewardGroup
       objectReference: {fileID: 0}
+    - target: {fileID: 7379909706393944379, guid: e0c5761ee554a394f9edc7d0dac6a52e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -86
+      objectReference: {fileID: 0}
     - target: {fileID: 8137242543597042691, guid: e0c5761ee554a394f9edc7d0dac6a52e, type: 3}
       propertyPath: m_SizeDelta.x
       value: 55.1265
@@ -9713,7 +9717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8137242543597042691, guid: e0c5761ee554a394f9edc7d0dac6a52e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -56.0542
+      value: -60
       objectReference: {fileID: 0}
     - target: {fileID: 8137242543597042691, guid: e0c5761ee554a394f9edc7d0dac6a52e, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -9736,7 +9740,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4952678278136892652, guid: e0c5761ee554a394f9edc7d0dac6a52e, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5800190708341056502, guid: e0c5761ee554a394f9edc7d0dac6a52e, type: 3}
@@ -16409,8 +16414,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -16418,7 +16423,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.04
 --- !u!1 &1649213500
 GameObject:
   m_ObjectHideFlags: 0
@@ -17131,6 +17136,7 @@ MonoBehaviour:
   listScale:
   - {x: 1, y: 1, z: 1}
   - {x: 0.7, y: 0.4, z: 1}
+  speed: 0.5
   part: {fileID: 1770859864}
   topic: {fileID: 1010680505}
 --- !u!1 &1755442453
