@@ -9703,6 +9703,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RewardGroup
       objectReference: {fileID: 0}
+    - target: {fileID: 7379909706393944379, guid: e0c5761ee554a394f9edc7d0dac6a52e, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -86
+      objectReference: {fileID: 0}
     - target: {fileID: 8137242543597042691, guid: e0c5761ee554a394f9edc7d0dac6a52e, type: 3}
       propertyPath: m_SizeDelta.x
       value: 55.1265
@@ -9713,7 +9717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8137242543597042691, guid: e0c5761ee554a394f9edc7d0dac6a52e, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -56.0542
+      value: -42
       objectReference: {fileID: 0}
     - target: {fileID: 8137242543597042691, guid: e0c5761ee554a394f9edc7d0dac6a52e, type: 3}
       propertyPath: m_AnchoredPosition.y
