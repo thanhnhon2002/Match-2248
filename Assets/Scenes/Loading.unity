@@ -601,7 +601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &148795488
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1050,7 +1050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &497058955
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2657,7 +2657,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1067860139
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3898,7 +3898,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1587298000
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4084,7 +4084,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1616984276
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4547,7 +4547,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1900876460
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4848,7 +4848,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2073213068
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4885,7 +4885,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 80387112}
         m_TargetAssemblyTypeName: CellInLoadingManager, Assembly-CSharp
-        m_MethodName: OnStartAnimation
+        m_MethodName: SetActive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5034,7 +5034,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2137872154
 RectTransform:
   m_ObjectHideFlags: 0

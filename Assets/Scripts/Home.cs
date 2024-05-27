@@ -24,7 +24,6 @@ public class Home : MonoBehaviour
         LogEventButton();
         var userData = GameSystem.userdata;
         scoreTxt.text = userData.highestScore.ToString ();
-        ToGameplay();
     }
 
     public void ToGameplay()
