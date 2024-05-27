@@ -75,6 +75,7 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
             added = false;
             return;
         }
+        lines.Last().SetPosition(1, transform.position);
         ExploseConectedCell();
     }
 
