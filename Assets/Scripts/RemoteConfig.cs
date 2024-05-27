@@ -28,7 +28,7 @@ public class RemoteConfig : MonoBehaviour
             { "collapsible_banner_fallback_enabled", _collapsibleBannerFallbackEnabled},
             { "collapsible_banner_interval", _collapsibleBannerInterval},
             { "show_interstitial_ads_interval", _timeBetweenAds},
-            { "gif interval", _giftInterval }
+            { "gif interval", _giftInterval },
 
             { "min_session_time_show_ads", _minSessionTimeShowAds}
         };
