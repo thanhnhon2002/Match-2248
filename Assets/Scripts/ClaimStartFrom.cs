@@ -34,4 +34,5 @@ public class ClaimStartFrom : MonoBehaviour
         popup.Disappear();
         GridManager.Instance.SetStartIndex();
     }
+
 }
