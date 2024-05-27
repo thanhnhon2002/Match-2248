@@ -16,7 +16,7 @@ public class Home : MonoBehaviour
     public DiamondGroup diamondGroup;
     private void Awake ()
     {
-        Instance = this;
+        Instance = this;   
     }
 
     private void Start ()
@@ -24,6 +24,7 @@ public class Home : MonoBehaviour
         LogEventButton();
         var userData = GameSystem.userdata;
         scoreTxt.text = userData.highestScore.ToString ();
+        ToGameplay();
     }
 
     public void ToGameplay()
