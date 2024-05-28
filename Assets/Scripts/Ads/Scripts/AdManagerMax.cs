@@ -57,6 +57,9 @@ namespace DarkcupGames
 
         public void ShowAds(int id)
         {
+            InternetChecker.Instance.CheckInternetConnection();
+            if (InternetChecker.Instance.WasConnected == false) return;
+
             loadingAdPopup.SetActive(true);
             LeanTween.delayedCall(1f, () =>
             {
