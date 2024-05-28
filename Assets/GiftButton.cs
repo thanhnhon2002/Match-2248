@@ -12,8 +12,11 @@ public class GiftButton : MonoBehaviour
 
     private void OnEnable()
     {
-        group.alpha = 0f;
-        group.DOFade(1f, Const.DEFAULT_TWEEN_TIME).OnComplete(() => button.interactable = true);
+        float posX = group.transform.position.x;
+        group.transform.position = new Vector3(posX - 100f, transform.position.y, transform.position.z);
+        group.transform.DOMoveX(posX, Const.DEFAULT_TWEEN_TIME + 1f).SetEase(Ease.OutQuad);
+        group.alpha = 0.1f;
+        group.DOFade(1f, Const.DEFAULT_TWEEN_TIME + 1f).OnComplete(() => button.interactable = true);
         timeCounter.ResetTimer();
         timeCounter.SetTime();
     }
