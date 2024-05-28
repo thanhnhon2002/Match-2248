@@ -7997,7 +7997,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <s>abcxyz </s>
+  m_text: <s>100.000VND</s>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3cbe8017b75c71c479f5cceb08db3e16, type: 2}
   m_sharedMaterial: {fileID: 4679512349138776985, guid: 3cbe8017b75c71c479f5cceb08db3e16, type: 2}
@@ -24619,6 +24619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oldPrice: {fileID: 843029382}
+  shop: {fileID: 4468560920206387619}
   popup: {fileID: 1827876965}
 --- !u!1 &1838419387
 GameObject:
@@ -28433,6 +28434,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b8f66f202ad7b64fb37361bf4769657, type: 3}
+--- !u!114 &4468560920206387619 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -485870816975220201, guid: 6b8f66f202ad7b64fb37361bf4769657, type: 3}
+  m_PrefabInstance: {fileID: 4468560920206387618}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987785678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f1f51ed0c0ca340886a83f4ffb8554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5030684158778570667
 RectTransform:
   m_ObjectHideFlags: 0

@@ -75,6 +75,12 @@ public class PopupManager : MonoBehaviour
             this.ShowAllQueue();
         }     
     }
+    public void DeQueueButtonAds()
+    {
+        if (!InternetChecker.Instance.WasConnected) return;
+        popupDic[queueShow.Peek().option].Disappear();
+        DeQueue();
+    }
     public void ShowPopup(PopupOptions option)
     {
         popupDic[option].Appear ();
