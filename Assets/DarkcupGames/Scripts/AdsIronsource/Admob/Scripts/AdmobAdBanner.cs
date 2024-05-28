@@ -46,6 +46,7 @@ public class AdmobAdBanner : AdmobAds
     {
         if (AdmobManager.isReady == false)
         {
+            AdmobManager.Instance.Init();
             Debug.LogError("admob is not ready for load banner");
             return;
         }
