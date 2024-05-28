@@ -69,6 +69,7 @@ public class UserData
     public float diamond;
     public bool replay;
     public bool firstPlayGame;
+    public long lastSpecialOffer;
     public BigInteger highestScore;
     public BigInteger highestCellValue;
     public GameData gameData;
@@ -86,7 +87,8 @@ public class UserData
         property = new UserProperty();
         gameData = new GameData();
         dailyRewardInfo = new DailyRewardInfo();
-        nickName = $"Guest{UnityEngine.Random.Range (1, int.MaxValue)}";
+        var r = new System.Random();
+        nickName = $"Guest{r.Next(0, int.MaxValue)}";
         boughtItems = new List<string>();
     }
     public void CheckValid()

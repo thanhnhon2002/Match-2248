@@ -12,13 +12,14 @@ public class RemoteConfig : MonoBehaviour
     [SerializeField] private float _timeBetweenAds = 120f;
     [SerializeField] private float _giftInterval = 120f;
     [SerializeField] private float _minSessionTimeShowAds = 60f;
+    [SerializeField] private float _minMinuteSpecialOffer = 2f;
     public bool COLLAPSIBLE_BANNER_ENABLED => _collapsibleBannerEnabled;
     public bool COLLAPSIBLE_FALLBACK_ENABLED => _collapsibleBannerFallbackEnabled;
     public float COLLAPSIBLE_BANNER_INTERVAL => _collapsibleBannerInterval;
     public float TIME_BETWEEN_ADS => _timeBetweenAds;
     public float MIN_SESSION_TIME_SHOW_ADS => _minSessionTimeShowAds;
-
     public float GIFT_INTERVAL => _giftInterval;
+    public float MIN_MINUTE_SPECIAL_OFFER => _minMinuteSpecialOffer;
 
     public void InitializeRemoteConfig()
     {
@@ -28,9 +29,9 @@ public class RemoteConfig : MonoBehaviour
             { "collapsible_banner_fallback_enabled", _collapsibleBannerFallbackEnabled},
             { "collapsible_banner_interval", _collapsibleBannerInterval},
             { "show_interstitial_ads_interval", _timeBetweenAds},
-            { "gif interval", _giftInterval },
-
-            { "min_session_time_show_ads", _minSessionTimeShowAds}
+            { "gif_interval", _giftInterval },
+            { "min_session_time_show_ads", _minSessionTimeShowAds},
+            { "min_minute_special_offer", _minMinuteSpecialOffer}
         };
         FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults).ContinueWithOnMainThread(task =>
         {
@@ -54,7 +55,8 @@ public class RemoteConfig : MonoBehaviour
                 var currentBannerInterval = FirebaseRemoteConfig.DefaultInstance.GetValue("collapsible_banner_interval").DoubleValue;
                 var currentInterval = FirebaseRemoteConfig.DefaultInstance.GetValue("show_interstitial_ads_interval").DoubleValue;
                 var currentMinSessionTimeShowAds = FirebaseRemoteConfig.DefaultInstance.GetValue("min_session_time_show_ads").DoubleValue;
-                var gifInterval = FirebaseRemoteConfig.DefaultInstance.GetValue("gif interval").DoubleValue;
+                var gifInterval = FirebaseRemoteConfig.DefaultInstance.GetValue("gif_interval").DoubleValue;
+                var specialOfferInterval = FirebaseRemoteConfig.DefaultInstance.GetValue("min_minute_special_offer").DoubleValue;
                 if (_showDebug)
                 {
                     Debug.Log("Current banner enabled: " + currentBannerEnabled);
@@ -69,6 +71,7 @@ public class RemoteConfig : MonoBehaviour
                 _timeBetweenAds = (float)currentInterval;
                 _minSessionTimeShowAds = (float)currentMinSessionTimeShowAds;
                 _giftInterval = (float)gifInterval;
+                _minMinuteSpecialOffer = (float)specialOfferInterval;
             }
             else
             {

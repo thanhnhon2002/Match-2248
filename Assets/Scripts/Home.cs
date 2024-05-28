@@ -1,5 +1,6 @@
 using DarkcupGames;
 using Firebase.Analytics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,19 +12,37 @@ public class Home : MonoBehaviour
 {
     public static Home Instance { get; private set; }
     [SerializeField] private TextMeshProUGUI scoreTxt;
+    [SerializeField] private SpecialOffer specialOffer;
     public DailyReward dailyReward;
     public Button diamondAdButton;
     public DiamondGroup diamondGroup;
-    private void Awake ()
+    private void Awake()
     {
-        Instance = this;   
+        Instance = this;
     }
 
-    private void Start ()
+    private void Start()
     {
         LogEventButton();
         var userData = GameSystem.userdata;
-        scoreTxt.text = userData.highestScore.ToString ();
+        scoreTxt.text = userData.highestScore.ToString();
+        if (userData.boughtItems.Contains(IAP_ID.no_ads.ToString())) return;
+        if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS) return;
+        if (DateTime.Now.Ticks - userData.lastSpecialOffer >= TimeSpan.TicksPerMinute * FirebaseManager.remoteConfig.MIN_MINUTE_SPECIAL_OFFER)
+        {
+            specialOffer.popup.Appear();
+            userData.lastSpecialOffer = DateTime.Now.Ticks;
+        } else
+        {
+            specialOffer.gameObject.SetActive(false);
+        }
+        GameSystem.SaveUserDataToLocal();
+    }
+
+    [ContextMenu("Test")]
+    public void Test()
+    {
+        specialOffer.popup.Appear();
     }
 
     public void ToGameplay()
@@ -32,8 +51,7 @@ public class Home : MonoBehaviour
         if (!userData.firstPlayGame)
         {
             Tutorial.instance.StartTutorial();
-        }
-        else Invoke(nameof(MoveToGamePlay), 0.25f);
+        } else Invoke(nameof(MoveToGamePlay), 0.25f);
     }
     public void MoveToGamePlay()
     {
@@ -41,7 +59,7 @@ public class Home : MonoBehaviour
     }
     public void GetDiamond()
     {
-        diamondGroup.AddDiamond(20,false);
+        diamondGroup.AddDiamond(20, false);
         UIManager.Instance.SpawnEffectReward(diamondAdButton.transform);
     }
 

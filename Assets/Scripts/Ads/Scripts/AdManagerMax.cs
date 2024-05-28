@@ -17,7 +17,7 @@ namespace DarkcupGames
         [SerializeField] private AdBreak adBreak;
         private MaxMediationIntertistial intertistial;
         private MaxMediationReward rewarded;
-        public float lastInterTime;
+        private float lastInterTime;
 
         private void Awake()
         {
@@ -27,13 +27,16 @@ namespace DarkcupGames
         {
             lastInterTime = Time.time;
         }
-        public void ShowIntertistial(Action onWatchAdsComplete)
+        public void ShowIntertistial(string placement, Action onWatchAdsComplete)
         {
-            if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS)
+            var userData = GameSystem.userdata;
+            if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS || userData.boughtItems.Contains(IAP_ID.no_ads.ToString()))
             {
                 onWatchAdsComplete?.Invoke();
                 return;
             }
+            if (Time.time - lastInterTime < FirebaseManager.remoteConfig.TIME_BETWEEN_ADS) return;
+            lastInterTime = Time.time;
             bool haveAds = MaxMediationManager.intertistial.IsAdAvailable();
             if (haveAds == false || GameSystem.userdata.boughtItems.Contains(IAP_ID.no_ads.ToString()))
             {
@@ -52,18 +55,26 @@ namespace DarkcupGames
                 GameSystem.userdata.property.total_interstitial_ads++;
                 GameSystem.SaveUserDataToLocal();
                 FirebaseManager.Instance.SetProperty(UserPopertyKey.total_interstitial_ads, GameSystem.userdata.property.total_interstitial_ads.ToString());
+                FirebaseManager.Instance.LogIntertisial(placement);
             });
         }
 
         public void ShowAds(int id)
         {
+            var onWatchAdsFinished = events[id];
+            var userData = GameSystem.userdata;
+            if (userData.boughtItems.Contains(IAP_ID.no_ads.ToString()))
+            {
+                onWatchAdsFinished?.Invoke();
+                return;
+            }
+            lastInterTime = Time.time;
             InternetChecker.Instance.CheckInternetConnection();
             if (InternetChecker.Instance.WasConnected == false) return;
 
             loadingAdPopup.SetActive(true);
             LeanTween.delayedCall(1f, () =>
             {
-                var onWatchAdsFinished = events[id];
                 MaxMediationManager.rewarded.ShowAds(() =>
                 {
                     DeepTrack.LogEvent(DeepTrackEvent.reward_success);
