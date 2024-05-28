@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 
-public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerClickHandler
+public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerClickHandler
 {
     public SpriteRenderer spriteRenderer { get; private set; }
     public TextMeshPro valueTxt;
@@ -32,33 +32,37 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
     private static int countInitValue;
     private static List<CellTutorial> listCell = new List<CellTutorial>();
     private static List<LineRenderer> lines = new List<LineRenderer>();
-    private static List<int> multiliers = new List<int>();
+    private static List<int> multipliers = new List<int>();
     [SerializeField] private LineRenderer linePrefab;
     [SerializeField] private Effect effectPrefab;
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         colorSet = GetComponent<ColorSet>();
         bounceClick = GetComponent<BounceOnClick>();
         cellInteractEffect = GetComponent<CellInteractEffect>();
-        InitMultilier();
+        InitMultipliers();
     }
-    void Start()
+
+    private void Start()
     {
         Value = (BigInteger)valueTutorial;
     }
-    void EffectChose()
+
+    private void EffectChose()
     {
         bounceClick.Bounce();
         cellInteractEffect.PlaySound();
     }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         isDragging = true;
         added = true;
         listCell.Add(this);
         initValue = value;
-        var line = PoolSystem.Instance.GetObject(linePrefab, this.transform.position);
+        var line = PoolSystem.Instance.GetObject(linePrefab, transform.position);
         lines.Add(line);
         line.SetPosition(0, transform.position);
         line.SetColors(spriteRenderer.color, spriteRenderer.color);
@@ -67,7 +71,7 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
     public void OnEndDrag(PointerEventData eventData)
     {
         isDragging = false;
-        if(listCell.Count == 1)
+        if (listCell.Count == 1)
         {
             listCell.Clear();
             lines[0].gameObject.SetActive(false);
@@ -75,8 +79,8 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
             added = false;
             return;
         }
-        lines.Last().SetPosition(1, transform.position);
-        ExploseConectedCell();
+        lines.Last().SetPosition(1, listCell.Last().transform.position);
+        ExplodeConnectedCell();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -86,19 +90,19 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        EffectChose();             
+        EffectChose();
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(isDragging && !added&&CanConect())
+        if (isDragging && !added && CanConnect())
         {
             added = true;
             EffectChose();
             listCell.Add(this);
-            countInitValue += (int) (value / initValue);
+            countInitValue += (int)(value / initValue);
             lines.Last().SetPosition(1, transform.position);
-            var line = PoolSystem.Instance.GetObject(linePrefab, this.transform.position,transform.parent);
+            var line = PoolSystem.Instance.GetObject(linePrefab, transform.position, transform.parent);
             lines.Add(line);
             line.SetPosition(0, transform.position);
             line.SetColors(spriteRenderer.color, spriteRenderer.color);
@@ -109,65 +113,80 @@ public class CellTutorial : MonoBehaviour,IPointerDownHandler ,IBeginDragHandler
     {
         EffectChose();
     }
-    private bool CanConect()
+
+    private bool CanConnect()
     {
-        if (value < listCell.Last().value) return false;
-        else if(value> listCell.Last().value
-            &&listCell.Count>1
+        if (Mathf.Abs(transform.GetSiblingIndex() - listCell.Last().transform.GetSiblingIndex()) > 1)
+            return false;
+
+        if (value < listCell.Last().value)
+            return false;
+        else if (value > listCell.Last().value
+            && listCell.Count > 1
             && listCell[0].value == listCell[1].value
-            &&value/2==listCell.Last().value) return true;
-        if (value == listCell.Last().value) return true;
+            && value / 2 == listCell.Last().value)
+            return true;
+        if (value == listCell.Last().value)
+            return true;
         return false;
     }
-    private void ExploseConectedCell()
+
+    private void ExplodeConnectedCell()
     {
-        foreach(var cell in listCell)
+        foreach (var cell in listCell)
         {
             cell.gameObject.SetActive(false);
             var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
-            fx.Play(listCell,listCell.IndexOf(cell), cell.spriteRenderer.color, listCell.Last().spriteRenderer.color);    
+            fx.Play(listCell, listCell.IndexOf(cell), cell.spriteRenderer.color, listCell.Last().spriteRenderer.color);
         }
         DOVirtual.DelayedCall(0.5f, () =>
         {
-            //foreach (var cell in listCell) cell.gameObject.SetActive(false);
-            foreach (var cell in listCell) cell.added = false;
+            foreach (var cell in listCell)
+                cell.added = false;
             listCell.Last().gameObject.SetActive(true);
             CheckNextPart(listCell.Last());
-            listCell.Last().Value = CalculateTotal(initValue,countInitValue);
+            listCell.Last().Value = CalculateTotal(initValue, countInitValue);
             listCell.Clear();
-            foreach (var line in lines) line.gameObject.SetActive(false);
+            foreach (var line in lines)
+                line.gameObject.SetActive(false);
             lines.Clear();
             cellInteractEffect.PlaySound();
-            countInitValue = 0;            
+            countInitValue = 0;
         });
     }
-    static BigInteger CalculateTotal(BigInteger initValue, int cellCount)
+
+    private static BigInteger CalculateTotal(BigInteger initValue, int cellCount)
     {
         return initValue * (BigInteger)Mathf.Pow(2, IndexCellCount(cellCount) + 1);
-   
     }
-    static private int IndexCellCount(int cellCount)
+
+    private static int IndexCellCount(int cellCount)
     {
-        if (cellCount == 0) return -1;
+        if (cellCount == 0)
+            return -1;
         for (var index = 0; index <= 30; index++)
         {
-            if (cellCount == multiliers[index]) return index;
-            if (multiliers[index + 1] > cellCount && multiliers[index] <= cellCount)
+            if (cellCount == multipliers[index])
+                return index;
+            if (multipliers[index + 1] > cellCount && multipliers[index] <= cellCount)
                 return index;
         }
-        return multiliers.Count - 1;
+        return multipliers.Count - 1;
     }
-    static private void InitMultilier()
+
+    private static void InitMultipliers()
     {
         for (int i = 0; i <= 30; i++)
         {
             var pow = Mathf.Pow(2, i);
-            multiliers.Add((int)pow);
+            multipliers.Add((int)pow);
         }
     }
-    void CheckNextPart(CellTutorial cell)
+
+    private void CheckNextPart(CellTutorial cell)
     {
         CellTutorial[] cells = cell.transform.parent.GetComponentsInChildren<CellTutorial>();
-        if (cells.Length <= 2) Tutorial.instance.NextPart();
+        if (cells.Length <= 2)
+            Tutorial.instance.NextPart();
     }
 }

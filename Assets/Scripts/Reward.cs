@@ -1,4 +1,5 @@
 using DarkcupGames;
+using DeepTrackSDK;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine.UI;
 public class Reward : MonoBehaviour
 {
     [SerializeField] private int amount;
+    public string placement;
     public Button claimButton;
     public int index;
 
@@ -18,5 +20,8 @@ public class Reward : MonoBehaviour
         DiamondGroup.Instance.AddDiamond(amount,false);
         UIManager.Instance.SpawnEffectReward(claimButton.transform);
         Home.Instance.dailyReward.gameObject.SetActive(false);
+
+        FirebaseManager.Instance.LogReward(placement);
+        DeepTrack.Log(placement);
     }
 }
