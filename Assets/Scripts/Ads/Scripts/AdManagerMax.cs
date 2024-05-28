@@ -68,9 +68,9 @@ namespace DarkcupGames
                 onWatchAdsFinished?.Invoke();
                 return;
             }
-            lastInterTime = Time.time;
             InternetChecker.Instance.CheckInternetConnection();
             if (InternetChecker.Instance.WasConnected == false) return;
+            lastInterTime = Time.time;
 
             loadingAdPopup.SetActive(true);
             LeanTween.delayedCall(1f, () =>

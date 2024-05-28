@@ -7,6 +7,7 @@ using UnityEngine;
 public class SpecialOffer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI oldPrice;
+    [SerializeField] private ShopIAPManager shop;
     public PopupAnimation popup;
     private void OnEnable()
     {
@@ -24,6 +25,6 @@ public class SpecialOffer : MonoBehaviour
 
     public void BuyNoAdSpecial()
     {
-        ShopIAPManager.Instance.BuyNoAdsSpecial();
+        shop.BuyNoAdsSpecial();
     }
 }
