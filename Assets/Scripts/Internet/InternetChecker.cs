@@ -17,7 +17,9 @@ public class InternetChecker : MonoBehaviour
     }
     private void Start()
     {
+#if !UNITY_EDITOR
         InitCheckInternetConnection();
+#endif
     }
     private void InitCheckInternetConnection()
     {

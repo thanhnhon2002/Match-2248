@@ -51,7 +51,7 @@ public class GameData
     public GameData()
     {
         cellDic = new Dictionary<string, BigInteger>();
-        currentHighestCellValue = 0;
+        currentHighestCellValue = 128;
         currentScore = 0;
         indexPlayer = 0;
         minIndex = 0;

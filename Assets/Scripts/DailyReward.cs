@@ -1,17 +1,14 @@
 ﻿using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System;
-using System.Runtime.CompilerServices;
 
 public class DailyReward : MonoBehaviour
 {
-    public static readonly string LAST_REWARD_TICK = "LastRewardTick";
-    public static readonly string HAS_CLAIM = "HasClaim";
+    public const string LAST_REWARD_TICK = "LastRewardTick";
+    public const string HAS_CLAIM = "HasClaim";
     private Reward[] rewards;
     private UserData userData;
+
 
     private void Awake()
     {

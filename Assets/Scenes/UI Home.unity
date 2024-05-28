@@ -648,6 +648,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 5
+  placement: DailyReward_Home
   claimButton: {fileID: 2055079639}
   index: 0
 --- !u!225 &92929087
@@ -1556,6 +1557,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 30
+  placement: DailyReward3_Home
   claimButton: {fileID: 1418483053}
   index: 2
 --- !u!114 &159185725
@@ -1962,6 +1964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 40
+  placement: DailyReward4_Home
   claimButton: {fileID: 860838651}
   index: 3
 --- !u!114 &197967042
@@ -9106,6 +9109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 20
+  placement: DailyReward2_Home
   claimButton: {fileID: 36363014}
   index: 1
 --- !u!114 &952370984
@@ -9226,6 +9230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   amount: 50
+  placement: DailyReward5_Home
   claimButton: {fileID: 1242281889}
   index: 4
 --- !u!114 &960586418

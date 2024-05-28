@@ -23,6 +23,7 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private ConectedPointDisplay pointDisplay;
     [SerializeField] private Combo combo;
     [SerializeField] private BonusDiamond bonusDiamond;
+    [SerializeField] private GiftButton giftButton;
     public GameObject shop;
     public DiamondGroup diamondGroup;
     public Camera mainCam;
@@ -33,6 +34,7 @@ public class GameFlow : MonoBehaviour
     public List<int> multiliers = new List<int>();
     private BigInteger gameScore;
     private BigInteger totalPoint;
+    private float lastGifTime;
     public float timeCount { get; private set; }
 
     public BigInteger GameScore
@@ -76,6 +78,7 @@ public class GameFlow : MonoBehaviour
         InitMultilier ();
         pointDisplay.gameObject.SetActive (false);
         bonusDiamond.gameObject.SetActive (false);
+        giftButton.gameObject.SetActive (false);
     }
 
     private void Start ()
@@ -90,6 +93,11 @@ public class GameFlow : MonoBehaviour
     private void Update()
     {
         timeCount += Time.deltaTime;
+        if(Time.time - lastGifTime > FirebaseManager.remoteConfig.GIFT_INTERVAL && GameSystem.userdata.gameData.currentHighestCellValue >= GridManager.MIN_HIGHLIGHT_VALUE)
+        {
+            giftButton.gameObject.SetActive (true);
+            lastGifTime = Time.time;
+        }
     }
 
     private void LoadUserData ()

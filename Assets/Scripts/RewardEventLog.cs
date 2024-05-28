@@ -1,4 +1,5 @@
 using DarkcupGames;
+using DeepTrackSDK;
 using Firebase.Analytics;
 using System;
 using System.Collections;
@@ -19,6 +20,7 @@ public class RewardEventLog : MonoBehaviour
             FirebaseManager.Instance.SetProperty(UserPopertyKey.last_placement, placement);
             GameSystem.SaveUserDataToLocal();
             MaxMediationReward.placement = placement;
+            DeepTrack.Log(placement);
         });
     }
 }
