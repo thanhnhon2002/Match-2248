@@ -20,7 +20,7 @@ public class SpecialOffer : MonoBehaviour
         if (ShopIAPManager.Instance.IsInitDone() == false) return;
         Dictionary<string, string> prices = ShopIAPManager.iap.prices;
         if (prices.ContainsKey(IAP_ID.no_ads.ToString()) == false) return;
-        oldPrice.text = "<s>" + prices[IAP_ID.no_ads.ToString()] + "</s>";
+        oldPrice.text = "Limited offer :" +"<s>" + prices[IAP_ID.no_ads.ToString()] + "</s>";
     }
 
     public void BuyNoAdSpecial()
