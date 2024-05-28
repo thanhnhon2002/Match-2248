@@ -7,7 +7,7 @@ using System;
 using UnityEngine.SceneManagement;
 using System.Linq;
 
-public enum IAP_ID { no_ads, diamond_100, diamond_300, diamond_500, diamond_1k1, diamond_2k5, diamond_5k, diamond_10k }
+public enum IAP_ID { no_ads, diamond_100, diamond_300, diamond_500, diamond_1k1, diamond_2k5, diamond_5k, diamond_10k, special_offer }
 
 namespace DarkcupGames
 {
@@ -80,6 +80,30 @@ namespace DarkcupGames
                 return;
             }
             string id = IAP_ID.no_ads.ToString();
+
+            if (GameSystem.userdata.boughtItems == null) GameSystem.userdata.boughtItems = new List<string>();
+            bool boughNoAds = GameSystem.userdata.boughtItems.Contains(id);
+            if (boughNoAds) return;
+            iap.OnPurchaseClicked(id, () =>
+            {
+                if (GameSystem.userdata.boughtItems == null) GameSystem.userdata.boughtItems = new List<string>();
+                if (GameSystem.userdata.boughtItems.Contains(id) == false)
+                {
+                    GameSystem.userdata.boughtItems.Add(id);
+                    GameSystem.SaveUserDataToLocal();
+                }
+                string currentScene = SceneManager.GetActiveScene().name;
+                SceneManager.LoadScene(currentScene);
+            });
+        }
+
+        public void BuyNoAdsSpecial()
+        {
+            if (IsInitDone() == false)
+            {
+                return;
+            }
+            string id = IAP_ID.special_offer.ToString();
 
             if (GameSystem.userdata.boughtItems == null) GameSystem.userdata.boughtItems = new List<string>();
             bool boughNoAds = GameSystem.userdata.boughtItems.Contains(id);

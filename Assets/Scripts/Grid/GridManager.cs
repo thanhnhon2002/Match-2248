@@ -337,11 +337,7 @@ public class GridManager : MonoBehaviour
         {
             OnDoneCellMove();
             if (!showAd) return;
-            if (Time.time - AdManagerMax.Instance.lastInterTime >= FirebaseManager.remoteConfig.TIME_BETWEEN_ADS)
-            {
-                AdManagerMax.Instance.ShowIntertistial(() => AdManagerMax.Instance.lastInterTime = Time.time);
-                FirebaseManager.Instance.LogIntertisial("Gameplay");
-            }
+            AdManagerMax.Instance.ShowIntertistial("Gameplay", null);          
         });
     }
 

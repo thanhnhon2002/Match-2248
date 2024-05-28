@@ -17,7 +17,7 @@ namespace DarkcupGames
         [SerializeField] private AdBreak adBreak;
         private MaxMediationIntertistial intertistial;
         private MaxMediationReward rewarded;
-        public float lastInterTime;
+        private float lastInterTime;
 
         private void Awake()
         {
@@ -27,13 +27,15 @@ namespace DarkcupGames
         {
             lastInterTime = Time.time;
         }
-        public void ShowIntertistial(Action onWatchAdsComplete)
+        public void ShowIntertistial(string placement, Action onWatchAdsComplete)
         {
             if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS)
             {
                 onWatchAdsComplete?.Invoke();
                 return;
             }
+            if (Time.time - lastInterTime < FirebaseManager.remoteConfig.TIME_BETWEEN_ADS) return;
+            lastInterTime = Time.time;
             bool haveAds = MaxMediationManager.intertistial.IsAdAvailable();
             if (haveAds == false || GameSystem.userdata.boughtItems.Contains(IAP_ID.no_ads.ToString()))
             {
@@ -52,11 +54,13 @@ namespace DarkcupGames
                 GameSystem.userdata.property.total_interstitial_ads++;
                 GameSystem.SaveUserDataToLocal();
                 FirebaseManager.Instance.SetProperty(UserPopertyKey.total_interstitial_ads, GameSystem.userdata.property.total_interstitial_ads.ToString());
+                FirebaseManager.Instance.LogIntertisial(placement);
             });
         }
 
         public void ShowAds(int id)
         {
+            lastInterTime = Time.time;
             loadingAdPopup.SetActive(true);
             LeanTween.delayedCall(1f, () =>
             {
