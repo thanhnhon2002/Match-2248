@@ -105,6 +105,7 @@ public class GridManager : MonoBehaviour
         {
             item.gameObject.SetActive(true);
         }
+        if(indexChose <= 0) indexChose = 1;
         indexStart = indexChose;
         SetUpCell();
         var startValue = (BigInteger)Mathf.Pow(2, indexStart);
