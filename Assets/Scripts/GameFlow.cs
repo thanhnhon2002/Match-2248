@@ -93,6 +93,7 @@ public class GameFlow : MonoBehaviour
     private void Update()
     {
         timeCount += Time.deltaTime;
+        if (!MaxMediationManager.rewarded.IsAdAvailable()) return;
         if(Time.time - lastGifTime > FirebaseManager.remoteConfig.GIFT_INTERVAL && GameSystem.userdata.gameData.currentHighestCellValue >= GridManager.MIN_HIGHLIGHT_VALUE)
         {
             giftButton.gameObject.SetActive (true);
