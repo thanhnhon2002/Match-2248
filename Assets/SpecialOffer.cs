@@ -24,6 +24,6 @@ public class SpecialOffer : MonoBehaviour
 
     public void BuyNoAdSpecial()
     {
-
+        ShopIAPManager.Instance.BuyNoAdsSpecial();
     }
 }

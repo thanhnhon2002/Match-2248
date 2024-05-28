@@ -29,7 +29,8 @@ namespace DarkcupGames
         }
         public void ShowIntertistial(string placement, Action onWatchAdsComplete)
         {
-            if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS)
+            var userData = GameSystem.userdata;
+            if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS || userData.boughtItems.Contains(IAP_ID.no_ads.ToString()))
             {
                 onWatchAdsComplete?.Invoke();
                 return;
@@ -60,11 +61,17 @@ namespace DarkcupGames
 
         public void ShowAds(int id)
         {
+            var onWatchAdsFinished = events[id];
+            var userData = GameSystem.userdata;
+            if (userData.boughtItems.Contains(IAP_ID.no_ads.ToString()))
+            {
+                onWatchAdsFinished?.Invoke();
+                return;
+            }
             lastInterTime = Time.time;
             loadingAdPopup.SetActive(true);
             LeanTween.delayedCall(1f, () =>
             {
-                var onWatchAdsFinished = events[id];
                 MaxMediationManager.rewarded.ShowAds(() =>
                 {
                     DeepTrack.LogEvent(DeepTrackEvent.reward_success);

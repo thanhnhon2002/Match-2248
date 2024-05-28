@@ -10,7 +10,6 @@ using UnityEngine.UI;
 
 public class Home : MonoBehaviour
 {
-    private const int OFFER_INTERVAL_HOUR = 1;
     public static Home Instance { get; private set; }
     [SerializeField] private TextMeshProUGUI scoreTxt;
     [SerializeField] private SpecialOffer specialOffer;
@@ -27,8 +26,9 @@ public class Home : MonoBehaviour
         LogEventButton();
         var userData = GameSystem.userdata;
         scoreTxt.text = userData.highestScore.ToString();
+        if (userData.boughtItems.Contains(IAP_ID.no_ads.ToString())) return;
         if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS) return;
-        if (DateTime.Now.Ticks - userData.lastSpecialOffer >= TimeSpan.TicksPerHour * OFFER_INTERVAL_HOUR)
+        if (DateTime.Now.Ticks - userData.lastSpecialOffer >= TimeSpan.TicksPerMinute * FirebaseManager.remoteConfig.MIN_MINUTE_SPECIAL_OFFER)
         {
             specialOffer.popup.Appear();
             userData.lastSpecialOffer = DateTime.Now.Ticks;

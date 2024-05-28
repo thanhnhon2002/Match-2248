@@ -17,6 +17,7 @@ namespace DarkcupGames
         public static MyIAPManager iap;
         public Transform clickedButton;
         [SerializeField] private TextMeshProUGUI diamondTxt;
+        [SerializeField] private IApSlot noAdSlot;
 
         private void Awake()
         {
@@ -35,6 +36,8 @@ namespace DarkcupGames
         {
             var userData = GameSystem.userdata;
             diamondTxt.text = userData.diamond.ToString();
+            bool boughNoAds = GameSystem.userdata.boughtItems.Contains(IAP_ID.no_ads.ToString());
+            if (boughNoAds) noAdSlot.gameObject.SetActive(false);
         }
 
         public void Init()
@@ -106,14 +109,14 @@ namespace DarkcupGames
             string id = IAP_ID.special_offer.ToString();
 
             if (GameSystem.userdata.boughtItems == null) GameSystem.userdata.boughtItems = new List<string>();
-            bool boughNoAds = GameSystem.userdata.boughtItems.Contains(id);
+            bool boughNoAds = GameSystem.userdata.boughtItems.Contains(IAP_ID.no_ads.ToString());
             if (boughNoAds) return;
             iap.OnPurchaseClicked(id, () =>
             {
                 if (GameSystem.userdata.boughtItems == null) GameSystem.userdata.boughtItems = new List<string>();
-                if (GameSystem.userdata.boughtItems.Contains(id) == false)
+                if (GameSystem.userdata.boughtItems.Contains(IAP_ID.no_ads.ToString()) == false)
                 {
-                    GameSystem.userdata.boughtItems.Add(id);
+                    GameSystem.userdata.boughtItems.Add(IAP_ID.no_ads.ToString());
                     GameSystem.SaveUserDataToLocal();
                 }
                 string currentScene = SceneManager.GetActiveScene().name;
