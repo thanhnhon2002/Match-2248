@@ -6,6 +6,7 @@ using DarkcupGames;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using NSubstitute.Core;
 
 public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerClickHandler
 {
@@ -70,6 +71,18 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        CellTutorial[] cells = transform.parent.GetComponentsInChildren<CellTutorial>();
+        if(listCell.Count < cells.Length)
+        {
+            foreach (var cell in listCell)
+                cell.added = false;
+            listCell.Clear();
+            foreach (var line in lines)
+                line.gameObject.SetActive(false);
+            lines.Clear();
+            isDragging = false;
+            return;
+        }
         isDragging = false;
         if (listCell.Count == 1)
         {
@@ -139,6 +152,8 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
             var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
             fx.Play(listCell, listCell.IndexOf(cell), cell.spriteRenderer.color, listCell.Last().spriteRenderer.color);
         }
+        foreach (var line in lines)
+            line.gameObject.SetActive(false);
         DOVirtual.DelayedCall(0.5f, () =>
         {
             foreach (var cell in listCell)
@@ -147,8 +162,6 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
             CheckNextPart(listCell.Last());
             listCell.Last().Value = CalculateTotal(initValue, countInitValue);
             listCell.Clear();
-            foreach (var line in lines)
-                line.gameObject.SetActive(false);
             lines.Clear();
             cellInteractEffect.PlaySound();
             countInitValue = 0;
