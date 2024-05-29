@@ -36,7 +36,7 @@ public class OnSceneChangeEffect : MonoBehaviour, ISceneChangeEffect
 
     public void RunEffect()
     {
-        if (move) transform.DOMove(basePosition, EFFECT_TIME).SetEase(ease);
+        if (move) transform.DOMove(basePosition, EFFECT_TIME).SetEase(ease).OnComplete(()=> transform.position = basePosition);
         if (scale) ((RectTransform)transform).DOSizeDelta(baseSizeDelta, EFFECT_TIME).SetEase(ease);
         if (fade && group != null) group.DOFade(baseAlpha, EFFECT_TIME).SetEase(ease);
     }
