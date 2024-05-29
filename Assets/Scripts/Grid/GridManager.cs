@@ -27,9 +27,10 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform cellSpawnPos;
     [SerializeField] private ParticalSystemController removeCellFx;
     public Dictionary<int, List<Cell>> allCellInCollom = new Dictionary<int, List<Cell>>();
-    private Dictionary<GridPosition, Vector3> girdPosToLocal = new Dictionary<GridPosition, Vector3>();
+    public Dictionary<GridPosition, Vector3> girdPosToLocal { get; private set; } = new Dictionary<GridPosition, Vector3>();
     public Cell[] allCell { get; private set; }
     public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell>();
+    public OnSceneChangeCellEffect effect { get; private set; }
 
     private int minIndex;
     public int MinIndex => minIndex;
@@ -57,6 +58,7 @@ public class GridManager : MonoBehaviour
         DOTween.SetTweensCapacity(1500, 1500);
         Application.targetFrameRate = 60;
         Instance = this;
+        effect = GetComponent<OnSceneChangeCellEffect>();
     }
 
     private void Start()
@@ -78,7 +80,7 @@ public class GridManager : MonoBehaviour
         }
         FirebaseManager.Instance.SetProperty(UserPopertyKey.last_level, maxIndex.ToString());
     }
-    void SetUpCell()
+    private void SetUpCell()
     {
         var userData = GameSystem.userdata;
         if (userData.gameData.minIndex == 0)
@@ -408,6 +410,7 @@ public class GridManager : MonoBehaviour
         }
         GameSystem.SaveUserDataToLocal();
     }
+
 
     public void DoubleHightCellValue()
     {

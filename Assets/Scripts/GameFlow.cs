@@ -9,7 +9,8 @@ using DarkcupGames;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DeepTrackSDK;
-
+using Vector3 = UnityEngine.Vector3;
+using Vector2 = UnityEngine.Vector2;
 public enum GameState
 {
     Playing, Fx, Smash, Swap, Pause, GameOver
@@ -24,6 +25,8 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private Combo combo;
     [SerializeField] private BonusDiamond bonusDiamond;
     [SerializeField] private GiftButton giftButton;
+    [SerializeField] private Image unmask;
+    [SerializeField] private Image blockInteract;
     public GameObject shop;
     public DiamondGroup diamondGroup;
     public Camera mainCam;
@@ -81,13 +84,23 @@ public class GameFlow : MonoBehaviour
         giftButton.gameObject.SetActive (false);
     }
 
-    private void Start ()
+    private IEnumerator Start ()
     {
         timeCount = 0;
         LoadUserData();
         LogEventButton();
-        if (GameSystem.userdata.replay) PopupManager.Instance.ShowPopup(PopupOptions.StartFrom);
-        else AudioSystem.Instance.PlaySound("Game_Open");
+        unmask.transform.localScale = Vector3.zero;
+        yield return new WaitForEndOfFrame();
+        if (GameSystem.userdata.replay)
+        {
+            PopupManager.Instance.ShowPopup(PopupOptions.StartFrom);
+            unmask.transform.localScale = Vector3.one;
+            blockInteract.gameObject.SetActive(false);
+        } else
+        {
+            GridManager.Instance.effect.Prepare();
+            ShowScene(GridManager.Instance.effect.RunEffect);
+        }
     }
 
     private void Update()
@@ -99,6 +112,29 @@ public class GameFlow : MonoBehaviour
             giftButton.gameObject.SetActive (true);
             lastGifTime = Time.time;
         }
+    }
+
+    private void ShowScene(Action onDone = null)
+    {
+        blockInteract.gameObject.SetActive(true);
+        var fx = FindObjectsOfType<OnSceneChangeEffect>();
+        foreach (var item in fx)
+        {
+            item.Prepare();
+        }
+        unmask.rectTransform.DOScale(UnityEngine.Vector2.one, Const.DEFAULT_TWEEN_TIME).OnComplete(() =>
+        {
+            AudioSystem.Instance.PlaySound("Game_Open");
+            foreach (var item in fx)
+            {
+                item.RunEffect();
+            }
+            onDone?.Invoke();
+            LeanTween.delayedCall(OnSceneChangeEffect.EFFECT_TIME, () =>
+            {
+                blockInteract.gameObject.SetActive(false);
+            });
+        });
     }
 
     private void LoadUserData ()
@@ -124,7 +160,6 @@ public class GameFlow : MonoBehaviour
         topGroup.SetInteract(interactable);
     }
 
-    [ContextMenu("Lose")]
     public void ShowLosePopup()
     {
         FirebaseManager.Instance.LogLevelFail(GridManager.Instance.MaxIndex, timeCount);
@@ -151,19 +186,14 @@ public class GameFlow : MonoBehaviour
     {
         var userData = GameSystem.userdata;
         userData.replay = true;
-        userData.gameData.cellDic.Clear ();
-        userData.gameData.currentScore = 0;
-        userData.gameData.indexPlayer = 0;
-        userData.gameData.minIndex = 0;
-        userData.gameData.maxIndex = 0;
-        userData.gameData.maxIndexRandom = 0;
+        userData.gameData = new GameData();
         GameSystem.SaveUserDataToLocal ();
-        SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+        unmask.transform.DOScale(Vector2.zero, Const.DEFAULT_TWEEN_TIME).OnComplete(() => SceneManager.LoadScene (SceneManager.GetActiveScene().name));
     }
 
     public void ToHome()
     {
-        SceneManager.LoadScene ("UI Home");
+        unmask.transform.DOScale(Vector2.zero, Const.DEFAULT_TWEEN_TIME).OnComplete(() => SceneManager.LoadScene ("UI Home"));
     }
 
     public void DelayToHome (float delay)

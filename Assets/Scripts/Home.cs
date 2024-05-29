@@ -1,4 +1,5 @@
 using DarkcupGames;
+using DG.Tweening;
 using Firebase.Analytics;
 using System;
 using System.Collections;
@@ -13,6 +14,8 @@ public class Home : MonoBehaviour
     public static Home Instance { get; private set; }
     [SerializeField] private TextMeshProUGUI scoreTxt;
     [SerializeField] private SpecialOffer specialOffer;
+    [SerializeField] private Image unmask;
+    [SerializeField] private Image blockInteract;
     public DailyReward dailyReward;
     public Button diamondAdButton;
     public DiamondGroup diamondGroup;
@@ -23,7 +26,12 @@ public class Home : MonoBehaviour
 
     private void Start()
     {
+        ShowScene(LoadUserData);
         LogEventButton();
+    }
+
+    private void LoadUserData()
+    {
         var userData = GameSystem.userdata;
         scoreTxt.text = userData.highestScore.ToString();
         if (userData.boughtItems.Contains(IAP_ID.no_ads.ToString())) return;
@@ -39,12 +47,6 @@ public class Home : MonoBehaviour
         GameSystem.SaveUserDataToLocal();
     }
 
-    [ContextMenu("Test")]
-    public void Test()
-    {
-        specialOffer.popup.Appear();
-    }
-
     public void ToGameplay()
     {
         var userData = GameSystem.userdata;
@@ -55,7 +57,7 @@ public class Home : MonoBehaviour
     }
     public void MoveToGamePlay()
     {
-        SceneManager.LoadScene("GameplayUI");
+        unmask.transform.DOScale(0f, Const.DEFAULT_TWEEN_TIME).OnComplete(() => SceneManager.LoadScene("GameplayUI"));       
     }
     public void GetDiamond()
     {
@@ -73,5 +75,28 @@ public class Home : MonoBehaviour
                 FirebaseManager.Instance.LogButtonClick(item.name);
             });
         }
+    }
+
+    private void ShowScene(Action onDone = null)
+    {
+        blockInteract.gameObject.SetActive(true);
+        var fx = FindObjectsOfType<OnSceneChangeEffect>();
+        foreach (var item in fx)
+        {
+            item.Prepare();
+        }
+        unmask.transform.localScale = Vector3.zero;
+        unmask.rectTransform.DOScale(Vector2.one, Const.DEFAULT_TWEEN_TIME).OnComplete(() =>
+        {
+            foreach (var item in fx)
+            {            
+                item.RunEffect();
+            }
+            LeanTween.delayedCall(OnSceneChangeEffect.EFFECT_TIME + 0.2f, () =>
+            {
+                blockInteract.gameObject.SetActive(false);
+                onDone?.Invoke();
+            });
+        });
     }
 }

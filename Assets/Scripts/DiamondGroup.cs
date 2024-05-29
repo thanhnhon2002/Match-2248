@@ -31,6 +31,15 @@ public class DiamondGroup : MonoBehaviour
         EasyEffect.Bounce(icon.gameObject, 0.1f);
     }
 
+    public void AddDiamond(int amount)
+    {
+        var userData = GameSystem.userdata;
+        oldDiamondAmount = userData.diamond;
+        userData.diamond += amount;
+        GameSystem.SaveUserDataToLocal();
+        EasyEffect.Bounce(icon.gameObject, 0.1f);
+    }
+
     public void Display()
     {
         var userData = GameSystem.userdata;

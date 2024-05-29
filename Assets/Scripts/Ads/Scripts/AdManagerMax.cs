@@ -35,7 +35,11 @@ namespace DarkcupGames
                 onWatchAdsComplete?.Invoke();
                 return;
             }
-            if (Time.time - lastInterTime < FirebaseManager.remoteConfig.TIME_BETWEEN_ADS) return;
+            if (Time.time - lastInterTime < FirebaseManager.remoteConfig.TIME_BETWEEN_ADS)
+            {
+                onWatchAdsComplete?.Invoke();
+                return;
+            }
             lastInterTime = Time.time;
             bool haveAds = MaxMediationManager.intertistial.IsAdAvailable();
             if (haveAds == false || GameSystem.userdata.boughtItems.Contains(IAP_ID.no_ads.ToString()))

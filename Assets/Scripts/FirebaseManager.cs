@@ -24,7 +24,7 @@ public class FirebaseManager : MonoBehaviour
     public static FirebaseManager Instance;
     public FirebaseApp app;
     public static RemoteConfig remoteConfig { get; private set; }
-    public bool ready;
+    public bool ready { get; private set; }
 
     private void Awake()
     {
