@@ -65,7 +65,12 @@ namespace DeepTrackSDK
         public static DatabaseReference databaseRef;
         private static string startTime;
         private static string appVersion;
-        private static DeepTrackUser userData;
+        public static DeepTrackUser userData;
+
+        private void Awake()
+        {
+            userData = LoadUserData();
+        }
 
         private void Start()
         {

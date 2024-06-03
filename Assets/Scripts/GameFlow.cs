@@ -45,7 +45,7 @@ public class GameFlow : MonoBehaviour
         get { return gameScore; }
         set { 
             gameScore = value;
-            scoreTxt.text = value.ToString ();
+            scoreTxt.text = BigIntegerConverter.ConverNameValue(value);
             var userData = GameSystem.userdata;
             userData.gameData.currentScore = gameScore;
             if (gameScore > userData.highestScore)
@@ -187,8 +187,10 @@ public class GameFlow : MonoBehaviour
         var userData = GameSystem.userdata;
         userData.replay = true;
         userData.gameData = new GameData();
+        userData.level++;
         GameSystem.SaveUserDataToLocal ();
         unmask.transform.DOScale(Vector2.zero, Const.DEFAULT_TWEEN_TIME).OnComplete(() => SceneManager.LoadScene (SceneManager.GetActiveScene().name));
+        DeepTrack.LogLevelStart(userData.level);
     }
 
     public void ToHome()
@@ -217,6 +219,7 @@ public class GameFlow : MonoBehaviour
                 AudioSystem.Instance.PlaySound ("Coins_collect");
                 bonusDiamond.gameObject.SetActive (false);
                 diamondGroup.AddDiamond (diamond, true);
+                diamondGroup.Display();
             });
         });
 

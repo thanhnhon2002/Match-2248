@@ -1360,6 +1360,7 @@ GameObject:
   - component: {fileID: 157089107}
   - component: {fileID: 157089109}
   - component: {fileID: 157089108}
+  - component: {fileID: 157089110}
   m_Layer: 0
   m_Name: TutorialText
   m_TagString: Untagged
@@ -1483,6 +1484,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157089106}
   m_CullTransparentMesh: 1
+--- !u!225 &157089110
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157089106}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &159185719
 GameObject:
   m_ObjectHideFlags: 0
@@ -2669,7 +2682,8 @@ MonoBehaviour:
   - {x: 0.3, y: 0.4, z: 1}
   speed: 0.5
   part: {fileID: 2139511714}
-  topic: {fileID: 824369908}
+  titlle: {fileID: 725421679}
+  topic: {fileID: 157089108}
 --- !u!1 &301030264
 GameObject:
   m_ObjectHideFlags: 0
@@ -2949,6 +2963,7 @@ GameObject:
   - component: {fileID: 329268467}
   - component: {fileID: 329268469}
   - component: {fileID: 329268468}
+  - component: {fileID: 329268470}
   m_Layer: 0
   m_Name: TutorialText
   m_TagString: Untagged
@@ -3072,6 +3087,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 329268466}
   m_CullTransparentMesh: 1
+--- !u!225 &329268470
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 329268466}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &344500602
 GameObject:
   m_ObjectHideFlags: 0
@@ -3122,7 +3149,8 @@ MonoBehaviour:
   - {x: 0.5, y: 0.15, z: 1}
   speed: 0.5
   part: {fileID: 106779375}
-  topic: {fileID: 1857601995}
+  titlle: {fileID: 1641540585}
+  topic: {fileID: 329268468}
 --- !u!1 &355622703
 GameObject:
   m_ObjectHideFlags: 0
@@ -3246,6 +3274,7 @@ GameObject:
   - component: {fileID: 362151166}
   - component: {fileID: 362151168}
   - component: {fileID: 362151167}
+  - component: {fileID: 362151169}
   m_Layer: 0
   m_Name: TutorialText
   m_TagString: Untagged
@@ -3369,6 +3398,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362151165}
   m_CullTransparentMesh: 1
+--- !u!225 &362151169
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362151165}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &367788236
 GameObject:
   m_ObjectHideFlags: 0
@@ -4430,7 +4471,8 @@ MonoBehaviour:
   - {x: 0.7, y: 0.52, z: 1}
   speed: 0.5
   part: {fileID: 618230211}
-  topic: {fileID: 2114399390}
+  titlle: {fileID: 1862360927}
+  topic: {fileID: 362151167}
 --- !u!1 &513740986
 GameObject:
   m_ObjectHideFlags: 0
@@ -6472,6 +6514,7 @@ GameObject:
   - component: {fileID: 725421678}
   - component: {fileID: 725421680}
   - component: {fileID: 725421679}
+  - component: {fileID: 725421681}
   m_Layer: 0
   m_Name: PraiseText
   m_TagString: Untagged
@@ -6595,6 +6638,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725421677}
   m_CullTransparentMesh: 1
+--- !u!225 &725421681
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 725421677}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &732280025
 GameObject:
   m_ObjectHideFlags: 0
@@ -22731,6 +22786,7 @@ GameObject:
   - component: {fileID: 1641540584}
   - component: {fileID: 1641540586}
   - component: {fileID: 1641540585}
+  - component: {fileID: 1641540587}
   m_Layer: 0
   m_Name: PraiseText
   m_TagString: Untagged
@@ -22854,6 +22910,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1641540583}
   m_CullTransparentMesh: 1
+--- !u!225 &1641540587
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641540583}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1648416454
 GameObject:
   m_ObjectHideFlags: 0
@@ -23175,6 +23243,7 @@ GameObject:
   - component: {fileID: 1711042897}
   - component: {fileID: 1711042899}
   - component: {fileID: 1711042898}
+  - component: {fileID: 1711042900}
   m_Layer: 0
   m_Name: PraiseText
   m_TagString: Untagged
@@ -23298,6 +23367,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1711042896}
   m_CullTransparentMesh: 1
+--- !u!225 &1711042900
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711042896}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1719846575
 GameObject:
   m_ObjectHideFlags: 0
@@ -23705,7 +23786,8 @@ MonoBehaviour:
   - {x: 0.7, y: 0.4, z: 1}
   speed: 0.5
   part: {fileID: 1770859864}
-  topic: {fileID: 1010680505}
+  titlle: {fileID: 1711042898}
+  topic: {fileID: 1790743548}
 --- !u!1 &1755442453
 GameObject:
   m_ObjectHideFlags: 0
@@ -24663,6 +24745,7 @@ GameObject:
   - component: {fileID: 1790743547}
   - component: {fileID: 1790743549}
   - component: {fileID: 1790743548}
+  - component: {fileID: 1790743550}
   m_Layer: 0
   m_Name: TutorialText
   m_TagString: Untagged
@@ -24786,6 +24869,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1790743546}
   m_CullTransparentMesh: 1
+--- !u!225 &1790743550
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1790743546}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1791989889
 GameObject:
   m_ObjectHideFlags: 0
@@ -25542,6 +25637,7 @@ GameObject:
   - component: {fileID: 1862360926}
   - component: {fileID: 1862360928}
   - component: {fileID: 1862360927}
+  - component: {fileID: 1862360929}
   m_Layer: 0
   m_Name: PraiseText
   m_TagString: Untagged
@@ -25665,6 +25761,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1862360925}
   m_CullTransparentMesh: 1
+--- !u!225 &1862360929
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862360925}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1868787723
 GameObject:
   m_ObjectHideFlags: 0

@@ -81,6 +81,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
                 line.gameObject.SetActive(false);
             lines.Clear();
             isDragging = false;
+            Tutorial.instance.Fail();
             return;
         }
         isDragging = false;

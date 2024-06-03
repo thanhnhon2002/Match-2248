@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.UI;
 using System;
-
+using TMPro;
 
 public class EffectPart : MonoBehaviour
 {
@@ -11,12 +11,14 @@ public class EffectPart : MonoBehaviour
     public List<Vector3> listScale = new List<Vector3>();
     public float speed=0.1f;
     public GameObject part;
-    public GameObject topic;
+    public TextMeshProUGUI titlle;
+    public TextMeshProUGUI topic;
 
     private void Awake()
     {
         sequence = DOTween.Sequence();
         topic.GetComponent<CanvasGroup>().alpha = 0;
+        titlle.GetComponent<CanvasGroup>().alpha = 0;
     }
     public void Animation(int i)
     {
@@ -37,6 +39,7 @@ public class EffectPart : MonoBehaviour
             sequence.AppendCallback(() =>
             {               
                 topic.GetComponent<CanvasGroup>().DOFade(1, 1f);
+                titlle.GetComponent<CanvasGroup>().DOFade(1, 1f);
             });
             sequence.AppendInterval(0.2f);
         }

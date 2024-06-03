@@ -1,4 +1,5 @@
 using DarkcupGames;
+using DeepTrackSDK;
 using DG.Tweening;
 using Firebase.Analytics;
 using System;
@@ -26,6 +27,7 @@ public class Home : MonoBehaviour
 
     private void Start()
     {
+        if (GameSystem.userdata.firstPlayGame) Tutorial.instance.StartTutorial();
         ShowScene(LoadUserData);
         LogEventButton();
     }
@@ -33,7 +35,8 @@ public class Home : MonoBehaviour
     private void LoadUserData()
     {
         var userData = GameSystem.userdata;
-        scoreTxt.text = userData.highestScore.ToString();
+        scoreTxt.text = BigIntegerConverter.ConverNameValue(userData.highestScore);
+        if (userData.firstPlayGame) return;
         if (userData.boughtItems.Contains(IAP_ID.no_ads.ToString())) return;
         if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS) return;
         if (DateTime.Now.Ticks - userData.lastSpecialOffer >= TimeSpan.TicksPerMinute * FirebaseManager.remoteConfig.MIN_MINUTE_SPECIAL_OFFER)
@@ -49,15 +52,14 @@ public class Home : MonoBehaviour
 
     public void ToGameplay()
     {
-        var userData = GameSystem.userdata;
-        if (!userData.firstPlayGame)
-        {
-            Tutorial.instance.StartTutorial();
-        } else Invoke(nameof(MoveToGamePlay), 0.25f);
+        Invoke(nameof(MoveToGamePlay), 0.25f);
     }
     public void MoveToGamePlay()
     {
-        unmask.transform.DOScale(0f, Const.DEFAULT_TWEEN_TIME).OnComplete(() => SceneManager.LoadScene("GameplayUI"));       
+        unmask.transform.DOScale(0f, Const.DEFAULT_TWEEN_TIME).OnComplete(() => SceneManager.LoadScene("GameplayUI"));
+        GameSystem.userdata.level++;
+        GameSystem.SaveUserDataToLocal();
+        DeepTrack.LogLevelStart(GameSystem.userdata.level);
     }
     public void GetDiamond()
     {

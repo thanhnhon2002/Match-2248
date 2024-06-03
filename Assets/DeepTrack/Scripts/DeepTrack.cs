@@ -12,12 +12,11 @@ namespace DeepTrackSDK
     {
         public static DeepTrack Instance { get; private set; }
         public bool showDebug = true;
-        private static DeepTrackUser userData;
         private static List<string> actions;
         private float lastAnalytics;
         private float previousPlayTime;
-        private static bool isFirebaseReady = false;
         private bool inited = false;
+        //public bool IsFirebaseReady => FirebaseManager.Instance.ready;
 
         private void Awake()
         {
@@ -25,7 +24,6 @@ namespace DeepTrackSDK
             {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
-                userData = DeepTrackSaveLoadData.LoadUserData();
                 actions = new List<string>();
             }
             else
@@ -37,12 +35,12 @@ namespace DeepTrackSDK
         private void Update()
         {
             if (FirebaseManager.Instance.ready == false) return;
+            if (DeepTrackSaveLoadData.userData == null) return;
             if (!inited) Init();
-            if (userData == null) return;
             if (Time.time - lastAnalytics > DeepTrackConstants.MIN_SECONDS_ANALYTICS)
             {
                 lastAnalytics = Time.time;
-                userData.totalPlayTime = previousPlayTime + Time.time;
+                DeepTrackSaveLoadData.userData.totalPlayTime = previousPlayTime + Time.time;
                 SaveAllData();
             }
         }
@@ -58,13 +56,14 @@ namespace DeepTrackSDK
 
         private void SaveAllData()
         {
-            DeepTrackSaveLoadData.SaveLocal(userData);
-            DeepTrackSaveLoadData.SaveServer(userData);
+            DeepTrackSaveLoadData.SaveLocal(DeepTrackSaveLoadData.userData);
+            DeepTrackSaveLoadData.SaveServer(DeepTrackSaveLoadData.userData);
             DeepTrackSaveLoadData.SaveActions(actions);
         }
 
         private void TrackUserData()
         {
+            var userData = DeepTrackSaveLoadData.userData;
             if (string.IsNullOrEmpty(userData.originalAppVersion))
             {
                 userData.originalAppVersion = Application.version;
@@ -92,6 +91,7 @@ namespace DeepTrackSDK
 
         private void TrackRetention()
         {
+            var userData = DeepTrackSaveLoadData.userData;
             double today = new TimeSpan(DateTime.Now.Ticks).TotalDays;
             if (userData.startPlayDay == 0)
             {
@@ -112,8 +112,8 @@ namespace DeepTrackSDK
 
         private static void SetCurrentLevel(int level)
         {
+            var userData = DeepTrackSaveLoadData.userData;
             userData.level = level;
-
             if (userData.maxLevel < level)
             {
                 userData.maxLevel = level;
@@ -142,7 +142,8 @@ namespace DeepTrackSDK
         }
         public static void LogEvent(DeepTrackEvent e, params object[] messages)
         {
-            if (!isFirebaseReady) return;
+            if (!FirebaseManager.Instance.ready) return;
+            var userData = DeepTrackSaveLoadData.userData;
             string s = e.ToString() + ' ' + string.Join(' ', messages);
             if (e == DeepTrackEvent.inter_fail || e == DeepTrackEvent.reward_fail || e == DeepTrackEvent.appopen_fail)
             {
@@ -167,17 +168,20 @@ namespace DeepTrackSDK
                     userData.revenue.bannerSuccess++;
                     break;
             }
+            Debug.LogError($"tracking event e = {e}");
+            DeepTrackSaveLoadData.SaveLocal(userData);
         }
 
         public static void Log(params object[] messages)
         {
-            if (!isFirebaseReady) return;
+            if (!FirebaseManager.Instance.ready) return;
             string s = string.Join(' ', messages);
             actions.Add(s);
         }
 
         private static void CountWinLose(string levelName, bool isWin)
         {
+            var userData = DeepTrackSaveLoadData.userData;
             if (userData.winloseDatas == null)
             {
                 userData.winloseDatas = new Dictionary<string, DeepTrackWinLoseData>();

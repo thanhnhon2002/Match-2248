@@ -350,6 +350,7 @@ public class GridManager : MonoBehaviour
         if (HasLose())
         {
             GameFlow.Instance.ShowLosePopup();
+            DeepTrack.LogLevelLose(GameSystem.userdata.level);
             return;
         }
         GameSystem.SaveUserDataToLocal();

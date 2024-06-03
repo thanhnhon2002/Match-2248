@@ -65,6 +65,7 @@ public class UserData
 {
     public string nickName;
     public int avatarIndex;
+    public int level;
     public float gold;
     public float diamond;
     public bool replay;
@@ -90,6 +91,8 @@ public class UserData
         var r = new System.Random();
         nickName = $"Guest{r.Next(0, int.MaxValue)}";
         boughtItems = new List<string>();
+        firstPlayGame = true;
+        level = 0;
     }
     public void CheckValid()
     {
