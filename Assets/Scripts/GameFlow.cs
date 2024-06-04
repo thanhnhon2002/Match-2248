@@ -141,7 +141,7 @@ public class GameFlow : MonoBehaviour
     {
         var userData = GameSystem.userdata;
         GameScore = userData.gameData.currentScore;
-        highScoreTxt.text = userData.highestScore.ToString ();
+        highScoreTxt.text = BigIntegerConverter.ConverNameValue(userData.highestScore);
     }
 
 
