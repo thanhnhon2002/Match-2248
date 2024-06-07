@@ -2,6 +2,7 @@
 using GoogleMobileAds.Api;
 using GoogleMobileAds.Common;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AppOpenFlowWhenChangeState : MonoBehaviour
 {
@@ -40,6 +41,7 @@ public class AppOpenFlowWhenChangeState : MonoBehaviour
 
         if (state == AppState.Foreground)
         {
+            if (SceneManager.GetActiveScene().name.Equals("Loading")) return;
             if (showDebug) Debug.Log("try showing app open, sleep time = " + (Time.realtimeSinceStartup - gotoBackgroundTime));
             if (Time.realtimeSinceStartup - gotoBackgroundTime > BACKGROUND_TIME_SHOW_APP_OPEN)
             {
