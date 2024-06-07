@@ -26,7 +26,34 @@ namespace DarkcupGames
         private void Start()
         {
             lastInterTime = Time.time;
+            MaxMediationManager.intertistial.AddOnAdCloseAction((str, info) =>
+            {
+                HideAdBreak();
+            });
+            MaxMediationManager.intertistial.AddOnAdFailAction((str, inof) =>
+            {
+                HideAdBreak();
+            });
+            MaxMediationManager.rewarded.AddOnAdCloseAction((str, info) =>
+            {
+                HideAdLoading();
+            });
+            MaxMediationManager.rewarded.AddOnAdFailAction((str, info) =>
+            {
+                HideAdLoading();
+            });
         }
+
+        private void HideAdLoading()
+        {
+            if (loadingAdPopup != null) loadingAdPopup.SetActive(false);
+        }
+
+        private void HideAdBreak()
+        {
+            if (adBreak != null) adBreak.gameObject.SetActive(false);
+        }
+
         public void ShowIntertistial(string placement, Action onWatchAdsComplete)
         {
             var userData = GameSystem.userdata;
@@ -50,9 +77,8 @@ namespace DarkcupGames
             onWatchAdsComplete += () =>
             {
                 DeepTrack.LogEvent(DeepTrackEvent.inter_success);
-                adBreak.gameObject.SetActive(false);
             };
-            adBreak.gameObject.SetActive(true);
+            if (adBreak != null) adBreak.gameObject.SetActive(true);
             LeanTween.delayedCall(DELAY_SHOW_INTER, () =>
             {
                 MaxMediationManager.intertistial.ShowAds(onWatchAdsComplete);
@@ -76,13 +102,12 @@ namespace DarkcupGames
             if (InternetChecker.Instance.WasConnected == false) return;
             lastInterTime = Time.time;
 
-            loadingAdPopup.SetActive(true);
+            if (loadingAdPopup != null) loadingAdPopup.SetActive(true);
             LeanTween.delayedCall(1f, () =>
             {
                 MaxMediationManager.rewarded.ShowAds(() =>
                 {
                     DeepTrack.LogEvent(DeepTrackEvent.reward_success);
-                    loadingAdPopup.SetActive(false);
                     onWatchAdsFinished?.Invoke();
                 });
                 GameSystem.userdata.property.total_rewarded_ads++;

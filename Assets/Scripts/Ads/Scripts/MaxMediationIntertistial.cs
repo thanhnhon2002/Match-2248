@@ -67,6 +67,16 @@ namespace DarkcupGames
             Firebase.Analytics.FirebaseAnalytics.LogEvent("ad_impression", impressionParameters);
         }
 
+        public void AddOnAdCloseAction(Action<string, MaxSdkBase.AdInfo> action)
+        {
+            MaxSdkCallbacks.Interstitial.OnAdHiddenEvent += action;
+        }
+
+        public void AddOnAdFailAction(Action<string, MaxSdkBase.ErrorInfo> action)
+        {
+            MaxSdkCallbacks.Interstitial.OnAdLoadFailedEvent += action;
+        }
+
         public override void LoadAds()
         {
             MaxSdk.LoadInterstitial(INTERTISTIAL_ID);

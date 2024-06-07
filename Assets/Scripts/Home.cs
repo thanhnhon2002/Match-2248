@@ -25,9 +25,10 @@ public class Home : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
         if (GameSystem.userdata.firstPlayGame) Tutorial.instance.StartTutorial();
+        yield return new WaitForEndOfFrame();
         ShowScene(LoadUserData);
         LogEventButton();
     }
