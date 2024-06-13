@@ -10,6 +10,7 @@ using System.Numerics;
 public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerClickHandler
 {
     public SpriteRenderer spriteRenderer { get; private set; }
+    public GameObject highLight;
     public TextMeshPro valueTxt;
     public ColorSet colorSet { get; private set; }
     public HighCellEffect highCellEffect { get; private set; }

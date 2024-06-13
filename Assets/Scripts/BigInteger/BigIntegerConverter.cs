@@ -64,14 +64,14 @@ public class NameExtension
     {
         //string nameResult = "";
         int indexPow = index - 4;
-        int thuong = indexPow / 26;
+        //int thuong = indexPow / 26;
         if (indexPow > 25)
         {
-            //nameResult += ExtensionByIndex (thuong - 1);
+            //nameResult += ExtensionByIndex(thuong - 1);
             //int du = indexPow % 26;
-            //nameResult += ExtensionByIndex (du);
+            //nameResult += ExtensionByIndex(du);
             //return nameResult;
-            return GetLimitExtension(thuong);
+            return GetLimitExtension(indexPow);
         } else return ExtensionByIndex (indexPow);
     }
     string GetLimitExtension(int indexPow)

@@ -1,4 +1,6 @@
 using DarkcupGames;
+using DG.Tweening;
+using NSubstitute.Core;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour
         if (!conectedValueCount.ContainsKey (cell.Value)) conectedValueCount.Add (cell.Value, 0);
         conectedValueCount[cell.Value] = 1;
         conectedCell.Add (cell);
+        cell.highLight.SetActive(true);
         segmentCount++;
         GameFlow.Instance.TotalPoint = currentCellValue;
         var line = PoolSystem.Instance.GetObject (linePrefab, cell.transform.position);
@@ -89,6 +92,7 @@ public class Player : MonoBehaviour
         line.SetColor (cell.spriteRenderer.color);
 
         conectedCell.Add (cell);
+        cell.highLight.SetActive(true);
         segmentCount += cell.Value / currentCellValue;
         countInitValue += (int)(cell.Value /initValue);
         
@@ -99,6 +103,7 @@ public class Player : MonoBehaviour
     {
         if (GameFlow.Instance.gameState != GameState.Playing) return;
         if (!isDraging) return;
+        lastCell.highLight.SetActive(false);
         if (conectedCell.Count <= 1) return;
         var lastLine = lines[lines.Count - 1];
         lastLine.gameObject.SetActive (false);
@@ -109,7 +114,7 @@ public class Player : MonoBehaviour
 
         segmentCount -= lastCell.Value / currentCellValue;
         countInitValue -= (int)(lastCell.Value / initValue);
-
+        
         conectedCell.Remove (lastCell);
         conectedValueCount[lastCell.Value]--;
         if (conectedValueCount[lastCell.Value] == 0) conectedValueCount.Remove (lastCell.Value);
@@ -142,6 +147,7 @@ public class Player : MonoBehaviour
         if (conectedCell.Count >= 2) ExploseConectedCell ();
         else
         {
+            conectedCell?.First()?.highLight.SetActive(false);
             ResetData ();
             GameFlow.Instance.TotalPoint = 0;
         }
@@ -156,7 +162,7 @@ public class Player : MonoBehaviour
         segmentCount = 0;
         countInitValue = 0;      
     }
-
+    
     private void ExploseConectedCell ()
     {
         var userData = GameSystem.userdata;
@@ -165,6 +171,7 @@ public class Player : MonoBehaviour
         var newValue = GameFlow.Instance.TotalPoint;
         var newColor = CellColor.Instance.GetCellColor (newValue);
         var combo = conectedCell.Count;
+        Sequence sequence = DOTween.Sequence();
         if (newValue > userData.gameData.currentHighestCellValue)
         {
             userData.gameData.currentHighestCellValue = newValue;
@@ -177,24 +184,35 @@ public class Player : MonoBehaviour
             }
             GameSystem.SaveUserDataToLocal ();
         }
-            for (int i = 0; i < conectedCell.Count; i++)
-        {
-            if (!conectedCell[i].Equals (lastCell)) conectedCell[i].gameObject.SetActive (false);
-            else
+        foreach (var cell in conectedCell)
+        {   
+            sequence.AppendCallback(() =>
             {
-                var color = lastCell.spriteRenderer.color;
-                color.a = 0;
-                lastCell.spriteRenderer.color = color;
-                lastCell.valueTxt.color = color;
-            }
-            GameFlow.Instance.gameState = GameState.Fx;
-            var fx = PoolSystem.Instance.GetObject (effectPrefab, conectedCell[i].transform.position);
-            fx.Play (conectedCell, i, conectedCell[i].spriteRenderer.color, newColor);
-            effectTime = fx.time;
-        }
-
+                if (!cell.Equals(lastCell))
+                {          
+                    
+                    cell.gameObject.SetActive(false);
+                }
+                else
+                {
+                    var color = lastCell.spriteRenderer.color;
+                    color.a = 0;
+                    lastCell.spriteRenderer.color = color;
+                    lastCell.valueTxt.color = color;
+                }
+                GameFlow.Instance.gameState = GameState.Fx;
+                var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
+                fx.Play(conectedCell,conectedCell.IndexOf(cell), cell.spriteRenderer.color, newColor);
+                AudioSystem.Instance.PlaySound("QT_paopao");
+                cell.highLight.SetActive(false);
+            });
+            sequence.AppendInterval(Mathf.Clamp(0.5f/conectedCell.Count,0.05f,0.25f));
+           //fx.time;
+        }        
+        effectTime = 0.5f;// 0.2f * conectedCell.Count;
         LeanTween.delayedCall (effectTime, () =>
         {
+            conectedCell.Last().highLight.SetActive(false);
             newColor.a = 1;
             var textColor = Color.white;
             textColor.a = 1;
@@ -203,13 +221,13 @@ public class Player : MonoBehaviour
             lastCell.valueTxt.color = textColor;
             AudioSystem.Instance.PlaySound (conectedSound.RandomElement ());
             GridManager.Instance.SetSumValue (newValue);
-            LeanTween.delayedCall (effectTime, () => 
-            {
+            //LeanTween.delayedCall (effectTime, () => 
+           // {
                 GameFlow.Instance.CheckCombo (combo, GameFlow.Instance.mainCam.WorldToScreenPoint (lastCell.transform.position));
                 GameFlow.Instance.AddScore (newValue);
                 GridManager.Instance.CheckToSpawnNewCell (conectedCell);
                 ResetData ();
-            });
+           // });
         });
     }
     

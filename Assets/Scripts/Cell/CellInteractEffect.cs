@@ -12,6 +12,6 @@ public class CellInteractEffect : MonoBehaviour
     {
         var clip = clips.RandomElement ();
         AudioSystem.Instance.PlaySound(clip, CELL_VOLUME);
-        Vibration.Vibrate (50);
+        Vibration.Vibrate (20);
     }
 }

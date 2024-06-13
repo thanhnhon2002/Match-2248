@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using DarkcupGames;
 
 public class CellPartical : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class CellPartical : MonoBehaviour
 
     public void PlayEffectOut (float time, Color startColor)
     {
+       // AudioSystem.Instance.PlaySound("QT_paopao");
         startColor.a = 0f;
         spriteRenderer.color = startColor;
         transform.localPosition = Vector3.zero;
