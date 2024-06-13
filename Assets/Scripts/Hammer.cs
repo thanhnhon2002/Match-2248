@@ -3,19 +3,14 @@ using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Hammer : Power
+public class Hammer : Power<Hammer>
 {
-    public static Hammer Instance { get; private set; }
     [SerializeField] private Animator hammer;
     [SerializeField] private RectTransform hamerImg;
     [SerializeField] private ParticalSystemController smashFx;
     [SerializeField] private AudioClip cellSmashSound;
     private bool chose;
     private Cell cell;
-    private void Awake ()
-    {
-        Instance = this;
-    }
     public override void UsePower ()
     {
         if (GameFlow.Instance.gameState != GameState.Playing) return;

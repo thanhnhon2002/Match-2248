@@ -372,9 +372,9 @@ public class GridManager : MonoBehaviour
         foreach (var item in allCell)
         {
             item.FindNearbyCells();
-            HighlightHighestCell();
             if (saveData) userCellDic[item.gridPosition.ToString()] = item.Value;
         }
+        HighlightHighestCell();
         if (saveData) GameSystem.SaveUserDataToLocal();
     }
 
@@ -431,14 +431,7 @@ public class GridManager : MonoBehaviour
         var sq = DOTween.Sequence();
         sq.AppendCallback(() => cell.transform.DOScale(1.2f, Const.DEFAULT_TWEEN_TIME));
         sq.AppendInterval(Const.DEFAULT_TWEEN_TIME);
-        sq.AppendCallback(() =>
-        {
-            LeanTween.value((float)cell.Value, (float)cell.Value * 2, Const.DEFAULT_TWEEN_TIME).setAlpha().setOnUpdate(x =>
-            {
-                cell.valueTxt.text = ((BigInteger)x).ToString();
-            });
-            cell.spriteRenderer.DOColor(CellColor.Instance.GetCellColor(cell.Value * 2), Const.DEFAULT_TWEEN_TIME);
-        });
+        sq.AppendCallback(() => cell.IncreaseValue(cell.Value * 2));
         sq.AppendInterval(Const.DEFAULT_TWEEN_TIME);
         sq.AppendCallback(() =>
         {

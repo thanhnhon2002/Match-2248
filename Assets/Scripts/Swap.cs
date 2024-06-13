@@ -4,18 +4,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Swap : Power
+public class Swap : Power<Swap>
 {
-    public static Swap Instance { get; private set; }
     private List<Cell> chosenCell = new List<Cell> ();
     private List<CellHighlight> cellHighlight = new List<CellHighlight> ();
     [SerializeField] private CellHighlight highlightPre;
     [SerializeField] private AudioClip interactSound;
-
-    private void Awake ()
-    {
-        Instance = this;
-    }
 
     public override void UsePower ()
     {

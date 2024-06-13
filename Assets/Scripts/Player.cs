@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Effect effectPrefab;
     [SerializeField] private AudioClip[] conectedSound;
     private List<Cell> conectedCell = new List<Cell>();
-    public List<Cell> ConectedCell =>conectedCell;
+    public List<Cell> ConectedCell => conectedCell;
     private List<Line> lines = new List<Line> ();
     private Dictionary<BigInteger, int> conectedValueCount = new Dictionary<BigInteger, int> ();
     public bool isDraging;
@@ -157,7 +157,7 @@ public class Player : MonoBehaviour
         countInitValue = 0;      
     }
 
-    private void ExploseConectedCell ()
+    public void ExploseConectedCell ()
     {
         var userData = GameSystem.userdata;
         var effectTime = 0f;

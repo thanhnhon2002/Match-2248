@@ -13,7 +13,7 @@ using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
 public enum GameState
 {
-    Playing, Fx, Smash, Swap, Pause, GameOver
+    Playing, Fx, Smash, Swap, Paint, Pause, GameOver
 }
 
 public class GameFlow : MonoBehaviour
