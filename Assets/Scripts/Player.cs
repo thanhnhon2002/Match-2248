@@ -189,8 +189,7 @@ public class Player : MonoBehaviour
             sequence.AppendCallback(() =>
             {
                 if (!cell.Equals(lastCell))
-                {          
-                    
+                {                             
                     cell.gameObject.SetActive(false);
                 }
                 else
@@ -220,6 +219,7 @@ public class Player : MonoBehaviour
             lastCell.Value = newValue;
             lastCell.valueTxt.color = textColor;
             AudioSystem.Instance.PlaySound (conectedSound.RandomElement ());
+            //AudioSystem.Instance.PlaySound ("2048_exchange");
             GridManager.Instance.SetSumValue (newValue);
             //LeanTween.delayedCall (effectTime, () => 
            // {

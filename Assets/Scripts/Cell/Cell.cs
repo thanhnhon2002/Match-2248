@@ -104,7 +104,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag (PointerEventData eventData)
     {
-        if (GameFlow.Instance.gameState != GameState.Playing) return;
+        if (GameFlow.Instance.gameState != GameState.Playing) return;      
         Player.Instance.ClearLine ();
     }
 #if UNITY_EDITOR

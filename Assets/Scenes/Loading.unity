@@ -1831,6 +1831,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 1645210a2aa3c8941affabb730e6c03d, type: 3}
   - {fileID: 8300000, guid: 319e1621e7e7d0242b2b115fc14ee4ff, type: 3}
   - {fileID: 8300000, guid: 4d38db49449621c43884e14ae61bf911, type: 3}
+  - {fileID: 8300000, guid: 1cb3cc97c4429e142b32548423cc2bc8, type: 3}
   chanels: []
 --- !u!82 &652002753
 AudioSource:
