@@ -41,6 +41,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         spriteRenderer = GetComponent<SpriteRenderer> ();
         colorSet = GetComponent<ColorSet> ();
         highCellEffect = GetComponent<HighCellEffect> ();
+        highLight = transform.Find("HighLight").gameObject;
 #if !UNITY_EDITOR
         debugTxt.gameObject.SetActive (false);
 #endif
@@ -130,7 +131,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
                 break;
             default: return;
         }
-        if (GameFlow.Instance.gameState != GameState.Playing) return;
+        //if (GameFlow.Instance.gameState != GameState.Playing) return;
         
     }
 
