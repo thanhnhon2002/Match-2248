@@ -49,7 +49,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
     private void Start()
     {
         Value = (BigInteger)valueTutorial;
-    }
+     }
 
     private void EffectChose()
     {
@@ -203,4 +203,5 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         if (cells.Length <= 2)
             Tutorial.instance.NextPart();
     }
+   
 }

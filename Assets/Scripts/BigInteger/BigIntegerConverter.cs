@@ -62,18 +62,22 @@ public class NameExtension
     }
     string Convert (int index)
     {
-        string nameResult = "";
+        //string nameResult = "";
         int indexPow = index - 4;
         int thuong = indexPow / 26;
         if (indexPow > 25)
         {
-            nameResult += ExtensionByIndex (thuong - 1);
-            int du = indexPow % 26;
-            nameResult += ExtensionByIndex (du);
-            return nameResult;
+            //nameResult += ExtensionByIndex (thuong - 1);
+            //int du = indexPow % 26;
+            //nameResult += ExtensionByIndex (du);
+            //return nameResult;
+            return GetLimitExtension(thuong);
         } else return ExtensionByIndex (indexPow);
-
-
+    }
+    string GetLimitExtension(int indexPow)
+    {
+        if(indexPow<26) return ExtensionByIndex(indexPow-1);
+        else return GetLimitExtension(indexPow/26) + ExtensionByIndex(indexPow%26);
     }
     string ExtensionByIndex (int index)
     {
