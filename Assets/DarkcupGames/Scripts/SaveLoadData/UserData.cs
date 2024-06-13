@@ -51,7 +51,7 @@ public class GameData
     public GameData()
     {
         cellDic = new Dictionary<string, BigInteger>();
-        currentHighestCellValue = 0;
+        currentHighestCellValue = 128;
         currentScore = 0;
         indexPlayer = 0;
         minIndex = 0;
@@ -65,10 +65,12 @@ public class UserData
 {
     public string nickName;
     public int avatarIndex;
+    public int level;
     public float gold;
     public float diamond;
     public bool replay;
     public bool firstPlayGame;
+    public long lastSpecialOffer;
     public BigInteger highestScore;
     public BigInteger highestCellValue;
     public GameData gameData;
@@ -86,8 +88,11 @@ public class UserData
         property = new UserProperty();
         gameData = new GameData();
         dailyRewardInfo = new DailyRewardInfo();
-        nickName = $"Guest{UnityEngine.Random.Range (1, int.MaxValue)}";
+        var r = new System.Random();
+        nickName = $"Guest{r.Next(0, int.MaxValue)}";
         boughtItems = new List<string>();
+        firstPlayGame = true;
+        level = 0;
     }
     public void CheckValid()
     {

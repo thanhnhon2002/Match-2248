@@ -11,11 +11,13 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:28.+' // Assets/MaxSdk/Mediation/InMobi/Editor/Dependencies.xml:6
     implementation 'com.applovin.mediation:bidmachine-adapter:2.6.0.1' // Assets/MaxSdk/Mediation/BidMachine/Editor/Dependencies.xml:8
     implementation 'com.applovin.mediation:bytedance-adapter:5.9.0.4.0' // Assets/MaxSdk/Mediation/ByteDance/Editor/Dependencies.xml:8
+    implementation 'com.applovin.mediation:facebook-adapter:[6.17.0.0]' // Assets/MaxSdk/Mediation/Facebook/Editor/Dependencies.xml:8
     implementation 'com.applovin.mediation:fyber-adapter:8.2.7.1' // Assets/MaxSdk/Mediation/Fyber/Editor/Dependencies.xml:4
     implementation 'com.applovin.mediation:google-adapter:[23.0.0.1]' // Assets/MaxSdk/Mediation/Google/Editor/Dependencies.xml:5
     implementation 'com.applovin.mediation:google-ad-manager-adapter:[23.0.0.1]' // Assets/MaxSdk/Mediation/GoogleAdManager/Editor/Dependencies.xml:5
     implementation 'com.applovin.mediation:inmobi-adapter:10.6.7.0' // Assets/MaxSdk/Mediation/InMobi/Editor/Dependencies.xml:4
     implementation 'com.applovin.mediation:mintegral-adapter:16.7.21.0' // Assets/MaxSdk/Mediation/Mintegral/Editor/Dependencies.xml:8
+    implementation 'com.applovin.mediation:mytarget-adapter:5.21.0.0' // Assets/MaxSdk/Mediation/MyTarget/Editor/Dependencies.xml:4
     implementation 'com.applovin.mediation:ogury-presage-adapter:5.7.0.0' // Assets/MaxSdk/Mediation/OguryPresage/Editor/Dependencies.xml:8
     implementation 'com.applovin.mediation:unityads-adapter:4.10.0.0' // Assets/MaxSdk/Mediation/UnityAds/Editor/Dependencies.xml:4
     implementation 'com.applovin.mediation:vungle-adapter:7.3.1.2' // Assets/MaxSdk/Mediation/Vungle/Editor/Dependencies.xml:4
@@ -30,27 +32,28 @@ dependencies {
     implementation 'com.bigossp:bigo-ads:4.7.0' // Assets/MaxSdk/Mediation/BigoAds/Editor/Dependencies.xml:13
     implementation 'com.bigossp:max-mediation:4.7.0.0' // Assets/MaxSdk/Mediation/BigoAds/Editor/Dependencies.xml:8
     implementation 'com.google.android.gms:play-services-ads:23.0.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
-    implementation 'com.google.android.gms:play-services-base:18.4.0' // Assets/Firebase/Editor/DatabaseDependencies.xml:17
+    implementation 'com.google.android.gms:play-services-base:18.4.0' // Assets/ExternalDependencyManager/Firebase/Editor/DatabaseDependencies.xml:17
     implementation 'com.google.android.ump:user-messaging-platform:2.2.0' // Assets/GoogleMobileAds/Editor/GoogleUmpDependencies.xml:7
-    implementation 'com.google.firebase:firebase-analytics:21.6.2' // Assets/Firebase/Editor/RemoteConfigDependencies.xml:15
-    implementation 'com.google.firebase:firebase-analytics-unity:11.9.0' // Assets/Firebase/Editor/AnalyticsDependencies.xml:18
-    implementation 'com.google.firebase:firebase-app-unity:11.9.0' // Assets/Firebase/Editor/AppDependencies.xml:22
-    implementation 'com.google.firebase:firebase-auth:22.3.1' // Assets/Firebase/Editor/AuthDependencies.xml:13
-    implementation 'com.google.firebase:firebase-auth-unity:11.9.0' // Assets/Firebase/Editor/AuthDependencies.xml:20
-    implementation 'com.google.firebase:firebase-common:20.4.3' // Assets/Firebase/Editor/AppDependencies.xml:13
-    implementation 'com.google.firebase:firebase-config:21.6.3' // Assets/Firebase/Editor/RemoteConfigDependencies.xml:13
-    implementation 'com.google.firebase:firebase-config-unity:11.9.0' // Assets/Firebase/Editor/RemoteConfigDependencies.xml:20
-    implementation 'com.google.firebase:firebase-crashlytics-ndk:18.6.4' // Assets/Firebase/Editor/CrashlyticsDependencies.xml:13
-    implementation 'com.google.firebase:firebase-crashlytics-unity:11.9.0' // Assets/Firebase/Editor/CrashlyticsDependencies.xml:20
-    implementation 'com.google.firebase:firebase-database:20.3.1' // Assets/Firebase/Editor/DatabaseDependencies.xml:13
-    implementation 'com.google.firebase:firebase-database-unity:11.9.0' // Assets/Firebase/Editor/DatabaseDependencies.xml:22
-    implementation 'com.google.firebase:firebase-iid:21.1.0' // Assets/Firebase/Editor/MessagingDependencies.xml:17
-    implementation 'com.google.firebase:firebase-messaging:23.4.1' // Assets/Firebase/Editor/MessagingDependencies.xml:13
-    implementation 'com.google.firebase:firebase-messaging-unity:11.9.0' // Assets/Firebase/Editor/MessagingDependencies.xml:24
-    implementation 'com.google.flatbuffers:flatbuffers-java:1.12.0' // Assets/Firebase/Editor/MessagingDependencies.xml:19
+    implementation 'com.google.firebase:firebase-analytics:21.6.2' // Assets/ExternalDependencyManager/Firebase/Editor/RemoteConfigDependencies.xml:15
+    implementation 'com.google.firebase:firebase-analytics-unity:11.9.0' // Assets/ExternalDependencyManager/Firebase/Editor/AnalyticsDependencies.xml:18
+    implementation 'com.google.firebase:firebase-app-unity:11.9.0' // Assets/ExternalDependencyManager/Firebase/Editor/AppDependencies.xml:22
+    implementation 'com.google.firebase:firebase-auth:22.3.1' // Assets/ExternalDependencyManager/Firebase/Editor/AuthDependencies.xml:13
+    implementation 'com.google.firebase:firebase-auth-unity:11.9.0' // Assets/ExternalDependencyManager/Firebase/Editor/AuthDependencies.xml:20
+    implementation 'com.google.firebase:firebase-common:20.4.3' // Assets/ExternalDependencyManager/Firebase/Editor/AppDependencies.xml:13
+    implementation 'com.google.firebase:firebase-config:21.6.3' // Assets/ExternalDependencyManager/Firebase/Editor/RemoteConfigDependencies.xml:13
+    implementation 'com.google.firebase:firebase-config-unity:11.9.0' // Assets/ExternalDependencyManager/Firebase/Editor/RemoteConfigDependencies.xml:20
+    implementation 'com.google.firebase:firebase-crashlytics-ndk:18.6.4' // Assets/ExternalDependencyManager/Firebase/Editor/CrashlyticsDependencies.xml:13
+    implementation 'com.google.firebase:firebase-crashlytics-unity:11.9.0' // Assets/ExternalDependencyManager/Firebase/Editor/CrashlyticsDependencies.xml:20
+    implementation 'com.google.firebase:firebase-database:20.3.1' // Assets/ExternalDependencyManager/Firebase/Editor/DatabaseDependencies.xml:13
+    implementation 'com.google.firebase:firebase-database-unity:11.9.0' // Assets/ExternalDependencyManager/Firebase/Editor/DatabaseDependencies.xml:22
+    implementation 'com.google.firebase:firebase-iid:21.1.0' // Assets/ExternalDependencyManager/Firebase/Editor/MessagingDependencies.xml:17
+    implementation 'com.google.firebase:firebase-messaging:23.4.1' // Assets/ExternalDependencyManager/Firebase/Editor/MessagingDependencies.xml:13
+    implementation 'com.google.firebase:firebase-messaging-unity:11.9.0' // Assets/ExternalDependencyManager/Firebase/Editor/MessagingDependencies.xml:24
+    implementation 'com.google.flatbuffers:flatbuffers-java:1.12.0' // Assets/ExternalDependencyManager/Firebase/Editor/MessagingDependencies.xml:19
     implementation 'com.mopub:mopub-sdk:5.18.0' // Assets/AppsFlyer/Editor/AppsFlyerAdrevenueDependencies.xml:6
     implementation 'com.squareup.picasso:picasso:2.71828' // Assets/MaxSdk/Mediation/InMobi/Editor/Dependencies.xml:5
 // Android Resolver Dependencies End
+
 **DEPS**}
 
 // Android Resolver Exclusions Start

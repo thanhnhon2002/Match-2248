@@ -32,6 +32,7 @@ public class AdmobAppOpen : AdmobAds
     {
         if (AdmobManager.isReady == false)
         {
+            AdmobManager.Instance.Init();
             Debug.LogError("admob is not ready for load app open!");
             return;
         }
@@ -50,7 +51,7 @@ public class AdmobAppOpen : AdmobAds
                 available = false;
                 retryCount++;
                 float time = Mathf.Pow(2, retryCount);
-                if (time > 64) time = 64;
+                if (time > AdmobManager.MAX_RETRY_TIME) time = AdmobManager.MAX_RETRY_TIME;
                 Invoke(nameof(LoadAds), time);
                 return;
             }

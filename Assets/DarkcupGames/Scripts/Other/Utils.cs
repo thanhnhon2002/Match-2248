@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using System;
 using System.Linq.Expressions;
+using System.Linq;
 
 namespace DarkcupGames
 {
@@ -111,6 +112,13 @@ namespace DarkcupGames
             {
                 thisTransform.GetChild(i).gameObject.SetActive(i == index);
             }
+        }
+
+        private static int LenghtOf<TSource>(IEnumerable<TSource> source)
+        {
+            if (source is ICollection<TSource> genericCollection) return genericCollection.Count;
+            if (source is ICollection nonGenericCollection) return nonGenericCollection.Count;
+            return source.Count();
         }
 
         #region GET_COMPONENT_BY_PATH

@@ -39,7 +39,7 @@ public class Tutorial : MonoBehaviour
         {
             ////Start Game
             var userData = GameSystem.userdata;
-            userData.firstPlayGame = true;
+            userData.firstPlayGame = false;
             GameSystem.SaveUserDataToLocal();         
             StartCoroutine(StartGame());
             return;
@@ -59,5 +59,18 @@ public class Tutorial : MonoBehaviour
         //uiHome.gameObject.SetActive(true);       
         uiEnd.SetActive(false);
         Home.Instance.MoveToGamePlay();
+    }
+
+    public void Fail()
+    {
+        var currentPart = effects[this.currentPart];
+        currentPart.titlle.GetComponent<CanvasGroup>().alpha = 0;
+        currentPart.topic.GetComponent<CanvasGroup>().alpha = 0;
+
+        currentPart.titlle.GetComponent<CanvasGroup>().DOFade(1f, 0.5f);
+        currentPart.topic.GetComponent<CanvasGroup>().DOFade(1f, 0.5f);
+
+        currentPart.titlle.text = "Oops";
+        currentPart.topic.text = "Try again";
     }
 }

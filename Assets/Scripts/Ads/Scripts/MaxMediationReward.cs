@@ -46,7 +46,7 @@ namespace DarkcupGames
         {
             retryCount++;
             float time = Mathf.Pow(2, retryCount);
-            if (time > 64) time = 64;
+            if (time > AdManagerMax.MAX_RETRY_TIME) time = AdManagerMax.MAX_RETRY_TIME;
             Invoke(nameof(LoadAds), time);
         }
 
@@ -67,6 +67,17 @@ namespace DarkcupGames
                                         new Firebase.Analytics.Parameter("value", revenue),
                                         new Firebase.Analytics.Parameter("currency", "USD"), };
             Firebase.Analytics.FirebaseAnalytics.LogEvent("ad_impression", impressionParameters);
+        }
+
+
+        public void AddOnAdCloseAction(Action<string, MaxSdkBase.AdInfo> action)
+        {
+            MaxSdkCallbacks.Rewarded.OnAdHiddenEvent += action;
+        }
+
+        public void AddOnAdFailAction(Action<string, MaxSdkBase.ErrorInfo> action)
+        {
+            MaxSdkCallbacks.Rewarded.OnAdLoadFailedEvent += action;
         }
 
         public override void LoadAds()

@@ -7,20 +7,18 @@ using Random = UnityEngine.Random;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
-using System;
-using System.Collections;
 using DarkcupGames;
 using DeepTrackSDK;
-using UnityEngine.UIElements;
+using Castle.Core.Internal;
 
 public class GridManager : MonoBehaviour
 {
     private const float CELL_DROP_TIME = 0.5F;
+    public const int MIN_HIGHLIGHT_VALUE = 128;
     public readonly int MAX_ROW = 8;
     public readonly int MAX_COL = 5;
     private const int Space_Index = 10;
     private const int Space_MaxIndex = 13;
-    private const int MIN_HIGHLIGHT_VALUE = 128;
 
     public static GridManager Instance { get; private set; }
     public static readonly List<GridPosition> neighbourGridPosition = new List<GridPosition>()
@@ -29,9 +27,10 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform cellSpawnPos;
     [SerializeField] private ParticalSystemController removeCellFx;
     public Dictionary<int, List<Cell>> allCellInCollom = new Dictionary<int, List<Cell>>();
-    private Dictionary<GridPosition, Vector3> girdPosToLocal = new Dictionary<GridPosition, Vector3>();
+    public Dictionary<GridPosition, Vector3> girdPosToLocal { get; private set; } = new Dictionary<GridPosition, Vector3>();
     public Cell[] allCell { get; private set; }
     public Dictionary<GridPosition, Cell> cellDic = new Dictionary<GridPosition, Cell>();
+    public OnSceneChangeCellEffect effect { get; private set; }
 
     private int minIndex;
     public int MinIndex => minIndex;
@@ -53,18 +52,13 @@ public class GridManager : MonoBehaviour
     private List<Cell> cellCol4 = new List<Cell>();
     private List<Cell> cellCol5 = new List<Cell>();
 
-    //[SerializeField] private List<Cell> debugCellCol1 = new List<Cell> ();
-    //[SerializeField] private List<Cell> debugCellCol2 = new List<Cell> ();
-    //[SerializeField] private List<Cell> debugCellCol3 = new List<Cell> ();
-    //[SerializeField] private List<Cell> debugCellCol4 = new List<Cell> ();
-    //[SerializeField] private List<Cell> debugCellCol5 = new List<Cell> ();
-
 
     private void Awake()
     {
         DOTween.SetTweensCapacity(1500, 1500);
         Application.targetFrameRate = 60;
         Instance = this;
+        effect = GetComponent<OnSceneChangeCellEffect>();
     }
 
     private void Start()
@@ -86,7 +80,7 @@ public class GridManager : MonoBehaviour
         }
         FirebaseManager.Instance.SetProperty(UserPopertyKey.last_level, maxIndex.ToString());
     }
-    void SetUpCell()
+    private void SetUpCell()
     {
         var userData = GameSystem.userdata;
         if (userData.gameData.minIndex == 0)
@@ -106,24 +100,14 @@ public class GridManager : MonoBehaviour
         UpdateCell();
         LoadCells();
     }
-    //IEnumerator WaitChoseStart()
-    //{
-    //    while(indexStart==0)
-    //    {
-    //        yield return null;
-    //    }
-    //    SetUpCell();
-    //    indexChose = 0;
-    //    indexStart = 0;
-    //    GameSystem.userdata.replay = false;
-    //    GameSystem.SaveUserDataToLocal();
-    //}
+
     public void SetStartIndex()
     {
         foreach (var item in allCell)
         {
             item.gameObject.SetActive(true);
         }
+        if(indexChose <= 0) indexChose = 1;
         indexStart = indexChose;
         SetUpCell();
         var startValue = (BigInteger)Mathf.Pow(2, indexStart);
@@ -155,7 +139,6 @@ public class GridManager : MonoBehaviour
     public Cell SpawnCell(Vector2 position, int value)
     {
         var cell = PoolSystem.Instance.GetObject(cellPrefab, position);
-        //var cell = Instantiate(cellPrefab, position, Quaternion.identity);
         cell.gridPosition = new GridPosition(0, 0);
         cell.transform.SetParent(transform);
         cell.Value = value;
@@ -227,16 +210,15 @@ public class GridManager : MonoBehaviour
         for (int i = 1; i <= MAX_COL; i++)
         {
             var list = RecollectActiveCell(i);
-            List<Cell> checkList;
-            switch (i)
+            List<Cell> checkList = i switch
             {
-                case 1: checkList = cellCol1; break;
-                case 2: checkList = cellCol2; break;
-                case 3: checkList = cellCol3; break;
-                case 4: checkList = cellCol4; break;
-                case 5: checkList = cellCol5; break;
-                default: checkList = null; break;
-            }
+                1 => cellCol1,
+                2 => cellCol2,
+                3 => cellCol3,
+                4 => cellCol4,
+                5 => cellCol5,
+                _ => null
+            }; 
             if (checkList == null)
             {
                 Debug.LogError("Something wrong here !!!");
@@ -358,11 +340,7 @@ public class GridManager : MonoBehaviour
         {
             OnDoneCellMove();
             if (!showAd) return;
-            if (Time.time - AdManagerMax.Instance.lastInterTime >= FirebaseManager.remoteConfig.TIME_BETWEEN_ADS)
-            {
-                AdManagerMax.Instance.ShowIntertistial(() => AdManagerMax.Instance.lastInterTime = Time.time);
-                FirebaseManager.Instance.LogIntertisial("Gameplay");
-            }
+            AdManagerMax.Instance.ShowIntertistial("Gameplay", null);          
         });
     }
 
@@ -372,6 +350,7 @@ public class GridManager : MonoBehaviour
         if (HasLose())
         {
             GameFlow.Instance.ShowLosePopup();
+            DeepTrack.LogLevelLose(GameSystem.userdata.level);
             return;
         }
         GameSystem.SaveUserDataToLocal();
@@ -389,16 +368,6 @@ public class GridManager : MonoBehaviour
             var list = allCellInCollom[item.gridPosition.x];
             if (!list.Contains(item)) list.Add(item);
         }
-        //debugCellCol1.Clear ();
-        //debugCellCol2.Clear ();
-        //debugCellCol3.Clear ();
-        //debugCellCol4.Clear ();
-        //debugCellCol5.Clear ();
-        //debugCellCol1.AddRange (allCellInCollom[1]);
-        //debugCellCol2.AddRange (allCellInCollom[2]);
-        //debugCellCol3.AddRange (allCellInCollom[3]);
-        //debugCellCol4.AddRange (allCellInCollom[4]);
-        //debugCellCol5.AddRange (allCellInCollom[5]);
         var userCellDic = GameSystem.userdata.gameData.cellDic;
         foreach (var item in allCell)
         {
@@ -443,6 +412,7 @@ public class GridManager : MonoBehaviour
         GameSystem.SaveUserDataToLocal();
     }
 
+
     public void DoubleHightCellValue()
     {
         GameFlow.Instance.gameState = GameState.Fx;
@@ -456,6 +426,7 @@ public class GridManager : MonoBehaviour
                 highest = item.Value;
             }
         }
+        cell.spriteRenderer.maskInteraction = SpriteMaskInteraction.None;
         var cellScale = cell.transform.localScale;
         var sq = DOTween.Sequence();
         sq.AppendCallback(() => cell.transform.DOScale(1.2f, Const.DEFAULT_TWEEN_TIME));
@@ -477,8 +448,52 @@ public class GridManager : MonoBehaviour
         sq.AppendInterval(Const.DEFAULT_TWEEN_TIME);
         sq.AppendCallback(() =>
         {
+            cell.spriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
             var userData = GameSystem.userdata;
-            userData.highestCellValue = cell.Value;
+            userData.gameData.currentHighestCellValue = cell.Value;
+            if(userData.gameData.currentHighestCellValue > userData.highestCellValue) userData.highestCellValue = cell.Value;
+            userData.gameData.cellDic[cell.gridPosition.ToString()] = cell.Value;
+            GameSystem.SaveUserDataToLocal();
+            GameFlow.Instance.gameState = GameState.Playing;
+        });
+    }
+
+    public void SpawHighestCell()
+    {
+        GameFlow.Instance.gameState = GameState.Fx;
+        var targetValue = GameSystem.userdata.gameData.currentHighestCellValue;
+        var lowCells = allCell.FindAll(x => x.Value < targetValue).ToList() ;
+        var cell = lowCells.RandomElement();
+        cell.spriteRenderer.maskInteraction = SpriteMaskInteraction.None;
+        cell.spriteRenderer.sortingOrder = 1;
+        cell.valueTxt.sortingOrder = 1;
+        var cellScale = cell.transform.localScale;
+        var sq = DOTween.Sequence();
+        sq.AppendCallback(() => cell.transform.DOScale(1.2f, Const.DEFAULT_TWEEN_TIME));
+        sq.AppendInterval(Const.DEFAULT_TWEEN_TIME);
+        sq.AppendCallback(() =>
+        {
+            cell.valueTxt.DOFade(0f, Const.DEFAULT_TWEEN_TIME);
+            cell.spriteRenderer.DOColor(CellColor.Instance.GetCellColor(targetValue), Const.DEFAULT_TWEEN_TIME);
+        });
+        sq.AppendInterval(Const.DEFAULT_TWEEN_TIME);
+        sq.AppendCallback(() =>
+        {
+            cell.valueTxt.DOFade(1f, Const.DEFAULT_TWEEN_TIME);
+            cell.Value = targetValue;
+            cell.transform.DOScale(cellScale, Const.DEFAULT_TWEEN_TIME);
+        });
+        sq.AppendInterval(Const.DEFAULT_TWEEN_TIME);
+        sq.AppendCallback(() =>
+        {
+            cell.spriteRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+            cell.spriteRenderer.sortingOrder = 0;
+            cell.valueTxt.sortingOrder = 0;
+            cell.highCellEffect.ShowEffect();
+            var userData = GameSystem.userdata;
+            userData.gameData.currentHighestCellValue = cell.Value;
+            if (userData.gameData.currentHighestCellValue > userData.highestCellValue) userData.highestCellValue = cell.Value;
+            userData.gameData.cellDic[cell.gridPosition.ToString()] = cell.Value;
             GameSystem.SaveUserDataToLocal();
             GameFlow.Instance.gameState = GameState.Playing;
         });

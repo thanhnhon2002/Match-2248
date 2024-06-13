@@ -7,11 +7,13 @@
     <package>com.android.support:recyclerview-v7:28.+</package>
     <package>com.applovin.mediation:bidmachine-adapter:2.6.0.1</package>
     <package>com.applovin.mediation:bytedance-adapter:5.9.0.4.0</package>
+    <package>com.applovin.mediation:facebook-adapter:[6.17.0.0]</package>
     <package>com.applovin.mediation:fyber-adapter:8.2.7.1</package>
     <package>com.applovin.mediation:google-adapter:[23.0.0.1]</package>
     <package>com.applovin.mediation:google-ad-manager-adapter:[23.0.0.1]</package>
     <package>com.applovin.mediation:inmobi-adapter:10.6.7.0</package>
     <package>com.applovin.mediation:mintegral-adapter:16.7.21.0</package>
+    <package>com.applovin.mediation:mytarget-adapter:5.21.0.0</package>
     <package>com.applovin.mediation:ogury-presage-adapter:5.7.0.0</package>
     <package>com.applovin.mediation:unityads-adapter:4.10.0.0</package>
     <package>com.applovin.mediation:vungle-adapter:7.3.1.2</package>
@@ -47,21 +49,7 @@
     <package>com.mopub:mopub-sdk:5.18.0</package>
     <package>com.squareup.picasso:picasso:2.71828</package>
   </packages>
-  <files>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/11.9.0/firebase-analytics-unity-11.9.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-analytics-unity/11.9.0/firebase-analytics-unity-11.9.0.pom</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-app-unity/11.9.0/firebase-app-unity-11.9.0.pom</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-auth-unity/11.9.0/firebase-auth-unity-11.9.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-auth-unity/11.9.0/firebase-auth-unity-11.9.0.pom</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-config-unity/11.9.0/firebase-config-unity-11.9.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-config-unity/11.9.0/firebase-config-unity-11.9.0.pom</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-crashlytics-unity/11.9.0/firebase-crashlytics-unity-11.9.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-crashlytics-unity/11.9.0/firebase-crashlytics-unity-11.9.0.pom</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-database-unity/11.9.0/firebase-database-unity-11.9.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-database-unity/11.9.0/firebase-database-unity-11.9.0.pom</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/11.9.0/firebase-messaging-unity-11.9.0.aar</file>
-    <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/11.9.0/firebase-messaging-unity-11.9.0.pom</file>
-  </files>
+  <files />
   <settings>
     <setting name="androidAbis" value="arm64-v8a,armeabi-v7a" />
     <setting name="bundleId" value="com.merge.number.block.puzzle" />

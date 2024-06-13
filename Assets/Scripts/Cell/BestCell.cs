@@ -11,10 +11,15 @@ public class BestCell : MonoBehaviour
 
     private void Start ()
     {
+        DisplayBestCell();
+    }
+
+    public void DisplayBestCell()
+    {
         var userData = GameSystem.userdata;
         var value = userData.gameData.currentHighestCellValue;
-        if(value < 2) value = 2;
-        cellImg.color = CellColor.Instance.GetCellColor (value);
+        if (value < 2) value = 2;
+        cellImg.color = CellColor.Instance.GetCellColor(value);
         valueTxt.text = BigIntegerConverter.ConverNameValue(value);
     }
 }

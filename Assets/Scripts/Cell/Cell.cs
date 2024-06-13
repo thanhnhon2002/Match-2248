@@ -36,7 +36,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public TextMeshPro debugTxt;
 
     private void Awake ()
-    {     
+    {
         spriteRenderer = GetComponent<SpriteRenderer> ();
         colorSet = GetComponent<ColorSet> ();
         highCellEffect = GetComponent<HighCellEffect> ();

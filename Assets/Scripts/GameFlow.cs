@@ -9,7 +9,8 @@ using DarkcupGames;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DeepTrackSDK;
-
+using Vector3 = UnityEngine.Vector3;
+using Vector2 = UnityEngine.Vector2;
 public enum GameState
 {
     Playing, Fx, Smash, Swap, Pause, GameOver
@@ -23,6 +24,9 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private ConectedPointDisplay pointDisplay;
     [SerializeField] private Combo combo;
     [SerializeField] private BonusDiamond bonusDiamond;
+    [SerializeField] private GiftButton giftButton;
+    [SerializeField] private Image unmask;
+    [SerializeField] private Image blockInteract;
     public GameObject shop;
     public DiamondGroup diamondGroup;
     public Camera mainCam;
@@ -33,6 +37,7 @@ public class GameFlow : MonoBehaviour
     public List<int> multiliers = new List<int>();
     private BigInteger gameScore;
     private BigInteger totalPoint;
+    private float lastGifTime;
     public float timeCount { get; private set; }
 
     public BigInteger GameScore
@@ -40,7 +45,7 @@ public class GameFlow : MonoBehaviour
         get { return gameScore; }
         set { 
             gameScore = value;
-            scoreTxt.text = value.ToString ();
+            scoreTxt.text = BigIntegerConverter.ConverNameValue(value);
             var userData = GameSystem.userdata;
             userData.gameData.currentScore = gameScore;
             if (gameScore > userData.highestScore)
@@ -76,27 +81,67 @@ public class GameFlow : MonoBehaviour
         InitMultilier ();
         pointDisplay.gameObject.SetActive (false);
         bonusDiamond.gameObject.SetActive (false);
+        giftButton.gameObject.SetActive (false);
     }
 
-    private void Start ()
+    private IEnumerator Start ()
     {
         timeCount = 0;
         LoadUserData();
         LogEventButton();
-        if (GameSystem.userdata.replay) PopupManager.Instance.ShowPopup(PopupOptions.StartFrom);
-        else AudioSystem.Instance.PlaySound("Game_Open");
+        unmask.transform.localScale = Vector3.zero;
+        yield return new WaitForEndOfFrame();
+        if (GameSystem.userdata.replay)
+        {
+            PopupManager.Instance.ShowPopup(PopupOptions.StartFrom);
+            unmask.transform.localScale = Vector3.one;
+            blockInteract.gameObject.SetActive(false);
+        } else
+        {
+            GridManager.Instance.effect.Prepare();
+            ShowScene(GridManager.Instance.effect.RunEffect);
+        }
     }
 
     private void Update()
     {
         timeCount += Time.deltaTime;
+        if (!MaxMediationManager.rewarded.IsAdAvailable()) return;
+        if(Time.time - lastGifTime > FirebaseManager.remoteConfig.GIFT_INTERVAL && GameSystem.userdata.gameData.currentHighestCellValue >= GridManager.MIN_HIGHLIGHT_VALUE)
+        {
+            giftButton.gameObject.SetActive (true);
+            lastGifTime = Time.time;
+        }
+    }
+
+    private void ShowScene(Action onDone = null)
+    {
+        blockInteract.gameObject.SetActive(true);
+        var fx = FindObjectsOfType<OnSceneChangeEffect>();
+        foreach (var item in fx)
+        {
+            item.Prepare();
+        }
+        unmask.rectTransform.DOScale(UnityEngine.Vector2.one, Const.DEFAULT_TWEEN_TIME).OnComplete(() =>
+        {
+            AudioSystem.Instance.PlaySound("Game_Open");
+            foreach (var item in fx)
+            {
+                item.RunEffect();
+            }
+            onDone?.Invoke();
+            LeanTween.delayedCall(OnSceneChangeEffect.EFFECT_TIME, () =>
+            {
+                blockInteract.gameObject.SetActive(false);
+            });
+        });
     }
 
     private void LoadUserData ()
     {
         var userData = GameSystem.userdata;
         GameScore = userData.gameData.currentScore;
-        highScoreTxt.text = userData.highestScore.ToString ();
+        highScoreTxt.text = BigIntegerConverter.ConverNameValue(userData.highestScore);
     }
 
 
@@ -115,7 +160,6 @@ public class GameFlow : MonoBehaviour
         topGroup.SetInteract(interactable);
     }
 
-    [ContextMenu("Lose")]
     public void ShowLosePopup()
     {
         FirebaseManager.Instance.LogLevelFail(GridManager.Instance.MaxIndex, timeCount);
@@ -142,19 +186,16 @@ public class GameFlow : MonoBehaviour
     {
         var userData = GameSystem.userdata;
         userData.replay = true;
-        userData.gameData.cellDic.Clear ();
-        userData.gameData.currentScore = 0;
-        userData.gameData.indexPlayer = 0;
-        userData.gameData.minIndex = 0;
-        userData.gameData.maxIndex = 0;
-        userData.gameData.maxIndexRandom = 0;
+        userData.gameData = new GameData();
+        userData.level++;
         GameSystem.SaveUserDataToLocal ();
-        SceneManager.LoadScene (SceneManager.GetActiveScene().name);
+        unmask.transform.DOScale(Vector2.zero, Const.DEFAULT_TWEEN_TIME).OnComplete(() => SceneManager.LoadScene (SceneManager.GetActiveScene().name));
+        DeepTrack.LogLevelStart(userData.level);
     }
 
     public void ToHome()
     {
-        SceneManager.LoadScene ("UI Home");
+        unmask.transform.DOScale(Vector2.zero, Const.DEFAULT_TWEEN_TIME).OnComplete(() => SceneManager.LoadScene ("UI Home"));
     }
 
     public void DelayToHome (float delay)
@@ -178,6 +219,7 @@ public class GameFlow : MonoBehaviour
                 AudioSystem.Instance.PlaySound ("Coins_collect");
                 bonusDiamond.gameObject.SetActive (false);
                 diamondGroup.AddDiamond (diamond, true);
+                diamondGroup.Display();
             });
         });
 

@@ -14,18 +14,21 @@ public class EffectUIAnimManager : MonoBehaviour
     private void OnEnable()
     {
         RandomRotate();
-        ScaleAndMoveToTarget();
+        Scale();
     }
 
-    private void ScaleAndMoveToTarget()
+    private void Scale()
     {
-        tweener = transform.DOScale(1, dotweenSpeed).OnComplete(() =>
+        tweener = transform.DOScale(1.15f, dotweenSpeed).SetEase(Ease.OutBack);
+    }
+
+    public void MoveToTarget()
+    {
+        tweener.Kill();
+        transform.DOMove(targetTransform.transform.position, dotweenSpeed).SetEase(Ease.InBack);
+        transform.DOScale(0f, dotweenSpeed).OnComplete(() =>
         {
-            tweener = transform.DOScale(0.3f, dotweenSpeed);
-            tweener = transform.DOMove(targetTransform.transform.position, dotweenSpeed).OnComplete(() =>
-            {
-                Destroy(gameObject);
-            });
+            Destroy(gameObject);
         });
     }
 

@@ -20,6 +20,8 @@ public enum PopupOptions
     Duplicate,
     StartFrom,
     NoInternet,
+    Gift,
+    SpecialOffer
 }
 public class DataEventPopup : EventArgs
 {
@@ -72,6 +74,12 @@ public class PopupManager : MonoBehaviour
             queueShow?.Dequeue();
             this.ShowAllQueue();
         }     
+    }
+    public void DeQueueButtonAds()
+    {
+        if (!InternetChecker.Instance.WasConnected) return;
+        popupDic[queueShow.Peek().option].Disappear();
+        DeQueue();
     }
     public void ShowPopup(PopupOptions option)
     {

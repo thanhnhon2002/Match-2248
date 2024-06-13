@@ -44,18 +44,23 @@ public class AdmobAdBanner : AdmobAds
 
     public override void LoadAds()
     {
-        if (AdmobManager.isReady == false)
+        try
         {
-            Debug.LogError("admob is not ready for load banner");
-            return;
+            if (AdmobManager.isReady == false)
+            {
+                AdmobManager.Instance.Init();
+                Debug.LogError("admob is not ready for load banner");
+                return;
+            }
+            var adRequest = new AdRequest();
+            if (useCollapsible)
+            {
+                adRequest.Extras.Add("collapsible", "bottom");
+                adRequest.Extras.Add("collapsible_request_id", uuid);
+            }
+            bannerView.LoadAd(adRequest);
         }
-        var adRequest = new AdRequest();
-        if (useCollapsible)
-        {
-            adRequest.Extras.Add("collapsible", "bottom");
-            adRequest.Extras.Add("collapsible_request_id", uuid);
-        }
-        bannerView.LoadAd(adRequest);        
+        catch (Exception e) { }
     }
 
     public override bool ShowAds(Action onShowAdsComplete)

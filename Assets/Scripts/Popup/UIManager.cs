@@ -24,7 +24,7 @@ public class UIManager : MonoBehaviour
     {
         var obj = PoolSystem.Instance.GetObject(prefabReward, spawner.position, PopupManager.Instance.transform);
         obj.GetComponent<SoundPopup>().PlayPopupSound();
-        while (timeCount <= MoveBenzier.timeDafault + 0.3f)
+        while (timeCount <= MoveBenzier.timeDafault)
         {
             timeCount += Time.deltaTime;
             yield return null;

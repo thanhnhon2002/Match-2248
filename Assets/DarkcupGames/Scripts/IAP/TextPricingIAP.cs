@@ -7,7 +7,7 @@ using DarkcupGames;
 public class TextPricingIAP : MonoBehaviour
 {
     public TextMeshProUGUI txt;
-    public string id;
+    public IAP_ID id;
 
     private void Awake()
     {
@@ -24,7 +24,7 @@ public class TextPricingIAP : MonoBehaviour
         if (ShopIAPManager.Instance == null) return;
         if (ShopIAPManager.Instance.IsInitDone() == false) return;
         Dictionary<string, string> prices = ShopIAPManager.iap.prices;
-        if (prices.ContainsKey(id) == false) return;
-        txt.text = prices[id];
+        if (prices.ContainsKey(id.ToString()) == false) return;
+        txt.text = prices[id.ToString()];
     }
 }
