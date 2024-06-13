@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using DarkcupGames;
 using Firebase.Analytics;
+using UnityEngine.SceneManagement;
 
 public class AdmobAdBanner : AdmobAds
 {
@@ -53,7 +54,7 @@ public class AdmobAdBanner : AdmobAds
                 return;
             }
             var adRequest = new AdRequest();
-            if (useCollapsible)
+            if (useCollapsible && !SceneManager.GetActiveScene().name.Equals("GameplayUI"))
             {
                 adRequest.Extras.Add("collapsible", "bottom");
                 adRequest.Extras.Add("collapsible_request_id", uuid);
