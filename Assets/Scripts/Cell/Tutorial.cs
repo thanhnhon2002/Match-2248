@@ -45,6 +45,7 @@ public class Tutorial : MonoBehaviour
             return;
         }
         effects[currentPart].Animation(0);
+        //hand.SetActive(true);
     }
     IEnumerator StartGame()
     {

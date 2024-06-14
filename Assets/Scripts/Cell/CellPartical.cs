@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using DarkcupGames;
 
 public class CellPartical : MonoBehaviour
 {
@@ -9,9 +10,16 @@ public class CellPartical : MonoBehaviour
     [SerializeField] private float size;
     [SerializeField] private float rotation;
     public SpriteRenderer spriteRenderer;
+    private void Awake()
+    {
+        localPos = transform.localPosition;
+        size = transform.localScale.x;
+        rotation = transform.eulerAngles.z;
+    }
 
     public void PlayEffectOut (float time, Color startColor)
     {
+       // AudioSystem.Instance.PlaySound("QT_paopao");
         startColor.a = 0f;
         spriteRenderer.color = startColor;
         transform.localPosition = Vector3.zero;

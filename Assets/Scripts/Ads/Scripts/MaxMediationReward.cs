@@ -6,7 +6,7 @@ namespace DarkcupGames
     public class MaxMediationReward : MaxMediationAds
     {
         public string REWARD_ID;
-        private Action onShowAdsComplete;
+        public Action onShowAdsComplete;
         private int retryCount = 0;
         private bool isShowingAds;
         public static string placement;

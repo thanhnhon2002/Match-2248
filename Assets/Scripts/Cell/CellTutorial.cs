@@ -13,6 +13,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
     public SpriteRenderer spriteRenderer { get; private set; }
     public TextMeshPro valueTxt;
     public ColorSet colorSet;
+    public GameObject highLight;
     private BigInteger value;
     public BigInteger Value
     {
@@ -44,6 +45,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         bounceClick = GetComponent<BounceOnClick>();
         cellInteractEffect = GetComponent<CellInteractEffect>();
         InitMultipliers();
+        highLight = transform.Find("HighLight").gameObject;
     }
 
     private void Start()
@@ -60,6 +62,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
     public void OnBeginDrag(PointerEventData eventData)
     {
         isDragging = true;
+        highLight.gameObject.SetActive(true);
         added = true;
         listCell.Add(this);
         initValue = value;
@@ -67,6 +70,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         lines.Add(line);
         line.SetPosition(0, transform.position);
         line.SetColors(spriteRenderer.color, spriteRenderer.color);
+        //Tutorial.instance.hand.SetActive(false);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -75,7 +79,10 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         if(listCell.Count < cells.Length)
         {
             foreach (var cell in listCell)
+            {
                 cell.added = false;
+                cell.highLight.SetActive(false);
+            }
             listCell.Clear();
             foreach (var line in lines)
                 line.gameObject.SetActive(false);
@@ -85,6 +92,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
             return;
         }
         isDragging = false;
+        //Tutorial.instance.hand.SetActive(true);
         if (listCell.Count == 1)
         {
             listCell.Clear();
@@ -112,6 +120,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         if (isDragging && !added && CanConnect())
         {
             added = true;
+            highLight.gameObject.SetActive(true);
             EffectChose();
             listCell.Add(this);
             countInitValue += (int)(value / initValue);
@@ -147,11 +156,17 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     private void ExplodeConnectedCell()
     {
+        Sequence sequence = DOTween.Sequence();
         foreach (var cell in listCell)
         {
-            cell.gameObject.SetActive(false);
-            var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
-            fx.Play(listCell, listCell.IndexOf(cell), cell.spriteRenderer.color, listCell.Last().spriteRenderer.color);
+            sequence.AppendCallback(() =>
+            {
+                cell.gameObject.SetActive(false);
+                var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
+                fx.Play(listCell, listCell.IndexOf(cell), cell.spriteRenderer.color, listCell.Last().spriteRenderer.color);
+                AudioSystem.Instance.PlaySound("QT_paopao");
+                cell.highLight.gameObject.SetActive(false);
+            }).AppendInterval(Mathf.Clamp(0.5f / listCell.Count, 0.05f, 0.25f));          
         }
         foreach (var line in lines)
             line.gameObject.SetActive(false);

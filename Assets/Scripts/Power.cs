@@ -4,11 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Power : MonoBehaviour
+public abstract class Power<T> : MonoBehaviour where T : Power<T>
 {
+    public static T Instance;
     [SerializeField] protected CanvasGroup displayGroup;
     [SerializeField] protected Button backButton;
     [SerializeField] protected float cost;
+
+    protected virtual void Awake()
+    {
+        Instance = (T)this;
+    }
+
+
     public virtual void UsePower()
     {
         displayGroup.alpha = 1f;

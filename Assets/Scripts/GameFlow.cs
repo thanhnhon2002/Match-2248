@@ -13,7 +13,7 @@ using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
 public enum GameState
 {
-    Playing, Fx, Smash, Swap, Pause, GameOver
+    Playing, Fx, Smash, Swap, Paint, Pause, GameOver
 }
 
 public class GameFlow : MonoBehaviour
@@ -33,6 +33,7 @@ public class GameFlow : MonoBehaviour
     public ButtonGroup bottomGroup;
     public ButtonGroup topGroup;
     public GameState gameState;
+    [SerializeField] private PowerReward powerReward;
     private const int INIT_MULTILIER = 30;
     public List<int> multiliers = new List<int>();
     private BigInteger gameScore;
@@ -258,10 +259,15 @@ public class GameFlow : MonoBehaviour
     {
         diamondGroup.AddDiamond(20);
     }
+    public void GetDiamond(int count)
+    {
+        diamondGroup.AddDiamond(count);
+    }
 
     public void GetDiamond(Transform spawner)
     {
-        diamondGroup.AddDiamond(20);
+        if(powerReward.IsShowing()) diamondGroup.AddDiamond(80);
+        else diamondGroup.AddDiamond(20);
         UIManager.Instance.SpawnEffectReward(spawner);
     }
 

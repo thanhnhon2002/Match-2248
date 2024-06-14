@@ -46,11 +46,11 @@ public class GameData
     public int minIndex;
     public int maxIndex;
     public int maxIndexRandom;
-    public Dictionary<string, BigInteger> cellDic = new Dictionary<string, BigInteger>();
+    public Dictionary<string, int> cellDic = new Dictionary<string, int>();
 
     public GameData()
     {
-        cellDic = new Dictionary<string, BigInteger>();
+        cellDic = new Dictionary<string, int>();
         currentHighestCellValue = 128;
         currentScore = 0;
         indexPlayer = 0;

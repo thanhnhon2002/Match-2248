@@ -6,10 +6,11 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using System.Linq;
 using System.Numerics;
-
+using DG.Tweening;
 public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerClickHandler
 {
     public SpriteRenderer spriteRenderer { get; private set; }
+    public GameObject highLight;
     public TextMeshPro valueTxt;
     public ColorSet colorSet { get; private set; }
     public HighCellEffect highCellEffect { get; private set; }
@@ -40,6 +41,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         spriteRenderer = GetComponent<SpriteRenderer> ();
         colorSet = GetComponent<ColorSet> ();
         highCellEffect = GetComponent<HighCellEffect> ();
+        highLight = transform.Find("HighLight").gameObject;
 #if !UNITY_EDITOR
         debugTxt.gameObject.SetActive (false);
 #endif
@@ -86,14 +88,30 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnPointerEnter (PointerEventData eventData)
     {
-        if (GameFlow.Instance.gameState != GameState.Playing) return;
-        Player.Instance.CheckCell (this);
+        switch(GameFlow.Instance.gameState)
+        {
+            case GameState.Playing:
+                Player.Instance.CheckCell(this);
+                break;
+            case GameState.Paint:
+                Paint.Instance.CheckCell(this);
+                break;
+            default: return;
+        }     
     }
 
     public void OnBeginDrag (PointerEventData eventData)
     {
-        if (GameFlow.Instance.gameState != GameState.Playing) return;
-        Player.Instance.InitLine (this);
+        switch (GameFlow.Instance.gameState)
+        {
+            case GameState.Playing:
+                Player.Instance.InitLine(this);
+                break;
+            case GameState.Paint:
+                Paint.Instance.BeginPaint(this);
+                break;
+            default: return;
+        }
     }
 
     public void OnDrag (PointerEventData eventData)
@@ -103,9 +121,29 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag (PointerEventData eventData)
     {
-        if (GameFlow.Instance.gameState != GameState.Playing) return;
-        Player.Instance.ClearLine ();
+        switch (GameFlow.Instance.gameState)
+        {
+            case GameState.Playing:
+                Player.Instance.ClearLine();
+                break;
+            case GameState.Paint:
+                Paint.Instance.PaintAllCells();
+                break;
+            default: return;
+        }
+        //if (GameFlow.Instance.gameState != GameState.Playing) return;
+        
     }
+
+    public void IncreaseValue(BigInteger endValue)
+    {
+        spriteRenderer.DOColor(CellColor.Instance.GetCellColor(endValue), Const.DEFAULT_TWEEN_TIME);
+        LeanTween.value((float)Value, (float)endValue, Const.DEFAULT_TWEEN_TIME).setOnUpdate((float x) =>
+        {
+            valueTxt.text = x.ToString().Substring(0,2);
+        }).setOnComplete(() => Value = endValue);
+    }
+
 #if UNITY_EDITOR
     private void OnValidate ()
     {
