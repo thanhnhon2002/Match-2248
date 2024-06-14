@@ -1,9 +1,12 @@
 using DG.Tweening;
+using NSubstitute.Core;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.UI;
+using Vector3 = UnityEngine.Vector3;
 
 public class Paint : Power<Paint>
 {
@@ -80,15 +83,7 @@ public class Paint : Power<Paint>
             }
             GameFlow.Instance.gameState = GameState.Playing;
             GridManager.Instance.UpdateCell(true);
-            DebugA();
-        });
-
-        
-    }
-
-    private void DebugA()
-    {
-        Debug.Log("A");
+        });      
     }
 
     private BigInteger FindHighestValue()

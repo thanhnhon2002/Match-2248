@@ -6,20 +6,26 @@ using DG.Tweening;
 using System.Net.Sockets;
 using DarkcupGames;
 
-public class RocketLauncher : MonoBehaviour
+public class RocketLauncher : Power<RocketLauncher>
 {
     private const int TARGET_AMOUNT = 5;
     private const float ROCKET_MOVE_TIME = 1f;
-    public static RocketLauncher Instance { get; private set;}
     private List<Cell> targets = new List<Cell>();
     private List<Cell> allCells = new List<Cell>();
-    [SerializeField] private float cost;
     [SerializeField] private Rocket rocketPre;
     [SerializeField] private ParticalSystemController smashFx;
     [SerializeField] private AudioClip explosedSound;
-    private void Awake ()
+
+    public override void UsePower()
     {
-        Instance = this;
+        if (GameFlow.Instance.gameState != GameState.Playing) return;
+        if (GameSystem.userdata.diamond < cost)
+        {
+            GameFlow.Instance.shop.SetActive(true);
+            return;
+        }
+        base.UsePower();
+        LaunchRocket();
     }
 
     public void LaunchRocket()
@@ -57,7 +63,11 @@ public class RocketLauncher : MonoBehaviour
             }
         });
         sq.AppendInterval (1f);
-        sq.AppendCallback (() => GridManager.Instance.CheckToSpawnNewCell (targets));
+        sq.AppendCallback (() =>
+        {
+            GridManager.Instance.CheckToSpawnNewCell(targets);
+            Back();
+        });
     }
 
     public void PayToLaunchRocket()

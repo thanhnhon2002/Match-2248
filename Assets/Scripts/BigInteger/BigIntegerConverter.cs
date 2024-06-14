@@ -37,16 +37,6 @@ public static class BigIntegerConverter
         }
         return -1;
     }
-
-    public static BigInteger PowBigInterger(float f, int p)
-    {
-        BigInteger returnValue = (BigInteger)f;
-        for (int i = 0; i < p; i++)
-        {
-            returnValue *= (BigInteger)f;
-        }
-        return returnValue;
-    }
 }
 public class NameExtension
 {
