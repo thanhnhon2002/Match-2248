@@ -148,7 +148,7 @@ public class Player : MonoBehaviour
         if (conectedCell.Count >= 2) ExploseConectedCell();
         else
         {
-            conectedCell?.First()?.highLight.SetActive(false);
+            if(conectedCell.Count ==1 ) conectedCell.First().highLight.SetActive(false);
             ResetData();
             GameFlow.Instance.TotalPoint = 0;
         }
