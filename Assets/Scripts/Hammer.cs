@@ -37,7 +37,6 @@ public class Hammer : Power<Hammer>
         backButton.gameObject.SetActive (false); 
         hammer.SetBool ("Play", false);
         var destination = GameFlow.Instance.mainCam.WorldToScreenPoint (cell.transform.position);
-        var position = hamerImg.position;
         var sq = DOTween.Sequence ();
         sq.AppendCallback (() => 
         {
