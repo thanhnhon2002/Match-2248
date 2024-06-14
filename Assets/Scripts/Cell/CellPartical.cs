@@ -10,6 +10,12 @@ public class CellPartical : MonoBehaviour
     [SerializeField] private float size;
     [SerializeField] private float rotation;
     public SpriteRenderer spriteRenderer;
+    private void Awake()
+    {
+        localPos = transform.localPosition;
+        size = transform.localScale.x;
+        rotation = transform.eulerAngles.z;
+    }
 
     public void PlayEffectOut (float time, Color startColor)
     {
