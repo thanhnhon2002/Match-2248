@@ -27,6 +27,7 @@ public class Paint : Power<Paint>
         base.UsePower();
         GameFlow.Instance.gameState = GameState.Paint;
         chosenCells.Clear();
+        lines.Clear();
     }
 
 
