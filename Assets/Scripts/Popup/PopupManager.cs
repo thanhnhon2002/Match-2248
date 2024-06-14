@@ -40,8 +40,8 @@ public class PopupManager : MonoBehaviour
     public Popup[] popups;
     private Dictionary<PopupOptions, Popup> popupDic = new Dictionary<PopupOptions, Popup>();
     public Image blackBackground;
-    private Queue<DataEventPopup>queueShow=new Queue<DataEventPopup>();
-    
+    private Queue<DataEventPopup> queueShow = new Queue<DataEventPopup>();
+
     private void Awake()
     {
         Instance = this;
@@ -60,12 +60,12 @@ public class PopupManager : MonoBehaviour
         queueShow.Enqueue(data);
         if (queueShow.Count == 1)
         {
-            DOVirtual.DelayedCall(0.5f, () => this.ShowAllQueue());       
+            DOVirtual.DelayedCall(0.5f, () => this.ShowAllQueue());
         }
     }
     public void ShowAllQueue()
     {
-       if(queueShow.Count!=0) queueShow?.Peek()?.action?.Invoke(queueShow.Peek().option);       
+        if (queueShow.Count != 0) queueShow?.Peek()?.action?.Invoke(queueShow.Peek().option);
     }
     public void DeQueue()
     {
@@ -73,7 +73,7 @@ public class PopupManager : MonoBehaviour
         {
             queueShow?.Dequeue();
             this.ShowAllQueue();
-        }     
+        }
     }
     public void DeQueueButtonAds()
     {
@@ -83,11 +83,11 @@ public class PopupManager : MonoBehaviour
     }
     public void ShowPopup(PopupOptions option)
     {
-        popupDic[option].Appear ();
+        popupDic[option].Appear();
         FirebaseManager.Instance.LogUIAppear(option.ToString());
     }
     public void HidePopup(PopupOptions option)
     {
-        popupDic[option].Disappear ();
+        popupDic[option].Disappear();
     }
 }

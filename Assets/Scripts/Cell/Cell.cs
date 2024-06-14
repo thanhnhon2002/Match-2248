@@ -136,10 +136,10 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     public void IncreaseValue(BigInteger endValue)
     {
         spriteRenderer.DOColor(CellColor.Instance.GetCellColor(endValue), Const.DEFAULT_TWEEN_TIME);
-        LeanTween.value((float)Value, (float)endValue, Const.DEFAULT_TWEEN_TIME).setOnUpdate((float x) =>
+        LeanTween.value(1000, 9999, Const.DEFAULT_TWEEN_TIME).setOnUpdate((float x) =>
         {
-            valueTxt.text = x.ToString().Substring(0, 2);
-        })/*.setOnComplete(() => Value = endValue);*/;
+            valueTxt.text = x.ToString().Substring(0,4);
+        }).setOnComplete(() => Value = endValue);
     }
 
 #if UNITY_EDITOR
