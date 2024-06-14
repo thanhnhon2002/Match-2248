@@ -353,9 +353,10 @@ public class GridManager : MonoBehaviour
                 item.transform.DOLocalMoveY(girdPosToLocal[item.gridPosition].y, CELL_DROP_TIME);
             }
         }
+        HighlightHighestCell();
         LeanTween.delayedCall(CELL_DROP_TIME, () =>
         {
-            OnDoneCellMove();
+            OnDoneCellMove();           
             if (!showAd) return;
             AdManagerMax.Instance.ShowIntertistial("Gameplay", null);          
         });
@@ -398,10 +399,18 @@ public class GridManager : MonoBehaviour
 
     public void HighlightHighestCell()
     {
+        BigInteger maxValue = 0;
         foreach (var item in allCell)
         {
+            if (maxValue < item.Value) maxValue = item.Value;
             if (item.Value == GameSystem.userdata.gameData.currentHighestCellValue && item.Value > MIN_HIGHLIGHT_VALUE) item.highCellEffect.ShowEffect();
             else item.highCellEffect.StopEffect();
+        }
+        if(maxValue != GameSystem.userdata.gameData.currentHighestCellValue)
+        {
+            GameSystem.userdata.gameData.currentHighestCellValue = maxValue;
+            GameSystem.SaveUserDataToLocal();
+            HighlightHighestCell();
         }
     }
 
