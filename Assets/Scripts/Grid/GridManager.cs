@@ -421,7 +421,7 @@ public class GridManager : MonoBehaviour
         {
             foreach (var cell in allCell)
             {
-                cell.Value = BigIntegerConverter.PowBigInterger(2, userCellDic[cell.gridPosition.ToString()]);
+                cell.Value = BigInteger.Pow(2, userCellDic[cell.gridPosition.ToString()]);
             }
             return;
         }
