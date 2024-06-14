@@ -74,7 +74,7 @@ public class Paint : Power<Paint>
                 item.IncreaseValue(highestValue);
             }
         });
-        sq.AppendInterval(Const.DEFAULT_TWEEN_TIME);
+        sq.AppendInterval(Const.DEFAULT_TWEEN_TIME +0.05f);
         sq.AppendCallback(() =>
         {
             foreach (var item in chosenCells)
@@ -102,6 +102,7 @@ public class Paint : Power<Paint>
         {
             item.gameObject.SetActive(false);
         }
+        lines.Clear();
     }
 
     private void ConectCell(Cell cell)

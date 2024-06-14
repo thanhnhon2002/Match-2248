@@ -461,7 +461,7 @@ public class GridManager : MonoBehaviour
         sq.AppendCallback(() => cell.transform.DOScale(1.2f, Const.DEFAULT_TWEEN_TIME));
         sq.AppendInterval(Const.DEFAULT_TWEEN_TIME);
         sq.AppendCallback(() => cell.IncreaseValue(cell.Value * 2));
-        sq.AppendInterval(Const.DEFAULT_TWEEN_TIME);
+        sq.AppendInterval(Const.DEFAULT_TWEEN_TIME +0.05f);
         sq.AppendCallback(() =>
         {
             cell.Value *= 2;

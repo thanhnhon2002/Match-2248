@@ -17,6 +17,8 @@ public class Home : MonoBehaviour
     [SerializeField] private SpecialOffer specialOffer;
     [SerializeField] private Image unmask;
     [SerializeField] private Image blockInteract;
+    [SerializeField] FadeInOut fadeInOut;
+
     public DailyReward dailyReward;
     public Button diamondAdButton;
     public DiamondGroup diamondGroup;
@@ -28,7 +30,10 @@ public class Home : MonoBehaviour
     private IEnumerator Start()
     {
         if (GameSystem.userdata.firstPlayGame) Tutorial.instance.StartTutorial();
+        if (fadeInOut) fadeInOut.canvasGroup.alpha = 0;
         yield return new WaitForEndOfFrame();
+        if (fadeInOut) fadeInOut.FadeIn(null);
+        unmask.transform.localScale = Vector3.zero;
         ShowScene(LoadUserData);
         LogEventButton();
     }
@@ -88,7 +93,6 @@ public class Home : MonoBehaviour
         {
             item.Prepare();
         }
-        unmask.transform.localScale = Vector3.zero;
         unmask.rectTransform.DOScale(Vector2.one, Const.DEFAULT_TWEEN_TIME).OnComplete(() =>
         {
             foreach (var item in fx)
