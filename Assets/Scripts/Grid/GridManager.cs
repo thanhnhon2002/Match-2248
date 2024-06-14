@@ -412,7 +412,7 @@ public class GridManager : MonoBehaviour
         {
             foreach (var cell in allCell)
             {
-                cell.Value = (BigInteger)Mathf.Pow(2, userCellDic[cell.gridPosition.ToString()]);
+                cell.Value = BigIntegerConverter.PowBigInterger(2, userCellDic[cell.gridPosition.ToString()]);
             }
             return;
         }
@@ -531,6 +531,12 @@ public class GridManager : MonoBehaviour
             gridPos.y = 1;
             pos.x += 1f;
             pos.y = (MAX_ROW / 2f) - 0.5f;
+        }
+
+        var cells = FindObjectsOfType<Cell>();
+        foreach (var item in cells)
+        {
+            item.transform.SetParent(transform);
         }
     }
 }
