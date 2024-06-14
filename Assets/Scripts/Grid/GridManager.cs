@@ -345,6 +345,7 @@ public class GridManager : MonoBehaviour
 
     public void Drop(bool showAd = false)
     {
+        HighlightHighestCell();
         for (int i = 1; i <= MAX_COL; i++)
         {
             var list = allCellInCollom[i];
@@ -352,8 +353,7 @@ public class GridManager : MonoBehaviour
             {
                 item.transform.DOLocalMoveY(girdPosToLocal[item.gridPosition].y, CELL_DROP_TIME);
             }
-        }
-        HighlightHighestCell();
+        }     
         LeanTween.delayedCall(CELL_DROP_TIME, () =>
         {
             OnDoneCellMove();           
