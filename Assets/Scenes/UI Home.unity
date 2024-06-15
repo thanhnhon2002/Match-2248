@@ -2466,7 +2466,7 @@ MonoBehaviour:
   specialOffer: {fileID: 1827876966}
   unmask: {fileID: 2002894938}
   blockInteract: {fileID: 1480592721}
-  fadeInOut: {fileID: 0}
+  fadeInOut: {fileID: 690461144}
   dailyReward: {fileID: 2059104150}
   diamondAdButton: {fileID: 5030684159142953039}
   diamondGroup: {fileID: 991176196}
@@ -6288,6 +6288,8 @@ GameObject:
   - component: {fileID: 690461140}
   - component: {fileID: 690461139}
   - component: {fileID: 690461143}
+  - component: {fileID: 690461145}
+  - component: {fileID: 690461144}
   m_Layer: 5
   m_Name: Canvas Home
   m_TagString: Untagged
@@ -6408,6 +6410,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popups: []
   blackBackground: {fileID: 0}
+--- !u!114 &690461144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690461138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffe6f35b70e7f64caea5550be5033d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!225 &690461145
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690461138}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &694815263
 GameObject:
   m_ObjectHideFlags: 0

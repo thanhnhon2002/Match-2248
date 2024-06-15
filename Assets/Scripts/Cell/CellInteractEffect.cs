@@ -5,13 +5,12 @@ using UnityEngine;
 
 public class CellInteractEffect : MonoBehaviour
 {
-    private const float CELL_VOLUME = 0.2f;
+    private const long VIBRATION_STRENGTH = 20;
     [SerializeField] private AudioClip[] clips;
 
     public void PlaySound()
     {
-        var clip = clips.RandomElement ();
-        AudioSystem.Instance.PlaySound(clip, CELL_VOLUME);
-        Vibration.Vibrate (20);
+        PianoSongPlayer.Instance.PlayNextNote();
+        Vibration.Vibrate(VIBRATION_STRENGTH);
     }
 }

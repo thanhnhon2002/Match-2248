@@ -164,7 +164,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
                 cell.gameObject.SetActive(false);
                 var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
                 fx.Play(listCell, listCell.IndexOf(cell), cell.spriteRenderer.color, listCell.Last().spriteRenderer.color);
-                AudioSystem.Instance.PlaySound("QT_paopao");
+                AudioSystem.Instance.PlaySound("QT_paopao", Player.POOK_SOUND_VOLUMNE);
                 cell.highLight.gameObject.SetActive(false);
             }).AppendInterval(Mathf.Clamp(0.5f / listCell.Count, 0.05f, 0.25f));          
         }
