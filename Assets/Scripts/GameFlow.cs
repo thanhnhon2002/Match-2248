@@ -125,7 +125,7 @@ public class GameFlow : MonoBehaviour
         }
         unmask.rectTransform.DOScale(UnityEngine.Vector2.one, Const.DEFAULT_TWEEN_TIME).OnComplete(() =>
         {
-            AudioSystem.Instance.PlaySound("Game_Open");
+            AudioSystem.Instance.PlaySound("sfx_splash");
             foreach (var item in fx)
             {
                 item.RunEffect();
