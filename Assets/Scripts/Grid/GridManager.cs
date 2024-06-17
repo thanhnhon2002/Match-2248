@@ -41,17 +41,25 @@ public class GridManager : MonoBehaviour
     public int MaxIndexRandom => maxIndexRandom;
     private int indexPlayer;
     public int IndexPlayer => indexPlayer;
+
+
+
     public int indexStart;
     public int indexChose;
 
     private List<Cell> lowestCells = new List<Cell>();
 
-    //Only use to check Conected Cell
+    //Only use to check Conected Cell         //oke sir :3
     private List<Cell> cellCol1 = new List<Cell>();
     private List<Cell> cellCol2 = new List<Cell>();
     private List<Cell> cellCol3 = new List<Cell>();
     private List<Cell> cellCol4 = new List<Cell>();
     private List<Cell> cellCol5 = new List<Cell>();
+    public List<Cell> CellCol1 { get => cellCol1; private set => cellCol1 = value; }
+    public List<Cell> CellCol2 { get => cellCol2; private set => cellCol2 = value; }
+    public List<Cell> CellCol3 { get => cellCol3; private set => cellCol3 = value; }
+    public List<Cell> CellCol4 { get => cellCol4; private set => cellCol4 = value; }
+    public List<Cell> CellCol5 { get => cellCol5; private set => cellCol5 = value; }
 
 
     private void Awake()
@@ -107,7 +115,7 @@ public class GridManager : MonoBehaviour
         {
             item.gameObject.SetActive(true);
         }
-        if(indexChose <= 0) indexChose = 1;
+        if (indexChose <= 0) indexChose = 1;
         indexStart = indexChose;
         SetUpCell();
         var startValue = (BigInteger)Mathf.Pow(2, indexStart);
@@ -218,7 +226,7 @@ public class GridManager : MonoBehaviour
                 4 => cellCol4,
                 5 => cellCol5,
                 _ => null
-            }; 
+            };
             if (checkList == null)
             {
                 Debug.LogError("Something wrong here !!!");
@@ -341,7 +349,7 @@ public class GridManager : MonoBehaviour
         {
             OnDoneCellMove();           
             if (!showAd) return;
-            AdManagerMax.Instance.ShowIntertistial("Gameplay", null);          
+            AdManagerMax.Instance.ShowIntertistial("Gameplay", null);
         });
     }
 
@@ -467,7 +475,7 @@ public class GridManager : MonoBehaviour
     {
         GameFlow.Instance.gameState = GameState.Fx;
         var targetValue = GameSystem.userdata.gameData.currentHighestCellValue;
-        var lowCells = allCell.FindAll(x => x.Value < targetValue).ToList() ;
+        var lowCells = allCell.FindAll(x => x.Value < targetValue).ToList();
         var cell = lowCells.RandomElement();
         cell.spriteRenderer.maskInteraction = SpriteMaskInteraction.None;
         cell.spriteRenderer.sortingOrder = 1;
@@ -532,3 +540,96 @@ public class GridManager : MonoBehaviour
         }
     }
 }
+
+//public class HintHelper : MonoBehaviour
+//{
+#region
+//    public GameObject handHelper;
+
+//    public float timeUntillPopupHelper;
+//    public float count;
+//    private void Awake()
+//    {
+//        count = 0;
+//    }
+//    private void Update()
+//    {
+//        if (Player.Instance.isDraging)
+//        {
+//            count = 0;
+//            return;
+//        }
+//        string countingState = Counting();
+//        CheckCountingState(countingState);
+//    }
+
+//    private void CheckCountingState(string countingState)
+//    {
+//        switch (countingState)
+//        {
+//            case "Trigger": TriggerHelper(); break;
+//            case "Counting": break;
+//        }
+//    }
+
+//    private void TriggerHelper()
+//    {
+//        var numberOfColom = Random.Range(1, 6);
+//        var indexCell = Random.Range(0, 8);
+
+//        List<Cell> chosedColom = numberOfColom switch
+//        {
+//            1 => GridManager.Instance.CellCol1,
+//            2 => GridManager.Instance.CellCol2,
+//            3 => GridManager.Instance.CellCol3,
+//            4 => GridManager.Instance.CellCol4,
+//            5 => GridManager.Instance.CellCol5
+//        };
+
+//        List<Cell> leftColom = numberOfColom switch
+//        {
+//            1 => null,
+//            2 => GridManager.Instance.CellCol1,
+//            3 => GridManager.Instance.CellCol2,
+//            4 => GridManager.Instance.CellCol3,
+//            5 => GridManager.Instance.CellCol4
+//        };
+//        List<Cell> rightColom = numberOfColom switch
+//        {
+//            1 => GridManager.Instance.CellCol1,
+//            2 => GridManager.Instance.CellCol2,
+//            3 => GridManager.Instance.CellCol3,
+//            4 => GridManager.Instance.CellCol4,
+//            5 => null
+//        };
+//        var chosedCell = chosedColom[indexCell];
+
+//        var upCell = chosedColom[indexCell - 1]? chosedColom[indexCell - 1]: null;
+//        var downCell = chosedColom[indexCell + 1]? chosedColom[indexCell + 1]: null;
+//        var leftCell = leftColom[indexCell] ? leftColom[indexCell] : null;
+//        var rightCell = rightColom[indexCell] ? rightColom[indexCell] : null;
+
+//        if(!upCell && !downCell && !leftCell && !rightCell)
+//        {
+//            var upLeftCell = leftColom[indexCell - 1] ? leftColom[indexCell - 1] : null;
+//            var upRightCell = rightColom[indexCell - 1] ? rightColom[indexCell - 1] : null;
+//            var downLeftCell = leftColom[indexCell + 1] ? leftColom[indexCell + 1] : null;
+//            var downRightCell = rightColom[indexCell + 1] ? rightColom[indexCell + 1] : null;
+
+//            if (!upLeftCell && !upRightCell && !downLeftCell && !downRightCell && !Player.Instance.isDraging) TriggerHelper();
+
+//        }
+//    }
+
+//    private string Counting()
+//    {
+//        count += Time.deltaTime;
+//        if (count == timeUntillPopupHelper)
+//        {
+//            count = 0;
+//            return "Trigger";
+//        }
+//        return "Counting";
+//    }
+#endregion
+//}
