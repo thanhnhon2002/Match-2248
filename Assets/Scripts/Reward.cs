@@ -11,10 +11,12 @@ using UnityEngine.UI;
 
 public class Reward : MonoBehaviour
 {
-    private const float FREE_INTERVAL = 600;
     [SerializeField] private int amount;
     [SerializeField] private TimeCounter timeCounter;
     [SerializeField] private TextMeshProUGUI free;
+    [SerializeField] private GameObject unlockDisplay;
+    [SerializeField] private GameObject lockDisplay;
+    [SerializeField] private GameObject claimDisplay;
     public string placement;
     public Button claimButton;
     public int index;
@@ -22,11 +24,11 @@ public class Reward : MonoBehaviour
     public void GetReward()
     {
         var userData = GameSystem.userdata;
-        userData.dailyRewardInfo.HasClaim[index] = true;
+        userData.dailyRewardInfo.hasClaim[index] = true;
         if(index == 0)
         {
             userData.dailyRewardInfo.lastFreeClaimTime = DateTime.Now;
-            userData.dailyRewardInfo.freeTimeRemain = FREE_INTERVAL;
+            userData.dailyRewardInfo.freeTimeRemain = FirebaseManager.remoteConfig.FREE_REWARD_INTERVAL;
         }
         DiamondGroup.Instance.AddDiamond(amount,false);
         UIManager.Instance.SpawnEffectReward(claimButton.transform);
@@ -40,8 +42,8 @@ public class Reward : MonoBehaviour
     {
         if (index != 0) return;
         var dailyRewardInfo = GameSystem.userdata.dailyRewardInfo;
-        dailyRewardInfo.freeTimeRemain -= (DateTime.Now - dailyRewardInfo.lastFreeClaimTime).TotalSeconds;
-        if (!dailyRewardInfo.HasClaim[0])
+        dailyRewardInfo.freeTimeRemain = FirebaseManager.remoteConfig.FREE_REWARD_INTERVAL - (DateTime.Now - dailyRewardInfo.lastFreeClaimTime).TotalSeconds;
+        if (!dailyRewardInfo.hasClaim[0])
         {
             claimButton.interactable = true;
         } else if (dailyRewardInfo.freeTimeRemain <= 0)
@@ -63,5 +65,31 @@ public class Reward : MonoBehaviour
             timeCounter.SetTime(dailyRewardInfo.freeTimeRemain);
         }
         GameSystem.SaveUserDataToLocal();
+    }
+
+    public void SetClaimButtonInteractable(int currentInteractableIndex)
+    {
+        if(index > currentInteractableIndex)
+        {
+            claimButton.interactable = false;
+            lockDisplay.SetActive(true);
+            claimDisplay.SetActive(false);
+            unlockDisplay.SetActive(false);
+        }
+        else if(index < currentInteractableIndex)
+        {
+            claimButton.interactable = false;
+            lockDisplay.SetActive(false);
+            claimDisplay.SetActive(true);
+            unlockDisplay.SetActive(false);
+        } else
+        {
+            claimButton.interactable = true;
+            unlockDisplay.SetActive(true);
+            lockDisplay.SetActive(false);
+            claimDisplay.SetActive(false);
+        }
+
+
     }
 }
