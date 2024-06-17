@@ -23,12 +23,13 @@ public class UserProperty
 [System.Serializable]
 public class DailyRewardInfo
 {
-    public long lastRewardTick;
-    public List<bool> hasClaim = new List<bool>();
-
+    public DateTime lastFreeClaimTime;
+    public double freeTimeRemain;
+    private List<bool> hasClaim = new List<bool>();
+    public List<bool> HasClaim => hasClaim;
     public DailyRewardInfo()
     {
-        lastRewardTick = 0;
+        freeTimeRemain = 0;
         hasClaim = new List<bool>();
         for (int i = 0; i < 5; i++)
         {
@@ -87,7 +88,6 @@ public class UserData
         highestCellValue = 128;
         property = new UserProperty();
         gameData = new GameData();
-        dailyRewardInfo = new DailyRewardInfo();
         var r = new System.Random();
         nickName = $"Guest{r.Next(0, int.MaxValue)}";
         boughtItems = new List<string>();
@@ -96,6 +96,7 @@ public class UserData
     }
     public void CheckValid()
     {
+        if (dailyRewardInfo == null) dailyRewardInfo = new DailyRewardInfo();
         if (boughtItems == null) boughtItems = new List<string>();
         if (dicSetting == null) dicSetting = new Dictionary<SettingKey, bool>();
         if (dicSetting.ContainsKey(SettingKey.Sound) == false) dicSetting.Add(SettingKey.Sound, true);

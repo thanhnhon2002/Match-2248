@@ -54,7 +54,7 @@ public class TimeCounter : MonoBehaviour
         timer.text = FormatTime(timeSpan);
     }
 
-    public void SetTime(float time)
+    public void SetTime(double time)
     {
         WAIT_TIME = time;
         SetTime();
