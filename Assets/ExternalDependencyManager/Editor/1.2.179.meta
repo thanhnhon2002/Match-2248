@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/ExternalDependencyManager/Editor/1.2.179.meta
+guid: 7d8a4ad914fa4aa4dacd03ece76f51d1
+folderAsset: yes
+DefaultImporter:
+========
+guid: 1543e5f9bab73423c96b42cab90363ab
+TextScriptImporter:
+>>>>>>>> origin/build-success:Assets/FacebookSDK/Plugins/Editor/Dependencies.xml.meta
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
