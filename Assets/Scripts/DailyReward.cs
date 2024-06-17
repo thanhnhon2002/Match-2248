@@ -20,58 +20,34 @@ public class DailyReward : MonoBehaviour
     {
         FirebaseManager.Instance.LogUIAppear(gameObject.name);
         transform.localScale = Vector3.one;
-        CheckData();
         UpdateClaimButtonInteractable();
-
     }
     public void Close()
     {
         transform.DOScale(0f, Const.DEFAULT_TWEEN_TIME).OnComplete(() => gameObject.SetActive(false));
     }
-    private void CheckData()
-    {
-        LoadDailyRewardInfo();
-        if (DateTime.Now.Ticks - userData.dailyRewardInfo.lastRewardTick >= TimeSpan.TicksPerDay)
-        {
-            userData.dailyRewardInfo.lastRewardTick = DateTime.Now.Ticks;
-            var claimList = userData.dailyRewardInfo.hasClaim;
-            for (int i = 0; i < claimList.Count; i++)
-            {
-                claimList[i] = false;
-            }
-            SaveDailyRewardInfo();
-        }
-    }
-    private void LoadDailyRewardInfo()
-    {
-        if (PlayerPrefs.HasKey(LAST_REWARD_TICK))
-        {
-            userData.dailyRewardInfo.lastRewardTick = long.Parse(PlayerPrefs.GetString(LAST_REWARD_TICK));
-        }
 
-        for (int i = 0; i < rewards.Length; i++)
-        {
-            if (PlayerPrefs.HasKey(HAS_CLAIM + i))
-            {
-                userData.dailyRewardInfo.hasClaim[i] = PlayerPrefs.GetInt(HAS_CLAIM + i) == 1;
-            }
-        }
-    }
-    private void SaveDailyRewardInfo()
+    public void ResetReward()
     {
-        PlayerPrefs.SetString(LAST_REWARD_TICK, userData.dailyRewardInfo.lastRewardTick.ToString());
-        for (int i = 0; i < userData.dailyRewardInfo.hasClaim.Count; i++)
+        var claimList = userData.dailyRewardInfo.HasClaim;
+        for (int i = 0; i < claimList.Count; i++)
         {
-            PlayerPrefs.SetInt(HAS_CLAIM + i, userData.dailyRewardInfo.hasClaim[i] ? 1 : 0);
+            claimList[i] = false;
         }
-        PlayerPrefs.Save();
+        GameSystem.SaveUserDataToLocal();
     }
+
     private void UpdateClaimButtonInteractable()
     {
         var dailyRewardInfo = userData.dailyRewardInfo;
         for (int i = 0; i < rewards.Length; i++)
         {
-            rewards[i].claimButton.interactable = !dailyRewardInfo.hasClaim[rewards[i].index];
+            if (rewards[i].index == 0)
+            {
+                rewards[i].CheckFreeGift();
+                continue;
+            }
+            rewards[i].claimButton.interactable = rewards[i].index >= 1 && dailyRewardInfo.HasClaim[rewards[i].index - 1] && !dailyRewardInfo.HasClaim[rewards[i].index];
         }
     }
 }
