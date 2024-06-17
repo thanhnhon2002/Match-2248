@@ -1,6 +1,7 @@
 using DarkcupGames;
 using DG.Tweening;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Hammer : Power<Hammer>
@@ -9,6 +10,8 @@ public class Hammer : Power<Hammer>
     [SerializeField] private RectTransform hamerImg;
     [SerializeField] private ParticalSystemController smashFx;
     [SerializeField] private AudioClip cellSmashSound;
+    [SerializeField] private CellHighlight highlightPre;
+
     private bool chose;
     private Cell cell;
     public override void UsePower ()
@@ -30,10 +33,12 @@ public class Hammer : Power<Hammer>
     {
         if (this.cell != null) return;
         this.cell = cell;
+        var highligt = PoolSystem.Instance.GetObject(highlightPre, cell.transform.position);
+        highligt.cell = cell;
         GameSystem.userdata.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();
         if (chose) return;
-        chose = true;
+        chose = true; 
         backButton.gameObject.SetActive (false); 
         hammer.SetBool ("Play", false);
         var destination = GameFlow.Instance.mainCam.WorldToScreenPoint (cell.transform.position);
@@ -46,8 +51,10 @@ public class Hammer : Power<Hammer>
         sq.AppendCallback (() => 
         {
             RemoveCell (cell);
+            highligt.gameObject.SetActive(false);
             displayGroup.DOFade (0f, 1f).OnComplete(() => 
             {
+                
                 hamerImg.anchoredPosition = Vector3.zero;
                 GameFlow.Instance.bottomGroup.gameObject.SetActive (true);
                 GameFlow.Instance.topGroup.gameObject.SetActive (true);

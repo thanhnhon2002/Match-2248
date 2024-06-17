@@ -27,6 +27,7 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private GiftButton giftButton;
     [SerializeField] private Image unmask;
     [SerializeField] private Image blockInteract;
+    public Button diamondAdButton;
     public GameObject shop;
     public DiamondGroup diamondGroup;
     public Camera mainCam;
@@ -258,10 +259,12 @@ public class GameFlow : MonoBehaviour
     public void GetDiamond()
     {
         diamondGroup.AddDiamond(20);
+        UIManager.Instance.SpawnEffectReward(diamondAdButton.transform);
     }
     public void GetDiamond(int count)
     {
         diamondGroup.AddDiamond(count);
+        UIManager.Instance.SpawnEffectReward(diamondAdButton.transform);
     }
 
     public void GetDiamond(Transform spawner)
