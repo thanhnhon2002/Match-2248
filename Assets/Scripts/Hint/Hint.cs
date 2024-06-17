@@ -8,7 +8,7 @@ public class Hint : MonoBehaviour
     private List<Cell> allCells = new List<Cell>();
     private List<Cell> hintcells = new List<Cell>();
     private List<Line> lines = new List<Line>();
-    private const float TIME_SHOW_HINT = 10;
+    private const float TIME_SHOW_HINT = 5;
     [SerializeField] private Line linePrefab;
     public static Hint Instance;
     public float timeLastDrag;
@@ -83,6 +83,7 @@ public class Hint : MonoBehaviour
     Color colorStart;
     Color colorEnd;
     SpriteRenderer sprite;
+    Color color;
     void AnimationHint()
     {
         sequence = DOTween.Sequence();
@@ -102,7 +103,10 @@ public class Hint : MonoBehaviour
                     lineRenderer.DOColor(new Color2(colorStart, colorStart), new Color2(colorEnd, colorEnd), TIME_FADE_HINT);
                 }
                 cell.highLight.SetActive(true);
-                sprite = cell.highLight.GetComponent<SpriteRenderer>();
+                var sprite = cell.highLight.GetComponent<SpriteRenderer>();
+                color = sprite.color;
+                color.a = 0.05f;
+                sprite.color = color;
                 sprite.DOFade(0.7f, TIME_FADE_HINT);
 
             }
@@ -121,9 +125,9 @@ public class Hint : MonoBehaviour
                     colorEnd = cell.spriteRenderer.color;
                     colorEnd.a = 1f;
                     lineRenderer.DOColor(new Color2(colorEnd, colorEnd), new Color2(colorStart, colorStart), TIME_FADE_HINT);
-                }
+                }               
                 cell.highLight.SetActive(true);
-                sprite = cell.highLight.GetComponent<SpriteRenderer>();
+                var sprite = cell.highLight.GetComponent<SpriteRenderer>();
                 sprite.DOFade(0.05f, TIME_FADE_HINT);
             }
         });
@@ -135,8 +139,8 @@ public class Hint : MonoBehaviour
         allCells.Clear();
         foreach (var cell in hintcells)
         {
-            var sprite = cell.highLight.GetComponent<SpriteRenderer>();           
-            Color color = sprite.color;
+            sprite = cell.highLight.GetComponent<SpriteRenderer>();           
+            color = sprite.color;
             color.a = (float) 155/255;
             sprite.color = color;
             cell.highLight.SetActive(false);
