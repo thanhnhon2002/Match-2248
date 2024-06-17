@@ -33,9 +33,8 @@ public class RocketLauncher : Power<RocketLauncher>
         GameFlow.Instance.gameState = GameState.Fx; 
         targets.Clear();
         allCells.Clear();
-        var allCell = GridManager.Instance.allCell;
-        allCells.AddRange (allCell);
-        allCells.Sort ((a, b) => a.Value.CompareTo (b.Value));
+        allCells.AddRange (GridManager.Instance.allCell);
+        allCells.Sort ((a, b) => a.Value.CompareTo(b.Value));
         for (int i = 0; i < TARGET_AMOUNT; i++)
         {
             targets.Add (allCells[i]);
