@@ -16,7 +16,7 @@ public class Combo : MonoBehaviour
     private void Update ()
     {
         var pos = transform.position;
-        pos.y -= moveSpeed * Time.deltaTime;
+        pos.y += moveSpeed * Time.deltaTime;
         transform.position = pos;
         lifeTime -= Time.deltaTime;
         gameObject.SetActive(lifeTime > 0);

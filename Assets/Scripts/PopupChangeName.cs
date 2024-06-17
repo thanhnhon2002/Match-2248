@@ -40,6 +40,7 @@ public class PopupChangeName : MonoBehaviour
         userData.avatarIndex = chosenAvatarIndex;
         userData.nickName = name.text;
         GameSystem.SaveUserDataToLocal();
+        ServerSystem.SaveUserData();
     }
 
     public void Close()
