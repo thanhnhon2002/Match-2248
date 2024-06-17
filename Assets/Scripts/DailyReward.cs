@@ -4,8 +4,6 @@ using System;
 
 public class DailyReward : MonoBehaviour
 {
-    public const string LAST_REWARD_TICK = "LastRewardTick";
-    public const string HAS_CLAIM = "HasClaim";
     private Reward[] rewards;
     private UserData userData;
 
@@ -29,8 +27,8 @@ public class DailyReward : MonoBehaviour
 
     public void ResetReward()
     {
-        var claimList = userData.dailyRewardInfo.HasClaim;
-        for (int i = 0; i < claimList.Count; i++)
+        var claimList = userData.dailyRewardInfo.hasClaim;
+        for (int i = 0; i < claimList.Length; i++)
         {
             claimList[i] = false;
         }
@@ -40,6 +38,12 @@ public class DailyReward : MonoBehaviour
     private void UpdateClaimButtonInteractable()
     {
         var dailyRewardInfo = userData.dailyRewardInfo;
+        var interactableIndex = 1;
+        for (int i = 1; i < dailyRewardInfo.hasClaim.Length; i++)
+        {
+            if (dailyRewardInfo.hasClaim[i]) interactableIndex = i;
+        }
+        interactableIndex++;
         for (int i = 0; i < rewards.Length; i++)
         {
             if (rewards[i].index == 0)
@@ -47,7 +51,7 @@ public class DailyReward : MonoBehaviour
                 rewards[i].CheckFreeGift();
                 continue;
             }
-            rewards[i].claimButton.interactable = rewards[i].index >= 1 && dailyRewardInfo.HasClaim[rewards[i].index - 1] && !dailyRewardInfo.HasClaim[rewards[i].index];
+            rewards[i].SetClaimButtonInteractable(interactableIndex);
         }
     }
 }
