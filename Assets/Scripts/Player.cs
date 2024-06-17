@@ -10,11 +10,12 @@ using Vector3 = UnityEngine.Vector3;
 
 public class Player : MonoBehaviour
 {
+    public const float POOK_SOUND_VOLUMNE = 0.1f;
+
     public static Player Instance { get; private set; }
     public UnityEngine.Vector2 mousePos { get; private set; }
     [SerializeField] private Line linePrefab;
     [SerializeField] private Effect effectPrefab;
-    [SerializeField] private AudioClip[] conectedSound;
     private List<Cell> conectedCell = new List<Cell>();
     public List<Cell> ConectedCell => conectedCell;
     private List<Line> lines = new List<Line>();
@@ -203,7 +204,7 @@ public class Player : MonoBehaviour
                 GameFlow.Instance.gameState = GameState.Fx;
                 var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
                 fx.Play(conectedCell, conectedCell.IndexOf(cell), cell.spriteRenderer.color, newColor);
-                AudioSystem.Instance.PlaySound("QT_paopao");
+                AudioSystem.Instance.PlaySound("QT_paopao", POOK_SOUND_VOLUMNE);
                 cell.highLight.SetActive(false);
             });
             sequence.AppendInterval(0.5f / conectedCell.Count);
@@ -218,7 +219,7 @@ public class Player : MonoBehaviour
             lastCell.spriteRenderer.color = newColor;
             lastCell.Value = newValue;
             lastCell.valueTxt.color = textColor;
-            AudioSystem.Instance.PlaySound(conectedSound.RandomElement());
+            PianoSongPlayer.Instance.PlayNextChord();
             GridManager.Instance.SetSumValue(newValue);
             GameFlow.Instance.CheckCombo(combo, GameFlow.Instance.mainCam.WorldToScreenPoint(lastCell.transform.position));
             GameFlow.Instance.AddScore(newValue);
@@ -226,5 +227,4 @@ public class Player : MonoBehaviour
             ResetData();
         });
     }
-
 }

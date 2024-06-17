@@ -1828,7 +1828,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fxSounds:
-  - {fileID: 8300000, guid: 1645210a2aa3c8941affabb730e6c03d, type: 3}
+  - {fileID: 8300000, guid: de83bd19e61071941b2f21fcd7536b0b, type: 3}
   - {fileID: 8300000, guid: 319e1621e7e7d0242b2b115fc14ee4ff, type: 3}
   - {fileID: 8300000, guid: 4d38db49449621c43884e14ae61bf911, type: 3}
   - {fileID: 8300000, guid: 1cb3cc97c4429e142b32548423cc2bc8, type: 3}
@@ -4639,6 +4639,7 @@ MonoBehaviour:
   _minSessionTimeShowAds: 60
   _minMinuteSpecialOffer: 2
   _loadingTime: 2.5
+  _timePowerReward: 180
 --- !u!114 &1853896789
 MonoBehaviour:
   m_ObjectHideFlags: 0

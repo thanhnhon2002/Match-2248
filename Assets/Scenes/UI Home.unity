@@ -2472,7 +2472,7 @@ MonoBehaviour:
   specialOffer: {fileID: 1827876966}
   unmask: {fileID: 2002894938}
   blockInteract: {fileID: 1480592721}
-  fadeInOut: {fileID: 0}
+  fadeInOut: {fileID: 690461144}
   dailyReward: {fileID: 2059104150}
   diamondAdButton: {fileID: 5030684159142953039}
   diamondGroup: {fileID: 991176196}
@@ -6294,6 +6294,8 @@ GameObject:
   - component: {fileID: 690461140}
   - component: {fileID: 690461139}
   - component: {fileID: 690461143}
+  - component: {fileID: 690461145}
+  - component: {fileID: 690461144}
   m_Layer: 5
   m_Name: Canvas Home
   m_TagString: Untagged
@@ -6414,6 +6416,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   popups: []
   blackBackground: {fileID: 0}
+--- !u!114 &690461144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690461138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ffe6f35b70e7f64caea5550be5033d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!225 &690461145
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690461138}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &694815263
 GameObject:
   m_ObjectHideFlags: 0
@@ -13352,17 +13378,6 @@ MonoBehaviour:
   - {r: 0.34117648, g: 0.43137258, b: 0.7058824, a: 1}
   - {r: 0.2627451, g: 0.7372549, b: 0.5372549, a: 1}
   - {r: 0.8980393, g: 0.42352945, b: 0.6666667, a: 1}
-  - {r: 0.83396226, g: 0.7503412, b: 0.1998362, a: 1}
-  - {r: 0.412874, g: 0.8352941, b: 0.2, a: 1}
-  - {r: 0.8352941, g: 0.2, b: 0.6467142, a: 1}
-  - {r: 0.2, g: 0.8352941, b: 0.79449934, a: 1}
-  - {r: 0.2, g: 0.20766221, b: 0.8352941, a: 1}
-  - {r: 0.8352941, g: 0.21570723, b: 0.2, a: 1}
-  - {r: 0.6150943, g: 0.5437846, b: 0.5419793, a: 1}
-  - {r: 0.15294117, g: 0.5176471, b: 0.19482923, a: 1}
-  - {r: 0.5176471, g: 0.35142377, b: 0.15294117, a: 1}
-  - {r: 0.12912063, g: 0.14132941, b: 0.3509434, a: 1}
-  - {r: 0.09404765, g: 0.4188679, b: 0.40836775, a: 1}
 --- !u!4 &1208078520
 Transform:
   m_ObjectHideFlags: 0

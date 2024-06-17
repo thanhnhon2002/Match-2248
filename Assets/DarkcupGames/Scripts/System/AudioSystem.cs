@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DarkcupGames
 {
-    [RequireComponent (typeof (AudioSource))]
+    [RequireComponent(typeof(AudioSource))]
     public class AudioSystem : MonoBehaviour
     {
         public static AudioSystem Instance;
@@ -12,37 +12,38 @@ namespace DarkcupGames
         public const int CHANEL_AMOUNT = 20;
         public const float VOLUME = 1f;
 
-        [SerializeField] private List<AudioClip> fxSounds = new List<AudioClip> ();
+        [SerializeField] private List<AudioClip> fxSounds = new List<AudioClip>();
 
-        private Dictionary<string, AudioClip> clips = new Dictionary<string, AudioClip> ();
+        private Dictionary<string, AudioClip> clips = new Dictionary<string, AudioClip>();
         [SerializeField] private AudioSource[] chanels;
 
-        void Awake ()
+        void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
-                gameObject.transform.SetParent (null);
-                DontDestroyOnLoad (gameObject);
+                gameObject.transform.SetParent(null);
+                DontDestroyOnLoad(gameObject);
 
-            } else
+            }
+            else
             {
-                Destroy (gameObject);
+                Destroy(gameObject);
                 return;
             }
             chanels = new AudioSource[CHANEL_AMOUNT];
             for (int i = 0; i < CHANEL_AMOUNT; i++)
             {
-                chanels[i] = new GameObject ().AddComponent<AudioSource> ();
-                chanels[i].transform.SetParent (transform);
+                chanels[i] = new GameObject().AddComponent<AudioSource>();
+                chanels[i].transform.SetParent(transform);
             }
             for (int i = 0; i < fxSounds.Count; i++)
             {
-                clips.Add (fxSounds[i].name, fxSounds[i]);
+                clips.Add(fxSounds[i].name, fxSounds[i]);
             }
         }
 
-        public void PlaySound (AudioClip clip, float volume = VOLUME)
+        public void PlaySound(AudioClip clip, float volume = VOLUME)
         {
             if (GameSystem.userdata.dicSetting[SettingKey.Sound] == false) return;
 
@@ -52,7 +53,7 @@ namespace DarkcupGames
                 {
                     item.clip = clip;
                     item.volume = volume;
-                    item.Play ();
+                    item.Play();
                     break;
                 }
             }
@@ -68,7 +69,7 @@ namespace DarkcupGames
                 {
                     item.clip = clip;
                     item.volume = volume;
-                    item.Play ();
+                    item.Play();
                     break;
                 }
             }
