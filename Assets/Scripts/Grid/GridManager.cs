@@ -16,7 +16,7 @@ public class GridManager : MonoBehaviour
 {
     private const float CELL_DROP_TIME = 0.5F;
     public const int MIN_HIGHLIGHT_VALUE = 128;
-    public readonly int MAX_ROW = 7;
+    public readonly int MAX_ROW = 8;
     public readonly int MAX_COL = 5;
     private const int Space_Index = 10;
     private const int Space_MaxIndex = 13;
