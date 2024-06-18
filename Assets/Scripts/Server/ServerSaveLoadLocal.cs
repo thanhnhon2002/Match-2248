@@ -14,14 +14,14 @@ public class ServerSaveLoadLocal : MonoBehaviour
         UserDataServer userData = new UserDataServer();
         if (!IsFileExist(FILE_NAME))
         {
-            CreateNewUserData();
+            userData = CreateNewUserData();
         }
         else
         {
             userData = DeserializeObjectFromFile<UserDataServer>(FILE_NAME);
             if (userData == null || userData.id == null || userData.id == "")
             {
-                CreateNewUserData();
+                userData = CreateNewUserData();
             }
         }
         return userData;

@@ -11,21 +11,9 @@ public class Friend
     }
     public State state;
     public string id;
-    public string nickName;
-    public string avatarPath;
-    public int indexPlayer;
-    public int maxIndex;
-    public int avatarIndex;
-
-
-    public Friend(State state, string id, string nickName, string avatarPath, int indexPlayer, int maxIndex, int avatarIndex)
+    public Friend(State state, string id)
     {
         this.id = id;
         this.state = state;
-        this.nickName = nickName;
-        this.avatarPath = avatarPath;
-        this.indexPlayer = indexPlayer;
-        this.maxIndex = maxIndex;
-        this.avatarIndex = avatarIndex;
     }
 }

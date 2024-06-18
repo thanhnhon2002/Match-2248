@@ -22,17 +22,6 @@ public class UserDataServer
     public int avatarIndex;
     public TypeLogin typeLogin;
     public Dictionary<string, Friend> listFriend = new Dictionary<string, Friend>();
-
-    public UserDataServer() { }
-    public UserDataServer(string id, string nickName, string avatarPath, int indexPlayer, int maxIndex, int avatarIndex)
-    {
-        this.id = id;
-        this.nickName = nickName;
-        this.avatarPath = avatarPath;
-        this.indexPlayer = indexPlayer;
-        this.maxIndex = maxIndex;
-        this.avatarIndex = avatarIndex;
-    }
     public void CopyFromLocalData()
     {
         if (GameSystem.userdata == null)

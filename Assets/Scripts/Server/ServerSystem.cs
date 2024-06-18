@@ -12,16 +12,16 @@ using UnityEngine;
 
 public class ServerSystem : MonoBehaviour
 {
-    public string idAddFriend;
     public const string BASE_URL = "game";
     public const string USER_DATA_URL = BASE_URL + "/user";
     public const string RANK_DATA_URL = BASE_URL + "/rank";
 
     public static ServerSystem Instance;
     public static DatabaseReference databaseRef;
-    private static UserDataServer user = new UserDataServer();
-    private static Rank rank = new Rank();
-    private static bool init = false;
+    
+    public static Rank rank = new Rank();
+    public static UserDataServer user = new UserDataServer();
+    public static bool init = false;
 
     private void Awake()
     {
@@ -30,10 +30,10 @@ public class ServerSystem : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        else
-        {
-            Destroy(gameObject);
-        }
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 
     private void Update()
@@ -46,21 +46,7 @@ public class ServerSystem : MonoBehaviour
         }
     }
 
-    [ContextMenu("Test Save To Server")]
-    public void Test()
-    {
-        SaveUserData();
-    }
-
-    public static void SaveUserData()
-    {
-        user.CopyFromLocalData();
-        UpdateListFriend();
-        SaveToServerAtPath(USER_DATA_URL + "/" + user.id, user);
-        ServerSaveLoadLocal.SaveToLocal(user);
-    }
-
-    private static void SaveToServerAtPath(string path, object value)
+    public static void SaveToServerAtPath(string path, object value)
     {
         if (init == false || databaseRef == null) return;
 
@@ -76,118 +62,5 @@ public class ServerSystem : MonoBehaviour
                 Debug.Log("save to server success");
             }
         });
-    }
-
-    public static void UpdateListFriend()
-    {
-        if (user.listFriend.Count == 0)
-        {
-            AddSelfAsFriend();
-        }
-    }
-
-    public static void AddSelfAsFriend()
-    {
-        Friend friend = new Friend(Friend.State.Confirmed, user.id, user.nickName, user.avatarPath, user.indexPlayer, user.maxIndex, user.avatarIndex);
-        user.listFriend[friend.id] = friend;
-    }
-
-    public static void UpdateRank()
-    {
-        UserDataServer userRank = new UserDataServer(user.id, user.nickName, user.avatarPath, user.indexPlayer, user.maxIndex, user.avatarIndex);
-        SaveToServerAtPath(RANK_DATA_URL + "/ranks" + "/" + user.maxIndex + "/" + user.id, userRank);
-    }
-
-    [ContextMenu("Get Data Rank")]
-    public async void GetRankGlobal()
-    {
-        try
-        {
-            var dataSnapshot = await databaseRef.Child(RANK_DATA_URL).GetValueAsync();
-            if (dataSnapshot != null)
-            {
-                var json = dataSnapshot.GetRawJsonValue();
-                rank = JsonConvert.DeserializeObject<Rank>(json);
-            }
-            else
-            {
-                Debug.LogWarning("No data found.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Error: {ex.Message}");
-        }
-    }
-
-    [ContextMenu("Test Add Friend")]
-    public void TestAddFriend()
-    {
-        AddFriend(idAddFriend);
-    }
-    public async void AddFriend(string id)
-    {
-        try
-        {
-            var dataSnapshot = await databaseRef.Child(USER_DATA_URL + "/" + id).GetValueAsync();
-            if (dataSnapshot != null)
-            {
-                var json = dataSnapshot.GetRawJsonValue();
-                UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
-                UpdateFriend(userDataServer, user, Friend.State.Sent);
-                UpdateFriend(user, userDataServer, Friend.State.Waiting);
-            }
-            else
-            {
-                Debug.LogWarning("No data found.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Error: {ex.Message}");
-        }
-    }
-
-    [ContextMenu("Test Load List Friend")]
-    public async void LoadListFriend()
-    {
-        try
-        {
-            var dataSnapshot = await databaseRef.Child(USER_DATA_URL + "/" + user.id).GetValueAsync();
-            if (dataSnapshot != null)
-            {
-                var json = dataSnapshot.GetRawJsonValue();
-                UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
-                foreach(Friend friend in userDataServer.listFriend.Values)
-                {
-                    if (friend.state.Equals(Friend.State.Waiting))
-                    {
-                        Debug.LogWarning(friend.nickName + " da gui loi moi ket ban");
-                    }
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No data found.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Error: {ex.Message}");
-        }
-    }
-
-    public void UpdateFriend(UserDataServer friendData, UserDataServer userDataServer, Friend.State state)
-    {
-        Friend friend = ConvertUserToFriend(friendData, state);
-        userDataServer.listFriend[friend.id] = friend;
-        SaveToServerAtPath(USER_DATA_URL + "/" + userDataServer.id, userDataServer);
-    }
-
-    public Friend ConvertUserToFriend(UserDataServer userDataServer, Friend.State state)
-    {
-        Friend friend = new Friend(state, userDataServer.id, userDataServer.nickName, userDataServer.avatarPath, 
-                        userDataServer.indexPlayer, userDataServer.maxIndex, userDataServer.avatarIndex);
-        return friend;
-    }
+    }   
 }
