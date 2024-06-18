@@ -15,6 +15,7 @@ public class RemoteConfig : MonoBehaviour
     [SerializeField] private float _minMinuteSpecialOffer = 2f;
     [SerializeField] private float _loadingTime = 2.5f;
     [SerializeField] private float _timePowerReward = 180f;
+    [SerializeField] private float _freeRewardInterval = 600f;
     public bool COLLAPSIBLE_BANNER_ENABLED => _collapsibleBannerEnabled;
     public bool COLLAPSIBLE_FALLBACK_ENABLED => _collapsibleBannerFallbackEnabled;
     public float COLLAPSIBLE_BANNER_INTERVAL => _collapsibleBannerInterval;
@@ -24,6 +25,7 @@ public class RemoteConfig : MonoBehaviour
     public float MIN_MINUTE_SPECIAL_OFFER => _minMinuteSpecialOffer;
     public float LOADING_TIME => _loadingTime;
     public float TIME_POWER_REWARD => _timePowerReward;
+    public float FREE_REWARD_INTERVAL => _freeRewardInterval;
 
     public bool fetch { get; private set; }
 
@@ -41,6 +43,7 @@ public class RemoteConfig : MonoBehaviour
             { "min_minute_special_offer", _minMinuteSpecialOffer},
             { "loading_time", _loadingTime},
             { "time_power_reward", _timePowerReward},
+            { "free_reward_interval", _freeRewardInterval},
         };
         FirebaseRemoteConfig.DefaultInstance.SetDefaultsAsync(defaults).ContinueWithOnMainThread(task =>
         {
@@ -68,6 +71,7 @@ public class RemoteConfig : MonoBehaviour
                 var specialOfferInterval = FirebaseRemoteConfig.DefaultInstance.GetValue("min_minute_special_offer").DoubleValue;
                 var loadingTime  = FirebaseRemoteConfig.DefaultInstance.GetValue("loading_time").DoubleValue;
                 var powerReward  = FirebaseRemoteConfig.DefaultInstance.GetValue("time_power_reward").DoubleValue;
+                var freeRewardInterval  = FirebaseRemoteConfig.DefaultInstance.GetValue("free_reward_interval").DoubleValue;
                 if (_showDebug)
                 {
                     Debug.Log("Current banner enabled: " + currentBannerEnabled);
@@ -85,6 +89,7 @@ public class RemoteConfig : MonoBehaviour
                 _minMinuteSpecialOffer = (float)specialOfferInterval;
                 _loadingTime = (float)loadingTime;
                 _timePowerReward = (float)powerReward;
+                _freeRewardInterval = (float)freeRewardInterval;
                 fetch = true;
             }
             else

@@ -25,16 +25,10 @@ public class DailyRewardInfo
 {
     public DateTime lastFreeClaimTime;
     public double freeTimeRemain;
-    private List<bool> hasClaim = new List<bool>();
-    public List<bool> HasClaim => hasClaim;
+    public bool[] hasClaim = new bool[] { false, false, false, false, false};
     public DailyRewardInfo()
     {
         freeTimeRemain = 0;
-        hasClaim = new List<bool>();
-        for (int i = 0; i < 5; i++)
-        {
-            hasClaim.Add(false);
-        }
     }
 }
 
