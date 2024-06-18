@@ -8,7 +8,7 @@ public class Hint : MonoBehaviour
     private List<Cell> allCells = new List<Cell>();
     private List<Cell> hintcells = new List<Cell>();
     private List<Line> lines = new List<Line>();
-    private const float TIME_SHOW_HINT = 5;
+    private const float TIME_SHOW_HINT = 15;
     [SerializeField] private Line linePrefab;
     public static Hint Instance;
     public float timeLastDrag;
@@ -23,13 +23,13 @@ public class Hint : MonoBehaviour
     {
         if (Time.time > timeLastDrag + TIME_SHOW_HINT && timeLastDrag != 0)
         {
-            FindHint();
             timeLastDrag = 0;
+            FindHint();           
         }
     }
     public void StartHint()
     {
-        timeLastDrag = Time.time;
+       if( GameFlow.Instance.gameState == GameState.Playing) timeLastDrag = Time.time;
     }
     void InintHint()
     {
@@ -143,8 +143,8 @@ public class Hint : MonoBehaviour
             color = sprite.color;
             color.a = (float) 155/255;
             sprite.color = color;
-            cell.highLight.SetActive(false);
             DOTween.Kill(sprite);
+            cell.highLight.SetActive(false);            
         }
         hintcells.Clear();
         foreach (var line in lines)

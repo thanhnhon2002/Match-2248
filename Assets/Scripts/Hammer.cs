@@ -29,13 +29,23 @@ public class Hammer : Power<Hammer>
         chose = false;
     }
 
+    public override void UsePowerIgnoreCost()
+    {
+        base.UsePowerIgnoreCost ();
+        cell = null;
+        base.UsePower();
+        GameFlow.Instance.gameState = GameState.Smash;
+        hammer.SetBool("Play", true);
+        chose = false;
+    }
+
     public void Smash(Cell cell)
     {
         if (this.cell != null) return;
         this.cell = cell;
         var highligt = PoolSystem.Instance.GetObject(highlightPre, cell.transform.position);
         highligt.cell = cell;
-        GameSystem.userdata.diamond -= cost;
+        if(!ignoreCost) GameSystem.userdata.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();
         if (chose) return;
         chose = true; 
