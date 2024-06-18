@@ -83,6 +83,7 @@ public class PopupManager : MonoBehaviour
     }
     public void ShowPopup(PopupOptions option)
     {
+        if(Hint.Instance!=null) Hint.Instance.ClearList();
         popupDic[option].Appear();
         FirebaseManager.Instance.LogUIAppear(option.ToString());
     }
