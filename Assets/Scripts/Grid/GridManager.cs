@@ -11,6 +11,7 @@ using DarkcupGames;
 using DeepTrackSDK;
 using Castle.Core.Internal;
 using System;
+using NSubstitute.Core;
 
 public class GridManager : MonoBehaviour
 {
@@ -86,6 +87,7 @@ public class GridManager : MonoBehaviour
             SetUpCell();
             HighlightHighestCell();
         }
+        Hint.Instance.StartHint();
         FirebaseManager.Instance.SetProperty(UserPopertyKey.last_level, maxIndex.ToString());
     }
     private void SetUpCell()
@@ -542,96 +544,3 @@ public class GridManager : MonoBehaviour
         }
     }
 }
-
-//public class HintHelper : MonoBehaviour
-//{
-#region
-//    public GameObject handHelper;
-
-//    public float timeUntillPopupHelper;
-//    public float count;
-//    private void Awake()
-//    {
-//        count = 0;
-//    }
-//    private void Update()
-//    {
-//        if (Player.Instance.isDraging)
-//        {
-//            count = 0;
-//            return;
-//        }
-//        string countingState = Counting();
-//        CheckCountingState(countingState);
-//    }
-
-//    private void CheckCountingState(string countingState)
-//    {
-//        switch (countingState)
-//        {
-//            case "Trigger": TriggerHelper(); break;
-//            case "Counting": break;
-//        }
-//    }
-
-//    private void TriggerHelper()
-//    {
-//        var numberOfColom = Random.Range(1, 6);
-//        var indexCell = Random.Range(0, 8);
-
-//        List<Cell> chosedColom = numberOfColom switch
-//        {
-//            1 => GridManager.Instance.CellCol1,
-//            2 => GridManager.Instance.CellCol2,
-//            3 => GridManager.Instance.CellCol3,
-//            4 => GridManager.Instance.CellCol4,
-//            5 => GridManager.Instance.CellCol5
-//        };
-
-//        List<Cell> leftColom = numberOfColom switch
-//        {
-//            1 => null,
-//            2 => GridManager.Instance.CellCol1,
-//            3 => GridManager.Instance.CellCol2,
-//            4 => GridManager.Instance.CellCol3,
-//            5 => GridManager.Instance.CellCol4
-//        };
-//        List<Cell> rightColom = numberOfColom switch
-//        {
-//            1 => GridManager.Instance.CellCol1,
-//            2 => GridManager.Instance.CellCol2,
-//            3 => GridManager.Instance.CellCol3,
-//            4 => GridManager.Instance.CellCol4,
-//            5 => null
-//        };
-//        var chosedCell = chosedColom[indexCell];
-
-//        var upCell = chosedColom[indexCell - 1]? chosedColom[indexCell - 1]: null;
-//        var downCell = chosedColom[indexCell + 1]? chosedColom[indexCell + 1]: null;
-//        var leftCell = leftColom[indexCell] ? leftColom[indexCell] : null;
-//        var rightCell = rightColom[indexCell] ? rightColom[indexCell] : null;
-
-//        if(!upCell && !downCell && !leftCell && !rightCell)
-//        {
-//            var upLeftCell = leftColom[indexCell - 1] ? leftColom[indexCell - 1] : null;
-//            var upRightCell = rightColom[indexCell - 1] ? rightColom[indexCell - 1] : null;
-//            var downLeftCell = leftColom[indexCell + 1] ? leftColom[indexCell + 1] : null;
-//            var downRightCell = rightColom[indexCell + 1] ? rightColom[indexCell + 1] : null;
-
-//            if (!upLeftCell && !upRightCell && !downLeftCell && !downRightCell && !Player.Instance.isDraging) TriggerHelper();
-
-//        }
-//    }
-
-//    private string Counting()
-//    {
-//        count += Time.deltaTime;
-//        if (count == timeUntillPopupHelper)
-//        {
-//            count = 0;
-//            return "Trigger";
-//        }
-//        return "Counting";
-//    }
-#endregion
-//}
