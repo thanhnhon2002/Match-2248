@@ -205,8 +205,7 @@ public class GridManager : MonoBehaviour
         userData.gameData.maxIndexRandom = maxIndexRandom;
         GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.TotalPoint = 0;
-        ServerSystem.SaveUserData();
-        ServerSystem.UpdateRank();
+        DataUserManager.SaveUserData();
     }
 
 
