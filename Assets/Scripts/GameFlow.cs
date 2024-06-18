@@ -186,7 +186,9 @@ public class GameFlow : MonoBehaviour
 
     public void Replay()
     {
+        Mathf math;
         var userData = GameSystem.userdata;
+        userData.lastHighestCellValue = math.LogBigInt(userData.gameData.currentHighestCellValue, 2) - 1;
         userData.replay = true;
         userData.gameData = new GameData();
         userData.level++;

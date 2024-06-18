@@ -132,6 +132,11 @@ public class GridManager : MonoBehaviour
     public void SetIndexChose(int index)
     {
         indexChose = index;
+        Debug.Log(index);
+    }
+    public void SetIndexSpecial()
+    {
+        SetIndexChose(GameSystem.userdata.lastHighestCellValue);
     }
     public void LoadDataIndex()
     {

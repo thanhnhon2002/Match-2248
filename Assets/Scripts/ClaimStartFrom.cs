@@ -1,3 +1,4 @@
+using DarkcupGames;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,18 @@ public class ClaimStartFrom : MonoBehaviour
 {
     private float cost;
     [SerializeField] private PopupAnimation popup;
-    [SerializeField] private Button button;
+    public Button button;
+    [SerializeField] private Image adIcon;
+    private bool isAd;
+
+    public bool IsAd
+    {
+        get { return isAd; }
+        set {
+            isAd = value;
+            adIcon.gameObject.SetActive(value);
+        }
+    }
 
     public float Cost
     { 
@@ -18,6 +30,16 @@ public class ClaimStartFrom : MonoBehaviour
             var userData = GameSystem.userdata;
             button.interactable = userData.diamond >= cost;
             } 
+    }
+
+    public void OnClickCheckAd()
+    {
+        if(IsAd)
+        {
+            AdManagerMax.Instance.ShowAds(6);
+            return;
+        }
+        Onclick();
     }
 
     public void Onclick()

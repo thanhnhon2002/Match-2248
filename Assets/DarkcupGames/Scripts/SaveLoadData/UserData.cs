@@ -73,7 +73,7 @@ public class UserData
     public DailyRewardInfo dailyRewardInfo;
     public Dictionary<SettingKey, bool> dicSetting = new Dictionary<SettingKey, bool>();
     public List<string> boughtItems;
-
+    public int lastHighestCellValue;
     public UserData()
     {
 #if UNITY_EDITOR
