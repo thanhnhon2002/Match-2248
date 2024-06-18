@@ -25,6 +25,7 @@ public class Swap : Power<Swap>
 
     public override void UsePowerIgnoreCost()
     {
+        base.UsePowerIgnoreCost();
         base.UsePower();
         GameFlow.Instance.gameState = GameState.Swap;
     }
@@ -46,7 +47,7 @@ public class Swap : Power<Swap>
             cellHighlight.Add (highligt);
         }
         if (chosenCell.Count < 2) return;
-        GameSystem.userdata.diamond -= cost;
+        if (!ignoreCost) GameSystem.userdata.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();
         backButton.gameObject.SetActive (false);
         for (int i = 0; i < chosenCell.Count; i++)
