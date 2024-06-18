@@ -67,10 +67,10 @@ public class DataFriendManager : MonoBehaviour
             {
                 // Deserialize dữ liệu snapshot thành đối tượng UserDataServer
                 var json = args.Snapshot.GetRawJsonValue();
-                List<Friend> listFriend = JsonConvert.DeserializeObject<List<Friend>>(json);
+                Dictionary<String,Friend> listFriend = JsonConvert.DeserializeObject<Dictionary<String, Friend>>(json);
 
                 // Lặp qua danh sách bạn bè và xử lý khi có trạng thái là Waiting
-                foreach (Friend friend in listFriend)
+                foreach (Friend friend in listFriend.Values)
                 {
                     if (friend.state.Equals(Friend.State.Waiting))
                     {
