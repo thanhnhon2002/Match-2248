@@ -27,6 +27,7 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private GiftButton giftButton;
     [SerializeField] private Image unmask;
     [SerializeField] private Image blockInteract;
+    [SerializeField] private ParticleSystem[] confextiFx;
     public Button diamondAdButton;
     public GameObject shop;
     public DiamondGroup diamondGroup;
@@ -162,7 +163,6 @@ public class GameFlow : MonoBehaviour
         topGroup.SetInteract(interactable);
     }
 
-    [ContextMenu("Lose")]
     public void ShowLosePopup()
     {
         FirebaseManager.Instance.LogLevelFail(GridManager.Instance.MaxIndex, timeCount);
@@ -286,6 +286,14 @@ public class GameFlow : MonoBehaviour
             {
                 FirebaseManager.Instance.LogButtonClick(item.name);
             });
+        }
+    }
+
+    public void Congrastulate()
+    {
+        foreach (var item in confextiFx)
+        {
+            item.Play();
         }
     }
 }

@@ -56,12 +56,6 @@ public class GridManager : MonoBehaviour
     private List<Cell> cellCol3 = new List<Cell>();
     private List<Cell> cellCol4 = new List<Cell>();
     private List<Cell> cellCol5 = new List<Cell>();
-    public List<Cell> CellCol1 { get => cellCol1; private set => cellCol1 = value; }
-    public List<Cell> CellCol2 { get => cellCol2; private set => cellCol2 = value; }
-    public List<Cell> CellCol3 { get => cellCol3; private set => cellCol3 = value; }
-    public List<Cell> CellCol4 { get => cellCol4; private set => cellCol4 = value; }
-    public List<Cell> CellCol5 { get => cellCol5; private set => cellCol5 = value; }
-
 
     private void Awake()
     {
@@ -181,6 +175,7 @@ public class GridManager : MonoBehaviour
             Debug.Log("New Block 2^" + indexPlayer);
             FirebaseManager.Instance.LogLevelPass(index, GameFlow.Instance.timeCount);
             DeepTrack.LogLevelWin(index);
+            GameFlow.Instance.Congrastulate();
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }
