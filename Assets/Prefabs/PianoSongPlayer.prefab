@@ -1,5 +1,70 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &196815800698335237
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5922025495274673712}
+  - component: {fileID: 1697981422144845108}
+  m_Layer: 0
+  m_Name: ChordPlayer (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5922025495274673712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196815800698335237}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9061277150872532122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1697981422144845108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 196815800698335237}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fed57baf78b00434c929251be90762a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chords:
+  - name: A
+    keys:
+    - a3
+    - c4
+    - e4
+  - name: C
+    keys:
+    - c4
+    - e4
+    - g4
+  - name: F
+    keys:
+    - a3
+    - c4
+    - f4
+  - name: G
+    keys:
+    - g3
+    - b3
+    - d4
 --- !u!1 &1457484325698413528
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,6 +97,7 @@ Transform:
   m_Children:
   - {fileID: 5800159100035473278}
   - {fileID: 6496879877724980485}
+  - {fileID: 5922025495274673712}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1860788544720847699
@@ -47,24 +113,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allPianoKeys:
-  - {fileID: 8300000, guid: f84984a13deda124186d45eba327c202, type: 3}
-  - {fileID: 8300000, guid: 42d6f1e5cac9dcf49bb3b946f295e616, type: 3}
-  - {fileID: 8300000, guid: 42f218939a021a64b8b4fa15d917f6e3, type: 3}
-  - {fileID: 8300000, guid: bc44c94f3038c7f428baa200fd42a5e8, type: 3}
-  - {fileID: 8300000, guid: 2b20a67bbdb38d64a8ea88501d10f027, type: 3}
-  - {fileID: 8300000, guid: b74023078c5475e4fb97605cfceec2fc, type: 3}
-  - {fileID: 8300000, guid: ee85b0f11b9f32346ad529fc139dcfed, type: 3}
-  - {fileID: 8300000, guid: c6d16ac7ac2d1c54082475c0f657b538, type: 3}
-  - {fileID: 8300000, guid: 415459ae92f292147903171c69e686fe, type: 3}
-  - {fileID: 8300000, guid: 7f07ae8cde5b643418a5eb1ac7c2fc30, type: 3}
-  - {fileID: 8300000, guid: 11abdd1fd8a0b8344a456f49b8687a0b, type: 3}
-  - {fileID: 8300000, guid: b4d701d8329f6054a8685dc06eb5451d, type: 3}
-  - {fileID: 8300000, guid: 3e318346c8628ac4aa86ac96f01a56a2, type: 3}
-  - {fileID: 8300000, guid: 4358c989943becb4fbb5796a044a7224, type: 3}
-  - {fileID: 8300000, guid: 3afec9782ff5ed44898bc70cdf93412c, type: 3}
+  - {fileID: 8300000, guid: 33bcd0bff0098524797f866e6fcd2da2, type: 3}
+  - {fileID: 8300000, guid: 24e0a318c3c8420498ca598dabbcca7e, type: 3}
+  - {fileID: 8300000, guid: 4c538819648ab444cb23ca614df42894, type: 3}
+  - {fileID: 8300000, guid: 31683fbe77294034dafd3b3240e1780b, type: 3}
+  - {fileID: 8300000, guid: 96bb5707ed569634aa6b2dc6ab352a91, type: 3}
+  - {fileID: 8300000, guid: 84dedeecf1c0c6c4cb94cb27504583a7, type: 3}
+  - {fileID: 8300000, guid: 5602648536073c543bc566ee78ca3fa1, type: 3}
+  - {fileID: 8300000, guid: 07c399fa97330af458d99d31837a633c, type: 3}
+  - {fileID: 8300000, guid: 15617686dc2706c419f88ba09142ae02, type: 3}
+  - {fileID: 8300000, guid: 245b802cefc41994fbebfb27e237a48f, type: 3}
+  - {fileID: 8300000, guid: c56b5298bba0b304baa2bb98cadcd421, type: 3}
+  - {fileID: 8300000, guid: 1c1bb7b230c918e459d132973709c81c, type: 3}
+  - {fileID: 8300000, guid: b19d5d76aa1959243a052c17d5bff4dd, type: 3}
+  - {fileID: 8300000, guid: bb94fae951f8ace45b11992a95e5144b, type: 3}
+  - {fileID: 8300000, guid: 61cfff22efca8cf4ebdc508b1b97471f, type: 3}
+  - {fileID: 8300000, guid: ce886763632c74f4d8576733116331b8, type: 3}
+  - {fileID: 8300000, guid: 2b96212e36a1c594f98a0930f1b6d309, type: 3}
+  - {fileID: 8300000, guid: e603a157cd2d37447bfa1e1cae6c64f6, type: 3}
+  - {fileID: 8300000, guid: fc21e9275c89cb8489e35f7f99688bdc, type: 3}
+  - {fileID: 8300000, guid: 1530eaf924113e347842c0622016d2cd, type: 3}
   type: 1
   textSongPlayer: {fileID: 677804842884020897}
-  chordPlayer: {fileID: 7246461729884076782}
+  chordPlayer: {fileID: 1697981422144845108}
 --- !u!1 &5497047327048763991
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,7 +197,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6496879877724980485
 Transform:
   m_ObjectHideFlags: 0
@@ -156,8 +227,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chords:
   - name: C
-    keys: 320000003400000036000000
+    keys: []
   - name: G
-    keys: 2c0000002e00000033000000
+    keys: []
   - name: F
-    keys: 320000003500000037000000
+    keys: []
