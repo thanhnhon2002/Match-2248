@@ -179,16 +179,21 @@ public class GridManager : MonoBehaviour
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }
+         
         if (index > maxIndex)
         {
-            GetLowestCells();
-            Debug.Log("Lock 2^" + minIndex);
-            minIndex++;
-            if (maxIndex - minIndex < Space_MaxIndex) maxIndex += 2;
-            else maxIndex += 1;
-            maxIndexRandom++;
-            Debug.Log("AddBlock 2^" + maxIndexRandom);
-
+            int indexOut = index - maxIndex;
+            for(int i=0; i < indexOut; i++)
+            {
+                GetLowestCells();
+                Debug.Log("Lock 2^" + minIndex);
+                minIndex++;
+                if (maxIndex - minIndex < Space_MaxIndex) maxIndex += 2;
+                else maxIndex += 1;
+                maxIndexRandom++;
+                Debug.Log("AddBlock 2^" + maxIndexRandom);
+                //GridManager.Instance.RemoveAllLowestCells();
+            }          
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
 
@@ -262,11 +267,12 @@ public class GridManager : MonoBehaviour
             fx.ChangeColor(lowestCells[i].spriteRenderer.color);
         }
         CheckToSpawnNewCell(lowestCells);
+        lowestCells.Clear();
     }
 
     private void GetLowestCells()
     {
-        lowestCells.Clear();
+        //lowestCells.Clear();
         foreach (var cell in allCell)
         {
             if (cell.Value == (BigInteger)Mathf.Pow(2, minIndex))

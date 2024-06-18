@@ -14,6 +14,8 @@ public class PopupAnimation : Popup
     [SerializeField] SetTextPanel textPanel;
     [SerializeField] GameObject[] listAppear;
     SoundPopup soundPopup;
+    WaitForSeconds wait015 = new WaitForSeconds(0.15f);
+    WaitForSeconds wait01 = new WaitForSeconds(0.1f);
     public override void Appear()
     {
         if (gameObject.activeInHierarchy) return;
@@ -30,28 +32,28 @@ public class PopupAnimation : Popup
     IEnumerator AnimationAppear()
     {
         if (topic != null) EasyEffect.Appear(topic.gameObject, 0.2f, 1, 0.15f);
-        yield return new WaitForSeconds(0.15f);
+        yield return wait015;
         if (content != null)
         {
             EasyEffect.Appear(content.gameObject, 0.2f, 1, 0.15f);
-            yield return new WaitForSeconds(0.15f);
+            yield return wait015;
         }
         if (panel != null)
         {
             panel.gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
+            yield return wait01;
         }
         if (reward != null)
         {
             EasyEffect.Appear(reward, 0.5f, 1, 0.15f);
-            yield return new WaitForSeconds(0.15f);
+            yield return wait015;
         }
         if (listAppear != null && listAppear.Length > 0)
         {
             foreach (var child in listAppear)
             {
                 EasyEffect.Appear(child, 0.5f, 1, 0.2f);
-                yield return new WaitForSeconds(0.15f);
+                yield return wait015;
             }
         }
         if (btnClaim == null)
@@ -77,11 +79,11 @@ public class PopupAnimation : Popup
             foreach (var child in listAppear)
             {
                 EasyEffect.Disappear(child, 1, 0, 0.1f);
-                yield return new WaitForSeconds(0.1f);
+                yield return wait01;
             }
         }
         if (btnClaim != null) EasyEffect.Disappear(btnClaim.gameObject, 1, 0, 0.1f);
-        yield return new WaitForSeconds(0.1f);
+        yield return wait01;
         if (panel != null) panel.gameObject.SetActive(false);
     }
 }

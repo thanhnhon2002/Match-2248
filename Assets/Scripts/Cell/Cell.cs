@@ -118,6 +118,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnDrag (PointerEventData eventData)
     {
+
         //Do not delete this funtion or esle it won't work. I don't know why
     }
 
