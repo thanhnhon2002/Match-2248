@@ -23,6 +23,12 @@ public class Swap : Power<Swap>
         GameFlow.Instance.gameState = GameState.Swap;
     }
 
+    public override void UsePowerIgnoreCost()
+    {
+        base.UsePower();
+        GameFlow.Instance.gameState = GameState.Swap;
+    }
+
     public void ChoseCell (Cell cell)
     {
         AudioSystem.Instance.PlaySound(interactSound);

@@ -36,4 +36,6 @@ public abstract class Power<T> : MonoBehaviour where T : Power<T>
         });  
         GameFlow.Instance.gameState = GameState.Playing;
     }
+
+    public abstract void UsePowerIgnoreCost();
 }

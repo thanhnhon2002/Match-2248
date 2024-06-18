@@ -82,4 +82,10 @@ public class RocketLauncher : Power<RocketLauncher>
         LaunchRocket();
         GameFlow.Instance.diamondGroup.Display();
     }
+
+    public override void UsePowerIgnoreCost()
+    {
+        base.UsePower();
+        LaunchRocket();
+    }
 }
