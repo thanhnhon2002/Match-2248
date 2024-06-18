@@ -76,6 +76,11 @@ android {
   }
 }
 // Android Resolver Exclusions End
+
+configurations {
+        all*.exclude group: 'com.android.billingclient', module: 'billing'
+    }
+
 android {
     ndkPath "**NDKPATH**"
 
