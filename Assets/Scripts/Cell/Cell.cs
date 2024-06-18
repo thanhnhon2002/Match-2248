@@ -151,12 +151,4 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         valueTxt.text = BigIntegerConverter.ConverNameValue (Value);
     }
 #endif
-    //[ContextMenu("Highligth")]
-    //public void Highight()
-    //{
-    //    foreach (var item in nearbyCell)
-    //    {
-    //        item.spriteRenderer.color = Color.red;
-    //    }
-    //}
 }
