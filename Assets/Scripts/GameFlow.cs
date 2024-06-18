@@ -162,6 +162,7 @@ public class GameFlow : MonoBehaviour
         topGroup.SetInteract(interactable);
     }
 
+    [ContextMenu("Lose")]
     public void ShowLosePopup()
     {
         FirebaseManager.Instance.LogLevelFail(GridManager.Instance.MaxIndex, timeCount);

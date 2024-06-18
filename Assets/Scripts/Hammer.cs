@@ -29,6 +29,15 @@ public class Hammer : Power<Hammer>
         chose = false;
     }
 
+    public override void UsePowerIgnoreCost()
+    {
+        cell = null;
+        base.UsePower();
+        GameFlow.Instance.gameState = GameState.Smash;
+        hammer.SetBool("Play", true);
+        chose = false;
+    }
+
     public void Smash(Cell cell)
     {
         if (this.cell != null) return;

@@ -29,7 +29,7 @@ public class Hint : MonoBehaviour
     }
     public void StartHint()
     {
-        timeLastDrag = Time.time;
+       if( GameFlow.Instance.gameState == GameState.Playing) timeLastDrag = Time.time;
     }
     void InintHint()
     {
