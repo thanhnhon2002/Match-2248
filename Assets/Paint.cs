@@ -31,6 +31,14 @@ public class Paint : Power<Paint>
     }
 
 
+    public override void UsePowerIgnoreCost()
+    {
+        base.UsePower();
+        GameFlow.Instance.gameState = GameState.Paint;
+        chosenCells.Clear();
+        lines.Clear();
+    }
+
     public void BeginPaint(Cell cell)
     {
         if (chosenCells.Contains(cell)) return;
