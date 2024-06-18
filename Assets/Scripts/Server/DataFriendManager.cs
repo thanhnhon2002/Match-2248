@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class DataFriendManager : MonoBehaviour
@@ -52,7 +53,7 @@ public class DataFriendManager : MonoBehaviour
     {
         ServerSystem.databaseRef.Child(ServerSystem.USER_DATA_URL + "/" + ServerSystem.user.id + "/listFriend").ValueChanged += HandleFriendListChanged;
     }
-    private void HandleFriendListChanged(object sender, ValueChangedEventArgs args)
+    private async void HandleFriendListChanged(object sender, ValueChangedEventArgs args)
     {
         try
         {
@@ -66,14 +67,16 @@ public class DataFriendManager : MonoBehaviour
             {
                 // Deserialize dữ liệu snapshot thành đối tượng UserDataServer
                 var json = args.Snapshot.GetRawJsonValue();
-                UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
+                List<Friend> listFriend = JsonConvert.DeserializeObject<List<Friend>>(json);
 
                 // Lặp qua danh sách bạn bè và xử lý khi có trạng thái là Waiting
-                foreach (Friend friend in userDataServer.listFriend.Values)
+                foreach (Friend friend in listFriend)
                 {
                     if (friend.state.Equals(Friend.State.Waiting))
                     {
-
+                        Task<UserDataServer> getFriendTask = GetFriend(friend.id);
+                        UserDataServer userDataServer = await getFriendTask;
+                        Debug.LogError(userDataServer.nickName + " Da loi moi ket ban");
                     }
                 }
             }
@@ -93,5 +96,31 @@ public class DataFriendManager : MonoBehaviour
         Friend friend = new Friend(state, friendData.id);
         userDataServer.listFriend[friend.id] = friend;
         ServerSystem.SaveToServerAtPath(ServerSystem.USER_DATA_URL + "/" + userDataServer.id, userDataServer);
+    }
+
+    public async Task<UserDataServer> GetFriend(string id)
+    {
+        UserDataServer friend = null;
+
+        try
+        {
+            var dataSnapshot = await ServerSystem.databaseRef.Child(ServerSystem.USER_DATA_URL + "/" + id).GetValueAsync();
+
+            if (dataSnapshot != null && dataSnapshot.Exists)
+            {
+                var json = dataSnapshot.GetRawJsonValue();
+                friend = JsonConvert.DeserializeObject<UserDataServer>(json);
+            }
+            else
+            {
+                Debug.LogWarning("No data found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error: {ex.Message}");
+        }
+
+        return friend;
     }
 }
