@@ -19,7 +19,7 @@ public class ServerSaveLoadLocal : MonoBehaviour
         else
         {
             userData = DeserializeObjectFromFile<UserDataServer>(FILE_NAME);
-            if (userData == null || userData.idGuest == null || userData.idGuest == "")
+            if (userData == null || userData.id == null || userData.id == "")
             {
                 CreateNewUserData();
             }
@@ -37,30 +37,30 @@ public class ServerSaveLoadLocal : MonoBehaviour
     public static UserDataServer CreateNewUserData()
     {
         UserDataServer user = new UserDataServer();
-        user.idGuest = GetRandomUserKey();
-        CopyUserDataTo(user);
+        user.id = GetRandomUserKey();
+        user.CopyFromLocalData(); //CopyUserDataTo(user);
         SaveToLocal(user);
         return user;
     }
 
-    public static UserDataServer CopyUserDataTo(UserDataServer user)
-    {
-        if (GameSystem.userdata == null)
-        {
-            Debug.LogError("user data currently is null");
-            return user;
-        }
-        if (GameSystem.userdata.gameData == null)
-        {
-            Debug.LogError("user game data null");
-            return user;
-        }
-        user.maxIndex = GameSystem.userdata.gameData.maxIndex;
-        user.indexPlayer = GameSystem.userdata.gameData.indexPlayer;
-        user.nickName = GameSystem.userdata.nickName;
-        user.avatarIndex = GameSystem.userdata.avatarIndex;
-        return user;
-    }
+    //public static UserDataServer CopyUserDataTo(UserDataServer user)
+    //{
+    //    if (GameSystem.userdata == null)
+    //    {
+    //        Debug.LogError("user data currently is null");
+    //        return user;
+    //    }
+    //    if (GameSystem.userdata.gameData == null)
+    //    {
+    //        Debug.LogError("user game data null");
+    //        return user;
+    //    }
+    //    user.maxIndex = GameSystem.userdata.gameData.maxIndex;
+    //    user.indexPlayer = GameSystem.userdata.gameData.indexPlayer;
+    //    user.nickName = GameSystem.userdata.nickName;
+    //    user.avatarIndex = GameSystem.userdata.avatarIndex;
+    //    return user;
+    //}
 
     static bool IsFileExist(string filePath, bool isAbsolutePath = false)
     {

@@ -200,6 +200,7 @@ public class GridManager : MonoBehaviour
         GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.TotalPoint = 0;
         ServerSystem.SaveUserData();
+        ServerSystem.UpdateRank();
     }
 
 
