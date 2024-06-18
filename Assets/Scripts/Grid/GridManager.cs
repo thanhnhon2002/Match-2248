@@ -87,7 +87,6 @@ public class GridManager : MonoBehaviour
             SetUpCell();
             HighlightHighestCell();
         }
-        Hint.Instance.StartHint();
         FirebaseManager.Instance.SetProperty(UserPopertyKey.last_level, maxIndex.ToString());
     }
     private void SetUpCell()
