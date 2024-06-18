@@ -8,6 +8,16 @@ using UnityEngine;
 public class DataFriendManager : MonoBehaviour
 {
     public string idAddFriend;
+    private bool init = false;
+
+    private void Update()
+    {
+        if(ServerSystem.databaseRef != null && init == false)
+        {
+            init = true;
+            StartListeningForFriendChanges();
+        }
+    }
 
     [ContextMenu("Test Add Friend")]
     public void TestAddFriend()
@@ -40,11 +50,10 @@ public class DataFriendManager : MonoBehaviour
     [ContextMenu("Test Start Listening For Friend Changes")]
     public void StartListeningForFriendChanges()
     {
-        ServerSystem.databaseRef.Child(ServerSystem.USER_DATA_URL + "/" + ServerSystem.user.id).ValueChanged += HandleFriendListChanged;
+        ServerSystem.databaseRef.Child(ServerSystem.USER_DATA_URL + "/" + ServerSystem.user.id + "/listFriend").ValueChanged += HandleFriendListChanged;
     }
     private void HandleFriendListChanged(object sender, ValueChangedEventArgs args)
     {
-        Debug.Log("aaa");
         try
         {
             if (args.DatabaseError != null)
