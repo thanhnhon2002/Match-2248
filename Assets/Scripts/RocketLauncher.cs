@@ -77,7 +77,7 @@ public class RocketLauncher : Power<RocketLauncher>
             GameFlow.Instance.shop.SetActive(true);
             return;
         }
-        userData.diamond -= cost;
+        if (!ignoreCost) userData.diamond -= cost;
         PopupManager.Instance.HidePopup(PopupOptions.Lose);
         LaunchRocket();
         GameFlow.Instance.diamondGroup.Display();
@@ -85,6 +85,7 @@ public class RocketLauncher : Power<RocketLauncher>
 
     public override void UsePowerIgnoreCost()
     {
+        base.UsePowerIgnoreCost ();
         base.UsePower();
         LaunchRocket();
     }

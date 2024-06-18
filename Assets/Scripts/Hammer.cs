@@ -31,6 +31,7 @@ public class Hammer : Power<Hammer>
 
     public override void UsePowerIgnoreCost()
     {
+        base.UsePowerIgnoreCost ();
         cell = null;
         base.UsePower();
         GameFlow.Instance.gameState = GameState.Smash;
@@ -44,7 +45,7 @@ public class Hammer : Power<Hammer>
         this.cell = cell;
         var highligt = PoolSystem.Instance.GetObject(highlightPre, cell.transform.position);
         highligt.cell = cell;
-        GameSystem.userdata.diamond -= cost;
+        if(!ignoreCost) GameSystem.userdata.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();
         if (chose) return;
         chose = true; 

@@ -2,6 +2,6 @@
 
 public interface IPiano
 {
-    public int GetNextNote();
-    public List<int> GetNextChord();
+    public string GetNextNote();
+    public List<string> GetNextChord();
 }

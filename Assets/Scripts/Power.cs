@@ -10,6 +10,7 @@ public abstract class Power<T> : MonoBehaviour where T : Power<T>
     [SerializeField] protected CanvasGroup displayGroup;
     [SerializeField] protected Button backButton;
     [SerializeField] protected float cost;
+    protected bool ignoreCost;
 
     protected virtual void Awake()
     {
@@ -19,6 +20,7 @@ public abstract class Power<T> : MonoBehaviour where T : Power<T>
 
     public virtual void UsePower()
     {
+        ignoreCost = false;
         displayGroup.alpha = 1f;
         GameFlow.Instance.bottomGroup.gameObject.SetActive (false);
         GameFlow.Instance.topGroup.gameObject.SetActive (false);
@@ -37,5 +39,8 @@ public abstract class Power<T> : MonoBehaviour where T : Power<T>
         GameFlow.Instance.gameState = GameState.Playing;
     }
 
-    public abstract void UsePowerIgnoreCost();
+    public virtual void UsePowerIgnoreCost()
+    {
+        ignoreCost = true;
+    }
 }

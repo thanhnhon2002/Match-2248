@@ -33,6 +33,7 @@ public class Paint : Power<Paint>
 
     public override void UsePowerIgnoreCost()
     {
+        base.UsePowerIgnoreCost();
         base.UsePower();
         GameFlow.Instance.gameState = GameState.Paint;
         chosenCells.Clear();
@@ -70,7 +71,7 @@ public class Paint : Power<Paint>
             GameFlow.Instance.gameState = GameState.Playing;
             return;
         }
-        GameSystem.userdata.diamond -= cost;
+        if (!ignoreCost) GameSystem.userdata.diamond -= cost;
         GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.diamondGroup.Display();
         var highestValue = FindHighestValue();
