@@ -74,6 +74,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnPointerClick (PointerEventData eventData)
     {
+        Hint.Instance.StartHint();
         switch (GameFlow.Instance.gameState)
         {
             case GameState.Swap:
@@ -102,6 +103,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnBeginDrag (PointerEventData eventData)
     {
+        Hint.Instance.ClearList();
         switch (GameFlow.Instance.gameState)
         {
             case GameState.Playing:
@@ -121,10 +123,11 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public void OnEndDrag (PointerEventData eventData)
     {
+        Hint.Instance.StartHint();
         switch (GameFlow.Instance.gameState)
         {
             case GameState.Playing:
-                Player.Instance.ClearLine();
+                Player.Instance.ClearLine();               
                 break;
             case GameState.Paint:
                 Paint.Instance.PaintAllCells();
