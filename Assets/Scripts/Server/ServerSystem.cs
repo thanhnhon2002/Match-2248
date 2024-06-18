@@ -12,6 +12,7 @@ using UnityEngine;
 
 public class ServerSystem : MonoBehaviour
 {
+    public string idAddFriend;
     public const string BASE_URL = "game";
     public const string USER_DATA_URL = BASE_URL + "/user";
     public const string RANK_DATA_URL = BASE_URL + "/rank";
@@ -107,9 +108,62 @@ public class ServerSystem : MonoBehaviour
             {
                 var json = dataSnapshot.GetRawJsonValue();
                 rank = JsonConvert.DeserializeObject<Rank>(json);
-                foreach (var users in rank.ranks.Values)
+            }
+            else
+            {
+                Debug.LogWarning("No data found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error: {ex.Message}");
+        }
+    }
+
+    [ContextMenu("Test Add Friend")]
+    public void TestAddFriend()
+    {
+        AddFriend(idAddFriend);
+    }
+    public async void AddFriend(string id)
+    {
+        try
+        {
+            var dataSnapshot = await databaseRef.Child(USER_DATA_URL + "/" + id).GetValueAsync();
+            if (dataSnapshot != null)
+            {
+                var json = dataSnapshot.GetRawJsonValue();
+                UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
+                UpdateFriend(userDataServer, user, Friend.State.Sent);
+                UpdateFriend(user, userDataServer, Friend.State.Waiting);
+            }
+            else
+            {
+                Debug.LogWarning("No data found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error: {ex.Message}");
+        }
+    }
+
+    [ContextMenu("Test Load List Friend")]
+    public async void LoadListFriend()
+    {
+        try
+        {
+            var dataSnapshot = await databaseRef.Child(USER_DATA_URL + "/" + user.id).GetValueAsync();
+            if (dataSnapshot != null)
+            {
+                var json = dataSnapshot.GetRawJsonValue();
+                UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
+                foreach(Friend friend in userDataServer.listFriend.Values)
                 {
-                    Debug.Log($"User: {users}, Score: {users}");
+                    if (friend.state.Equals(Friend.State.Waiting))
+                    {
+                        Debug.LogWarning(friend.nickName + " da gui loi moi ket ban");
+                    }
                 }
             }
             else
@@ -123,30 +177,17 @@ public class ServerSystem : MonoBehaviour
         }
     }
 
-    [ContextMenu("Test Get Data")]
-    public async void TestGetData()
+    public void UpdateFriend(UserDataServer friendData, UserDataServer userDataServer, Friend.State state)
     {
-        try
-        {
-            var dataSnapshot = await databaseRef.Child(USER_DATA_URL).GetValueAsync();
-            if (dataSnapshot != null)
-            {
-                var json = dataSnapshot.GetRawJsonValue();
-                rank = JsonConvert.DeserializeObject<Rank>(json);
+        Friend friend = ConvertUserToFriend(friendData, state);
+        userDataServer.listFriend[friend.id] = friend;
+        SaveToServerAtPath(USER_DATA_URL + "/" + userDataServer.id, userDataServer);
+    }
 
-                foreach (var users in rank.ranks.Values)
-                {
-                    Debug.Log($"User: {users}, Score: {users}");
-                }
-            }
-            else
-            {
-                Debug.LogWarning("No data found.");
-            }
-        }
-        catch (Exception ex)
-        {
-            Debug.LogError($"Error: {ex.Message}");
-        }
+    public Friend ConvertUserToFriend(UserDataServer userDataServer, Friend.State state)
+    {
+        Friend friend = new Friend(state, userDataServer.id, userDataServer.nickName, userDataServer.avatarPath, 
+                        userDataServer.indexPlayer, userDataServer.maxIndex, userDataServer.avatarIndex);
+        return friend;
     }
 }

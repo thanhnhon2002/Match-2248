@@ -7,7 +7,7 @@ public class Friend
 {
     public enum State
     {
-        Confirmed, Waiting
+        Confirmed, Waiting, Sent
     }
     public State state;
     public string id;
