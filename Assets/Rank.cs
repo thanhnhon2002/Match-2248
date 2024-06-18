@@ -4,5 +4,5 @@ using System.Collections.Generic;
 [System.Serializable]
 public class Rank
 {
-    public List<UserDataServer> users = new List<UserDataServer>();
+    public Dictionary<int, Dictionary<string, UserDataServer>> ranks = new Dictionary<int, Dictionary<string, UserDataServer>>();
 }
