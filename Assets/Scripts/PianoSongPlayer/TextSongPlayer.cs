@@ -4,8 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class PianoNote
 {
-    public int key;
-    public List<int> chord;
+    public string key;
+    public List<string> chord;
 }
 
 [System.Serializable]
@@ -26,7 +26,7 @@ public class TextSongPlayer : MonoBehaviour, IPiano
         currentSong = ReadSongFromText(textAsset.text);
     }
 
-    public int GetNextNote()
+    public string GetNextNote()
     {
         current++;
         if (current >= currentSong.notes.Count) current = 0;
@@ -34,7 +34,7 @@ public class TextSongPlayer : MonoBehaviour, IPiano
         return note.key;
     }
 
-    public List<int> GetNextChord()
+    public List<string> GetNextChord()
     {
         current++;
         if (current >= currentSong.notes.Count) current = 0;
@@ -44,7 +44,7 @@ public class TextSongPlayer : MonoBehaviour, IPiano
 
     private PianoSong ReadSongFromText(string text)
     {
-        List<int> currentChord = new List<int>();
+        List<string> currentChord = new List<string>();
         PianoSong song = new PianoSong();
         song.notes = new List<PianoNote>();
         string[] lines = text.Split("\n");
@@ -75,14 +75,14 @@ public class TextSongPlayer : MonoBehaviour, IPiano
             return null;
         }
         var note = new PianoNote();
-        note.key = key;
+        note.key = key.ToString();
         return note;
     }
 
-    List<int> ReadChord(string line)
+    List<string> ReadChord(string line)
     {
         line = line.Replace(CHORD_IDENTIFIER, "");
-        List<int> result = new List<int>();
+        List<string> result = new List<string>();
         int first = line.IndexOf("//");
         if (first >= 0)
         {
@@ -99,7 +99,7 @@ public class TextSongPlayer : MonoBehaviour, IPiano
                 Debug.LogError("failed to read key = " + keys[i]);
                 continue;
             }
-            result.Add(key);
+            result.Add(key.ToString());
         }
         return result;
     }

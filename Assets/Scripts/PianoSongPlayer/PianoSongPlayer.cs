@@ -21,13 +21,13 @@ public class PianoSongPlayer : MonoBehaviour
     public TextSongPlayer textSongPlayer;
     public ChordPlayer chordPlayer;
 
-    private Dictionary<int, AudioClip> dicPianoKey = new Dictionary<int, AudioClip>();
+    private Dictionary<string, AudioClip> dicPianoKey = new Dictionary<string, AudioClip>();
     private readonly WaitForSeconds wait = new WaitForSeconds(CHORD_KEY_DELAY_TIME);
     private readonly List<string> keyNames = new List<string>()
     {
         "C","D","E","F","G","A","B"
     };
-    private int note;
+    private string note;
     private void Awake()
     {
         Instance = this;
@@ -36,26 +36,20 @@ public class PianoSongPlayer : MonoBehaviour
 
     public void Init()
     {
-        dicPianoKey = new Dictionary<int, AudioClip>();
+        dicPianoKey = new Dictionary<string, AudioClip>();
         for (int i = 0; i < allPianoKeys.Count; i++)
         {
-            bool success = int.TryParse(allPianoKeys[i].name, out int key);
-            if (!success)
-            {
-                Debug.LogError($"piano key file should name as integer, failed at name = {allPianoKeys[i].name}");
-                continue;
-            }
-            dicPianoKey.Add(key, allPianoKeys[i]);
+            dicPianoKey.Add(allPianoKeys[i].name, allPianoKeys[i]);
         }
     }
 
-    [ContextMenu("Play Chord")]
-    private void Test()
-    {
-        StartCoroutine(IEPlayChord(new List<int>() { 50, 52, 54}));
-    }
+    //[ContextMenu("Play Chord")]
+    //private void Test()
+    //{
+    //    StartCoroutine(IEPlayChord(new List<int>() { 50, 52, 54}));
+    //}
 
-    private IEnumerator IEPlayChord(List<int> chord)
+    private IEnumerator IEPlayChord(List<string> chord)
     {
         for (int i = 0; i < chord.Count; i++)
         {
@@ -78,7 +72,7 @@ public class PianoSongPlayer : MonoBehaviour
 
     public void PlayNextChord()
     {
-        List<int> chord;
+        List<string> chord;
         if(type == PianoPlayerType.Song)
         {
             chord = textSongPlayer.GetNextChord();
