@@ -1,4 +1,4 @@
-using DarkcupGames;
+﻿using DarkcupGames;
 using DG.Tweening.Plugins.Core.PathCore;
 using Firebase.Database;
 using Firebase.Extensions;
@@ -19,6 +19,7 @@ public class ServerSystem : MonoBehaviour
     public static ServerSystem Instance;
     public static DatabaseReference databaseRef;
     private static UserDataServer user = new UserDataServer();
+    private static Rank rank = new Rank();
     private static bool init = false;
 
     private void Awake()
@@ -92,6 +93,60 @@ public class ServerSystem : MonoBehaviour
 
     public static void UpdateRank()
     {
-        SaveToServerAtPath(RANK_DATA_URL + "/" + user.maxIndex + "/" + user.id, user);
+        UserDataServer userRank = new UserDataServer(user.id, user.nickName, user.avatarPath, user.indexPlayer, user.maxIndex, user.avatarIndex);
+        SaveToServerAtPath(RANK_DATA_URL + "/ranks" + "/" + user.maxIndex + "/" + user.id, userRank);
+    }
+
+    [ContextMenu("Get Data Rank")]
+    public async void GetRankGlobal()
+    {
+        try
+        {
+            var dataSnapshot = await databaseRef.Child(RANK_DATA_URL).GetValueAsync();
+            if (dataSnapshot != null)
+            {
+                var json = dataSnapshot.GetRawJsonValue();
+                rank = JsonConvert.DeserializeObject<Rank>(json);
+                foreach (var users in rank.ranks.Values)
+                {
+                    Debug.Log($"User: {users}, Score: {users}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No data found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error: {ex.Message}");
+        }
+    }
+
+    [ContextMenu("Test Get Data")]
+    public async void TestGetData()
+    {
+        try
+        {
+            var dataSnapshot = await databaseRef.Child(USER_DATA_URL).GetValueAsync();
+            if (dataSnapshot != null)
+            {
+                var json = dataSnapshot.GetRawJsonValue();
+                rank = JsonConvert.DeserializeObject<Rank>(json);
+
+                foreach (var users in rank.ranks.Values)
+                {
+                    Debug.Log($"User: {users}, Score: {users}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No data found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error: {ex.Message}");
+        }
     }
 }
