@@ -175,6 +175,7 @@ public class GridManager : MonoBehaviour
             Debug.Log("New Block 2^" + indexPlayer);
             FirebaseManager.Instance.LogLevelPass(index, GameFlow.Instance.timeCount);
             DeepTrack.LogLevelWin(index);
+            GameFlow.Instance.Congrastulate();
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }
