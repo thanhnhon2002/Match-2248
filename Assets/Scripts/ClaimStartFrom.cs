@@ -8,6 +8,7 @@ public class ClaimStartFrom : MonoBehaviour
 {
     private float cost;
     [SerializeField] private PopupAnimation popup;
+    [SerializeField] private RewardEventLog logger;
     public Button button;
     [SerializeField] private Image adIcon;
     private bool isAd;
@@ -36,6 +37,7 @@ public class ClaimStartFrom : MonoBehaviour
     {
         if(IsAd)
         {
+            if (logger != null) logger.LogEvent();
             AdManagerMax.Instance.ShowAds(6);
             return;
         }

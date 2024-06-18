@@ -136,6 +136,7 @@ public class Hint : MonoBehaviour
     }
     public void ClearList()
     {
+        timeLastDrag = 0;
         allCells.Clear();
         foreach (var cell in hintcells)
         {
