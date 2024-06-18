@@ -37,7 +37,7 @@ public class AnimationPanelBlock : AnimationPanel
             rectTransform.DOAnchorPosX(125, 0.3f);
             images[0].rectTransform.DOSizeDelta(new Vector2(235, 235), 0.25f);
         });
-        sequence.AppendInterval(0.65f);
+        sequence.AppendInterval(0.35f);
         sequence.AppendCallback(()=>
         {
             ///
