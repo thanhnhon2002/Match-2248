@@ -172,15 +172,14 @@ public class GridManager : MonoBehaviour
         int index = mathf.LogBigInt(value, 2);
         if (index > indexPlayer)
         {
-            indexPlayer = index;
-            Debug.Log("New Block 2^" + indexPlayer);
+            //indexPlayer = index;
+            Debug.Log("New Block 2^" + index);
             FirebaseManager.Instance.LogLevelPass(index, GameFlow.Instance.timeCount);
             DeepTrack.LogLevelWin(index);
             GameFlow.Instance.Congrastulate();
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
+            // PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }
-
         if (index > maxIndex)
         {
             int indexOut = index - maxIndex;
@@ -197,11 +196,30 @@ public class GridManager : MonoBehaviour
             }
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
-
         }
         SaveDataIndex();
+        if (index > indexPlayer)
+        {
+            indexPlayer = index;
+            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
+        }
     }
-
+    void CheckIndexDublicate()
+    {
+        if (indexPlayer > maxIndex)
+        {
+            GetLowestCells();
+            Debug.Log("Lock 2^" + minIndex);
+            minIndex++;
+            if (maxIndex - minIndex < Space_MaxIndex) maxIndex += 2;
+            else maxIndex += 1;
+            maxIndexRandom++;
+            Debug.Log("AddBlock 2^" + maxIndexRandom);
+            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
+            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
+            SaveDataIndex();
+        }
+    }
     void SaveDataIndex()
     {
         var userData = GameSystem.userdata;
@@ -489,22 +507,7 @@ public class GridManager : MonoBehaviour
             CheckIndexDublicate();
         });
     }
-    void CheckIndexDublicate()
-    {
-        if(indexPlayer>maxIndex)
-        {
-            GetLowestCells();
-            Debug.Log("Lock 2^" + minIndex);
-            minIndex++;
-            if (maxIndex - minIndex < Space_MaxIndex) maxIndex += 2;
-            else maxIndex += 1;
-            maxIndexRandom++;
-            Debug.Log("AddBlock 2^" + maxIndexRandom);
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
-            SaveDataIndex();
-        }      
-    }
+    
     public void SpawHighestCell()
     {
         GameFlow.Instance.gameState = GameState.Fx;
