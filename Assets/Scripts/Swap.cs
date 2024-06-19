@@ -10,6 +10,8 @@ public class Swap : Power<Swap>
     private List<CellHighlight> cellHighlight = new List<CellHighlight> ();
     [SerializeField] private CellHighlight highlightPre;
     [SerializeField] private AudioClip interactSound;
+    [SerializeField] private SwapTutorial tutorialPrefab;
+    private SwapTutorial tutorial;
 
     public override void UsePower ()
     {
@@ -20,6 +22,12 @@ public class Swap : Power<Swap>
             return;
         }
         base.UsePower ();
+        if (!info.isTutorialFinish)
+        {
+            tutorial = Instantiate(tutorialPrefab, Vector3.zero, UnityEngine.Quaternion.identity);
+            tutorial.DoTutorial();
+            backButton.gameObject.SetActive(false);
+        }
         GameFlow.Instance.gameState = GameState.Swap;
     }
 
@@ -47,6 +55,7 @@ public class Swap : Power<Swap>
             cellHighlight.Add (highligt);
         }
         if (chosenCell.Count < 2) return;
+        if (tutorial != null) tutorial.gameObject.SetActive(false);
         if (!ignoreCost) GameSystem.userdata.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();
         info.isTutorialFinish = true;
