@@ -46,7 +46,7 @@ public class DiamondGroup : MonoBehaviour
 
         DOVirtual.Float(oldDiamondAmount, userData.diamond, Const.DEFAULT_TWEEN_TIME, x =>
         {
-            diamondTxt.text = ((int)x).ToString();
+            diamondTxt.text = MoneyConveter.ConvertNameValueBestCode((int)x);
         });
         EasyEffect.Bounce(icon.gameObject, 0.1f);
     }

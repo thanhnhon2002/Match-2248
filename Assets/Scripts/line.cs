@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Line : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
+    public LineRenderer lineRenderer { get; private set; }
     [SerializeField] private int sortingOrder = -1;
     public Cell startCell;
     public Cell endCell;

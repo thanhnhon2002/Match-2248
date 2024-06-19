@@ -14,7 +14,7 @@ public class PianoSong
     public List<PianoNote> notes = new List<PianoNote>();
 }
 
-public class TextSongPlayer : MonoBehaviour, IPiano
+public class TextSongPlayer : PianoNoteGetter
 {
     public const string CHORD_IDENTIFIER = "###";
     public const float CHORD_KEY_DELAY_TIME = 0.05f;
@@ -26,7 +26,7 @@ public class TextSongPlayer : MonoBehaviour, IPiano
         currentSong = ReadSongFromText(textAsset.text);
     }
 
-    public string GetNextNote()
+    public override string GetNextNote()
     {
         current++;
         if (current >= currentSong.notes.Count) current = 0;
@@ -34,7 +34,7 @@ public class TextSongPlayer : MonoBehaviour, IPiano
         return note.key;
     }
 
-    public List<string> GetNextChord()
+    public override List<string> GetNextChord()
     {
         current++;
         if (current >= currentSong.notes.Count) current = 0;

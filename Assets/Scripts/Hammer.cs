@@ -11,7 +11,8 @@ public class Hammer : Power<Hammer>
     [SerializeField] private ParticalSystemController smashFx;
     [SerializeField] private AudioClip cellSmashSound;
     [SerializeField] private CellHighlight highlightPre;
-
+    [SerializeField] private HammerTutorial tutorialPrefab;
+    private HammerTutorial tutorial;
     private bool chose;
     private Cell cell;
     public override void UsePower ()
@@ -24,6 +25,12 @@ public class Hammer : Power<Hammer>
         }
         cell = null;
         base.UsePower ();
+        if (!info.isTutorialFinish)
+        {
+            tutorial = Instantiate(tutorialPrefab, Vector3.zero, UnityEngine.Quaternion.identity);
+            tutorial.DoTutorial();
+            backButton.gameObject.SetActive(false);
+        }
         GameFlow.Instance.gameState = GameState.Smash;
         hammer.SetBool ("Play", true);
         chose = false;
@@ -42,6 +49,7 @@ public class Hammer : Power<Hammer>
     public void Smash(Cell cell)
     {
         if (this.cell != null) return;
+        if (tutorial != null) tutorial.gameObject.SetActive(false);
         this.cell = cell;
         var highligt = PoolSystem.Instance.GetObject(highlightPre, cell.transform.position);
         highligt.cell = cell;

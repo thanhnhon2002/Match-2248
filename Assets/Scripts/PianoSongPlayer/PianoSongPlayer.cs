@@ -16,10 +16,7 @@ public class PianoSongPlayer : MonoBehaviour
 
     public static PianoSongPlayer Instance;
     public List<AudioClip> allPianoKeys;
-
-    public PianoPlayerType type = PianoPlayerType.Chord;
-    public TextSongPlayer textSongPlayer;
-    public ChordPlayer chordPlayer;
+    public PianoNoteGetter piano;
 
     private Dictionary<string, AudioClip> dicPianoKey = new Dictionary<string, AudioClip>();
     private readonly WaitForSeconds wait = new WaitForSeconds(CHORD_KEY_DELAY_TIME);
@@ -58,28 +55,29 @@ public class PianoSongPlayer : MonoBehaviour
         }
     }
 
-    public void PlayNextNote()
+    public void PlayNextNote(float volume = 1f)
     {
-        if (type == PianoPlayerType.Song)
-        {
-            note = textSongPlayer.GetNextNote();
-        } else
-        {
-            note = chordPlayer.GetNextNote();
-        }
-        AudioSystem.Instance.PlaySound(dicPianoKey[note]);
+        //if (type == PianoPlayerType.Song)
+        //{
+        //    note = textSongPlayer.GetNextNote();
+        //} else
+        //{
+        //    note = chordPlayer.GetNextNote();
+        //}
+        note = piano.GetNextNote();
+        AudioSystem.Instance.PlaySound(dicPianoKey[note], volume);
     }
 
     public void PlayNextChord()
     {
-        List<string> chord;
-        if(type == PianoPlayerType.Song)
-        {
-            chord = textSongPlayer.GetNextChord();
-        } else
-        {
-            chord = chordPlayer.GetNextChord();
-        }
+        List<string> chord = piano.GetNextChord();
+        //if(type == PianoPlayerType.Song)
+        //{
+        //    chord = textSongPlayer.GetNextChord();
+        //} else
+        //{
+        //    chord = chordPlayer.GetNextChord();
+        //}
         StartCoroutine(IEPlayChord(chord));
     }
 

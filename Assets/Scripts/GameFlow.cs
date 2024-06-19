@@ -293,7 +293,7 @@ public class GameFlow : MonoBehaviour
     {
         foreach (var item in confextiFx)
         {
-            item.Play();
+            item.Play(); 
         }
     }
 }

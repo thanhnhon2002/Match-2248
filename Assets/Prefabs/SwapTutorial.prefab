@@ -299,6 +299,7 @@ GameObject:
   - component: {fileID: 7974510981865845660}
   - component: {fileID: 4844613574942047224}
   - component: {fileID: 6869099171318703464}
+  - component: {fileID: 7508022969745468553}
   m_Layer: 5
   m_Name: Iris Shot
   m_TagString: Untagged
@@ -392,6 +393,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TargetUnmask: {fileID: 3610375004272382537}
+--- !u!114 &7508022969745468553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8671199589130932306}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb9714b62a114d45b65f30fc946ea5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TargetUnmask: {fileID: 630082187286500705}
 --- !u!1 &9148543272792156415
 GameObject:
   m_ObjectHideFlags: 0
