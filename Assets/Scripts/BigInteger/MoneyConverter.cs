@@ -3,7 +3,7 @@
 [Serializable]
 public static class MoneyConveter
 {
-    public static string ConverNameValue(long value)
+    public static string ConvertNameValue(long value)
     {
         if (value < 1000) return value.ToString();
         if (value < 1000000) 
@@ -15,7 +15,7 @@ public static class MoneyConveter
         else if (value < 10000000000) return (value / 1000000000).ToString() + "," + (value / 100000000 % 10) + "B";
             else return (value / 1000000000).ToString() + "B";
     }
-    public static string ConverNameValueBestCode(long value)
+    public static string ConvertNameValueBestCode(long value)
     {
         if (value < 1000) return value.ToString();
         for(int i=3;i>0;i--)

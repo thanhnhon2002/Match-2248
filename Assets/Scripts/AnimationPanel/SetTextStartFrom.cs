@@ -15,7 +15,7 @@ public class SetTextStartFrom : SetTextPanel
 
         var lastValue = BigInteger.Pow(2, GameSystem.userdata.lastHighestCellValue);
         texts[3].transform.parent.gameObject.SetActive(GameSystem.userdata.lastHighestCellValue > 12);
-        texts[3].text = BigIntegerConverter.ConverNameValue(lastValue);
+        texts[3].text = BigIntegerConverter.ConvertNameValue(lastValue);
         texts[3].GetComponentInParent<Button>(true).image.color = CellColor.Instance.GetCellColor(lastValue);
     }
 }

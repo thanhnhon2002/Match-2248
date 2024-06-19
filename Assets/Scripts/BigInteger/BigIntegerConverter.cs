@@ -6,7 +6,7 @@ using UnityEngine;
 [Serializable]
 public static class BigIntegerConverter
 {
-    public static string ConverNameValue(BigInteger value)
+    public static string ConvertNameValue(BigInteger value)
     {
         if (value < 10000) return value.ToString();
         string nameResult = "";

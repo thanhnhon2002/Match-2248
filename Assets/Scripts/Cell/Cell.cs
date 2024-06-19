@@ -23,7 +23,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         get { return value; }
         set {
             this.value = value;
-            valueTxt.text = BigIntegerConverter.ConverNameValue (value);
+            valueTxt.text = BigIntegerConverter.ConvertNameValue (value);
             colorSet.SetColor ();
         }
     }
@@ -149,7 +149,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 #if UNITY_EDITOR
     private void OnValidate ()
     {
-        valueTxt.text = BigIntegerConverter.ConverNameValue (Value);
+        valueTxt.text = BigIntegerConverter.ConvertNameValue (Value);
     }
 #endif
 }
