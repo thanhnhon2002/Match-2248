@@ -6,11 +6,14 @@ using UnityEngine;
 public class CellInteractEffect : MonoBehaviour
 {
     private const long VIBRATION_STRENGTH = 20;
+    public const float VOLUME = 0.5f;
+
     [SerializeField] private AudioClip[] clips;
 
     public void PlaySound()
     {
-        PianoSongPlayer.Instance.PlayNextNote();
+        Debug.LogError("play sound!");
+        PianoSongPlayer.Instance.PlayNextNote(VOLUME);
         Vibration.Vibrate(VIBRATION_STRENGTH);
     }
 }

@@ -55,7 +55,7 @@ public class PianoSongPlayer : MonoBehaviour
         }
     }
 
-    public void PlayNextNote()
+    public void PlayNextNote(float volume = 1f)
     {
         //if (type == PianoPlayerType.Song)
         //{
@@ -65,7 +65,7 @@ public class PianoSongPlayer : MonoBehaviour
         //    note = chordPlayer.GetNextNote();
         //}
         note = piano.GetNextNote();
-        AudioSystem.Instance.PlaySound(dicPianoKey[note]);
+        AudioSystem.Instance.PlaySound(dicPianoKey[note], volume);
     }
 
     public void PlayNextChord()
