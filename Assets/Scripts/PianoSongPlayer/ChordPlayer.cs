@@ -9,7 +9,7 @@ public class Chord
     public List<string> keys;
 }
 
-public class ChordPlayer : MonoBehaviour, IPiano
+public class ChordPlayer : PianoNoteGetter
 {
     public List<Chord> chords;
     Chord currentChord;
@@ -21,14 +21,14 @@ public class ChordPlayer : MonoBehaviour, IPiano
         currentNote = currentChord.keys.RandomElement();
     }
 
-    public List<string> GetNextChord()
+    public override List<string> GetNextChord()
     {
         Chord oldChord = currentChord;
         currentChord = chords.RandomElement();
         return oldChord.keys;
     }
 
-    public string GetNextNote()
+    public override string GetNextNote()
     {
         List<string> notes = new List<string>(currentChord.keys);
         notes.Remove(currentNote);
