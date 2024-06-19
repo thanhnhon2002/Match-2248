@@ -71,7 +71,9 @@ public class Paint : Power<Paint>
             GameFlow.Instance.gameState = GameState.Playing;
             return;
         }
+        onUseCompleted?.Invoke();
         if (!ignoreCost) GameSystem.userdata.diamond -= cost;
+        info.isTutorialFinish = true;
         GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.diamondGroup.Display();
         var highestValue = FindHighestValue();

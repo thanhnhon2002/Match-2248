@@ -72,6 +72,7 @@ public class UserData
     public UserProperty property;
     public DailyRewardInfo dailyRewardInfo;
     public Dictionary<SettingKey, bool> dicSetting = new Dictionary<SettingKey, bool>();
+    public Dictionary<PowerType, PowerInfo> dicPower = new Dictionary<PowerType, PowerInfo>();
     public List<string> boughtItems;
     public int lastHighestCellValue;
     public UserData()
@@ -93,8 +94,15 @@ public class UserData
         if (dailyRewardInfo == null) dailyRewardInfo = new DailyRewardInfo();
         if (boughtItems == null) boughtItems = new List<string>();
         if (dicSetting == null) dicSetting = new Dictionary<SettingKey, bool>();
+
         if (dicSetting.ContainsKey(SettingKey.Sound) == false) dicSetting.Add(SettingKey.Sound, true);
         if (dicSetting.ContainsKey(SettingKey.Music) == false) dicSetting.Add(SettingKey.Music, true);
         if (dicSetting.ContainsKey(SettingKey.Vibration) == false) dicSetting.Add(SettingKey.Vibration, true);
+
+        if (dicPower == null) dicPower = new Dictionary<PowerType, PowerInfo>(dicPower);
+        if (!dicPower.ContainsKey(PowerType.Hammer)) dicPower.Add(PowerType.Hammer, new PowerInfo(50f));
+        if (!dicPower.ContainsKey(PowerType.Swap)) dicPower.Add(PowerType.Swap, new PowerInfo(50f));
+        if (!dicPower.ContainsKey(PowerType.Rocket)) dicPower.Add(PowerType.Rocket, new PowerInfo(60f));
+        if (!dicPower.ContainsKey(PowerType.Paint)) dicPower.Add(PowerType.Paint, new PowerInfo(200f));
     }
 }

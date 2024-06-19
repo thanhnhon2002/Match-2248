@@ -47,6 +47,8 @@ public class Hammer : Power<Hammer>
         highligt.cell = cell;
         if(!ignoreCost) GameSystem.userdata.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();
+        info.isTutorialFinish = true;
+        GameSystem.SaveUserDataToLocal();
         if (chose) return;
         chose = true; 
         backButton.gameObject.SetActive (false); 
@@ -64,12 +66,13 @@ public class Hammer : Power<Hammer>
             highligt.gameObject.SetActive(false);
             displayGroup.DOFade (0f, 1f).OnComplete(() => 
             {
-                
+                onUseCompleted?.Invoke();
                 hamerImg.anchoredPosition = Vector3.zero;
                 GameFlow.Instance.bottomGroup.gameObject.SetActive (true);
                 GameFlow.Instance.topGroup.gameObject.SetActive (true);
                 displayGroup.gameObject.SetActive (false);
                 displayGroup.alpha = 1f;
+
             });
         });
 

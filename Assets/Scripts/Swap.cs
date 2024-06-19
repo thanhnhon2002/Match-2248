@@ -49,6 +49,8 @@ public class Swap : Power<Swap>
         if (chosenCell.Count < 2) return;
         if (!ignoreCost) GameSystem.userdata.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();
+        info.isTutorialFinish = true;
+        GameSystem.SaveUserDataToLocal();
         backButton.gameObject.SetActive (false);
         for (int i = 0; i < chosenCell.Count; i++)
         {
@@ -105,6 +107,7 @@ public class Swap : Power<Swap>
             GameFlow.Instance.topGroup.gameObject.SetActive (true);
             chosenCell.Clear ();
             cellHighlight.Clear ();
+            onUseCompleted?.Invoke();
         });
     }
 

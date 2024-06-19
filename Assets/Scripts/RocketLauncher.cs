@@ -30,6 +30,8 @@ public class RocketLauncher : Power<RocketLauncher>
 
     public void LaunchRocket()
     {
+        info.isTutorialFinish = true;
+        GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.gameState = GameState.Fx; 
         targets.Clear();
         allCells.Clear();
@@ -66,6 +68,7 @@ public class RocketLauncher : Power<RocketLauncher>
         {
             GridManager.Instance.CheckToSpawnNewCell(targets);
             Back();
+            onUseCompleted?.Invoke();
         });
     }
 
@@ -79,6 +82,8 @@ public class RocketLauncher : Power<RocketLauncher>
         }
         if (!ignoreCost) userData.diamond -= cost;
         PopupManager.Instance.HidePopup(PopupOptions.Lose);
+        info.isTutorialFinish = true;
+        GameSystem.SaveUserDataToLocal();
         LaunchRocket();
         GameFlow.Instance.diamondGroup.Display();
     }

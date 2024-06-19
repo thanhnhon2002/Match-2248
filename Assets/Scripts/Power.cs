@@ -1,20 +1,48 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
+
+public enum PowerType
+{
+    Hammer, Swap, Rocket, Paint
+}
+
+[Serializable]
+public class PowerInfo
+{
+    public readonly float cost;
+    public bool isTutorialFinish;
+
+    public PowerInfo(float cost)
+    {
+        this.cost = cost;
+        isTutorialFinish = false;
+    }
+}
 
 public abstract class Power<T> : MonoBehaviour where T : Power<T>
 {
     public static T Instance;
     [SerializeField] protected CanvasGroup displayGroup;
+    [SerializeField] protected TextMeshProUGUI priceTxt;
     [SerializeField] protected Button backButton;
-    [SerializeField] protected float cost;
+    [SerializeField] protected PowerType powerType;
+    [SerializeField] protected PowerInfo info;
+    public UnityEvent onUseCompleted;
     protected bool ignoreCost;
-
+    protected float cost;
+    public string ID { get; protected set; }
     protected virtual void Awake()
     {
         Instance = (T)this;
+        info = GameSystem.userdata.dicPower[powerType];
+        DisplayCost();
     }
 
 
@@ -42,5 +70,13 @@ public abstract class Power<T> : MonoBehaviour where T : Power<T>
     public virtual void UsePowerIgnoreCost()
     {
         ignoreCost = true;
+    }
+
+    public void DisplayCost()
+    {
+        if (info.isTutorialFinish) cost = info.cost;
+        else cost = 0;
+        var text = cost > 0 ? cost.ToString() : "Free";
+        priceTxt.text = text;
     }
 }
