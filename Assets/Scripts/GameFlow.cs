@@ -48,13 +48,13 @@ public class GameFlow : MonoBehaviour
         get { return gameScore; }
         set { 
             gameScore = value;
-            scoreTxt.text = BigIntegerConverter.ConverNameValue(value);
+            scoreTxt.text = BigIntegerConverter.ConvertNameValue(value);
             var userData = GameSystem.userdata;
             userData.gameData.currentScore = gameScore;
             if (gameScore > userData.highestScore)
             {
                 userData.highestScore = gameScore;
-                highScoreTxt.text = BigIntegerConverter.ConverNameValue(gameScore);
+                highScoreTxt.text = BigIntegerConverter.ConvertNameValue(gameScore);
             }
             GameSystem.SaveUserDataToLocal ();
         }
@@ -144,7 +144,7 @@ public class GameFlow : MonoBehaviour
     {
         var userData = GameSystem.userdata;
         GameScore = userData.gameData.currentScore;
-        highScoreTxt.text = BigIntegerConverter.ConverNameValue(userData.highestScore);
+        highScoreTxt.text = BigIntegerConverter.ConvertNameValue(userData.highestScore);
     }
 
 

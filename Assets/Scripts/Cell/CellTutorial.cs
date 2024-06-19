@@ -21,7 +21,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
         set
         {
             this.value = value;
-            valueTxt.text = BigIntegerConverter.ConverNameValue(value);
+            valueTxt.text = BigIntegerConverter.ConvertNameValue(value);
             colorSet.SetColor();
         }
     }

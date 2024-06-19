@@ -20,6 +20,6 @@ public class BestCell : MonoBehaviour
         var value = userData.gameData.currentHighestCellValue;
         if (value < 2) value = 2;
         cellImg.color = CellColor.Instance.GetCellColor(value);
-        valueTxt.text = BigIntegerConverter.ConverNameValue(value);
+        valueTxt.text = BigIntegerConverter.ConvertNameValue(value);
     }
 }

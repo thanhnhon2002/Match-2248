@@ -25,7 +25,7 @@ public class CheckPoint : MonoBehaviour
         mask.enabled = dislayValue <= GameSystem.userdata.highestCellValue;
         maskImg.gameObject.SetActive(mask.enabled);
         group.alpha = 0f;
-        textMesh.text = BigIntegerConverter.ConverNameValue(value);
+        textMesh.text = BigIntegerConverter.ConvertNameValue(value);
         group.DOFade(1f, 0.2f);
     }
 }

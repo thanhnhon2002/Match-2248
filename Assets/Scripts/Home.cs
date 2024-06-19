@@ -41,7 +41,7 @@ public class Home : MonoBehaviour
     private void LoadUserData()
     {
         var userData = GameSystem.userdata;
-        scoreTxt.text = BigIntegerConverter.ConverNameValue(userData.highestScore);
+        scoreTxt.text = BigIntegerConverter.ConvertNameValue(userData.highestScore);
         if (userData.firstPlayGame) return;
         if (userData.boughtItems.Contains(IAP_ID.no_ads.ToString())) return;
         if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS) return;
