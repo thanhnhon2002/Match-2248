@@ -65,6 +65,64 @@ MonoBehaviour:
     - g3
     - b3
     - d4
+--- !u!1 &504176734892603247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7762079827822430577}
+  - component: {fileID: 1766554722025057560}
+  m_Layer: 0
+  m_Name: Ogirinal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7762079827822430577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504176734892603247}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 169.22308, y: -392.70435, z: -3.1127973}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9061277150872532122}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1766554722025057560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504176734892603247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 863a4903db13c6942959be0260d248a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keys:
+  - {fileID: 8300000, guid: 810798c06cb8458418b042acf96e0d9f, type: 3}
+  - {fileID: 8300000, guid: 0dbd981b8afc2d3468f77dc0b5345a27, type: 3}
+  - {fileID: 8300000, guid: d2ca42c07ae559845a66438949547340, type: 3}
+  - {fileID: 8300000, guid: e77debe00bace294b8ccca3accbac708, type: 3}
+  - {fileID: 8300000, guid: 9538b81887200c344af27f0ba84e6e20, type: 3}
+  - {fileID: 8300000, guid: 7d263c4fedd41bd479afddc39e26450b, type: 3}
+  - {fileID: 8300000, guid: 06c973232b0d22841836e8ab6aaaaeac, type: 3}
+  - {fileID: 8300000, guid: 02e3d43e62273b245a76d7e9d44146db, type: 3}
+  - {fileID: 8300000, guid: 7daccc77150fd3344a7a68f9f4c56a32, type: 3}
+  chords:
+  - {fileID: 8300000, guid: cc2527de46d689a41b79297f75b23448, type: 3}
+  - {fileID: 8300000, guid: 24faebe83886b8e4ea2016ef42146073, type: 3}
+  - {fileID: 8300000, guid: 4d62acadd1e97c5418903936acc2702c, type: 3}
 --- !u!1 &1457484325698413528
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,6 +156,7 @@ Transform:
   - {fileID: 5800159100035473278}
   - {fileID: 6496879877724980485}
   - {fileID: 5922025495274673712}
+  - {fileID: 7762079827822430577}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1860788544720847699
@@ -113,29 +172,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allPianoKeys:
-  - {fileID: 8300000, guid: 33bcd0bff0098524797f866e6fcd2da2, type: 3}
-  - {fileID: 8300000, guid: 24e0a318c3c8420498ca598dabbcca7e, type: 3}
-  - {fileID: 8300000, guid: 4c538819648ab444cb23ca614df42894, type: 3}
-  - {fileID: 8300000, guid: 31683fbe77294034dafd3b3240e1780b, type: 3}
-  - {fileID: 8300000, guid: 96bb5707ed569634aa6b2dc6ab352a91, type: 3}
-  - {fileID: 8300000, guid: 84dedeecf1c0c6c4cb94cb27504583a7, type: 3}
-  - {fileID: 8300000, guid: 5602648536073c543bc566ee78ca3fa1, type: 3}
-  - {fileID: 8300000, guid: 07c399fa97330af458d99d31837a633c, type: 3}
-  - {fileID: 8300000, guid: 15617686dc2706c419f88ba09142ae02, type: 3}
-  - {fileID: 8300000, guid: 245b802cefc41994fbebfb27e237a48f, type: 3}
-  - {fileID: 8300000, guid: c56b5298bba0b304baa2bb98cadcd421, type: 3}
-  - {fileID: 8300000, guid: 1c1bb7b230c918e459d132973709c81c, type: 3}
-  - {fileID: 8300000, guid: b19d5d76aa1959243a052c17d5bff4dd, type: 3}
-  - {fileID: 8300000, guid: bb94fae951f8ace45b11992a95e5144b, type: 3}
-  - {fileID: 8300000, guid: 61cfff22efca8cf4ebdc508b1b97471f, type: 3}
-  - {fileID: 8300000, guid: ce886763632c74f4d8576733116331b8, type: 3}
-  - {fileID: 8300000, guid: 2b96212e36a1c594f98a0930f1b6d309, type: 3}
-  - {fileID: 8300000, guid: e603a157cd2d37447bfa1e1cae6c64f6, type: 3}
-  - {fileID: 8300000, guid: fc21e9275c89cb8489e35f7f99688bdc, type: 3}
-  - {fileID: 8300000, guid: 1530eaf924113e347842c0622016d2cd, type: 3}
-  type: 1
-  textSongPlayer: {fileID: 677804842884020897}
-  chordPlayer: {fileID: 1697981422144845108}
+  - {fileID: 8300000, guid: 810798c06cb8458418b042acf96e0d9f, type: 3}
+  - {fileID: 8300000, guid: 0dbd981b8afc2d3468f77dc0b5345a27, type: 3}
+  - {fileID: 8300000, guid: d2ca42c07ae559845a66438949547340, type: 3}
+  - {fileID: 8300000, guid: e77debe00bace294b8ccca3accbac708, type: 3}
+  - {fileID: 8300000, guid: 9538b81887200c344af27f0ba84e6e20, type: 3}
+  - {fileID: 8300000, guid: 7d263c4fedd41bd479afddc39e26450b, type: 3}
+  - {fileID: 8300000, guid: 06c973232b0d22841836e8ab6aaaaeac, type: 3}
+  - {fileID: 8300000, guid: 02e3d43e62273b245a76d7e9d44146db, type: 3}
+  - {fileID: 8300000, guid: 7daccc77150fd3344a7a68f9f4c56a32, type: 3}
+  - {fileID: 8300000, guid: 4d62acadd1e97c5418903936acc2702c, type: 3}
+  - {fileID: 8300000, guid: cc2527de46d689a41b79297f75b23448, type: 3}
+  - {fileID: 8300000, guid: 24faebe83886b8e4ea2016ef42146073, type: 3}
+  piano: {fileID: 1766554722025057560}
 --- !u!1 &5497047327048763991
 GameObject:
   m_ObjectHideFlags: 0
