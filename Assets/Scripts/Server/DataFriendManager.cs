@@ -19,7 +19,6 @@ public class DataFriendManager : MonoBehaviour
             StartListeningForFriendChanges();
         }
     }
-
     [ContextMenu("Test Add Friend")]
     public void TestAddFriend()
     {

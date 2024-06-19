@@ -18,7 +18,6 @@ public class Hint : MonoBehaviour
     {
         Instance = this;
     }
-
     private void Update()
     {
         if (Time.time > timeLastDrag + TIME_SHOW_HINT && timeLastDrag != 0)
