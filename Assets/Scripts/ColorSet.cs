@@ -25,10 +25,11 @@ public class ColorSet : MonoBehaviour
         if (!isTutorial)
         {
              color = CellColor.Instance.GetCellColor(cell.Value);
+             cell.valueTxt.color = CellColor.Instance.GetTextColor(cell.Value);
         }
         else
         {
-            color = CellColor.Instance.GetCellColor(cellTt.Value);
+            color = CellColor.Instance.GetCellColor(cellTt.Value);          
         }
         color.a = 1f;
         spriteRenderer.color = color;

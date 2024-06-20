@@ -13,7 +13,7 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
     [SerializeField] Vector2 posUp;
     [SerializeField] Vector2 sizeUp;
     [SerializeField] Vector2 sizeDown;
-    const float TIME_ANIMATON_UP = 0.002f;
+    const float TIME_ANIMATON_UP = 0.001f;
     const float TIME_ANIMATON_DOWN = 0.008f;
     TextMeshProUGUI nameOption;
     //Sequence sequence;
@@ -84,25 +84,28 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
         optionAnimation = this;
         AnimationUp();
     }
-    void AnimationUp()
+    public void AnimationUp(float speed = TIME_ANIMATON_UP)
     {
         DestroyAniamtion();
         //sequence = DOTween.Sequence();
-        rectTransform.DOLocalMoveY(posUp.y, TIME_ANIMATON_UP * (posUp.y-rectTransform.localPosition.y));
-        rectTransform.DOSizeDelta(sizeUp, TIME_ANIMATON_UP * (sizeUp.x - rectTransform.localPosition.x));
+        rectTransform.DOLocalMoveY(posUp.y, speed * (posUp.y-rectTransform.localPosition.y));
+        rectTransform.DOSizeDelta(sizeUp, speed * (sizeUp.x - rectTransform.localPosition.x));
     }
-    void AnimationDown()
+    public void AnimationDown(float speed = TIME_ANIMATON_DOWN)
     {
         DestroyAniamtion();
         //sequence = DOTween.Sequence();
-        rectTransform.DOLocalMoveY(0, TIME_ANIMATON_DOWN * rectTransform.localPosition.y);
-        rectTransform.DOSizeDelta(sizeDown, TIME_ANIMATON_DOWN * (rectTransform.localPosition.x-sizeDown.x));
+        rectTransform.DOLocalMoveY(0, speed * rectTransform.localPosition.y);
+        rectTransform.DOSizeDelta(sizeDown, speed * (rectTransform.localPosition.x-sizeDown.x));
     }
     void DestroyAniamtion()
     {
         //sequence.Kill();
         DOTween.Kill(rectTransform);
     }
-
+    void OnDestroy()
+    {
+        DestroyAniamtion();
+    }
     
 }
