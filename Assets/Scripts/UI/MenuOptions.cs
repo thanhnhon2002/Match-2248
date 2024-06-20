@@ -7,6 +7,7 @@ public enum OptionMenu
     Home,
     PlayerInformation,
     Shop,
+    Rank
 }
 public class MenuOptions : MonoBehaviour
 {

@@ -33,11 +33,23 @@ public class UserDataServer
         {
             Debug.LogError("user game data null");
             return;
-        }    
+        }
 
         this.maxIndex = GameSystem.userdata.gameData.maxIndex;
         this.indexPlayer = GameSystem.userdata.gameData.indexPlayer;
         this.nickName = GameSystem.userdata.nickName;
         this.avatarIndex = GameSystem.userdata.avatarIndex;
+    }
+
+    public string GetID()
+    {
+        return typeLogin switch
+        {
+            TypeLogin.Guest => id,
+            TypeLogin.Google => idGoogle,
+            TypeLogin.Facebook => idFacebook,
+            TypeLogin.Apple => idApple,
+            _=> ""
+        };
     }
 }

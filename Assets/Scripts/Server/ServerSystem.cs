@@ -14,7 +14,7 @@ public class ServerSystem : MonoBehaviour
 {
     public const string BASE_URL = "game";
     public const string USER_DATA_URL = BASE_URL + "/user";
-    public const string RANK_DATA_URL = BASE_URL + "/rank";
+    public const string RANK_DATA_URL = BASE_URL + "/TopRank";
 
     public static ServerSystem Instance;
     public static DatabaseReference databaseRef;
