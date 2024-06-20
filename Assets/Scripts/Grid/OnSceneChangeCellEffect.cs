@@ -44,7 +44,5 @@ public class OnSceneChangeCellEffect : MonoBehaviour, ISceneChangeEffect
                 yield return new WaitForSeconds(EFFEC_DELAY);
             }
         }
-        yield return new WaitForSeconds(Const.DEFAULT_TWEEN_TIME);
-        Hint.Instance.StartHint();
     }
 }

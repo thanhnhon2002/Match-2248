@@ -104,6 +104,8 @@ public class GameFlow : MonoBehaviour
             GridManager.Instance.effect.Prepare();
             ShowScene(GridManager.Instance.effect.RunEffect);
         }
+        yield return new WaitForSeconds(Const.DEFAULT_TWEEN_TIME);
+        Hint.Instance.StartHint();
     }
 
     private void Update()
