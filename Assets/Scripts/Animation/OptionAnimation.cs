@@ -8,8 +8,9 @@ using UnityEngine.UI;
 
 public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHandler,IPointerDownHandler,IPointerEnterHandler,IPointerExitHandler,IDragHandler,IEndDragHandler,IBeginDragHandler
 {
-    [SerializeField] Image imageNormal;
-    [SerializeField] Image imageUsed;
+    [SerializeField] Image iconOption;
+    [SerializeField] Sprite iconUsed;
+    Sprite iconNormal;
     [SerializeField] Vector2 posUp;
     [SerializeField] Vector2 sizeUp;
     [SerializeField] Vector2 sizeDown;
@@ -17,14 +18,15 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
     const float TIME_ANIMATON_DOWN = 0.008f;
     TextMeshProUGUI nameOption;
     //Sequence sequence;
-    RectTransform rectTransform;
+    RectTransform rectTransformImageUsed;
     public OptionMenu option;
     public static OptionAnimation optionAnimation;
     static bool draging;
     void Awake()
     {
-        imageUsed = transform.GetComponentsInChildren<Image>()[1];
-        rectTransform = imageUsed.GetComponent<RectTransform>();
+        iconOption = transform.GetComponentsInChildren<Image>()[1];
+        iconNormal = iconOption.sprite;
+        rectTransformImageUsed = iconOption.GetComponent<RectTransform>();
         nameOption = GetComponentInChildren<TextMeshProUGUI>();
     }
     public void OnPointerEnter(PointerEventData eventData)
@@ -88,20 +90,22 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
     {
         DestroyAniamtion();
         //sequence = DOTween.Sequence();
-        rectTransform.DOLocalMoveY(posUp.y, speed * (posUp.y-rectTransform.localPosition.y));
-        rectTransform.DOSizeDelta(sizeUp, speed * (sizeUp.x - rectTransform.localPosition.x));
+        iconOption.sprite = iconUsed;
+        rectTransformImageUsed.DOLocalMoveY(posUp.y, speed * (posUp.y-rectTransformImageUsed.localPosition.y));
+        rectTransformImageUsed.DOSizeDelta(sizeUp, speed * (sizeUp.x - rectTransformImageUsed.localPosition.x));
     }
     public void AnimationDown(float speed = TIME_ANIMATON_DOWN)
     {
         DestroyAniamtion();
         //sequence = DOTween.Sequence();
-        rectTransform.DOLocalMoveY(0, speed * rectTransform.localPosition.y);
-        rectTransform.DOSizeDelta(sizeDown, speed * (rectTransform.localPosition.x-sizeDown.x));
+        iconOption.sprite = iconNormal;
+        rectTransformImageUsed.DOLocalMoveY(0, speed * rectTransformImageUsed.localPosition.y);
+        rectTransformImageUsed.DOSizeDelta(sizeDown, speed * (rectTransformImageUsed.localPosition.x-sizeDown.x));
     }
     void DestroyAniamtion()
     {
         //sequence.Kill();
-        DOTween.Kill(rectTransform);
+        DOTween.Kill(rectTransformImageUsed);
     }
     void OnDestroy()
     {
