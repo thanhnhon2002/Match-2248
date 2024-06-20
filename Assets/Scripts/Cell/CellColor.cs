@@ -31,7 +31,6 @@ public class CellColor : MonoBehaviour
         Mathf mathf;
         var pow = mathf.LogBigInt(value, 2) - 1;
         var index = pow % colors.Length;
-        Debug.Log("tttttttttttttttttttttt" + index);
         if (index == 9 || index == 11 || index == 12) return Color.black;
         return Color.white;
     }

@@ -24,31 +24,34 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
     static bool draging;
     void Awake()
     {
-        iconOption = transform.GetComponentsInChildren<Image>()[1];
-        iconNormal = iconOption.sprite;
+        iconOption = transform.GetComponentsInChildren<Image>()[1];    
         rectTransformImageUsed = iconOption.GetComponent<RectTransform>();
-        nameOption = GetComponentInChildren<TextMeshProUGUI>();
+        nameOption = GetComponentInChildren<TextMeshProUGUI>(true);
+    }
+    void Start()
+    {
+        iconNormal = iconOption.sprite;
+        nameOption.gameObject.SetActive(false);
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        Debug.Log("Enter "+transform.name);
+        //Debug.Log("Enter "+transform.name);
         if (optionAnimation != null&&draging)
         {
+            optionAnimation.AnimationDown();
             optionAnimation = this;
             AnimationUp();
         }
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-        Debug.Log("Exit " + transform.name);
-        if(optionAnimation!=null && draging) AnimationDown();
+        //Debug.Log("Exit " + transform.name);
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("Down " + transform.name);
+        //Debug.Log("Down " + transform.name);
         if (optionAnimation != null)
         {
-            //if(option!=optionAnimation.option) MenuOptions.Instance.HideOption(optionAnimation.option);
             optionAnimation.AnimationDown();
         }
         optionAnimation = this;
@@ -56,7 +59,7 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("Begin Drag");
+        //Debug.Log("Begin Drag");
         draging = true;
     }
     public void OnDrag(PointerEventData eventData)
@@ -65,24 +68,21 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
     }  
     public void OnPointerUp(PointerEventData eventData)
     {
-        Debug.Log("Up + USE " + transform.name);
+        //Debug.Log("Up + USE " + transform.name);
         MenuOptions.Instance.HideAllOption(optionAnimation.option);
-        //optionAnimation = null;
     }
     public void OnEndDrag(PointerEventData eventData)
     {
-        Debug.Log("End Drag " + transform.name);
+        //Debug.Log("End Drag " + transform.name);
         draging = false;
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        Debug.Log("Click " + transform.name);
+        //Debug.Log("Click " + transform.name);
         if (optionAnimation != null)
         {
-            //MenuOptions.Instance.HideOption(optionAnimation.option);
             optionAnimation.AnimationDown();
         }
-        //MenuOptions.Instance.ShowOption(option);
         optionAnimation = this;
         AnimationUp();
     }
@@ -93,6 +93,7 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
         iconOption.sprite = iconUsed;
         rectTransformImageUsed.DOLocalMoveY(posUp.y, speed * (posUp.y-rectTransformImageUsed.localPosition.y));
         rectTransformImageUsed.DOSizeDelta(sizeUp, speed * (sizeUp.x - rectTransformImageUsed.localPosition.x));
+        nameOption.gameObject.SetActive(true);
     }
     public void AnimationDown(float speed = TIME_ANIMATON_DOWN)
     {
@@ -100,12 +101,14 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
         //sequence = DOTween.Sequence();
         iconOption.sprite = iconNormal;
         rectTransformImageUsed.DOLocalMoveY(0, speed * rectTransformImageUsed.localPosition.y);
-        rectTransformImageUsed.DOSizeDelta(sizeDown, speed * (rectTransformImageUsed.localPosition.x-sizeDown.x));
+        rectTransformImageUsed.DOSizeDelta(sizeDown, speed * (rectTransformImageUsed.localPosition.x - sizeDown.x));
+        nameOption.gameObject.SetActive(false);
     }
     void DestroyAniamtion()
     {
         //sequence.Kill();
         DOTween.Kill(rectTransformImageUsed);
+        DOTween.Kill(iconOption);
     }
     void OnDestroy()
     {

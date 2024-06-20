@@ -67,14 +67,14 @@ public class MenuOptions : MonoBehaviour
         {
             optionAnimations[0].AnimationUp(0.008f);
             optionAnimations[4].AnimationUp(0.008f);
-        }).AppendInterval(0.4f);
+        }).AppendInterval(0.5f);
         sequence.AppendCallback(() =>
         {
             optionAnimations[0].AnimationDown();
             optionAnimations[4].AnimationDown();
             optionAnimations[1].AnimationUp(0.008f);
             optionAnimations[3].AnimationUp(0.008f);
-        }).AppendInterval(0.4f);
+        }).AppendInterval(0.5f);
         sequence.AppendCallback(() =>
         {
             optionAnimations[1].AnimationDown();

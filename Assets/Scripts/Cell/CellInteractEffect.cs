@@ -12,7 +12,7 @@ public class CellInteractEffect : MonoBehaviour
 
     public void PlaySound()
     {
-        Debug.LogError("play sound!");
+        //Debug.LogError("play sound!");
         PianoSongPlayer.Instance.PlayNextNote(VOLUME);
         Vibration.Vibrate(VIBRATION_STRENGTH);
     }
