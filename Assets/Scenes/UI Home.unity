@@ -1896,6 +1896,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placement: Daily Reward 3
+  autoLog: 1
 --- !u!1 &161372285
 GameObject:
   m_ObjectHideFlags: 0
@@ -2515,6 +2516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placement: Daily Reward 4
+  autoLog: 1
 --- !u!1 &201002801
 GameObject:
   m_ObjectHideFlags: 0
@@ -10922,6 +10924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placement: Daily Reward 2
+  autoLog: 1
 --- !u!1 &960586412
 GameObject:
   m_ObjectHideFlags: 0
@@ -11048,6 +11051,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placement: Daily Reward 5
+  autoLog: 1
 --- !u!1 &961992384
 GameObject:
   m_ObjectHideFlags: 0
@@ -26216,8 +26220,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -448}
-  m_SizeDelta: {x: 280.3185, y: 280.3185}
+  m_AnchoredPosition: {x: 0, y: -437}
+  m_SizeDelta: {x: 367.8745, y: 367.8745}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1781798207
 MonoBehaviour:
@@ -26239,7 +26243,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 3bc7db0a86f33c04c96329ef72d24f72, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bfc914d4c73c7364d815032b98818b48, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -31745,6 +31749,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placement: GetDiamond Home
+  autoLog: 1
 --- !u!114 &5030684159142953043
 MonoBehaviour:
   m_ObjectHideFlags: 0
