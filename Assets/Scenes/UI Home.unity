@@ -11065,6 +11065,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 900319606}
+  - component: {fileID: 900319607}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -11080,7 +11081,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 900319605}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11088,8 +11089,23 @@ Transform:
   - {fileID: 1023515709}
   - {fileID: 267486058}
   - {fileID: 809113234}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1440825370}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &900319607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 900319605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17744e454206e84c910528cbf602218, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabReward: {fileID: 1064146706113661061, guid: 9958cc3d9fef5364199733b9640da7a0, type: 3}
+  uiReward: {fileID: 1544270333}
+  diamondGroup: {fileID: 991176196}
 --- !u!1 &902091454
 GameObject:
   m_ObjectHideFlags: 0
@@ -11977,53 +11993,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &968529555
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 968529557}
-  - component: {fileID: 968529556}
-  m_Layer: 0
-  m_Name: UIManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &968529556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 968529555}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a17744e454206e84c910528cbf602218, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  prefabReward: {fileID: 1064146706113661061, guid: 9958cc3d9fef5364199733b9640da7a0, type: 3}
-  uiReward: {fileID: 1544270333}
-  diamondGroup: {fileID: 991176196}
---- !u!4 &968529557
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 968529555}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 147.47197, y: 2032.6868, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1440825370}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &986397210
 GameObject:
   m_ObjectHideFlags: 0
@@ -18189,8 +18158,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 968529557}
   - {fileID: 295669411003095024}
+  - {fileID: 900319606}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1452186021
@@ -33524,10 +33493,10 @@ RectTransform:
   - {fileID: 5438033796659432880}
   m_Father: {fileID: 783318412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -111.3, y: 1920.9891}
-  m_SizeDelta: {x: 103.9783, y: 103.9783}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -111.3, y: -274}
+  m_SizeDelta: {x: 103.9783, y: 103.97827}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5030684158778570668
 MonoBehaviour:
@@ -33881,7 +33850,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 694815266}
   - {fileID: 690461142}
-  - {fileID: 900319606}
   - {fileID: 446564909}
   - {fileID: 1440825370}
   - {fileID: 1928837370}
