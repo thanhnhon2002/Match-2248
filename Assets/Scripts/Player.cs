@@ -214,11 +214,11 @@ public class Player : MonoBehaviour
         {
             conectedCell.Last().highLight.SetActive(false);
             newColor.a = 1;
-            var textColor = Color.white;
-            textColor.a = 1;
+            //var textColor = Color.white;
+            //textColor.a = 1;
             lastCell.spriteRenderer.color = newColor;
             lastCell.Value = newValue;
-            lastCell.valueTxt.color = textColor;
+            //lastCell.valueTxt.color = textColor;
             PianoSongPlayer.Instance.PlayNextChord();
             GridManager.Instance.SetSumValue(newValue);
             GameFlow.Instance.CheckCombo(combo, GameFlow.Instance.mainCam.WorldToScreenPoint(lastCell.transform.position));

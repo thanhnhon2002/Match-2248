@@ -20,10 +20,18 @@ public class CellColor : MonoBehaviour
     public Color GetCellColor(BigInteger value)
     {
         Mathf mathf;
-        var pow = mathf.LogBigInt(value, 2);
+        var pow = mathf.LogBigInt(value, 2)-1;
         var index = pow % colors.Length;
         var color = colors[index];
         color.a = 1f;
         return color;
+    }
+    public Color GetTextColor(BigInteger value)
+    {
+        Mathf mathf;
+        var pow = mathf.LogBigInt(value, 2) - 1;
+        var index = pow % colors.Length;
+        if (index == 9 || index == 11 || index == 12) return Color.black;
+        return Color.white;
     }
 }
