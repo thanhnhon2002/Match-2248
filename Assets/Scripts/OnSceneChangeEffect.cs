@@ -11,6 +11,7 @@ public interface ISceneChangeEffect
 
 public class OnSceneChangeEffect : MonoBehaviour, ISceneChangeEffect
 {
+    public const bool ACTIVE_EFFECT = false;
     public const float EFFECT_TIME = 1F;
     [SerializeField] private Vector3 startOffset;
     [SerializeField] private CanvasGroup group;
@@ -25,6 +26,7 @@ public class OnSceneChangeEffect : MonoBehaviour, ISceneChangeEffect
 
     public void Prepare()
     {
+        if (!ACTIVE_EFFECT) return;
         basePosition = transform.position;
         baseSizeDelta = ((RectTransform)transform).sizeDelta;
         if (group != null) baseAlpha = group.alpha;
@@ -36,6 +38,7 @@ public class OnSceneChangeEffect : MonoBehaviour, ISceneChangeEffect
 
     public void RunEffect()
     {
+        if (!ACTIVE_EFFECT) return;
         if (move) transform.DOMove(basePosition, EFFECT_TIME).SetEase(ease).OnComplete(()=> transform.position = basePosition);
         if (scale) ((RectTransform)transform).DOSizeDelta(baseSizeDelta, EFFECT_TIME).SetEase(ease);
         if (fade && group != null) group.DOFade(baseAlpha, EFFECT_TIME).SetEase(ease);
