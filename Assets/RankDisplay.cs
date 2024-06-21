@@ -10,10 +10,12 @@ public class RankDisplay : MonoBehaviour
 {
     private RankUserInfo[] infos;
     [ReadOnly] public Sprite[] avatar;
+    [SerializeField] private PersonalRank personal;
     [SerializeField] private GameObject loadingIcon;
     [SerializeField] private CanvasGroup rankGroup;
     [SerializeField] private TextMeshProUGUI message;
     private List<UserDataServer> userDataServers = new List<UserDataServer>();
+    public List<UserDataServer> UserDataServers => userDataServers;
 
     private void Awake()
     {
@@ -24,6 +26,7 @@ public class RankDisplay : MonoBehaviour
     {
         message.text = "Loading\nPlease wait";
         await DataRankManager.GetRankGlobal(DisplayRank, DisplayFailMessage);
+        personal.DisplayPersonalRank();
     }
 
     private async void DisplayRank(List<UserDataServer> users)
