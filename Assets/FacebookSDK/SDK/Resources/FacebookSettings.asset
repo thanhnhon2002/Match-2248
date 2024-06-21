@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedAppIndex: 0
   clientTokens:
-  - 
+  - GGQVlhbFowa01MaGNXVERzc0Y1WHdIalJPYnhQSi1LbmoxTlJUSHpMRWs0VXpPZAWd2NEJPUGlCWEZAnSTRXdTd5ZAjlJam42UTVpTElaWDYtcThzOEFyWG5BVHMzaTVYcVpURjBxWTVpNG9tdndvaWhHU2QtUldMUFNFdi1NWlQyUlo1SFo4YkxtTHpKTUE4b1F0dXk2R3hvN0hSc2l2U3piMwZDZD
   appIds:
-  - 0
+  - 985575699865498
   appLabels:
-  - App Name
+  - 2248 Puzzle-2048 Number Game
   cookie: 1
   logging: 1
   status: 1
   xfbml: 0
   frictionlessRequests: 1
-  androidKeystorePath: 
+  androidKeystorePath: C:\Unity\Match-2248-\keystorefor2248.keystore
   iosURLSuffix: 
   appLinkSchemes:
   - list: []

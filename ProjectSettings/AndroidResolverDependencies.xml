@@ -37,6 +37,7 @@
     <package>com.facebook.android:facebook-login:[17.0.0,18)</package>
     <package>com.facebook.android:facebook-share:[17.0.0,18)</package>
     <package>com.google.android.gms:play-services-ads:23.0.0</package>
+    <package>com.google.android.gms:play-services-auth:16+</package>
     <package>com.google.android.gms:play-services-base:18.4.0</package>
     <package>com.google.android.ump:user-messaging-platform:2.2.0</package>
     <package>com.google.firebase:firebase-analytics:22.0.0</package>
@@ -55,6 +56,7 @@
     <package>com.google.firebase:firebase-messaging:24.0.0</package>
     <package>com.google.firebase:firebase-messaging-unity:12.0.0</package>
     <package>com.google.flatbuffers:flatbuffers-java:1.12.0</package>
+    <package>com.google.signin:google-signin-support:1.0.4</package>
     <package>com.mopub:mopub-sdk:5.18.0</package>
     <package>com.parse.bolts:bolts-android:1.4.0</package>
     <package>com.squareup.picasso:picasso:2.71828</package>
@@ -73,6 +75,8 @@
     <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-database-unity/12.0.0/firebase-database-unity-12.0.0.pom</file>
     <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/12.0.0/firebase-messaging-unity-12.0.0.aar</file>
     <file>Assets/GeneratedLocalRepo/Firebase/m2repository/com/google/firebase/firebase-messaging-unity/12.0.0/firebase-messaging-unity-12.0.0.pom</file>
+    <file>Assets/GeneratedLocalRepo/GoogleSignIn/Editor/m2repository/com/google/signin/google-signin-support/1.0.4/google-signin-support-1.0.4.aar</file>
+    <file>Assets/GeneratedLocalRepo/GoogleSignIn/Editor/m2repository/com/google/signin/google-signin-support/1.0.4/google-signin-support-1.0.4.pom</file>
   </files>
   <settings>
     <setting name="androidAbis" value="arm64-v8a,armeabi-v7a" />

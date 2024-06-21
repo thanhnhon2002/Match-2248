@@ -136,6 +136,7 @@ public class DataFriendManager : MonoBehaviour
             if (dataSnapshot != null)
             {
                 var json = dataSnapshot.GetRawJsonValue();
+                if(string.IsNullOrEmpty(json)) return;
                 Dictionary<String, Friend> listFriend = JsonConvert.DeserializeObject<Dictionary<String, Friend>>(json);
 
                 // Lặp qua danh sách bạn bè và xử lý khi có trạng thái là Waiting

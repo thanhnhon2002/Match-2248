@@ -41,6 +41,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:[17.0.0,18)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:7
     implementation 'com.facebook.android:facebook-share:[17.0.0,18)' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:8
     implementation 'com.google.android.gms:play-services-ads:23.0.0' // Assets/GoogleMobileAds/Editor/GoogleMobileAdsDependencies.xml:7
+    implementation 'com.google.android.gms:play-services-auth:16+' // Assets/GoogleSignIn/Editor/GoogleSignInDependencies.xml:10
     implementation 'com.google.android.gms:play-services-base:18.4.0' // Assets/ExternalDependencyManager/Firebase/Editor/DatabaseDependencies.xml:17
     implementation 'com.google.android.ump:user-messaging-platform:2.2.0' // Assets/GoogleMobileAds/Editor/GoogleUmpDependencies.xml:7
     implementation 'com.google.firebase:firebase-analytics:22.0.0' // Assets/ExternalDependencyManager/Firebase/Editor/RemoteConfigDependencies.xml:15
@@ -59,6 +60,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging:24.0.0' // Assets/ExternalDependencyManager/Firebase/Editor/MessagingDependencies.xml:13
     implementation 'com.google.firebase:firebase-messaging-unity:12.0.0' // Assets/ExternalDependencyManager/Firebase/Editor/MessagingDependencies.xml:24
     implementation 'com.google.flatbuffers:flatbuffers-java:1.12.0' // Assets/ExternalDependencyManager/Firebase/Editor/MessagingDependencies.xml:19
+    implementation 'com.google.signin:google-signin-support:1.0.4' // Assets/GoogleSignIn/Editor/GoogleSignInSupportDependencies.xml:9
     implementation 'com.mopub:mopub-sdk:5.18.0' // Assets/AppsFlyer/Editor/AppsFlyerAdrevenueDependencies.xml:6
     implementation 'com.parse.bolts:bolts-android:1.4.0' // Assets/FacebookSDK/Plugins/Editor/Dependencies.xml:4
     implementation 'com.squareup.picasso:picasso:2.71828' // Assets/MaxSdk/Mediation/InMobi/Editor/Dependencies.xml:5

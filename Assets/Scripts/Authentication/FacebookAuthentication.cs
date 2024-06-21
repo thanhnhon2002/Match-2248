@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public class FacebookAuthentication : MonoBehaviour
 {
     [SerializeField] private Image profileImage;
+    [SerializeField] private TextMeshProUGUI nameText;
+    [SerializeField] private TextMeshProUGUI userIDText;
     void Awake()
     {
         if (!FB.IsInitialized)
@@ -51,12 +53,12 @@ public class FacebookAuthentication : MonoBehaviour
             Time.timeScale = 1;
         }
     }
-    public void LoginWithFacebook()
+    public void SignIn()
     {
         var perms = new List<string>() { "gaming_profile", "email", };
         FB.LogInWithReadPermissions(perms, AuthCallback);
     }
-    public void Logout()
+    public void SignOut()
     {
         FB.LogOut();
     }
