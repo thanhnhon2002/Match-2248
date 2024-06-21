@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 public class RankDisplay : MonoBehaviour
 {
-    private RankUserInfo[] infos;
+    [SerializeField] private RankUserInfo[] infos;
     [ReadOnly] public Sprite[] avatar;
     [SerializeField] private PersonalRank personal;
     [SerializeField] private GameObject loadingIcon;
@@ -16,11 +16,6 @@ public class RankDisplay : MonoBehaviour
     [SerializeField] private TextMeshProUGUI message;
     private List<UserDataServer> userDataServers = new List<UserDataServer>();
     public List<UserDataServer> UserDataServers => userDataServers;
-
-    private void Awake()
-    {
-        infos = GetComponentsInChildren<RankUserInfo>();
-    }
 
     private async void Start()
     {
@@ -45,7 +40,10 @@ public class RankDisplay : MonoBehaviour
         rankGroup.alpha = 0f;
         rankGroup.interactable = false;
 
-        for (int i = 0; i < userDataServers.Count; i++)
+        var count = infos.Length;
+        if(count > userDataServers.Count) count = userDataServers.Count;
+
+        for (int i = 0; i < count; i++)
         {
             await infos[i].DisplayInfo(userDataServers[i]);
             infos[i].gameObject.SetActive(true);
