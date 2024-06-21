@@ -8,22 +8,20 @@ using UnityEngine.UIElements;
 
 public class RankDisplay : MonoBehaviour
 {
-    private RankUserInfo[] infos;
+    [SerializeField] private RankUserInfo[] infos;
     [ReadOnly] public Sprite[] avatar;
+    [SerializeField] private PersonalRank personal;
     [SerializeField] private GameObject loadingIcon;
     [SerializeField] private CanvasGroup rankGroup;
     [SerializeField] private TextMeshProUGUI message;
     private List<UserDataServer> userDataServers = new List<UserDataServer>();
-
-    private void Awake()
-    {
-        infos = GetComponentsInChildren<RankUserInfo>();
-    }
+    public List<UserDataServer> UserDataServers => userDataServers;
 
     private async void Start()
     {
         message.text = "Loading\nPlease wait";
         await DataRankManager.GetRankGlobal(DisplayRank, DisplayFailMessage);
+        personal.DisplayPersonalRank();
     }
 
     private async void DisplayRank(List<UserDataServer> users)
@@ -42,7 +40,10 @@ public class RankDisplay : MonoBehaviour
         rankGroup.alpha = 0f;
         rankGroup.interactable = false;
 
-        for (int i = 0; i < userDataServers.Count; i++)
+        var count = infos.Length;
+        if(count > userDataServers.Count) count = userDataServers.Count;
+
+        for (int i = 0; i < count; i++)
         {
             await infos[i].DisplayInfo(userDataServers[i]);
             infos[i].gameObject.SetActive(true);
