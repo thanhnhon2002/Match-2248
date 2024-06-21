@@ -353,6 +353,35 @@ public class PoolSystem : MonoBehaviour
         return addObject;
     }
 
+    public T GetObjectFromPool<T>(T prefab, Transform parent) where T : Component
+    {
+        string key = prefab.name;
+
+        if (!allPool.ContainsKey(key))
+        {
+            var newObject = Instantiate(prefab, parent);
+            newObject.transform.position = parent.position;
+            var newPool = new List<GameObject>();
+            newPool.Add(newObject.gameObject);
+            allPool.Add(key, newPool);
+            return newObject;
+        }
+        var pool = allPool[key];
+        foreach (var obj in pool)
+        {
+            if (!obj.gameObject.activeInHierarchy)
+            {
+                obj.transform.position = parent.position;
+                obj.gameObject.SetActive(true);
+                return obj.GetComponent<T>();
+            }
+        }
+        var newObj = Instantiate(prefab, parent);
+        newObj.transform.position = parent.position;
+        pool.Add(newObj.gameObject);
+        return newObj;
+    }
+
     public GameObject GetObject (GameObject obj, Vector3 position, Vector3 rotation, Transform parent = null)
     {
         var key = SliptKey (obj.name);
