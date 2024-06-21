@@ -17,7 +17,11 @@ public class DataRankManager : MonoBehaviour
             var dataSnapshot = await ServerSystem.databaseRef.Child(ServerSystem.RANK_DATA_URL).GetValueAsync();
             if(dataSnapshot == null) Debug.LogWarning("No data found.");
             var json = dataSnapshot.GetRawJsonValue();
-            if (string.IsNullOrEmpty(json)) return; 
+            if (string.IsNullOrEmpty(json))
+            {
+                fallBack?.Invoke();
+                return;
+            }
             ServerSystem.rank.topTenRank = JsonConvert.DeserializeObject<List<UserDataServer>>(json);
             callBack?.Invoke(ServerSystem.rank.topTenRank);
         } catch (Exception ex)
