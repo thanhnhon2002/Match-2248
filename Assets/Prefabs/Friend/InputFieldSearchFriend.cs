@@ -1,16 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class InputFieldSearchFriend : MonoBehaviour
 {
-    private InputField inputField;
+    private TMP_InputField inputField;
 
     private void Awake()
     {
-        inputField = GetComponent<InputField>();
+        inputField = GetComponentInChildren<TMP_InputField>();
         if (inputField != null)
         {
             inputField.onValueChanged.AddListener(OnInputFieldValueChanged);

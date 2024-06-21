@@ -11,6 +11,8 @@ using UnityEngine;
 public class DataFriendManager : MonoBehaviour
 {
     public static Dictionary<string,UserDataServer> friends = new Dictionary<string, UserDataServer>();
+    public static Dictionary<string, UserDataServer> friendRequest = new Dictionary<string, UserDataServer>();
+    public static Dictionary<string, UserDataServer> friendRequestSent = new Dictionary<string, UserDataServer>();
     public string idAddFriend;
     private bool init = false;
 
@@ -28,7 +30,7 @@ public class DataFriendManager : MonoBehaviour
     {
         AddFriend(idAddFriend);
     }
-    public async void AddFriend(string id)
+    public static async void AddFriend(string id)
     {
         try
         {
@@ -39,6 +41,29 @@ public class DataFriendManager : MonoBehaviour
                 UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
                 UpdateFriend(userDataServer, ServerSystem.user, Friend.State.Sent);
                 UpdateFriend(ServerSystem.user, userDataServer, Friend.State.Waiting);
+            }
+            else
+            {
+                Debug.LogWarning("No data found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error: {ex.Message}");
+        }
+    }
+
+    public static async void AcceptFriend(string id)
+    {
+        try
+        {
+            var dataSnapshot = await ServerSystem.databaseRef.Child(ServerSystem.USER_DATA_URL + "/" + id).GetValueAsync();
+            if (dataSnapshot != null)
+            {
+                var json = dataSnapshot.GetRawJsonValue();
+                UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
+                UpdateFriend(userDataServer, ServerSystem.user, Friend.State.Confirmed);
+                UpdateFriend(ServerSystem.user, userDataServer, Friend.State.Confirmed);
             }
             else
             {
@@ -80,12 +105,13 @@ public class DataFriendManager : MonoBehaviour
                     switch (friend.state)
                     {
                         case Friend.State.Waiting:
-                            Debug.LogError(userDataServer.nickName + " Da loi moi ket ban");
+                            friendRequest[userDataServer.id] = userDataServer;
                             break;
                         case Friend.State.Confirmed:
                             friends[userDataServer.id] = userDataServer;
                             break;
                         case Friend.State.Sent:
+                            friendRequestSent[userDataServer.id] = userDataServer;
                             break;
                     }
                 }
@@ -120,12 +146,13 @@ public class DataFriendManager : MonoBehaviour
                     switch (friend.state)
                     {
                         case Friend.State.Waiting:
-                            Debug.LogError(userDataServer.nickName + " Da loi moi ket ban");
+                            friendRequest[userDataServer.id] = userDataServer;
                             break;
                         case Friend.State.Confirmed:
                             friends[userDataServer.id] = userDataServer;
                             break;
                         case Friend.State.Sent:
+                            friendRequestSent[userDataServer.id] = userDataServer;
                             break;
                     }
                 }
@@ -144,7 +171,7 @@ public class DataFriendManager : MonoBehaviour
 
     }
 
-    public void UpdateFriend(UserDataServer friendData, UserDataServer userDataServer, Friend.State state)
+    public static void UpdateFriend(UserDataServer friendData, UserDataServer userDataServer, Friend.State state)
     {
         Friend friend = new Friend(state, friendData.id);
         userDataServer.listFriend[friend.id] = friend;
