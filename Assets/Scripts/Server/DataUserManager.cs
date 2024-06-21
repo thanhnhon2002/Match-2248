@@ -8,8 +8,15 @@ using UnityEngine;
 public class DataUserManager : MonoBehaviour
 {
     public static List<UserDataServer> listAllUser = new List<UserDataServer>();
-
-
+    private bool init;
+    private void Update()
+    {
+        if (ServerSystem.databaseRef != null && init == false)
+        {
+            init = true;
+            SaveUserData();
+        }
+    }
 
     [ContextMenu("Test Save To Server")]
     public void Test()
