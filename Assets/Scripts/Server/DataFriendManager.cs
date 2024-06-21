@@ -149,9 +149,10 @@ public class DataFriendManager : MonoBehaviour
         Friend friend = new Friend(state, friendData.id);
         userDataServer.listFriend[friend.id] = friend;
         ServerSystem.SaveToServerAtPath(ServerSystem.USER_DATA_URL + "/" + userDataServer.id, userDataServer);
+        DataUserManager.SaveUserData();
     }
 
-    public async Task<UserDataServer> GetFriend(string id)
+    public static async Task<UserDataServer> GetFriend(string id)
     {
         UserDataServer friend = null;
 
