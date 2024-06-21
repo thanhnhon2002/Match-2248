@@ -93,9 +93,13 @@ public class GoogleAuthentication : MonoBehaviour
         if (profileImage != null)
         {
             profileImage.sprite = null;
+            nameText.text = "User";
         }
         Debug.Log("Signing out");
+        if (currentUser != null) 
+        {
+            GoogleSignIn.DefaultInstance.SignOut();
+        }
         currentUser = null;
-        GoogleSignIn.DefaultInstance.SignOut();
     }
 }

@@ -28,6 +28,17 @@ public class FacebookAuthentication : MonoBehaviour
             FetchUserProfile();
         }
     }
+    private void TrySilentLogin()
+    {
+        if (FB.IsLoggedIn)
+        {
+            FetchUserProfile();
+        }
+        else
+        {
+            FB.LogInWithReadPermissions(new List<string>() { "public_profile", "email" }, AuthCallback);
+        }
+    }
     public void FetchUserProfile()
     {
         FB.API("/me?fields=name,picture.type(large)", HttpMethod.GET, HandleUserInfo);
@@ -40,6 +51,10 @@ public class FacebookAuthentication : MonoBehaviour
 #if !UNITY_EDITOR
             FB.ActivateApp();
 #endif
+            if (FB.IsLoggedIn)
+            {
+                FetchUserProfile();
+            }
         }
         else
         {
@@ -50,12 +65,10 @@ public class FacebookAuthentication : MonoBehaviour
     {
         if (!isGameShown)
         {
-            // Pause the game - we will need to hide
             Time.timeScale = 0;
         }
         else
         {
-            // Resume the game - we're getting focus again
             Time.timeScale = 1;
         }
     }
@@ -70,6 +83,8 @@ public class FacebookAuthentication : MonoBehaviour
     }
     public void SignOut()
     {
+        nameText.text = "User";
+        profileImage.sprite = null;
         FB.LogOut();
     }
     private void AuthCallback(ILoginResult result)
