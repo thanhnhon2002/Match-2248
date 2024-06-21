@@ -8,7 +8,8 @@ public enum OptionMenu
     Home,
     PlayerInformation,
     Shop,
-    Rank
+    Rank,
+    Friend
 }
 public class MenuOptions : MonoBehaviour
 {

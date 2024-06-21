@@ -50,4 +50,6 @@ public class RankDisplay : MonoBehaviour
         rankGroup.alpha = 1f;
         rankGroup.interactable = true;
     }
+
+    
 }

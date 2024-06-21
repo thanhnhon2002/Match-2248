@@ -5,4 +5,6 @@ using System.Collections.Generic;
 public class Rank
 {
     public List<UserDataServer> topTenRank = new List<UserDataServer>();
+
+    public List<UserDataServer> rankFriend = new List<UserDataServer>();
 }
