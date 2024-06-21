@@ -10,7 +10,7 @@ using UnityEngine.UIElements;
 public class DataRankManager : MonoBehaviour
 {
     [ContextMenu("Get Data Rank")]
-    public static async Task GetRankGlobal()
+    public static async Task GetRankGlobal(Action<List<UserDataServer>> callBack, Action fallBack)
     {
         try
         {
@@ -18,8 +18,10 @@ public class DataRankManager : MonoBehaviour
             if(dataSnapshot == null) Debug.LogWarning("No data found.");
             var json = dataSnapshot.GetRawJsonValue();
             ServerSystem.rank.topTenRank = JsonConvert.DeserializeObject<List<UserDataServer>>(json);
+            callBack.Invoke(ServerSystem.rank.topTenRank);
         } catch (Exception ex)
         {
+            fallBack.Invoke();
             Debug.LogError($"Error: {ex.Message}");
         }
     }

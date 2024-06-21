@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -11,6 +12,7 @@ public class RankDisplay : MonoBehaviour
     [ReadOnly] public Sprite[] avatar;
     [SerializeField] private GameObject loadingIcon;
     [SerializeField] private CanvasGroup rankGroup;
+    [SerializeField] private TextMeshProUGUI message;
     private List<UserDataServer> userDataServers = new List<UserDataServer>();
 
     private void Awake()
@@ -20,34 +22,40 @@ public class RankDisplay : MonoBehaviour
 
     private async void Start()
     {
-        await GetUsers();
-        await DisplayRank();
+        message.text = "Loading\nPlease wait";
+        await DataRankManager.GetRankGlobal(DisplayRank, DisplayFailMessage);
     }
 
-    private async Task GetUsers()
+    private async void DisplayRank(List<UserDataServer> users)
     {
         userDataServers.Clear();
-        if (ServerSystem.rank.topTenRank.Count == 0) await DataRankManager.GetRankGlobal();
-        userDataServers.AddRange(ServerSystem.rank.topTenRank);
-        userDataServers.Sort((a,b) => b.indexPlayer.CompareTo(a.indexPlayer));
-    }
+        userDataServers.AddRange(users);
+        userDataServers.Sort((a, b) => b.indexPlayer.CompareTo(a.indexPlayer));
 
-    private async Task DisplayRank()
-    {
         for (int i = 0; i < infos.Length; i++)
         {
             infos[i].gameObject.SetActive(false);
         }
+
         loadingIcon.SetActive(true);
+        message.gameObject.SetActive(true);
         rankGroup.alpha = 0f;
         rankGroup.interactable = false;
+
         for (int i = 0; i < userDataServers.Count; i++)
         {
             await infos[i].DisplayInfo(userDataServers[i]);
             infos[i].gameObject.SetActive(true);
         }
+
         loadingIcon.SetActive(false);
+        message.gameObject.SetActive(false);
         rankGroup.alpha = 1f;
         rankGroup.interactable = true;
+    }
+
+    private void DisplayFailMessage()
+    {
+        message.text = "Please try again later";
     }
 }

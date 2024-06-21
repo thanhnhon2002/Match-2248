@@ -32,21 +32,6 @@ public class RankUserInfo : MonoBehaviour
         score.text = BigIntegerConverter.ConvertNameValue(BigInteger.Pow(2, data.indexPlayer));
         id.text = data.GetID();
         if (data.typeLogin == UserDataServer.TypeLogin.Guest) avatar.sprite = rankDisplay.avatar[data.avatarIndex];
-        else avatar.sprite = await LoadAvatar(data.avatarPath, avatar.rectTransform.rect, avatar.rectTransform.pivot);
-    }
-
-    private async Task<Sprite> LoadAvatar(string url, Rect rect, UnityEngine.Vector2 pivot)
-    {
-        var yiel = Task.Yield();
-        using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
-        {
-            var asyncOp = www.SendWebRequest();
-            while (asyncOp.isDone == false)
-                await yiel;
-
-            if (www.result != UnityWebRequest.Result.Success) return null;
-            var texture = DownloadHandlerTexture.GetContent(www);
-            return Sprite.Create(texture, rect, pivot);
-        }
+        else avatar.sprite = await Avatar.LoadAvatar(data.avatarPath, avatar.rectTransform.rect, avatar.rectTransform.pivot);
     }
 }
