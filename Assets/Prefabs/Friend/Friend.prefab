@@ -230,7 +230,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Global
+  m_text: Friend Request
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 078f7f5b6c244ca4aa92c6410118a7bd, type: 2}
   m_sharedMaterial: {fileID: -4173571995952352744, guid: 078f7f5b6c244ca4aa92c6410118a7bd, type: 2}
@@ -1794,7 +1794,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 841546410818896658}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6171600997867507936}
+        m_TargetAssemblyTypeName: FriendManager, Assembly-CSharp
+        m_MethodName: CickListFriendRequest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7026752220796877217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1991,7 +2003,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 9167814382067881037}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6171600997867507936}
+        m_TargetAssemblyTypeName: FriendManager, Assembly-CSharp
+        m_MethodName: CickListFriend
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8111444772210811015
 GameObject:
   m_ObjectHideFlags: 0
