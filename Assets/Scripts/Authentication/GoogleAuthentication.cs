@@ -12,7 +12,6 @@ public class GoogleAuthentication : MonoBehaviour
     public const string WEB_CLIENT_ID = "208772801322-vc71ernkepvd3293l3b92iamr8849925.apps.googleusercontent.com";
     [SerializeField] private Image profileImage;
     [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI userIDText;
 
     private GoogleSignInConfiguration configuration;
     private string imageURL;
@@ -63,7 +62,6 @@ public class GoogleAuthentication : MonoBehaviour
             Debug.Log("UserId: " + task.Result.UserId);
             Debug.Log("AuthCode: " + task.Result.AuthCode);
             nameText.text = task.Result.DisplayName;
-            userIDText.text = task.Result.UserId;
             imageURL = $"{task.Result.ImageUrl}";
             StartCoroutine(LoadImage());
         }

@@ -10,7 +10,6 @@ public class FacebookAuthentication : MonoBehaviour
 {
     [SerializeField] private Image profileImage;
     [SerializeField] private TextMeshProUGUI nameText;
-    [SerializeField] private TextMeshProUGUI userIDText;
     void Awake()
     {
         if (!FB.IsInitialized)

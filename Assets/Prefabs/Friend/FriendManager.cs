@@ -81,6 +81,7 @@ public class FriendManager : MonoBehaviour
     {
         maskButton[0].gameObject.SetActive(true);
         maskButton[1].gameObject.SetActive(false);
+        ResetContent();
         await ShowAllFriendAsync();
     }
 
@@ -88,6 +89,7 @@ public class FriendManager : MonoBehaviour
     {
         maskButton[1].gameObject.SetActive(true);
         maskButton[0].gameObject.SetActive(false);
+        ResetContent();
         await ShowAllFriendRequest();
     }
 }

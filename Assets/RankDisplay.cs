@@ -39,7 +39,7 @@ public class RankDisplay : MonoBehaviour
         message.gameObject.SetActive(true);
         rankGroup.alpha = 0f;
         rankGroup.interactable = false;
-
+        if (userDataServers.Count == 0) return;
         var count = infos.Length;
         if(count > userDataServers.Count) count = userDataServers.Count;
 
@@ -57,6 +57,11 @@ public class RankDisplay : MonoBehaviour
 
     private void DisplayFailMessage()
     {
+        message.gameObject.SetActive(true);
+        for (int i = 0; i < infos.Length; i++)
+        {
+            infos[i].gameObject.SetActive(false);
+        }
         message.text = "Please try again later";
     }
 }
