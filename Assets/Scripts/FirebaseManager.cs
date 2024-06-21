@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Firebase.Extensions;
@@ -8,6 +8,7 @@ using DarkcupGames;
 using UnityEngine.SceneManagement;
 using System;
 using Firebase.Crashlytics;
+using Firebase.Auth;
 
 public enum AnalyticsEvent
 {
@@ -23,6 +24,7 @@ public class FirebaseManager : MonoBehaviour
 {
     public static FirebaseManager Instance;
     public FirebaseApp app;
+    public FirebaseAuth auth;
     public static RemoteConfig remoteConfig { get; private set; }
     public bool ready { get; private set; }
 
@@ -33,13 +35,14 @@ public class FirebaseManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
             remoteConfig = GetComponentInChildren<RemoteConfig>();
-        } else
+            auth = FirebaseAuth.DefaultInstance;
+        }
+        else
         {
             Destroy(gameObject);
             return;
         }
     }
-
     IEnumerator Start()
     {
         yield return FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
@@ -52,14 +55,60 @@ public class FirebaseManager : MonoBehaviour
                 remoteConfig.InitializeRemoteConfig();
                 ready = true;
                 Debug.Log("Firebas is ready");
-            } else
+            }
+            else
             {
                 Debug.LogError(System.String.Format(
                   "Could not resolve all Firebase dependencies: {0}", dependencyStatus));
             }
         });
     }
+    public void OnLoginGoogleCompleted(string idToken, string accessToken)
+    {
+        Credential credential = GoogleAuthProvider.GetCredential(idToken, accessToken);
+        auth.SignInAndRetrieveDataWithCredentialAsync(credential).ContinueWith(task =>
+        {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SignInAndRetrieveDataWithCredentialAsync was canceled.");
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError("SignInAndRetrieveDataWithCredentialAsync encountered an error: " + task.Exception);
+                return;
+            }
 
+            AuthResult result = task.Result;
+            Debug.LogFormat("User signed in successfully: {0} ({1})",
+                result.User.DisplayName, result.User.UserId);
+        });
+    }
+    public void OnLoginFBCompleted(string accessToken)
+    {
+        Credential credential =
+        FacebookAuthProvider.GetCredential(accessToken);
+        auth.SignInAndRetrieveDataWithCredentialAsync(credential).ContinueWith(task => {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SignInAndRetrieveDataWithCredentialAsync was canceled.");
+                return;
+            }
+            if (task.IsFaulted)
+            {
+                Debug.LogError("SignInAndRetrieveDataWithCredentialAsync encountered an error: " + task.Exception);
+                return;
+            }
+
+            AuthResult result = task.Result;
+            Debug.LogFormat("User signed in successfully: {0} ({1})",
+                result.User.DisplayName, result.User.UserId);
+        });
+    }
+    public void SignOut()
+    {
+        auth.SignOut();
+    }
     public void LogLevelStart(int level, bool restart)
     {
         if (!ready) return;

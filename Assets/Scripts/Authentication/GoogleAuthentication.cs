@@ -12,10 +12,10 @@ public class GoogleAuthentication : MonoBehaviour
     public const string WEB_CLIENT_ID = "208772801322-vc71ernkepvd3293l3b92iamr8849925.apps.googleusercontent.com";
     [SerializeField] private Image profileImage;
     [SerializeField] private TextMeshProUGUI nameText;
-
+    private GoogleSignInUser currentUser;
     private GoogleSignInConfiguration configuration;
     private string imageURL;
-    private void Start()
+    private void Awake()
     {
         configuration = new GoogleSignInConfiguration
         {
@@ -23,6 +23,17 @@ public class GoogleAuthentication : MonoBehaviour
             RequestEmail = true,
             RequestIdToken = true
         };
+        CheckSignInStatus();
+    }
+    private void CheckSignInStatus()
+    {
+        GoogleSignIn.Configuration = configuration;
+        GoogleSignIn.DefaultInstance.SignInSilently()
+            .ContinueWith(OnAuthenticationFinished);
+    }
+    public bool IsLoggedIn()
+    {
+        return currentUser != null;
     }
     public void SignIn()
     {
@@ -56,6 +67,7 @@ public class GoogleAuthentication : MonoBehaviour
         }
         else
         {
+            currentUser = task.Result;
             Debug.Log("Welcome: " + task.Result.DisplayName + "!");
             Debug.Log("Email: " + task.Result.Email);
             Debug.Log("IdToken: " + task.Result.IdToken);
@@ -64,6 +76,10 @@ public class GoogleAuthentication : MonoBehaviour
             nameText.text = task.Result.DisplayName;
             imageURL = $"{task.Result.ImageUrl}";
             StartCoroutine(LoadImage());
+            transform.parent.GetComponent<AuthenticationManager>().UpdateSignInUI();
+            string idToken = task.Result.IdToken;
+            string accessToken = task.Result.AuthCode;
+            FirebaseManager.Instance.OnLoginGoogleCompleted(idToken, accessToken);
         }
     }
     private IEnumerator LoadImage()
@@ -79,6 +95,7 @@ public class GoogleAuthentication : MonoBehaviour
             profileImage.sprite = null;
         }
         Debug.Log("Signing out");
+        currentUser = null;
         GoogleSignIn.DefaultInstance.SignOut();
     }
 }

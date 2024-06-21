@@ -52,6 +52,10 @@ public class FacebookAuthentication : MonoBehaviour
             Time.timeScale = 1;
         }
     }
+    public bool IsLoggedIn()
+    {
+        return FB.IsLoggedIn;
+    }
     public void SignIn()
     {
         var perms = new List<string>() { "gaming_profile", "email", };
@@ -65,13 +69,43 @@ public class FacebookAuthentication : MonoBehaviour
     {
         if (FB.IsLoggedIn)
         {
-            // AccessToken class will have session details
-            var aToken = Facebook.Unity.AccessToken.CurrentAccessToken.TokenString;
-
+            var accessToken = AccessToken.CurrentAccessToken.TokenString;
+            FirebaseManager.Instance.OnLoginFBCompleted(accessToken);
+            FB.API("/me?fields=name", HttpMethod.GET, HandleUserInfo);
+            //string pictureUrl = pictureUrlData["url"] as string;
         }
         else
         {
             Debug.Log("User cancelled login");
+        }
+    }
+    private void HandleUserInfo(IResult result)
+    {
+        if (result == null)
+        {
+            Debug.LogError("Failed to Load Profile. Response is null");
+            return;
+        }
+
+        // Log any errors that may happen
+        if (result.Error != null)
+        {
+            Debug.LogError("Error Loading Profile: " + result.Error);
+            return;
+        }
+
+        // If there was no error, handle the user's name
+        if (!string.IsNullOrEmpty(result.RawResult))
+        {
+            var userInfo = (Dictionary<string, object>)Facebook.MiniJSON.Json.Deserialize(result.RawResult);
+            string name = userInfo["name"] as string;
+            nameText.text = name;  // Set the name to your UI Text
+
+            Debug.Log("User Name: " + name);
+        }
+        else
+        {
+            Debug.LogError("Empty Response on Profile Information");
         }
     }
     private IEnumerator LoadImage(System.Uri imageURL)
