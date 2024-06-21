@@ -12,6 +12,8 @@ public class PlayerInfo : MonoBehaviour
     [SerializeField] private Image avatar;
     [SerializeField] private TextMeshProUGUI nameTxt;
     [SerializeField] private TextMeshProUGUI bestScoreTxt;
+    [SerializeField] private TextMeshProUGUI id;
+    [SerializeField] private TextMeshProUGUI rank;
     [SerializeField] private PopupChangeName changeName;
 
     private void OnEnable ()
@@ -25,6 +27,7 @@ public class PlayerInfo : MonoBehaviour
         var userData = GameSystem.userdata;
         avatar.sprite = avatarSprites[userData.avatarIndex];
         nameTxt.text = userData.nickName;
+        id.text = ServerSystem.user.GetID();
         LeanTween.value(0f, (float)userData.highestScore, Const.DEFAULT_TWEEN_TIME).setOnUpdate(x =>
         {
             bestScoreTxt.text = ((int)x).ToString();

@@ -19,6 +19,7 @@ public class Avatar : MonoBehaviour
         if (avatar == null && user.typeLogin != UserDataServer.TypeLogin.Guest && !string.IsNullOrEmpty(user.avatarPath))
             avatar = await LoadAvatar(user.avatarPath, image.rectTransform.rect, image.rectTransform.pivot);
         else avatar = sprites[user.avatarIndex];
+        image.sprite = avatar;
     }
 
     public static async Task<Sprite> LoadAvatar(string url, Rect rect, Vector2 pivot)
