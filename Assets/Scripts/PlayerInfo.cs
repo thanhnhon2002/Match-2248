@@ -22,7 +22,7 @@ public class PlayerInfo : MonoBehaviour
         DisplayInfo();
     }
 
-    public void DisplayInfo()
+    public async void DisplayInfo()
     {
         var userData = GameSystem.userdata;
         avatar.sprite = avatarSprites[userData.avatarIndex];
@@ -32,5 +32,14 @@ public class PlayerInfo : MonoBehaviour
         {
             bestScoreTxt.text = ((int)x).ToString();
         });
+        await DataRankManager.GetRankGlobal(DisplayRank, null);
+    }
+
+    public void DisplayRank(List<UserDataServer> users)
+    {
+        rank.text = string.Empty;
+        var place = users.Find(x => x.id.Equals(ServerSystem.user.id));
+        if (place == null) rank.text = $"{users.Count}+";
+        else rank.text = (users.IndexOf(place) + 1).ToString();
     }
 }
