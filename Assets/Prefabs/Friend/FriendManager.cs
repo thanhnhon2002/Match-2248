@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FriendManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class FriendManager : MonoBehaviour
 
     [SerializeField] Transform content;
     [SerializeField] FriendInfo friendInfo;
+    [SerializeField] FriendInfo friendRequestInfo;
+    [SerializeField] Image[] maskButton;
 
     private void Awake()
     {
@@ -16,6 +19,12 @@ public class FriendManager : MonoBehaviour
         {
             Instance = this;
         }
+    }
+
+    private async void OnEnable()
+    {
+        ResetContent();
+        await ShowAllFriendAsync();
     }
 
     public async Task ShowAllFriendAsync()
@@ -29,8 +38,12 @@ public class FriendManager : MonoBehaviour
 
     public async Task SearchUser(string id)
     {
-        UserDataServer userData;
-        if (DataFriendManager.friends.ContainsKey(id))
+        UserDataServer userData = null;
+        if (id.Equals(""))
+        {
+            await ShowAllFriendAsync();
+        }
+        else if (DataFriendManager.friends.ContainsKey(id))
         {
             userData = DataFriendManager.friends[id];
         }
@@ -39,8 +52,21 @@ public class FriendManager : MonoBehaviour
             userData = await DataFriendManager.GetFriend(id);
         }
         ResetContent();
-        var info = PoolSystem.Instance.GetObjectFromPool(friendInfo, content);
-        await info.DisplayInfo(userData);
+        if (userData != null)
+        {
+            var info = PoolSystem.Instance.GetObjectFromPool(friendInfo, content);
+            await info.DisplayInfo(userData);
+        }
+        
+    }
+
+    public async Task ShowAllFriendRequest()
+    {
+        foreach (UserDataServer user in DataFriendManager.friendRequest.Values)
+        {
+            var info = PoolSystem.Instance.GetObjectFromPool(friendRequestInfo, content);
+            await info.DisplayInfoRequest(user);
+        }
     }
 
     public void ResetContent()
@@ -49,5 +75,19 @@ public class FriendManager : MonoBehaviour
         {
             friendInfo.gameObject.SetActive(false);
         }
+    }
+
+    public async void CickListFriend()
+    {
+        maskButton[0].gameObject.SetActive(true);
+        maskButton[1].gameObject.SetActive(false);
+        await ShowAllFriendAsync();
+    }
+
+    public async void CickListFriendRequest()
+    {
+        maskButton[1].gameObject.SetActive(true);
+        maskButton[0].gameObject.SetActive(false);
+        await ShowAllFriendRequest();
     }
 }
