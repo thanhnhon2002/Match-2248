@@ -43,7 +43,8 @@ public class DiamondGroup : MonoBehaviour
     public void Display()
     {
         var userData = GameSystem.userdata;
-
+        if(userData.diamond < 0) userData.diamond = 0;
+        GameSystem.SaveUserDataToLocal();
         DOVirtual.Float(oldDiamondAmount, userData.diamond, Const.DEFAULT_TWEEN_TIME, x =>
         {
             diamondTxt.text = MoneyConveter.ConvertNameValueBestCode((int)x);
