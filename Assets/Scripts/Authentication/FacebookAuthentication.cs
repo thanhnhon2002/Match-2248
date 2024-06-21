@@ -14,25 +14,32 @@ public class FacebookAuthentication : MonoBehaviour
     {
         if (!FB.IsInitialized)
         {
-            // Initialize the Facebook SDK
             FB.Init(InitCallback, OnHideUnity);
         }
         else
         {
-            // Already initialized, signal an app activation App Event
             FB.ActivateApp();
         }
+    }
+    private void Start()
+    {
+        if (FB.IsInitialized && IsLoggedIn())
+        {
+            FetchUserProfile();
+        }
+    }
+    public void FetchUserProfile()
+    {
+        FB.API("/me?fields=name,picture.type(large)", HttpMethod.GET, HandleUserInfo);
+        transform.parent.GetComponent<AuthenticationManager>().UpdateSignInUI();
     }
     private void InitCallback()
     {
         if (FB.IsInitialized)
         {
-            // Signal an app activation App Event
 #if !UNITY_EDITOR
             FB.ActivateApp();
 #endif
-            // Continue with Facebook SDK
-            // ...
         }
         else
         {
@@ -71,8 +78,7 @@ public class FacebookAuthentication : MonoBehaviour
         {
             var accessToken = AccessToken.CurrentAccessToken.TokenString;
             FirebaseManager.Instance.OnLoginFBCompleted(accessToken);
-            FB.API("/me?fields=name", HttpMethod.GET, HandleUserInfo);
-            //string pictureUrl = pictureUrlData["url"] as string;
+            FetchUserProfile();
         }
         else
         {
@@ -81,36 +87,58 @@ public class FacebookAuthentication : MonoBehaviour
     }
     private void HandleUserInfo(IResult result)
     {
-        if (result == null)
-        {
-            Debug.LogError("Failed to Load Profile. Response is null");
-            return;
-        }
-
-        // Log any errors that may happen
         if (result.Error != null)
         {
             Debug.LogError("Error Loading Profile: " + result.Error);
             return;
         }
 
-        // If there was no error, handle the user's name
-        if (!string.IsNullOrEmpty(result.RawResult))
+        if (result.ResultDictionary == null)
         {
-            var userInfo = (Dictionary<string, object>)Facebook.MiniJSON.Json.Deserialize(result.RawResult);
-            string name = userInfo["name"] as string;
-            nameText.text = name;  // Set the name to your UI Text
+            Debug.LogError("Result dictionary is null");
+            return;
+        }
 
-            Debug.Log("User Name: " + name);
+        if (result.ResultDictionary.TryGetValue("name", out object name))
+        {
+            nameText.text = name.ToString();
+            Debug.Log("User Name: " + name.ToString());
         }
         else
         {
-            Debug.LogError("Empty Response on Profile Information");
+            Debug.LogError("Name key is missing in the result dictionary");
+        }
+
+        if (result.ResultDictionary.TryGetValue("picture", out object pictureObj))
+        {
+            var pictureData = pictureObj as Dictionary<string, object>;
+            if (pictureData != null && pictureData.TryGetValue("data", out object data))
+            {
+                var dataDict = data as Dictionary<string, object>;
+                if (dataDict != null && dataDict.TryGetValue("url", out object url))
+                {
+                    StartCoroutine(LoadImage(url.ToString()));
+                    Debug.Log("Picture URL: " + url.ToString());
+                }
+                else
+                {
+                    Debug.LogError("URL key is missing in the data dictionary");
+                }
+            }
+            else
+            {
+                Debug.LogError("Data key is missing in the picture dictionary");
+            }
+        }
+        else
+        {
+            Debug.LogError("Picture key is missing in the result dictionary");
         }
     }
-    private IEnumerator LoadImage(System.Uri imageURL)
+
+    private IEnumerator LoadImage(string imageURL)
     {
-        WWW www = new WWW(imageURL.ToString());
+        WWW www = new WWW($"{imageURL}");
         yield return www;
         profileImage.sprite = Sprite.Create(www.texture, new Rect(0, 0, www.texture.width, www.texture.height), Vector2.zero);
     }
