@@ -1,3 +1,4 @@
+using Firebase.Extensions;
 using Google;
 using System;
 using System.Collections;
@@ -52,7 +53,7 @@ public class GoogleAuthentication : MonoBehaviour
         GoogleSignIn.Configuration.RequestEmail = true;
         GoogleSignIn.Configuration.RequestAuthCode = true;
         Debug.Log("Calling SignIn");
-        GoogleSignIn.DefaultInstance.SignIn().ContinueWith(OnAuthenticationFinished);
+        GoogleSignIn.DefaultInstance.SignIn().ContinueWithOnMainThread(OnAuthenticationFinished);
     }
     private void OnAuthenticationFinished(Task<GoogleSignInUser> task)
     {
