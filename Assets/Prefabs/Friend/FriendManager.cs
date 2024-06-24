@@ -1,17 +1,28 @@
+using Firebase.Database;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class FriendManager : MonoBehaviour
 {
+    public enum NameContent
+    {
+        AllFriend, Search, FriendRequest
+    }
+
     public static FriendManager Instance;
 
     [SerializeField] Transform content;
+    [SerializeField] UserInfo userInfo;
+    [SerializeField] FriendRequestInfo friendRequestInfo;
+    [SerializeField] SentFriendRequestInfo sentFriendRequestInfo;
     [SerializeField] FriendInfo friendInfo;
-    [SerializeField] FriendInfo friendRequestInfo;
     [SerializeField] Image[] maskButton;
+    [SerializeField] TMP_InputField inputField;
+    private NameContent currentContent;
 
     private void Awake()
     {
@@ -29,6 +40,7 @@ public class FriendManager : MonoBehaviour
 
     public async Task ShowAllFriendAsync()
     {
+        currentContent = NameContent.AllFriend;
         foreach (UserDataServer user in DataFriendManager.friends.Values)
         {
             var info = PoolSystem.Instance.GetObjectFromPool(friendInfo, content);
@@ -38,6 +50,8 @@ public class FriendManager : MonoBehaviour
 
     public async Task SearchUser(string id)
     {
+        ResetContent();
+        currentContent = NameContent.Search;
         UserDataServer userData = null;
         if (id.Equals(""))
         {
@@ -46,32 +60,52 @@ public class FriendManager : MonoBehaviour
         else if (DataFriendManager.friends.ContainsKey(id))
         {
             userData = DataFriendManager.friends[id];
+            var info = PoolSystem.Instance.GetObjectFromPool(friendInfo, content);
+            await info.DisplayInfo(userData);
+        }
+        else if (DataFriendManager.friendRequestSent.ContainsKey(id))
+        {
+            userData = DataFriendManager.friendRequestSent[id];
+            var info = PoolSystem.Instance.GetObjectFromPool(friendRequestInfo, content);
+            await info.DisplayInfo(userData);
         }
         else
         {
             userData = await DataFriendManager.GetFriend(id);
-        }
-        ResetContent();
-        if (userData != null)
-        {
-            var info = PoolSystem.Instance.GetObjectFromPool(friendInfo, content);
-            await info.DisplayInfo(userData);
+            if (userData != null)
+            {
+                var info = PoolSystem.Instance.GetObjectFromPool(userInfo, content);
+                await info.DisplayInfo(userData);
+            }
         }
         
     }
 
     public async Task ShowAllFriendRequest()
     {
+        currentContent = NameContent.FriendRequest;
         foreach (UserDataServer user in DataFriendManager.friendRequest.Values)
         {
             var info = PoolSystem.Instance.GetObjectFromPool(friendRequestInfo, content);
-            await info.DisplayInfoRequest(user);
+            await info.DisplayInfo(user);
         }
     }
 
     public void ResetContent()
     {
-        foreach(FriendInfo friendInfo in content.GetComponentsInChildren<FriendInfo>())
+        foreach(UserInfo friendInfo in content.GetComponentsInChildren<UserInfo>())
+        {
+            friendInfo.gameObject.SetActive(false);
+        }
+        foreach (FriendInfo friendInfo in content.GetComponentsInChildren<FriendInfo>())
+        {
+            friendInfo.gameObject.SetActive(false);
+        }
+        foreach (SentFriendRequestInfo friendInfo in content.GetComponentsInChildren<SentFriendRequestInfo>())
+        {
+            friendInfo.gameObject.SetActive(false);
+        }
+        foreach (FriendRequestInfo friendInfo in content.GetComponentsInChildren<FriendRequestInfo>())
         {
             friendInfo.gameObject.SetActive(false);
         }
@@ -91,5 +125,26 @@ public class FriendManager : MonoBehaviour
         maskButton[0].gameObject.SetActive(false);
         ResetContent();
         await ShowAllFriendRequest();
+    }
+
+    public void StartListeningForFriendChanges()
+    {
+        ServerSystem.databaseRef.Child(ServerSystem.USER_DATA_URL + "/" + ServerSystem.user.id + "/listFriend").ValueChanged += HandleFriendListChanged;
+    }
+
+    private async void HandleFriendListChanged(object sender, ValueChangedEventArgs e)
+    {
+        switch (currentContent)
+        {
+            case NameContent.AllFriend:
+                await ShowAllFriendAsync();
+                break;
+            case NameContent.Search:
+                await SearchUser(inputField.text);
+                break;
+            case NameContent.FriendRequest:
+                await ShowAllFriendRequest();
+                break;
+        }
     }
 }

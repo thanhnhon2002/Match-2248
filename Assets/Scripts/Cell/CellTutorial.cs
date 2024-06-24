@@ -157,17 +157,33 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
     private void ExplodeConnectedCell()
     {
         Sequence sequence = DOTween.Sequence();
+        //foreach (var cell in listCell)
+        //{
+        //    sequence.AppendCallback(() =>
+        //    {
+        //        cell.gameObject.SetActive(false);
+        //        var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
+        //        fx.Play(listCell, listCell.IndexOf(cell), cell.spriteRenderer.color, listCell.Last().spriteRenderer.color);
+        //        AudioSystem.Instance.PlaySound("QT_paopao", Player.POOK_SOUND_VOLUMNE);
+        //        cell.highLight.gameObject.SetActive(false);
+        //    }).AppendInterval(Mathf.Clamp(0.5f / listCell.Count, 0.05f, 0.25f));          
+        //}
+        float delayEachBlock = Mathf.Clamp(0.5f / listCell.Count, 0.05f, 0.25f);
+
         foreach (var cell in listCell)
         {
             sequence.AppendCallback(() =>
             {
                 cell.gameObject.SetActive(false);
                 var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
+                fx.delayEachBlock = delayEachBlock;
                 fx.Play(listCell, listCell.IndexOf(cell), cell.spriteRenderer.color, listCell.Last().spriteRenderer.color);
                 AudioSystem.Instance.PlaySound("QT_paopao", Player.POOK_SOUND_VOLUMNE);
                 cell.highLight.gameObject.SetActive(false);
-            }).AppendInterval(Mathf.Clamp(0.5f / listCell.Count, 0.05f, 0.25f));          
+            }).AppendInterval(delayEachBlock);
         }
+
+
         foreach (var line in lines)
             line.gameObject.SetActive(false);
         DOVirtual.DelayedCall(0.5f, () =>

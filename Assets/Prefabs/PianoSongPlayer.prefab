@@ -45,26 +45,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chords:
-  - name: A
+  - name: C_truong
     keys:
-    - a3
-    - c4
-    - e4
-  - name: C
+    - 44
+    - 46
+    - 51
+    - 54
+    - 56
+    chords:
+    - C_truong
+  - name: F_truong
     keys:
-    - c4
-    - e4
-    - g4
-  - name: F
+    - 50
+    - 52
+    - 54
+    - 40
+    - 42
+    - 44
+    chords:
+    - F_truong
+    - F_truong_2
+    - F_truong_2
+  - name: B giang
     keys:
-    - a3
-    - c4
-    - f4
-  - name: G
+    - 50
+    - 53
+    - 55
+    - 40
+    - 43
+    - 45
+    chords:
+    - B_giang
+    - B_giang_2
+  - name: G thu
     keys:
-    - g3
-    - b3
-    - d4
+    - 51
+    - 53
+    - 55
+    - 51
+    - 43
+    - 45
+    chords:
+    - G_thu
 --- !u!1 &504176734892603247
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,7 +176,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5800159100035473278}
-  - {fileID: 6496879877724980485}
   - {fileID: 5922025495274673712}
   - {fileID: 7762079827822430577}
   m_Father: {fileID: 0}
@@ -172,19 +193,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allPianoKeys:
-  - {fileID: 8300000, guid: 810798c06cb8458418b042acf96e0d9f, type: 3}
-  - {fileID: 8300000, guid: 0dbd981b8afc2d3468f77dc0b5345a27, type: 3}
-  - {fileID: 8300000, guid: d2ca42c07ae559845a66438949547340, type: 3}
-  - {fileID: 8300000, guid: e77debe00bace294b8ccca3accbac708, type: 3}
-  - {fileID: 8300000, guid: 9538b81887200c344af27f0ba84e6e20, type: 3}
-  - {fileID: 8300000, guid: 7d263c4fedd41bd479afddc39e26450b, type: 3}
-  - {fileID: 8300000, guid: 06c973232b0d22841836e8ab6aaaaeac, type: 3}
-  - {fileID: 8300000, guid: 02e3d43e62273b245a76d7e9d44146db, type: 3}
-  - {fileID: 8300000, guid: 7daccc77150fd3344a7a68f9f4c56a32, type: 3}
-  - {fileID: 8300000, guid: 4d62acadd1e97c5418903936acc2702c, type: 3}
-  - {fileID: 8300000, guid: cc2527de46d689a41b79297f75b23448, type: 3}
-  - {fileID: 8300000, guid: 24faebe83886b8e4ea2016ef42146073, type: 3}
-  piano: {fileID: 1766554722025057560}
+  - {fileID: 8300000, guid: da3817dfbf1296440b9fe98b8c2c2fc8, type: 3}
+  - {fileID: 8300000, guid: 7d2e0747f6c925140b2e5bb2e7db9205, type: 3}
+  - {fileID: 8300000, guid: 31f67ae24af263d4788380b1d915e5fe, type: 3}
+  - {fileID: 8300000, guid: af12c38ca3d233f47ba3cda723bc4c21, type: 3}
+  - {fileID: 8300000, guid: 482016cb1bb8ebe46b76114c0a19c2bb, type: 3}
+  - {fileID: 8300000, guid: 7832b53848cefee41aee23be146e3beb, type: 3}
+  - {fileID: 8300000, guid: cd82ff91553e2c449b1155e6beae3a2b, type: 3}
+  - {fileID: 8300000, guid: 97f1fefd371c0294cb79a0dbb9e1b1ca, type: 3}
+  - {fileID: 8300000, guid: 8415bc6ed7055604d82c48a390940457, type: 3}
+  - {fileID: 8300000, guid: fb00ff2d1af327748849116542798ea1, type: 3}
+  - {fileID: 8300000, guid: 85902176246705441aebb481cdf31bc8, type: 3}
+  - {fileID: 8300000, guid: 2258b97c395c462448b45aae108e4c3e, type: 3}
+  - {fileID: 8300000, guid: 4d381dbd78a896d40aedbe3463d86d3c, type: 3}
+  - {fileID: 8300000, guid: 758a60c8359afcc42b724fe70d40f5eb, type: 3}
+  - {fileID: 8300000, guid: 175592af7e0206d4d959cb1844558500, type: 3}
+  - {fileID: 8300000, guid: 88cc20ef9845b5a4fba0e6c04988d4ef, type: 3}
+  - {fileID: 8300000, guid: 026672fe31d019748ab5c2a29384fe5e, type: 3}
+  - {fileID: 8300000, guid: 37d0952e3aad3f44c840ceff6756858c, type: 3}
+  - {fileID: 8300000, guid: 0a9f54372d290d043afc461968f2cb14, type: 3}
+  - {fileID: 8300000, guid: d8de3f35999a9fd4097ae007fb84c8de, type: 3}
+  - {fileID: 8300000, guid: e058fd1d59c663c4db575bd878dd1527, type: 3}
+  - {fileID: 8300000, guid: c3ef28bb170f45b4fab97afabaff0a13, type: 3}
+  piano: {fileID: 1697981422144845108}
 --- !u!1 &5497047327048763991
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,54 +261,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textAsset: {fileID: 4900000, guid: 839aa098630cf8b468b7c572fc1a6ad0, type: 3}
---- !u!1 &8437419343726766851
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6496879877724980485}
-  - component: {fileID: 7246461729884076782}
-  m_Layer: 0
-  m_Name: ChordPlayer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &6496879877724980485
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8437419343726766851}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 9061277150872532122}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7246461729884076782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8437419343726766851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fed57baf78b00434c929251be90762a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chords:
-  - name: C
-    keys: []
-  - name: G
-    keys: []
-  - name: F
-    keys: []

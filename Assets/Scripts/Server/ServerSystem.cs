@@ -38,7 +38,7 @@ public class ServerSystem : MonoBehaviour
 
     private void Update()
     {
-        if (FirebaseManager.Instance.ready == false && init == false)
+        if (FirebaseManager.Instance.ready == true && init == false)
         {
             init = true;
             user = ServerSaveLoadLocal.LoadUserDataFromLocal();

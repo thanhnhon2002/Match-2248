@@ -64,6 +64,31 @@ public class DataFriendManager : MonoBehaviour
                 UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
                 UpdateFriend(userDataServer, ServerSystem.user, Friend.State.Confirmed);
                 UpdateFriend(ServerSystem.user, userDataServer, Friend.State.Confirmed);
+
+            }
+            else
+            {
+                Debug.LogWarning("No data found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error: {ex.Message}");
+        }
+    }
+
+    public static async void RemoveFriend(string id)
+    {
+        try
+        {
+            var dataSnapshot = await ServerSystem.databaseRef.Child(ServerSystem.USER_DATA_URL + "/" + id).GetValueAsync();
+            if (dataSnapshot != null)
+            {
+                var json = dataSnapshot.GetRawJsonValue();
+                UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
+                RemoveRequest(userDataServer, ServerSystem.user);
+                RemoveRequest(ServerSystem.user, userDataServer);
+
             }
             else
             {
@@ -97,7 +122,8 @@ public class DataFriendManager : MonoBehaviour
                 var json = args.Snapshot.GetRawJsonValue();
                 Dictionary<String,Friend> listFriend = JsonConvert.DeserializeObject<Dictionary<String, Friend>>(json);
 
-                // Lặp qua danh sách bạn bè và xử lý khi có trạng thái là Waiting
+                friendRequest.Clear();
+                friendRequestSent.Clear();
                 foreach (Friend friend in listFriend.Values)
                 {
                     Task<UserDataServer> getFriendTask = GetFriend(friend.id);
@@ -157,8 +183,6 @@ public class DataFriendManager : MonoBehaviour
                             break;
                     }
                 }
-                friends = friends.OrderByDescending(kv => kv.Value.maxIndex)
-                                   .ToDictionary(kv => kv.Key, kv => kv.Value);
             }
             else
             {
@@ -180,6 +204,12 @@ public class DataFriendManager : MonoBehaviour
         DataUserManager.SaveUserData();
     }
 
+    public static void RemoveRequest(UserDataServer friendData, UserDataServer userDataServer)
+    {
+        userDataServer.listFriend.Remove(friendData.id);
+        ServerSystem.SaveToServerAtPath(ServerSystem.USER_DATA_URL + "/" + userDataServer.id, userDataServer);
+    }
+
     public static async Task<UserDataServer> GetFriend(string id)
     {
         UserDataServer friend = null;
@@ -195,7 +225,7 @@ public class DataFriendManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("No data found.");
+               // Debug.LogWarning("No data found.");
             }
         }
         catch (Exception ex)

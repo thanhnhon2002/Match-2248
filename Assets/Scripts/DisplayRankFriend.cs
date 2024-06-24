@@ -1,6 +1,7 @@
-using DG.Tweening;
+﻿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DisplayRankFriend : MonoBehaviour
@@ -24,7 +25,10 @@ public class DisplayRankFriend : MonoBehaviour
 
     public async void SetUpContent()
     {
-        foreach(UserDataServer user in DataFriendManager.friends.Values)
+        Dictionary<string, UserDataServer> rankFriend = new Dictionary<string, UserDataServer>(DataFriendManager.friends);
+        rankFriend[ServerSystem.user.id] = ServerSystem.user;
+        rankFriend = rankFriend.OrderByDescending(kv => kv.Value.maxIndex).ToDictionary(kv => kv.Key, kv => kv.Value);
+        foreach (UserDataServer user in rankFriend.Values)
         {
             var info = PoolSystem.Instance.GetObjectFromPool(rankUserInfo, content);
             await info.DisplayInfo(user);
