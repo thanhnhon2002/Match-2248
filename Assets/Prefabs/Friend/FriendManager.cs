@@ -72,8 +72,11 @@ public class FriendManager : MonoBehaviour
         else
         {
             userData = await DataFriendManager.GetFriend(id);
-            var info = PoolSystem.Instance.GetObjectFromPool(userInfo, content);
-            await info.DisplayInfo(userData);
+            if (userData != null)
+            {
+                var info = PoolSystem.Instance.GetObjectFromPool(userInfo, content);
+                await info.DisplayInfo(userData);
+            }
         }
         
     }

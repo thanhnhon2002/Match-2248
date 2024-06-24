@@ -201,7 +201,7 @@ public class DataFriendManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("No data found.");
+               // Debug.LogWarning("No data found.");
             }
         }
         catch (Exception ex)
