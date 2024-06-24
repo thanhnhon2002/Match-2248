@@ -943,11 +943,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 5179330727012696073}
-  friendInfo: {fileID: -7610049488920849732, guid: 4df34a8406df0c64ca5684e6f9aa3d1d, type: 3}
-  friendRequestInfo: {fileID: -7610049488920849732, guid: 708511a68005aee40b9b754a157ce357, type: 3}
+  userInfo: {fileID: -7610049488920849732, guid: 4df34a8406df0c64ca5684e6f9aa3d1d, type: 3}
+  friendRequestInfo: {fileID: 1811276487459861604, guid: 5513a5c67cb26e645af5366374c790c4, type: 3}
+  sentFriendRequestInfo: {fileID: 7402823627496626864, guid: b1a303cbb36f2ca48a085e5d3b375023, type: 3}
+  friendInfo: {fileID: 5714396492524807649, guid: 708511a68005aee40b9b754a157ce357, type: 3}
   maskButton:
   - {fileID: 7357997140731443131}
   - {fileID: 1193752480281932642}
+  inputField: {fileID: 0}
 --- !u!1 &4057493266367450297
 GameObject:
   m_ObjectHideFlags: 0
