@@ -38,6 +38,11 @@ public class FriendManager : MonoBehaviour
         await ShowAllFriendAsync();
     }
 
+    private void Start()
+    {
+        StartListeningForFriendChanges();
+    }
+
     public async Task ShowAllFriendAsync()
     {
         currentContent = NameContent.AllFriend;
@@ -66,7 +71,7 @@ public class FriendManager : MonoBehaviour
         else if (DataFriendManager.friendRequestSent.ContainsKey(id))
         {
             userData = DataFriendManager.friendRequestSent[id];
-            var info = PoolSystem.Instance.GetObjectFromPool(friendRequestInfo, content);
+            var info = PoolSystem.Instance.GetObjectFromPool(sentFriendRequestInfo, content);
             await info.DisplayInfo(userData);
         }
         else
