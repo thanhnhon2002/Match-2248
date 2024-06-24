@@ -12,37 +12,45 @@ public class CellPartical : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     private void Awake()
     {
-        localPos = transform.localPosition;
-        size = transform.localScale.x;
-        rotation = transform.eulerAngles.z;
+        //localPos = transform.localPosition;
+        //size = transform.localScale.x;
+        //rotation = transform.eulerAngles.z;
     }
 
-    public void PlayEffectOut (float time, Color startColor)
+    private void OnEnable()
     {
-       // AudioSystem.Instance.PlaySound("QT_paopao");
+        transform.localPosition = Vector3.zero;
+        transform.localScale = Vector3.zero;
+        transform.localRotation = new Quaternion(0, 0, 0, 0);
+        spriteRenderer.color = Color.clear;
+    }
+
+    public void PlayEffectOut(float time, Color startColor)
+    {
+        // AudioSystem.Instance.PlaySound("QT_paopao");
         startColor.a = 0f;
         spriteRenderer.color = startColor;
         transform.localPosition = Vector3.zero;
         transform.localScale = Vector3.zero;
-        transform.localRotation = new Quaternion (0, 0, 0, 0);
-        spriteRenderer.DOFade (1f, time);
-        transform.DOLocalMove (localPos, time);
-        transform.DORotate (new Vector3 (0, 0, rotation), time);
-        transform.DOScale (size, time);
+        transform.localRotation = new Quaternion(0, 0, 0, 0);
+        spriteRenderer.DOFade(1f, time);
+        transform.DOLocalMove(localPos, time).SetEase(Ease.OutCubic);
+        transform.DORotate(new Vector3(0, 0, rotation), time);
+        transform.DOScale(size, time);
     }
 
     public void PlayEffectIn(float time, Color endColor)
     {
-        transform.DOScale (0, time);
-        transform.DOLocalMove (Vector3.zero, time);
-        transform.DOLocalRotate (Vector3.zero, time);
-        spriteRenderer.DOFade (0f, time);
-        spriteRenderer.DOColor (endColor, time);
+        transform.DOScale(0, time);
+        transform.DOLocalMove(Vector3.zero, time).SetEase(Ease.Linear);
+        transform.DOLocalRotate(Vector3.zero, time);
+        spriteRenderer.DOFade(0f, time);
+        spriteRenderer.DOColor(endColor, time);
     }
 
-    [ContextMenu ("Get Info")]
+    [ContextMenu("Get Info")]
 
-    private void GetInfo ()
+    private void GetInfo()
     {
         localPos = transform.localPosition;
         size = transform.localScale.x;

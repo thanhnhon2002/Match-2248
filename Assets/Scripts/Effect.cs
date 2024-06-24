@@ -7,16 +7,34 @@ using UnityEngine;
 public class Effect : MonoBehaviour
 {
     [SerializeField] private CellPartical[] cellPartcals;
-    public float time;
-    [SerializeField] private List<Vector3> pos = new List<Vector3> ();
+    [SerializeField] private List<Vector3> pos = new List<Vector3>();
+    public float delayEachBlock = 0.1f;
     private Sequence sq;
-    public void Play (List<Cell> path, int index, Color startColor, Color endColor)
+    public void Play(List<Cell> path, int index, Color startColor, Color endColor)
     {
         pos.Clear();
         for (int i = index; i < path.Count; i++)
         {
             pos.Add(path[i].transform.position);
         }
+        Play(index, startColor, endColor);
+    }
+
+    public void Play(List<CellTutorial> path, int index, Color startColor, Color endColor)
+    {
+        pos.Clear();
+        for (int i = index; i < path.Count; i++)
+        {
+            pos.Add(path[i].transform.position);
+        }
+        Play(index, startColor, endColor);
+    }
+
+    private void Play(int index, Color startColor, Color endColor)
+    {
+        float outTime = Player.MAX_EFFECT_TIME * 0.3f + (pos.Count - index) * delayEachBlock;
+        float inTime = Player.MAX_EFFECT_TIME * 0.5f;
+
         startColor.a = 0;
         for (int i = 0; i < cellPartcals.Length; i++)
         {
@@ -28,68 +46,34 @@ public class Effect : MonoBehaviour
         {
             for (int i = 0; i < cellPartcals.Length; i++)
             {
-                cellPartcals[i].PlayEffectOut(time, startColor);
+                cellPartcals[i].PlayEffectOut(outTime, startColor);
             }
         });
-        sq.AppendInterval(time);
+        sq.AppendInterval(outTime);
         sq.AppendCallback(() =>
         {
             for (int i = 0; i < cellPartcals.Length; i++)
             {
-                cellPartcals[i].PlayEffectIn(time, endColor);
+                cellPartcals[i].PlayEffectIn(inTime, endColor);
             }
-            transform.DOPath(pos.ToArray(), time);
+            transform.DOPath(pos.ToArray(), inTime);
         });
-        sq.AppendInterval(time);
+        sq.AppendInterval(inTime);
         sq.AppendCallback(() => gameObject.SetActive(false));
     }
-    public void Play (List<CellTutorial> path, int index, Color startColor, Color endColor)
-    {
-        pos.Clear ();
-        for (int i = index; i < path.Count; i++)
-        {
-            pos.Add (path[i].transform.position);
-        }
-        startColor.a = 0;
-        for (int i = 0; i < cellPartcals.Length; i++)
-        {
-            startColor.a = 1f;  
-            cellPartcals[i].spriteRenderer.color = startColor;
-        }
-        sq = DOTween.Sequence ();
-        sq.AppendCallback (() =>
-        {
-            for (int i = 0; i < cellPartcals.Length; i++)
-            {
-                cellPartcals[i].PlayEffectOut (time, startColor);
-            }
-        });
-        sq.AppendInterval (time);
-        sq.AppendCallback (() =>
-        {
-            for (int i = 0; i < cellPartcals.Length; i++)
-            {
-                cellPartcals[i].PlayEffectIn (time, endColor);
-            }
-            transform.DOPath (pos.ToArray (), time);
-        });
-        sq.AppendInterval (time);
-        sq.AppendCallback (() => gameObject.SetActive (false));
-        
-    }
 
-    [ContextMenu ("Set up")]
-    private void SetUp ()
+    [ContextMenu("Set up")]
+    private void SetUp()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-            var child = transform.GetChild (i);
+            var child = transform.GetChild(i);
             var pos = Random.insideUnitCircle * 1.5f;
-            var scale = Random.Range (0.3f, 1f);
-            var rotation = Random.Range (0f, 360f);
+            var scale = Random.Range(0.3f, 1f);
+            var rotation = Random.Range(0f, 360f);
             child.localPosition = pos;
             child.transform.localScale = Vector3.one * scale;
-            child.transform.Rotate (0f, 0f, rotation);
+            child.transform.Rotate(0f, 0f, rotation);
         }
     }
 }

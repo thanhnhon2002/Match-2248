@@ -76,6 +76,17 @@ MonoBehaviour:
     - 45
     chords:
     - B_giang
+    - B_giang_2
+  - name: G thu
+    keys:
+    - 51
+    - 53
+    - 55
+    - 51
+    - 43
+    - 45
+    chords:
+    - G_thu
 --- !u!1 &504176734892603247
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,6 +209,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 758a60c8359afcc42b724fe70d40f5eb, type: 3}
   - {fileID: 8300000, guid: 175592af7e0206d4d959cb1844558500, type: 3}
   - {fileID: 8300000, guid: 88cc20ef9845b5a4fba0e6c04988d4ef, type: 3}
+  - {fileID: 8300000, guid: 026672fe31d019748ab5c2a29384fe5e, type: 3}
   - {fileID: 8300000, guid: 37d0952e3aad3f44c840ceff6756858c, type: 3}
   - {fileID: 8300000, guid: 0a9f54372d290d043afc461968f2cb14, type: 3}
   - {fileID: 8300000, guid: d8de3f35999a9fd4097ae007fb84c8de, type: 3}

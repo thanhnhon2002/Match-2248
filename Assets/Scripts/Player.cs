@@ -11,6 +11,9 @@ using Vector3 = UnityEngine.Vector3;
 public class Player : MonoBehaviour
 {
     public const float POOK_SOUND_VOLUMNE = 0.1f;
+    public const float MAX_EFFECT_TIME = 1f;
+    public const float MAX_TIME_BETWEEN_DESTROY_BLOCK = 0.1f;
+    public const float DELAY_EFFECT_FINISH = 0.5f;
 
     public static Player Instance { get; private set; }
     public UnityEngine.Vector2 mousePos { get; private set; }
@@ -186,6 +189,15 @@ public class Player : MonoBehaviour
             }
             GameSystem.SaveUserDataToLocal();
         }
+
+        float destroyDelay = MAX_EFFECT_TIME / conectedCell.Count;
+        if (destroyDelay > MAX_TIME_BETWEEN_DESTROY_BLOCK)
+        {
+            destroyDelay = MAX_TIME_BETWEEN_DESTROY_BLOCK;
+        }
+        effectTime = conectedCell.Count * destroyDelay + DELAY_EFFECT_FINISH;
+        //effectTime = MAX_EFFECT_TIME;
+
         foreach (var cell in conectedCell)
         {
             sequence.AppendCallback(() =>
@@ -203,13 +215,14 @@ public class Player : MonoBehaviour
                 }
                 GameFlow.Instance.gameState = GameState.Fx;
                 var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
+                fx.delayEachBlock = destroyDelay;
                 fx.Play(conectedCell, conectedCell.IndexOf(cell), cell.spriteRenderer.color, newColor);
                 AudioSystem.Instance.PlaySound("QT_paopao", POOK_SOUND_VOLUMNE);
                 cell.highLight.SetActive(false);
             });
-            sequence.AppendInterval(0.5f / conectedCell.Count);
+            sequence.AppendInterval(destroyDelay);
         }
-        effectTime = 0.5f;
+
         LeanTween.delayedCall(effectTime, () =>
         {
             conectedCell.Last().highLight.SetActive(false);
