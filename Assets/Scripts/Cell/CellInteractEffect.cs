@@ -6,7 +6,7 @@ using UnityEngine;
 public class CellInteractEffect : MonoBehaviour
 {
     private const long VIBRATION_STRENGTH = 20;
-    public const float VOLUME = 0.5f;
+    public const float VOLUME = 1f;
 
     [SerializeField] private AudioClip[] clips;
 
