@@ -7,6 +7,7 @@ public class Chord
 {
     public string name;
     public List<string> keys;
+    public List<string> chords;
 }
 
 public class ChordPlayer : PianoNoteGetter
@@ -25,7 +26,7 @@ public class ChordPlayer : PianoNoteGetter
     {
         Chord oldChord = currentChord;
         currentChord = chords.RandomElement();
-        return oldChord.keys;
+        return new List<string>() { oldChord.chords.RandomElement() };
     }
 
     public override string GetNextNote()

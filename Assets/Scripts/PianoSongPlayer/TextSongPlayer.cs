@@ -92,14 +92,14 @@ public class TextSongPlayer : PianoNoteGetter
         bool success;
         for (int i = 0; i < keys.Length; i++)
         {
-            if (keys[i] == "" || keys[i] == " ") continue;
-            success = int.TryParse(keys[i], out int key);
-            if (!success)
-            {
-                Debug.LogError("failed to read key = " + keys[i]);
-                continue;
-            }
-            result.Add(key.ToString());
+            //if (keys[i] == "" || keys[i] == " ") continue;
+            //success = int.TryParse(keys[i], out int key);
+            //if (!success)
+            //{
+            //    Debug.LogError("failed to read key = " + keys[i]);
+            //    continue;
+            //}
+            result.Add(keys[i].ToString());
         }
         return result;
     }

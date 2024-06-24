@@ -1,4 +1,4 @@
-###50 52 54  //Do Truong
+###F_truong  //Do Truong
 52
 54
 55
@@ -7,11 +7,11 @@
 52
 50
 50
-###44 46 51  //Sol Truong
+###C_truong  //Sol Truong
 51
 44
 44
-###50 52 54  //Do Truong
+###F_truong_2  //Do Truong
 52
 50
 50
@@ -22,9 +22,9 @@
 52
 50
 50
-###44 46 51  //Sol Truong
+###C_truong  //Sol Truong
 51
 44
 44
-###42 44 50  //Do Truong Duoi
+###F_truong_3  //Do Truong Duoi
 50
