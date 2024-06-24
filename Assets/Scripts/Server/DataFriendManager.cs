@@ -77,6 +77,30 @@ public class DataFriendManager : MonoBehaviour
         }
     }
 
+    public static async void RemoveFriend(string id)
+    {
+        try
+        {
+            var dataSnapshot = await ServerSystem.databaseRef.Child(ServerSystem.USER_DATA_URL + "/" + id).GetValueAsync();
+            if (dataSnapshot != null)
+            {
+                var json = dataSnapshot.GetRawJsonValue();
+                UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
+                RemoveRequest(userDataServer, ServerSystem.user);
+                RemoveRequest(ServerSystem.user, userDataServer);
+
+            }
+            else
+            {
+                Debug.LogWarning("No data found.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError($"Error: {ex.Message}");
+        }
+    }
+
     [ContextMenu("Test Start Listening For Friend Changes")]
     public void StartListeningForFriendChanges()
     {
@@ -180,10 +204,10 @@ public class DataFriendManager : MonoBehaviour
         DataUserManager.SaveUserData();
     }
 
-    public static void RemoveRequest(string friendId)
+    public static void RemoveRequest(UserDataServer friendData, UserDataServer userDataServer)
     {
-        ServerSystem.user.listFriend.Remove(friendId);
-        DataUserManager.SaveUserData();
+        userDataServer.listFriend.Remove(friendData.id);
+        ServerSystem.SaveToServerAtPath(ServerSystem.USER_DATA_URL + "/" + userDataServer.id, userDataServer);
     }
 
     public static async Task<UserDataServer> GetFriend(string id)

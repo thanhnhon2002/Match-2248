@@ -24,7 +24,7 @@ public class SentFriendRequestInfo : MonoBehaviour
 
     private void OnClickAcceptFriend(string id)
     {
-        DataFriendManager.RemoveRequest(id);
+        DataFriendManager.RemoveFriend(id);
         BtnRemoveRequest.onClick.RemoveAllListeners();
     }
 }
