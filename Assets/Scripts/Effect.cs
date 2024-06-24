@@ -32,7 +32,7 @@ public class Effect : MonoBehaviour
 
     private void Play(int index, Color startColor, Color endColor)
     {
-        float outTime = Player.MAX_EFFECT_TIME * 0.3f + (pos.Count - index) * delayEachBlock;
+        float outTime = Player.MAX_EFFECT_TIME * 0.3f + (pos.Count - index + 1) * delayEachBlock * 0.5f;
         float inTime = Player.MAX_EFFECT_TIME * 0.5f;
 
         startColor.a = 0;
