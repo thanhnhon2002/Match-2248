@@ -19,6 +19,9 @@ public class Player : MonoBehaviour
     public UnityEngine.Vector2 mousePos { get; private set; }
     [SerializeField] private Line linePrefab;
     [SerializeField] private Effect effectPrefab;
+    [SerializeField] private ParticleController effectDust;
+    [SerializeField] private ParticleSystem effectComplete;
+
     private List<Cell> conectedCell = new List<Cell>();
     public List<Cell> ConectedCell => conectedCell;
     private List<Line> lines = new List<Line>();
@@ -217,6 +220,9 @@ public class Player : MonoBehaviour
                 var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
                 fx.delayEachBlock = destroyDelay;
                 fx.Play(conectedCell, conectedCell.IndexOf(cell), cell.spriteRenderer.color, newColor);
+                var fx2 = PoolSystem.Instance.GetObject(effectDust, cell.transform.position);
+                fx2.SetColor(cell.spriteRenderer.color);
+
                 AudioSystem.Instance.PlaySound("QT_paopao", POOK_SOUND_VOLUMNE);
                 cell.highLight.SetActive(false);
             });
@@ -237,6 +243,8 @@ public class Player : MonoBehaviour
             GameFlow.Instance.CheckCombo(combo, GameFlow.Instance.mainCam.WorldToScreenPoint(lastCell.transform.position));
             GameFlow.Instance.AddScore(newValue);
             GridManager.Instance.CheckToSpawnNewCell(conectedCell);
+            var fx = PoolSystem.Instance.GetObject(effectComplete, lastCell.transform.position);
+
             ResetData();
         });
     }

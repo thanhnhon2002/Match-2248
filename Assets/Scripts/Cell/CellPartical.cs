@@ -42,8 +42,8 @@ public class CellPartical : MonoBehaviour
     public void PlayEffectIn(float time, Color endColor)
     {
         transform.DOScale(0, time);
-        transform.DOLocalMove(Vector3.zero, time).SetEase(Ease.Linear);
-        transform.DOLocalRotate(Vector3.zero, time);
+        transform.DOLocalMove(Vector3.zero, time * 0.5f).SetEase(Ease.Linear);
+        transform.DOLocalRotate(Vector3.zero, time * 0.5f);
         spriteRenderer.DOFade(0f, time);
         spriteRenderer.DOColor(endColor, time);
     }
