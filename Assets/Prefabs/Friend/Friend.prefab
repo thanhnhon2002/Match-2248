@@ -950,7 +950,7 @@ MonoBehaviour:
   maskButton:
   - {fileID: 7357997140731443131}
   - {fileID: 1193752480281932642}
-  inputField: {fileID: 0}
+  inputField: {fileID: 4482330180238543335}
 --- !u!1 &4057493266367450297
 GameObject:
   m_ObjectHideFlags: 0

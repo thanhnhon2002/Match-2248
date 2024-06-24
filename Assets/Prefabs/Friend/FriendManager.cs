@@ -38,11 +38,6 @@ public class FriendManager : MonoBehaviour
         await ShowAllFriendAsync();
     }
 
-    private void Start()
-    {
-        StartListeningForFriendChanges();
-    }
-
     public async Task ShowAllFriendAsync()
     {
         currentContent = NameContent.AllFriend;
@@ -132,12 +127,7 @@ public class FriendManager : MonoBehaviour
         await ShowAllFriendRequest();
     }
 
-    public void StartListeningForFriendChanges()
-    {
-        ServerSystem.databaseRef.Child(ServerSystem.USER_DATA_URL + "/" + ServerSystem.user.id + "/listFriend").ValueChanged += HandleFriendListChanged;
-    }
-
-    private async void HandleFriendListChanged(object sender, ValueChangedEventArgs e)
+    public async void HandleFriendListChanged()
     {
         switch (currentContent)
         {

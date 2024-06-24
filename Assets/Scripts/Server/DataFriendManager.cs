@@ -141,6 +141,7 @@ public class DataFriendManager : MonoBehaviour
                             break;
                     }
                 }
+                FriendManager.Instance?.HandleFriendListChanged();
             }
             else
             {
