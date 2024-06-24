@@ -64,6 +64,7 @@ public class DataFriendManager : MonoBehaviour
                 UserDataServer userDataServer = JsonConvert.DeserializeObject<UserDataServer>(json);
                 UpdateFriend(userDataServer, ServerSystem.user, Friend.State.Confirmed);
                 UpdateFriend(ServerSystem.user, userDataServer, Friend.State.Confirmed);
+
             }
             else
             {
@@ -97,7 +98,8 @@ public class DataFriendManager : MonoBehaviour
                 var json = args.Snapshot.GetRawJsonValue();
                 Dictionary<String,Friend> listFriend = JsonConvert.DeserializeObject<Dictionary<String, Friend>>(json);
 
-                // Lặp qua danh sách bạn bè và xử lý khi có trạng thái là Waiting
+                friendRequest.Clear();
+                friendRequestSent.Clear();
                 foreach (Friend friend in listFriend.Values)
                 {
                     Task<UserDataServer> getFriendTask = GetFriend(friend.id);
@@ -157,8 +159,6 @@ public class DataFriendManager : MonoBehaviour
                             break;
                     }
                 }
-                friends = friends.OrderByDescending(kv => kv.Value.maxIndex)
-                                   .ToDictionary(kv => kv.Key, kv => kv.Value);
             }
             else
             {
@@ -177,6 +177,12 @@ public class DataFriendManager : MonoBehaviour
         Friend friend = new Friend(state, friendData.id);
         userDataServer.listFriend[friend.id] = friend;
         ServerSystem.SaveToServerAtPath(ServerSystem.USER_DATA_URL + "/" + userDataServer.id, userDataServer);
+        DataUserManager.SaveUserData();
+    }
+
+    public static void RemoveRequest(string friendId)
+    {
+        ServerSystem.user.listFriend.Remove(friendId);
         DataUserManager.SaveUserData();
     }
 
