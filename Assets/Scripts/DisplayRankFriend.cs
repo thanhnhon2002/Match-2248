@@ -23,8 +23,14 @@ public class DisplayRankFriend : MonoBehaviour
         }
     }
 
+    public void OnClickRankFriend()
+    {
+        SetUpContent();
+    }
+
     public async void SetUpContent()
     {
+        ResetContent();
         Dictionary<string, UserDataServer> rankFriend = new Dictionary<string, UserDataServer>(DataFriendManager.friends);
         rankFriend[ServerSystem.user.id] = ServerSystem.user;
         rankFriend = rankFriend.OrderByDescending(kv => kv.Value.maxIndex).ToDictionary(kv => kv.Key, kv => kv.Value);
@@ -32,6 +38,14 @@ public class DisplayRankFriend : MonoBehaviour
         {
             var info = PoolSystem.Instance.GetObjectFromPool(rankUserInfo, content);
             await info.DisplayInfo(user);
+        }
+    }
+
+    private void ResetContent()
+    {
+        foreach(var info in content.GetComponentsInChildren<RankUserInfo>())
+        {
+            info.gameObject.SetActive(false);
         }
     }
 }
