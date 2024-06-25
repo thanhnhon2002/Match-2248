@@ -11,6 +11,7 @@ public class FriendRequestInfo : MonoBehaviour
     [SerializeField] private TextMeshProUGUI userName;
     [SerializeField] private TextMeshProUGUI id;
     [SerializeField] private Button BtnAddFriend;
+    [SerializeField] private Button BtnRemoveFriend;
 
     public async Task DisplayInfo(UserDataServer data)
     {
@@ -18,6 +19,7 @@ public class FriendRequestInfo : MonoBehaviour
         userName.text = data.nickName;
         id.text = data.GetID();
         BtnAddFriend.onClick.AddListener(() => { OnClickAcceptFriend(data.id); });
+        BtnRemoveFriend.onClick.AddListener(() => { OncikBtnRemoveFriend(data.id); });
         if (data.typeLogin == UserDataServer.TypeLogin.Guest) avatar.sprite = AvatarManager.Instance.avatars[data.avatarIndex];
         else avatar.sprite = await Avatar.LoadAvatar(data.avatarPath, avatar.rectTransform.rect, avatar.rectTransform.pivot);
     }
@@ -26,5 +28,11 @@ public class FriendRequestInfo : MonoBehaviour
     {
         DataFriendManager.AcceptFriend(id);
         BtnAddFriend.onClick.RemoveAllListeners();
+    }
+
+    private void OncikBtnRemoveFriend(string id)
+    {
+        DataFriendManager.RemoveFriend(id);
+        BtnRemoveFriend.onClick.RemoveAllListeners();
     }
 }

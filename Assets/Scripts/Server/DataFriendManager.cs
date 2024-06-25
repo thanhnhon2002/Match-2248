@@ -124,22 +124,25 @@ public class DataFriendManager : MonoBehaviour
 
                 friendRequest.Clear();
                 friendRequestSent.Clear();
+                friends.Clear();
                 foreach (Friend friend in listFriend.Values)
                 {
-                    if (friend != null) return;
-                    Task<UserDataServer> getFriendTask = GetFriend(friend.id);
-                    UserDataServer userDataServer = await getFriendTask;
-                    switch (friend.state)
+                    if (friend != null)
                     {
-                        case Friend.State.Waiting:
-                            friendRequest[userDataServer.id] = userDataServer;
-                            break;
-                        case Friend.State.Confirmed:
-                            friends[userDataServer.id] = userDataServer;
-                            break;
-                        case Friend.State.Sent:
-                            friendRequestSent[userDataServer.id] = userDataServer;
-                            break;
+                        Task<UserDataServer> getFriendTask = GetFriend(friend.id);
+                        UserDataServer userDataServer = await getFriendTask;
+                        switch (friend.state)
+                        {
+                            case Friend.State.Waiting:
+                                friendRequest[userDataServer.id] = userDataServer;
+                                break;
+                            case Friend.State.Confirmed:
+                                friends[userDataServer.id] = userDataServer;
+                                break;
+                            case Friend.State.Sent:
+                                friendRequestSent[userDataServer.id] = userDataServer;
+                                break;
+                        }
                     }
                 }
                 FriendManager.Instance?.HandleFriendListChanged();
@@ -166,24 +169,28 @@ public class DataFriendManager : MonoBehaviour
                 var json = dataSnapshot.GetRawJsonValue();
                 if(string.IsNullOrEmpty(json)) return;
                 Dictionary<String, Friend> listFriend = JsonConvert.DeserializeObject<Dictionary<String, Friend>>(json);
-
+                friendRequest.Clear();
+                friendRequestSent.Clear();
+                friends.Clear();
                 // Lặp qua danh sách bạn bè và xử lý khi có trạng thái là Waiting
                 foreach (Friend friend in listFriend.Values)
                 {
-                    if (friend != null) return;
-                    Task<UserDataServer> getFriendTask = GetFriend(friend.id);
-                    UserDataServer userDataServer = await getFriendTask;
-                    switch (friend.state)
+                    if (friend != null)
                     {
-                        case Friend.State.Waiting:
-                            friendRequest[userDataServer.id] = userDataServer;
-                            break;
-                        case Friend.State.Confirmed:
-                            friends[userDataServer.id] = userDataServer;
-                            break;
-                        case Friend.State.Sent:
-                            friendRequestSent[userDataServer.id] = userDataServer;
-                            break;
+                        Task<UserDataServer> getFriendTask = GetFriend(friend.id);
+                        UserDataServer userDataServer = await getFriendTask;
+                        switch (friend.state)
+                        {
+                            case Friend.State.Waiting:
+                                friendRequest[userDataServer.id] = userDataServer;
+                                break;
+                            case Friend.State.Confirmed:
+                                friends[userDataServer.id] = userDataServer;
+                                break;
+                            case Friend.State.Sent:
+                                friendRequestSent[userDataServer.id] = userDataServer;
+                                break;
+                        }
                     }
                 }
             }
