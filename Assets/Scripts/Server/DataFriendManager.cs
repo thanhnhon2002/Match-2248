@@ -126,6 +126,7 @@ public class DataFriendManager : MonoBehaviour
                 friendRequestSent.Clear();
                 foreach (Friend friend in listFriend.Values)
                 {
+                    if (friend != null) return;
                     Task<UserDataServer> getFriendTask = GetFriend(friend.id);
                     UserDataServer userDataServer = await getFriendTask;
                     switch (friend.state)
@@ -141,6 +142,7 @@ public class DataFriendManager : MonoBehaviour
                             break;
                     }
                 }
+                FriendManager.Instance?.HandleFriendListChanged();
             }
             else
             {
@@ -168,6 +170,7 @@ public class DataFriendManager : MonoBehaviour
                 // Lặp qua danh sách bạn bè và xử lý khi có trạng thái là Waiting
                 foreach (Friend friend in listFriend.Values)
                 {
+                    if (friend != null) return;
                     Task<UserDataServer> getFriendTask = GetFriend(friend.id);
                     UserDataServer userDataServer = await getFriendTask;
                     switch (friend.state)
