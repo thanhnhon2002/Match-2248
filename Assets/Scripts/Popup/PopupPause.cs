@@ -3,6 +3,7 @@ using DarkcupGames;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PopupPause : Popup
 {

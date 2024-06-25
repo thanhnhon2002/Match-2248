@@ -9,6 +9,8 @@ using System.Numerics;
 using DG.Tweening;
 public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerClickHandler
 {
+    public const bool SHOW_DEBUG_TEXT = false;
+
     public SpriteRenderer spriteRenderer { get; private set; }
     public GameObject highLight;
     public TextMeshPro valueTxt;
@@ -42,6 +44,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         colorSet = GetComponent<ColorSet> ();
         highCellEffect = GetComponent<HighCellEffect> ();
         highLight = transform.Find("HighLight").gameObject;
+        debugTxt.text = "";
 #if !UNITY_EDITOR
         debugTxt.gameObject.SetActive (false);
 #endif
@@ -50,7 +53,10 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 #if UNITY_EDITOR
     private void Update ()
     {
-        debugTxt.text = $"({gridPosition.x},{gridPosition.y})";
+        if (SHOW_DEBUG_TEXT)
+        {
+            debugTxt.text = $"({gridPosition.x},{gridPosition.y})";
+        }
     }
 #endif
     public void FindNearbyCells ()

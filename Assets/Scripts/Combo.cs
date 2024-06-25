@@ -7,11 +7,21 @@ using DarkcupGames;
 
 public class Combo : MonoBehaviour
 {
+    private const int MIN_COMBO_CONGRATULATION = 6;
+
     private const string COMBO_TEXT = "Combo x";
     [SerializeField] private TextMeshProUGUI comboTxt;
     private float lifeTime;
     [SerializeField] private float moveSpeed;
     [SerializeField] private AudioClip comboSound;
+    [SerializeField] private EffectCongratulation effectCongratulation;
+
+    private bool alive = true;
+
+    private void OnEnable()
+    {
+        alive = true;
+    }
 
     private void Update()
     {
@@ -19,10 +29,18 @@ public class Combo : MonoBehaviour
         pos.y += moveSpeed * Time.deltaTime;
         transform.position = pos;
         lifeTime -= Time.deltaTime;
-        gameObject.SetActive(lifeTime > 0);
+
+        if (lifeTime < 0 && alive == true)
+        {
+            alive = false;
+            comboTxt.DOFade(0f, Const.DEFAULT_TWEEN_TIME).OnComplete(() =>
+            {
+                gameObject.SetActive(false);
+            });
+        }
     }
 
-    public void ShowCombo(int amount, Vector3 position, out float effectTime, float lifeTime = 2f)
+    public void ShowCombo(int amount, Vector3 position, out float effectTime, float lifeTime = 1f)
     {
         EasyEffect.Appear(gameObject, 1f, 1f, speed: 0.15f);
         AudioSystem.Instance.PlaySound(comboSound);
@@ -36,5 +54,13 @@ public class Combo : MonoBehaviour
         this.lifeTime = lifeTime;
         gameObject.SetActive(true);
         comboTxt.text = $"{COMBO_TEXT}{amount}";
+
+        if (amount >= MIN_COMBO_CONGRATULATION)
+        {
+            LeanTween.delayedCall(1f, () =>
+            {
+                effectCongratulation.gameObject.SetActive(true);
+            });
+        }
     }
 }
