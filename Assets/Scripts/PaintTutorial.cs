@@ -3,6 +3,7 @@ using NSubstitute.Core;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections;
 using UnityEngine;
 
 public class PaintTutorial : PowerTutorial
@@ -22,17 +23,8 @@ public class PaintTutorial : PowerTutorial
         cells.AddFirst(highestCell);
         for (int i = 0; i < Paint.MAX_CELL - 1; i++)
         {
-            var sameLineCell = cells.Last.Value.nearbyCell.First(x => !x.Equals(cells.Last.Value) 
-            && x.gridPosition.x == highestCell.gridPosition.x
-            && !cells.Contains(x));
-            if (sameLineCell != null) cells.AddAfter(cells.Last, sameLineCell);
-            else
-            {
-                var sameColCell = highestCell.nearbyCell.First(x => !x.Equals(cells.Last.Value) 
-                && x.gridPosition.y == highestCell.gridPosition.y
-                && !cells.Contains(x));
-                cells.AddAfter(cells.Last, sameColCell);
-            }
+            var cell = cells.Last.Value.nearbyCell.First(x => !cells.Contains(x));
+            if (cell != null) cells.AddAfter(cells.Last, cell);
         }
         GetPositions(cells.First);
         ConectCells(cells.First);
