@@ -28,7 +28,7 @@ public class PlayerInfo : MonoBehaviour
         if (ServerSystem.user.typeLogin == UserDataServer.TypeLogin.Guest) avatar.sprite = avatarSprites[userData.avatarIndex];
         else avatar.sprite = await Avatar.LoadAvatar(ServerSystem.user.avatarPath);
         nameTxt.text = GetUserName();
-        id.text = ServerSystem.user.GetID();
+        id.text = ServerSystem.user.id;
         rank.text = string.Empty;
         LeanTween.value(0f, (float)userData.highestScore, Const.DEFAULT_TWEEN_TIME).setOnUpdate(x =>
         {
