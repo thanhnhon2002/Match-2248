@@ -19,7 +19,7 @@ public class UserInfo : MonoBehaviour
     {
         if (data.id == null) return;
         userName.text = data.nickName;
-        id.text = data.GetID();
+        id.text = data.id;
         BtnAddFriend.onClick.AddListener(() => { OnCikcBtnAddFriend(data.id); });
         if (data.typeLogin == UserDataServer.TypeLogin.Guest) avatar.sprite = AvatarManager.Instance.avatars[data.avatarIndex];
         else avatar.sprite = await Avatar.LoadAvatar(data.avatarPath);
