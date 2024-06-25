@@ -37,6 +37,7 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
     private static List<int> multipliers = new List<int>();
     [SerializeField] private LineRenderer linePrefab;
     [SerializeField] private Effect effectPrefab;
+    [SerializeField] private ParticleController effectDust;
 
     private void Awake()
     {
@@ -178,6 +179,10 @@ public class CellTutorial : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
                 var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
                 fx.delayEachBlock = delayEachBlock;
                 fx.Play(listCell, listCell.IndexOf(cell), cell.spriteRenderer.color, listCell.Last().spriteRenderer.color);
+
+                var fx2 = PoolSystem.Instance.GetObject(effectDust, cell.transform.position);
+                fx2.SetColor(cell.spriteRenderer.color);
+
                 AudioSystem.Instance.PlaySound("QT_paopao", Player.POOK_SOUND_VOLUMNE);
                 cell.highLight.gameObject.SetActive(false);
             }).AppendInterval(delayEachBlock);

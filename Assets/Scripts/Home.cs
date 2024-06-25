@@ -99,7 +99,7 @@ public class Home : MonoBehaviour
             {            
                 item.RunEffect();
             }
-            LeanTween.delayedCall(OnSceneChangeEffect.EFFECT_TIME + 0.2f, () =>
+            LeanTween.delayedCall(Const.DEFAULT_TWEEN_TIME + 0.3f, () =>
             {
                 blockInteract.gameObject.SetActive(false);
                 onDone?.Invoke();

@@ -12,7 +12,7 @@ public class RemoteConfig : MonoBehaviour
     [SerializeField] private float _timeBetweenAds = 120f;
     [SerializeField] private float _giftInterval = 120f;
     [SerializeField] private float _minSessionTimeShowAds = 60f;
-    [SerializeField] private float _minMinuteSpecialOffer = 2f;
+    [SerializeField] private float _minMinuteSpecialOffer = 10f;
     [SerializeField] private float _loadingTime = 2.5f;
     [SerializeField] private float _timePowerReward = 180f;
     [SerializeField] private float _freeRewardInterval = 600f;

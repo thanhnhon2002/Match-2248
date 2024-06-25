@@ -241,10 +241,6 @@ public class Player : MonoBehaviour
             lastCell.spriteRenderer.color = newColor;
             lastCell.Value = newValue;
 
-            //Vector3 scale = lastCell.transform.localScale;
-            //lastCell.transform.localScale = Vector3.ze;
-            //lastCell.transform.DOScale(scale, 1f);
-
             EasyEffect.Appear(lastCell.gameObject, 1f, 1f, 0.15f, 1.1f);
             var fx2 = PoolSystem.Instance.GetObject(effectDust, lastCell.transform.position);
             fx2.SetColor(lastCell.spriteRenderer.color);
