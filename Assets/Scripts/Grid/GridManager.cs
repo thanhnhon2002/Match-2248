@@ -172,13 +172,17 @@ public class GridManager : MonoBehaviour
         int index = mathf.LogBigInt(value, 2);
         if (index > indexPlayer)
         {
-            //indexPlayer = index;
             Debug.Log("New Block 2^" + index);
             FirebaseManager.Instance.LogLevelPass(index, GameFlow.Instance.timeCount);
             DeepTrack.LogLevelWin(index);
             GameFlow.Instance.Congrastulate();
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
-            // PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
+        }
+        SaveDataIndex();
+        if (index > indexPlayer)
+        {
+            indexPlayer = index;
+            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }
         if (index > maxIndex)
         {
@@ -192,16 +196,9 @@ public class GridManager : MonoBehaviour
                 else maxIndex += 1;
                 maxIndexRandom++;
                 Debug.Log("AddBlock 2^" + maxIndexRandom);
-                //GridManager.Instance.RemoveAllLowestCells();
             }
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
             PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
-        }
-        SaveDataIndex();
-        if (index > indexPlayer)
-        {
-            indexPlayer = index;
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
+            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
         }
     }
     void CheckIndexDublicate()
@@ -279,8 +276,17 @@ public class GridManager : MonoBehaviour
         Drop(true);
     }
 
+    public void RemoveAllLowestCellsDelayed(float time)
+    {
+        LeanTween.delayedCall(time, () =>
+        {
+            RemoveAllLowestCells();
+        });
+    }
+
     public void RemoveAllLowestCells()
     {
+        GameFlow.Instance.gameState = GameState.Fx;
         for (int i = 0; i < lowestCells.Count; i++)
         {
             if (lowestCells[i] == null) continue;
@@ -288,13 +294,16 @@ public class GridManager : MonoBehaviour
             var fx = PoolSystem.Instance.GetObject(removeCellFx, lowestCells[i].transform.position);
             fx.ChangeColor(lowestCells[i].spriteRenderer.color);
         }
-        CheckToSpawnNewCell(lowestCells);
-        lowestCells.Clear();
+        LeanTween.delayedCall(1f, () =>
+        {
+            GameFlow.Instance.gameState = GameState.Playing;
+            CheckToSpawnNewCell(lowestCells);
+            lowestCells.Clear();
+        });
     }
 
     private void GetLowestCells()
     {
-        //lowestCells.Clear();
         foreach (var cell in allCell)
         {
             if (cell.Value == (BigInteger)Mathf.Pow(2, minIndex))

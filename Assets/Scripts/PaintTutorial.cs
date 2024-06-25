@@ -23,14 +23,14 @@ public class PaintTutorial : PowerTutorial
         for (int i = 0; i < Paint.MAX_CELL - 1; i++)
         {
             var sameLineCell = cells.Last.Value.nearbyCell.First(x => !x.Equals(cells.Last.Value) 
-            && x.gridPosition.x == highestCell.gridPosition.x
-            && !cells.Contains(x));
+                                && x.gridPosition.x == highestCell.gridPosition.x
+                                && !cells.Contains(x));
             if (sameLineCell != null) cells.AddAfter(cells.Last, sameLineCell);
             else
             {
                 var sameColCell = highestCell.nearbyCell.First(x => !x.Equals(cells.Last.Value) 
-                && x.gridPosition.y == highestCell.gridPosition.y
-                && !cells.Contains(x));
+                                && x.gridPosition.y == highestCell.gridPosition.y
+                                && !cells.Contains(x));
                 cells.AddAfter(cells.Last, sameColCell);
             }
         }

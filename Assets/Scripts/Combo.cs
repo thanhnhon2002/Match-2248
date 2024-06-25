@@ -13,7 +13,7 @@ public class Combo : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private AudioClip comboSound;
 
-    private void Update ()
+    private void Update()
     {
         var pos = transform.position;
         pos.y += moveSpeed * Time.deltaTime;
@@ -22,14 +22,15 @@ public class Combo : MonoBehaviour
         gameObject.SetActive(lifeTime > 0);
     }
 
-    public void ShowCombo (int amount, Vector3 position, out float effectTime, float lifeTime = 2f)
+    public void ShowCombo(int amount, Vector3 position, out float effectTime, float lifeTime = 2f)
     {
-        AudioSystem.Instance.PlaySound (comboSound);
+        EasyEffect.Appear(gameObject, 1f, 1f, speed: 0.15f);
+        AudioSystem.Instance.PlaySound(comboSound);
         effectTime = lifeTime;
         var color = Color.white;
         color.a = 0f;
         comboTxt.color = color;
-        comboTxt.DOFade (1f, Const.DEFAULT_TWEEN_TIME);
+        comboTxt.DOFade(1f, Const.DEFAULT_TWEEN_TIME);
         var rectTransform = (RectTransform)transform;
         rectTransform.position = position;
         this.lifeTime = lifeTime;
