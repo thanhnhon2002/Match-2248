@@ -6,7 +6,7 @@ using DG.Tweening;
 
 public class EffectCongratulation : MonoBehaviour
 {
-    [SerializeField] private List<TextMeshProUGUI> txtEffects;
+    [SerializeField] private List<TextMeshPro> txtEffects;
     [SerializeField] private List<Color> colors;
     [SerializeField] private TextShadow txtShadow;
     [SerializeField] private AudioClip congratulationSound;
@@ -58,7 +58,7 @@ public class EffectCongratulation : MonoBehaviour
         }
     }
 
-    public void ShowEffect(TextMeshProUGUI comboTxt, string content)
+    public void ShowEffect(TextMeshPro comboTxt, string content)
     {
         comboTxt.text = content;
         PianoSongPlayer.Instance.PlayNextChord();

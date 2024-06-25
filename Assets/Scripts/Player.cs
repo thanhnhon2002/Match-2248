@@ -131,6 +131,7 @@ public class Player : MonoBehaviour
 
     private bool CanConect(Cell cell)
     {
+        return true;
         if (!conectedValueCount.ContainsKey(cell.Value / 2) && cell.Value > initValue) return false;
         if (cell.Value < currentCellValue) return false;
         else if (currentCellValue == cell.Value)

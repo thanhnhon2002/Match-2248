@@ -1,33 +1,27 @@
 ﻿using UnityEngine;
 using TMPro;
 
-[RequireComponent(typeof(TextMeshProUGUI))]
-[RequireComponent(typeof(CanvasGroup))]
+[RequireComponent(typeof(TextMeshPro))]
 public class TextShadow : MonoBehaviour
 {
-    public TextMeshProUGUI txtTarget;
-    private TextMeshProUGUI txt;
-    private CanvasGroup canvasGroup;
+    public TextMeshPro txtTarget;
+    private TextMeshPro txt;
     public Vector3 offset;
+    private Color color;
 
     private void Awake()
     {
-        txt = GetComponent<TextMeshProUGUI>();
-        canvasGroup = GetComponent<CanvasGroup>();
-    }
-
-    private void OnEnable()
-    {
-        canvasGroup.alpha = 0;
+        txt = GetComponent<TextMeshPro>();
     }
 
     private void Update()
     {
         transform.position = txtTarget.transform.position + offset;
-        canvasGroup.alpha = txtTarget.color.a;
+        color.a = txtTarget.color.a;
+        txt.color = color;
     }
 
-    public void SetTarget(TextMeshProUGUI txtTarget)
+    public void SetTarget(TextMeshPro txtTarget)
     {
         this.txtTarget = txtTarget;
         txt.text = txtTarget.text;
@@ -35,6 +29,8 @@ public class TextShadow : MonoBehaviour
 
     public void SetColor(Color color)
     {
+        color.a = 0;
         txt.color = color;
+        this.color = color;
     }
 }
