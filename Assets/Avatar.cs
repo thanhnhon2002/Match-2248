@@ -13,16 +13,16 @@ public class Avatar : MonoBehaviour
     private static readonly YieldAwaitable yield = Task.Yield();
     public static Sprite avatar { get; private set; }
 
-    private async void Start()
+    private async void OnEnable()
     {
         var user = ServerSystem.user;
-        if (avatar == null && user.typeLogin != UserDataServer.TypeLogin.Guest && !string.IsNullOrEmpty(user.avatarPath))
-            avatar = await LoadAvatar(user.avatarPath, image.rectTransform.rect, image.rectTransform.pivot);
+        if (user.typeLogin != UserDataServer.TypeLogin.Guest && !string.IsNullOrEmpty(user.avatarPath))
+            avatar = await LoadAvatar(user.avatarPath);
         else avatar = sprites[user.avatarIndex];
         image.sprite = avatar;
     }
 
-    public static async Task<Sprite> LoadAvatar(string url, Rect rect, Vector2 pivot)
+    public static async Task<Sprite> LoadAvatar(string url)
     {
         using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
         {
@@ -32,7 +32,7 @@ public class Avatar : MonoBehaviour
 
             if (www.result != UnityWebRequest.Result.Success) return null;
             var texture = DownloadHandlerTexture.GetContent(www);
-            return Sprite.Create(texture, rect, pivot);
+            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
         }
     }
 }

@@ -16,6 +16,7 @@ public class GoogleAuthentication : MonoBehaviour
     private static GoogleSignInUser currentUser;
     private static GoogleSignInConfiguration configuration;
     private string imageURL;
+    public static string Name { get; private set; }
     private void Awake()
     {
         if (currentUser != null)
@@ -85,12 +86,17 @@ public class GoogleAuthentication : MonoBehaviour
             Debug.Log("UserId: " + task.Result.UserId);
             Debug.Log("AuthCode: " + task.Result.AuthCode);
             nameText.text = task.Result.DisplayName;
+            Name = task.Result.DisplayName;
             imageURL = $"{task.Result.ImageUrl}";
             StartCoroutine(LoadImage());
             transform.parent.GetComponent<AuthenticationManager>().UpdateSignInUI();
             string idToken = task.Result.IdToken;
             string accessToken = task.Result.AuthCode;
             FirebaseManager.Instance.OnLoginGoogleCompleted(idToken, accessToken);
+
+            ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
+            ServerSystem.user.avatarPath = imageURL;
+            DataUserManager.SaveUserData();
         }
     }
     private IEnumerator LoadImage()
@@ -111,6 +117,9 @@ public class GoogleAuthentication : MonoBehaviour
         {
             GoogleSignIn.DefaultInstance.SignOut();
             currentUser = null;
+            ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Guest;
+            ServerSystem.user.avatarPath = string.Empty;
+            DataUserManager.SaveUserData();
         }
     }
 }

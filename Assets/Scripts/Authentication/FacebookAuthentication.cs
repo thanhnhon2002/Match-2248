@@ -10,6 +10,8 @@ public class FacebookAuthentication : MonoBehaviour
 {
     [SerializeField] private Image profileImage;
     [SerializeField] private TextMeshProUGUI nameText;
+
+    public static string Name { get; private set; }
     void Awake()
     {
         if (!FB.IsInitialized)
@@ -86,6 +88,9 @@ public class FacebookAuthentication : MonoBehaviour
         nameText.text = "User";
         profileImage.sprite = null;
         FB.LogOut();
+        ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Guest;
+        ServerSystem.user.avatarPath = string.Empty;
+        DataUserManager.SaveUserData();
     }
     private void AuthCallback(ILoginResult result)
     {
@@ -116,6 +121,7 @@ public class FacebookAuthentication : MonoBehaviour
 
         if (result.ResultDictionary.TryGetValue("name", out object name))
         {
+            Name = (string)name;
             nameText.text = name.ToString();
             Debug.Log("User Name: " + name.ToString());
         }
@@ -133,6 +139,9 @@ public class FacebookAuthentication : MonoBehaviour
                 if (dataDict != null && dataDict.TryGetValue("url", out object url))
                 {
                     StartCoroutine(LoadImage(url.ToString()));
+                    ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Facebook;
+                    ServerSystem.user.avatarPath = url.ToString();
+                    DataUserManager.SaveUserData();
                     Debug.Log("Picture URL: " + url.ToString());
                 }
                 else

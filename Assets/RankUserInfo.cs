@@ -30,11 +30,11 @@ public class RankUserInfo : MonoBehaviour
     {
         userName.text = data.nickName;
         score.text = BigIntegerConverter.ConvertNameValue(BigInteger.Pow(2, data.indexPlayer));
-        id.text = data.GetID();
+        id.text = data.id;
         if (data.typeLogin == UserDataServer.TypeLogin.Guest)
         {
             if(rankDisplay == null ) rankDisplay = GetComponentInParent<RankDisplay>();
             avatar.sprite = rankDisplay.avatar[data.avatarIndex];
-        } else avatar.sprite = await Avatar.LoadAvatar(data.avatarPath, avatar.rectTransform.rect, avatar.rectTransform.pivot);
+        } else avatar.sprite = await Avatar.LoadAvatar(data.avatarPath);
     }
 }

@@ -25,9 +25,11 @@ public class PlayerInfo : MonoBehaviour
     public async void DisplayInfo()
     {
         var userData = GameSystem.userdata;
-        avatar.sprite = avatarSprites[userData.avatarIndex];
-        nameTxt.text = userData.nickName;
-        id.text = ServerSystem.user.GetID();
+        if (ServerSystem.user.typeLogin == UserDataServer.TypeLogin.Guest) avatar.sprite = avatarSprites[userData.avatarIndex];
+        else avatar.sprite = await Avatar.LoadAvatar(ServerSystem.user.avatarPath);
+        nameTxt.text = GetUserName();
+        id.text = ServerSystem.user.id;
+        rank.text = string.Empty;
         LeanTween.value(0f, (float)userData.highestScore, Const.DEFAULT_TWEEN_TIME).setOnUpdate(x =>
         {
             bestScoreTxt.text = ((int)x).ToString();
@@ -41,5 +43,16 @@ public class PlayerInfo : MonoBehaviour
         var place = users.Find(x => x.id.Equals(ServerSystem.user.id));
         if (place == null) rank.text = $"{users.Count}+";
         else rank.text = (users.IndexOf(place) + 1).ToString();
+    }
+
+    private string GetUserName()
+    {
+        var user = ServerSystem.user;
+        return user.typeLogin switch
+        {
+            UserDataServer.TypeLogin.Google => GoogleAuthentication.Name,
+            UserDataServer.TypeLogin.Facebook => FacebookAuthentication.Name,
+            _ => GameSystem.userdata.nickName
+        };;
     }
 }

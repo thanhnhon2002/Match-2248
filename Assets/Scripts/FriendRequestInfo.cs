@@ -17,11 +17,11 @@ public class FriendRequestInfo : MonoBehaviour
     {
         if (data.id == null) return;
         userName.text = data.nickName;
-        id.text = data.GetID();
+        id.text = data.id;
         BtnAddFriend.onClick.AddListener(() => { OnClickAcceptFriend(data.id); });
         BtnRemoveFriend.onClick.AddListener(() => { OncikBtnRemoveFriend(data.id); });
         if (data.typeLogin == UserDataServer.TypeLogin.Guest) avatar.sprite = AvatarManager.Instance.avatars[data.avatarIndex];
-        else avatar.sprite = await Avatar.LoadAvatar(data.avatarPath, avatar.rectTransform.rect, avatar.rectTransform.pivot);
+        else avatar.sprite = await Avatar.LoadAvatar(data.avatarPath);
     }
 
     private void OnClickAcceptFriend(string id)

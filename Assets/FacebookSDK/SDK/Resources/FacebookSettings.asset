@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectedAppIndex: 0
   clientTokens:
-  - GGQVlaODZAXOWF3ei1BSmc5VU8xTER4N3cxbklpZA01sc2lKV0JQUEtSaFhqOGxCOU1Cd0RPNzB5blNNUmw4WTZA0LWJDNlZAxT3N1V2pORWNqSnF5ejRaYmU2bG9jRW9ZASVU1OFRMS0xtb1ZAjbjBvMEJDVUVaMlJ5c1J0MC1ZAa3V4b1BBVnhyeFJmcEJqWndwN1Fkd2xOTkd3aTVsNHVHcTRZAbwZDZD
+  - GGQVliQ1hXVF90OEpfbWRYZA3dydXlzY3liRW11cHh2OF9teFNjdTM0ZAzdmcUItOWszT1drZAmxiWWE1YkEwYVZAyLTRiRkpoVFB6MlpXekVGYkgxdHVBdFdsaVd4R3pFRjRJLUJpc0Y0Q1drNXlYa1dFSWxNeER3VXF3eW1fQXVEdXVvYUw1T3dWQTQtbWk1Nnk4QmdjeHQxaldueWZA4a1E1cU53
   appIds:
   - 985575699865498
   appLabels:
@@ -24,7 +24,8 @@ MonoBehaviour:
   status: 1
   xfbml: 0
   frictionlessRequests: 1
-  androidKeystorePath: C:\Unity\Match-2248-\keystorefor2248.keystore
+  androidKeystorePath: C:\Users\rober\Documents\Unity Project\2048Connect\keystore
+    for 2248.keystore
   iosURLSuffix: 
   appLinkSchemes:
   - list: []
