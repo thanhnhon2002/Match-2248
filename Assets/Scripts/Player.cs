@@ -131,6 +131,7 @@ public class Player : MonoBehaviour
 
     private bool CanConect(Cell cell)
     {
+        return true;
         if (!conectedValueCount.ContainsKey(cell.Value / 2) && cell.Value > initValue) return false;
         if (cell.Value < currentCellValue) return false;
         else if (currentCellValue == cell.Value)
@@ -193,18 +194,25 @@ public class Player : MonoBehaviour
             GameSystem.SaveUserDataToLocal();
         }
 
+        PianoSongPlayer.Instance.PlayNextChord();
         float destroyDelay = MAX_EFFECT_TIME / conectedCell.Count;
         if (destroyDelay > MAX_TIME_BETWEEN_DESTROY_BLOCK)
         {
             destroyDelay = MAX_TIME_BETWEEN_DESTROY_BLOCK;
         }
         effectTime = conectedCell.Count * destroyDelay + DELAY_EFFECT_FINISH;
-        //effectTime = MAX_EFFECT_TIME;
 
         foreach (var cell in conectedCell)
         {
             sequence.AppendCallback(() =>
             {
+                GameFlow.Instance.gameState = GameState.Fx;
+                var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
+                fx.delayEachBlock = destroyDelay;
+                fx.Play(conectedCell, conectedCell.IndexOf(cell), cell.spriteRenderer.color, newColor);
+                var fx2 = PoolSystem.Instance.GetObject(effectDust, cell.transform.position);
+                fx2.SetColor(cell.spriteRenderer.color);
+
                 if (!cell.Equals(lastCell))
                 {
                     cell.gameObject.SetActive(false);
@@ -216,13 +224,6 @@ public class Player : MonoBehaviour
                     lastCell.spriteRenderer.color = color;
                     lastCell.valueTxt.color = color;
                 }
-                GameFlow.Instance.gameState = GameState.Fx;
-                var fx = PoolSystem.Instance.GetObject(effectPrefab, cell.transform.position);
-                fx.delayEachBlock = destroyDelay;
-                fx.Play(conectedCell, conectedCell.IndexOf(cell), cell.spriteRenderer.color, newColor);
-                var fx2 = PoolSystem.Instance.GetObject(effectDust, cell.transform.position);
-                fx2.SetColor(cell.spriteRenderer.color);
-
                 AudioSystem.Instance.PlaySound("QT_paopao", POOK_SOUND_VOLUMNE);
                 cell.highLight.SetActive(false);
             });
@@ -233,12 +234,8 @@ public class Player : MonoBehaviour
         {
             conectedCell.Last().highLight.SetActive(false);
             newColor.a = 1;
-            //var textColor = Color.white;
-            //textColor.a = 1;
             lastCell.spriteRenderer.color = newColor;
             lastCell.Value = newValue;
-            //lastCell.valueTxt.color = textColor;
-            PianoSongPlayer.Instance.PlayNextChord();
             GridManager.Instance.SetSumValue(newValue);
             GameFlow.Instance.CheckCombo(combo, GameFlow.Instance.mainCam.WorldToScreenPoint(lastCell.transform.position));
             GameFlow.Instance.AddScore(newValue);

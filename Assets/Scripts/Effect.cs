@@ -35,6 +35,10 @@ public class Effect : MonoBehaviour
         float outTime = Player.MAX_EFFECT_TIME * 0.3f + (pos.Count - index + 0.5f) * delayEachBlock * 0.5f;
         float inTime = Player.MAX_EFFECT_TIME * 0.5f;
 
+        if (outTime < 0.01f) outTime = 0.01f;
+
+        Debug.Log($"index = {index}, pos.Count = {pos.Count}, outTIme = {outTime}, inTime = {inTime}, outTime + inTime = {outTime + inTime}");
+
         startColor.a = 0;
         for (int i = 0; i < cellPartcals.Length; i++)
         {
