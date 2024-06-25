@@ -6,16 +6,13 @@ using DarkcupGames;
 
 public class CellPartical : MonoBehaviour
 {
-    [SerializeField] private Vector3 localPos;
-    [SerializeField] private float size;
-    [SerializeField] private float rotation;
+    public const float MIN_SIZE = 0.15f;
+    public const float MAX_SIZE = 0.25f;
+    public const float MIN_RANGE = 0.7f;
+    public const float MAX_RANGE = 1.1f;
+
     public SpriteRenderer spriteRenderer;
-    private void Awake()
-    {
-        //localPos = transform.localPosition;
-        //size = transform.localScale.x;
-        //rotation = transform.eulerAngles.z;
-    }
+    private Vector3 localPos;
 
     private void OnEnable()
     {
@@ -27,7 +24,7 @@ public class CellPartical : MonoBehaviour
 
     public void PlayEffectOut(float time, Color startColor)
     {
-        // AudioSystem.Instance.PlaySound("QT_paopao");
+        localPos = Random.insideUnitCircle * Random.Range(MIN_RANGE, MAX_RANGE);
         startColor.a = 0f;
         spriteRenderer.color = startColor;
         transform.localPosition = Vector3.zero;
@@ -35,8 +32,8 @@ public class CellPartical : MonoBehaviour
         transform.localRotation = new Quaternion(0, 0, 0, 0);
         spriteRenderer.DOFade(1f, time);
         transform.DOLocalMove(localPos, time).SetEase(Ease.OutCubic);
-        transform.DORotate(new Vector3(0, 0, rotation), time);
-        transform.DOScale(size, time);
+        transform.DORotate(new Vector3(0, 0, Random.Range(0, 360)), time);
+        transform.DOScale(Vector3.one * Random.Range(MIN_SIZE, MAX_SIZE), time);
     }
 
     public void PlayEffectIn(float time, Color endColor)
@@ -46,14 +43,5 @@ public class CellPartical : MonoBehaviour
         transform.DOLocalRotate(Vector3.zero, time * 0.5f);
         spriteRenderer.DOFade(0f, time);
         spriteRenderer.DOColor(endColor, time);
-    }
-
-    [ContextMenu("Get Info")]
-
-    private void GetInfo()
-    {
-        localPos = transform.localPosition;
-        size = transform.localScale.x;
-        rotation = transform.eulerAngles.z;
     }
 }
