@@ -13,6 +13,10 @@ public enum OptionMenu
 }
 public class MenuOptions : MonoBehaviour
 {
+    public const float ANIMATION_MOVE_TIME = 0.008f;
+    public const float ANIMATION_MOVE_TIME_SLOW = 0.005f;
+    public const bool ANIMATION_ALL_PANEL = false;
+
     public static MenuOptions Instance;
     Dictionary<OptionMenu, GameObject> dicMenuOptions = new Dictionary<OptionMenu, GameObject>();
     [SerializeField] OptionAnimation defaultOption;
@@ -52,14 +56,21 @@ public class MenuOptions : MonoBehaviour
     }
     void OnPanel()
     {       
-        panel.GetComponent<RectTransform>().anchoredPosition = normalPos;
-        panel.GetComponent<RectTransform>().DOAnchorPosX(normalPos.x, 0.5f).OnComplete(()=>
+        if (ANIMATION_ALL_PANEL)
         {
-            panel.GetComponent<RectTransform>().DOAnchorPosX(0, 0.3f).OnComplete(()=>
+            panel.GetComponent<RectTransform>().anchoredPosition = normalPos;
+            panel.GetComponent<RectTransform>().DOAnchorPosX(normalPos.x, 0.5f).OnComplete(() =>
             {
-                AnimationPanel();
+                panel.GetComponent<RectTransform>().DOAnchorPosX(0, 0.3f).OnComplete(() =>
+                {
+                    AnimationPanel();
+                });
             });
-        });
+        } else
+        {
+            panel.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, normalPos.y);
+            OptionAnimation.optionAnimation.AnimationUp(ANIMATION_MOVE_TIME_SLOW);
+        }
     }
     void AnimationPanel()
     {
@@ -67,21 +78,21 @@ public class MenuOptions : MonoBehaviour
         var optionAnimations = panel.GetComponentsInChildren<OptionAnimation>();
         sequence.AppendCallback(() =>
         {
-            optionAnimations[0].AnimationUp(0.008f);
-            optionAnimations[4].AnimationUp(0.008f);
+            optionAnimations[0].AnimationUp(ANIMATION_MOVE_TIME);
+            optionAnimations[4].AnimationUp(ANIMATION_MOVE_TIME);
         }).AppendInterval(0.5f);
         sequence.AppendCallback(() =>
         {
             optionAnimations[0].AnimationDown();
             optionAnimations[4].AnimationDown();
-            optionAnimations[1].AnimationUp(0.008f);
-            optionAnimations[3].AnimationUp(0.008f);
+            optionAnimations[1].AnimationUp(ANIMATION_MOVE_TIME);
+            optionAnimations[3].AnimationUp(ANIMATION_MOVE_TIME);
         }).AppendInterval(0.5f);
         sequence.AppendCallback(() =>
         {
             optionAnimations[1].AnimationDown();
             optionAnimations[3].AnimationDown();
-            OptionAnimation.optionAnimation.AnimationUp(0.005f);
+            OptionAnimation.optionAnimation.AnimationUp(ANIMATION_MOVE_TIME_SLOW);
         });
     }
     private void OnDestroy()

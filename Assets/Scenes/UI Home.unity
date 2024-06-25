@@ -637,6 +637,7 @@ MonoBehaviour:
   valueTutorial: 16
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &61100610
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2578,7 +2579,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 900319606}
+  m_Father: {fileID: 446564909}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &267576916
 GameObject:
@@ -4654,6 +4655,7 @@ Transform:
   - {fileID: 444283194}
   - {fileID: 1816644268}
   - {fileID: 1761406198}
+  - {fileID: 267486058}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &468714944
@@ -5801,6 +5803,7 @@ MonoBehaviour:
   valueTutorial: 4
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &659445105
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9308,6 +9311,7 @@ MonoBehaviour:
   valueTutorial: 4
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &866841890
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9612,7 +9616,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1023515709}
-  - {fileID: 267486058}
   - {fileID: 809113234}
   m_Father: {fileID: 1440825370}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10802,6 +10805,7 @@ MonoBehaviour:
   valueTutorial: 8
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &1017900224
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -11091,6 +11095,7 @@ MonoBehaviour:
   valueTutorial: 8
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &1029008677
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -12225,6 +12230,7 @@ MonoBehaviour:
   valueTutorial: 4
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &1158240467
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16027,6 +16033,7 @@ MonoBehaviour:
   valueTutorial: 2
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &1434676525
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -16265,6 +16272,7 @@ MonoBehaviour:
   valueTutorial: 2
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &1452186027
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -17045,6 +17053,7 @@ MonoBehaviour:
   valueTutorial: 2
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &1553372006
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -25119,6 +25128,7 @@ MonoBehaviour:
   valueTutorial: 4
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &1786125921
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -27286,6 +27296,7 @@ MonoBehaviour:
   valueTutorial: 2
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &1950402727
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28637,6 +28648,7 @@ MonoBehaviour:
   valueTutorial: 4
   linePrefab: {fileID: 4934305722662563819, guid: 7ba086d3cb3d3d44fb9af2b2401685bd, type: 3}
   effectPrefab: {fileID: 1268373247494189, guid: 536610e01521dbe4aa4b82aeedf2f7fb, type: 3}
+  effectDust: {fileID: 4882705934142971709, guid: 375fbb13154cafc4ebd04d92aa349ee3, type: 3}
 --- !u!61 &2068850659
 BoxCollider2D:
   m_ObjectHideFlags: 0

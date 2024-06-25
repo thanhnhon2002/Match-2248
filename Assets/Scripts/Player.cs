@@ -153,10 +153,14 @@ public class Player : MonoBehaviour
         {
             line.gameObject.SetActive(false);
         }
+    }
+
+    public void EndDrag()
+    {
         if (conectedCell.Count >= 2) ExploseConectedCell();
         else
         {
-            if(conectedCell.Count ==1 ) conectedCell.First().highLight.SetActive(false);
+            if (conectedCell.Count == 1) conectedCell.First().highLight.SetActive(false);
             ResetData();
             GameFlow.Instance.TotalPoint = 0;
         }
@@ -229,6 +233,18 @@ public class Player : MonoBehaviour
             });
             sequence.AppendInterval(destroyDelay);
         }
+        sequence.AppendInterval(0.2f);
+        sequence.AppendCallback(() =>
+        {
+            newColor.a = 1;
+            lastCell.highLight.SetActive(false);
+            lastCell.spriteRenderer.color = newColor;
+            lastCell.Value = newValue;
+
+            EasyEffect.Appear(lastCell.gameObject, 1f, 1f, 0.15f, 1.1f);
+            var fx2 = PoolSystem.Instance.GetObject(effectDust, lastCell.transform.position);
+            fx2.SetColor(lastCell.spriteRenderer.color);
+        });
 
         LeanTween.delayedCall(effectTime, () =>
         {

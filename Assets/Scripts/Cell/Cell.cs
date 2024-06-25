@@ -50,7 +50,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 #if UNITY_EDITOR
     private void Update ()
     {
-        debugTxt.text = $"x = {gridPosition.x}, y =  {gridPosition.y}";
+        debugTxt.text = $"({gridPosition.x},{gridPosition.y})";
     }
 #endif
     public void FindNearbyCells ()
@@ -129,6 +129,7 @@ public class Cell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
         {
             case GameState.Playing:
                 Player.Instance.ClearLine();               
+                Player.Instance.EndDrag();               
                 break;
             case GameState.Paint:
                 Paint.Instance.PaintAllCells();
