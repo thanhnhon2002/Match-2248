@@ -141,5 +141,7 @@ public class FriendManager : MonoBehaviour
                 await ShowAllFriendRequest();
                 break;
         }
+
+        ResetContent();
     }
 }

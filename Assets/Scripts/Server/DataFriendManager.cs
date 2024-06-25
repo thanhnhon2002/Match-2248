@@ -145,12 +145,12 @@ public class DataFriendManager : MonoBehaviour
                         }
                     }
                 }
-                FriendManager.Instance?.HandleFriendListChanged();
             }
             else
             {
                 Debug.LogWarning("No data found.");
             }
+            FriendManager.Instance?.HandleFriendListChanged();
         }
         catch (Exception ex)
         {
@@ -218,6 +218,7 @@ public class DataFriendManager : MonoBehaviour
     {
         userDataServer.listFriend.Remove(friendData.id);
         ServerSystem.SaveToServerAtPath(ServerSystem.USER_DATA_URL + "/" + userDataServer.id, userDataServer);
+        DataUserManager.SaveUserData();
     }
 
     public static async Task<UserDataServer> GetFriend(string id)
