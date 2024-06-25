@@ -93,6 +93,7 @@ public class FriendManager : MonoBehaviour
 
     public void ResetContent()
     {
+        if (content == null) return;
         foreach(UserInfo friendInfo in content.GetComponentsInChildren<UserInfo>())
         {
             friendInfo.gameObject.SetActive(false);

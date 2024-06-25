@@ -35,6 +35,6 @@ public class RankUserInfo : MonoBehaviour
         {
             if(rankDisplay == null ) rankDisplay = GetComponentInParent<RankDisplay>();
             avatar.sprite = rankDisplay.avatar[data.avatarIndex];
-        } else avatar.sprite = await Avatar.LoadAvatar(data.avatarPath, avatar.rectTransform.rect, avatar.rectTransform.pivot);
+        } else avatar.sprite = await Avatar.LoadAvatar(data.avatarPath);
     }
 }
