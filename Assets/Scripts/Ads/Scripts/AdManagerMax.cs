@@ -10,6 +10,7 @@ namespace DarkcupGames
     public class AdManagerMax : MonoBehaviour
     {
         private const float DELAY_SHOW_INTER = 0.5f;
+        public const float INTER_BUFFER = 60F;
         public static readonly float MAX_RETRY_TIME = 64f;
         public static AdManagerMax Instance { get; private set; }
         public List<UnityEvent> events;
@@ -100,7 +101,7 @@ namespace DarkcupGames
             }
             InternetChecker.Instance.CheckInternetConnection();
             if (InternetChecker.Instance.WasConnected == false) return;
-            lastInterTime = Time.time;
+            lastInterTime = Time.time + INTER_BUFFER;
 
             if (loadingAdPopup != null) loadingAdPopup.SetActive(true);
             LeanTween.delayedCall(1f, () =>

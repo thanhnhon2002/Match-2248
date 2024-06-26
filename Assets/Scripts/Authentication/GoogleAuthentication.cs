@@ -94,6 +94,9 @@ public class GoogleAuthentication : MonoBehaviour
             string accessToken = task.Result.AuthCode;
             FirebaseManager.Instance.OnLoginGoogleCompleted(idToken, accessToken);
 
+            Debug.Log("Google Name" + Name);
+            GameSystem.userdata.nickName = Name;
+            GameSystem.SaveUserDataToLocal();
             ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
             ServerSystem.user.avatarPath = imageURL;
             DataUserManager.SaveUserData();

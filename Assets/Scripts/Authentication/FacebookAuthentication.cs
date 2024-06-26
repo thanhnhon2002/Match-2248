@@ -139,6 +139,8 @@ public class FacebookAuthentication : MonoBehaviour
                 if (dataDict != null && dataDict.TryGetValue("url", out object url))
                 {
                     StartCoroutine(LoadImage(url.ToString()));
+                    GameSystem.userdata.nickName = Name;
+                    GameSystem.SaveUserDataToLocal();
                     ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Facebook;
                     ServerSystem.user.avatarPath = url.ToString();
                     DataUserManager.SaveUserData();

@@ -41,10 +41,13 @@ public abstract class Power<T> : MonoBehaviour where T : Power<T>
     protected virtual void Awake()
     {
         Instance = (T)this;
-        info = GameSystem.userdata.dicPower[powerType];
-        DisplayCost();
+        info = GameSystem.userdata.dicPower[powerType];     
     }
 
+    private void OnEnable()
+    {
+        DisplayCost();
+    }
 
     public virtual void UsePower()
     {

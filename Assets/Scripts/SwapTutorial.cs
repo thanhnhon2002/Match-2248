@@ -39,7 +39,7 @@ public class SwapTutorial : PowerTutorial
         unmasks[0].transform.position = pos;
         unmasks[0].transform.DOScale(1f, 1f);
 
-        var target2 = allCells.First(x => x.Value == cell.Value);
+        var target2 = allCells.First(x => x.Value != cell.Value);
         pos = GameFlow.Instance.mainCam.WorldToScreenPoint(target2.transform.position);
         unmasks[1].transform.position = pos;
         unmasks[1].transform.DOScale(1f, 1f);

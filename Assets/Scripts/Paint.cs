@@ -85,6 +85,7 @@ public class Paint : Power<Paint>
         info.isTutorialFinish = true;
         GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.diamondGroup.Display();
+        DisplayCost();
         var highestValue = FindHighestValue();
         GameFlow.Instance.gameState = GameState.Fx;
         var sq = DOTween.Sequence();
