@@ -9,6 +9,17 @@ using UnityEngine.UIElements;
 
 public class DataRankManager : MonoBehaviour
 {
+    private bool init = false;
+
+    private async void Update()
+    {
+        if (ServerSystem.databaseRef != null && init == false)
+        {
+            init = true;
+            await GetRankGlobal(null, null);
+        }
+    }
+
     [ContextMenu("Get Data Rank")]
     public static async Task GetRankGlobal(Action<List<UserDataServer>> callBack, Action fallBack)
     {

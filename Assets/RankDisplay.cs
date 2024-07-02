@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using TMPro;
 using Unity.Collections;
 using UnityEngine;
-using UnityEngine.UIElements;
+using DG.Tweening;
 
 public class RankDisplay : MonoBehaviour
 {
@@ -14,6 +14,7 @@ public class RankDisplay : MonoBehaviour
     [SerializeField] private GameObject loadingIcon;
     [SerializeField] private CanvasGroup rankGroup;
     [SerializeField] private TextMeshProUGUI message;
+    [SerializeField] private TextMeshProUGUI[] texts;
     private List<UserDataServer> userDataServers = new List<UserDataServer>();
     public List<UserDataServer> UserDataServers => userDataServers;
 
@@ -63,5 +64,17 @@ public class RankDisplay : MonoBehaviour
             infos[i].gameObject.SetActive(false);
         }
         message.text = "Please try again later";
+    }
+
+    public void ClickRankGlobal()
+    {
+        texts[0].DOFade(1, 0);
+        texts[1].DOFade(0.1f, 0);
+    }
+
+    public void ClickRankFriend()
+    {
+        texts[1].DOFade(1, 0);
+        texts[0].DOFade(0.1f, 0);
     }
 }

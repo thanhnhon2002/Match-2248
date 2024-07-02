@@ -27,10 +27,10 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
         iconOption = transform.GetComponentsInChildren<Image>()[1];    
         rectTransformImageUsed = iconOption.GetComponent<RectTransform>();
         nameOption = GetComponentInChildren<TextMeshProUGUI>(true);
+        iconNormal = iconOption.sprite;
     }
     void Start()
     {
-        iconNormal = iconOption.sprite;
         nameOption.gameObject.SetActive(false);
     }
     public void OnPointerEnter(PointerEventData eventData)

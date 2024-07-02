@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Firebase.Database;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,7 +21,7 @@ public class FriendManager : MonoBehaviour
     [SerializeField] FriendRequestInfo friendRequestInfo;
     [SerializeField] SentFriendRequestInfo sentFriendRequestInfo;
     [SerializeField] FriendInfo friendInfo;
-    [SerializeField] Image[] maskButton;
+    [SerializeField] TextMeshProUGUI[] texts;
     [SerializeField] TMP_InputField inputField;
     private NameContent currentContent;
 
@@ -112,18 +113,18 @@ public class FriendManager : MonoBehaviour
         }
     }
 
-    public async void CickListFriend()
+    public async void ClickListFriend()
     {
-        maskButton[0].gameObject.SetActive(true);
-        maskButton[1].gameObject.SetActive(false);
+        texts[0].DOFade(1, 0);
+        texts[1].DOFade(0.1f, 0);
         ResetContent();
         await ShowAllFriendAsync();
     }
 
-    public async void CickListFriendRequest()
+    public async void ClickListFriendRequest()
     {
-        maskButton[1].gameObject.SetActive(true);
-        maskButton[0].gameObject.SetActive(false);
+        texts[1].DOFade(1, 0);
+        texts[0].DOFade(0.1f, 0);
         ResetContent();
         await ShowAllFriendRequest();
     }
