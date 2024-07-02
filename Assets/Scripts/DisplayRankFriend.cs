@@ -17,7 +17,7 @@ public class DisplayRankFriend : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach(RankUserInfo userInfo in GetComponentsInChildren<RankUserInfo>())
+        foreach(RankUserInfo userInfo in content.GetComponentsInChildren<RankUserInfo>())
         {
             userInfo.gameObject.SetActive(false);
         }

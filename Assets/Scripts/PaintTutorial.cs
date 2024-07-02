@@ -12,9 +12,11 @@ public class PaintTutorial : PowerTutorial
     [SerializeField] private Sprite pressSprite;
     [SerializeField] private Sprite releaseSprite;
     [SerializeField] private Line linePrefab;
+    [SerializeField] private CellHighlight highlightPrefab;
 
     private LinkedList<Cell> cells = new LinkedList<Cell>();
     private List<Line> lines = new List<Line>();
+    private List<CellHighlight> highlights = new List<CellHighlight>();
     private List<Vector3> positions = new List<Vector3>();
 
     public override void DoTutorial()
@@ -28,6 +30,12 @@ public class PaintTutorial : PowerTutorial
         }
         GetPositions(cells.First);
         ConectCells(cells.First);
+        foreach (var item in cells)
+        {
+            var obj = PoolSystem.Instance.GetObject(highlightPrefab, item.transform.position);
+            obj.cell = item;
+            highlights.Add(obj);
+        }
         StartCoroutine(TutorialHandMove(positions.ToArray()));
     }
 
@@ -74,5 +82,9 @@ public class PaintTutorial : PowerTutorial
     private void OnDisable()
     {
         ClearData();
+        foreach (var item in highlights)
+        {
+            item.gameObject.SetActive(false);
+        }
     }
 }

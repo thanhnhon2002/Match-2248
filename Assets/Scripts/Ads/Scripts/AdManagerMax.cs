@@ -35,6 +35,8 @@ namespace DarkcupGames
             {
                 HideAdBreak();
             });
+
+
             MaxMediationManager.rewarded.AddOnAdCloseAction((str, info) =>
             {
                 HideAdLoading();
@@ -57,6 +59,12 @@ namespace DarkcupGames
 
         public void ShowIntertistial(string placement, Action onWatchAdsComplete)
         {
+            onWatchAdsComplete += () =>
+            {
+                GameSystem.userdata.diamond += adBreak.diamondAmount;
+                var diamondGroup = FindObjectOfType<DiamondGroup>();
+                if (diamondGroup != null) diamondGroup.Display();
+            };
             var userData = GameSystem.userdata;
             if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS || userData.boughtItems.Contains(IAP_ID.no_ads.ToString()))
             {

@@ -49,6 +49,7 @@ MonoBehaviour:
   pressSprite: {fileID: 21300000, guid: 4a4565abc39c2ab46987ba073e98d00e, type: 3}
   releaseSprite: {fileID: 21300000, guid: 4f3fdcbd4baf07240bd1234b5faa7e2c, type: 3}
   linePrefab: {fileID: 7968922329495858375, guid: dd2332ba64676ba40aa92ab136e31341, type: 3}
+  highlightPrefab: {fileID: 5962770623641434231, guid: b3decc7d3b34953438887f3b22737c90, type: 3}
 --- !u!212 &8799327348197076010
 SpriteRenderer:
   m_ObjectHideFlags: 0

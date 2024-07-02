@@ -79,6 +79,11 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
     public void OnPointerClick(PointerEventData eventData)
     {
         //Debug.Log("Click " + transform.name);
+        OpenPanel();
+    }
+
+    public void OpenPanel()
+    {
         if (optionAnimation != null)
         {
             optionAnimation.AnimationDown();
@@ -86,6 +91,7 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
         optionAnimation = this;
         AnimationUp();
     }
+
     public void AnimationUp(float speed = TIME_ANIMATON_UP)
     {
         DestroyAniamtion();

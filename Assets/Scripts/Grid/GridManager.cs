@@ -294,7 +294,7 @@ public class GridManager : MonoBehaviour
         }
         LeanTween.delayedCall(1f, () =>
         {
-            GameFlow.Instance.gameState = GameState.Playing;
+            //GameFlow.Instance.gameState = GameState.Playing;
             CheckToSpawnNewCell(lowestCells);
             lowestCells.Clear();
         });
