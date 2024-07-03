@@ -99,6 +99,7 @@ public class GoogleAuthentication : MonoBehaviour
             GameSystem.SaveUserDataToLocal();
             ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
             ServerSystem.user.avatarPath = imageURL;
+            ConvertIdManager.UpdateIdConvert(task.Result.UserId, ServerSystem.user.id);
             DataUserManager.SaveUserData();
         }
     }

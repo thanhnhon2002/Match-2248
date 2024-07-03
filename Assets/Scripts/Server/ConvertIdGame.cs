@@ -6,4 +6,5 @@ public class ConvertIdGame : MonoBehaviour
 {
     public string idSocialNetwork;
     public string idGame;
+
 }

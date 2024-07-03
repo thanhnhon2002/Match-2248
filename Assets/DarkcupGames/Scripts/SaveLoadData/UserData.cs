@@ -61,7 +61,6 @@ public class UserData
     public string nickName;
     public int avatarIndex;
     public int level;
-    public float gold;
     public float diamond;
     public bool replay;
     public bool firstPlayGame;

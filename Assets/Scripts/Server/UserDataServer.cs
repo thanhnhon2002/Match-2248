@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 
@@ -20,8 +21,12 @@ public class UserDataServer
     public int indexPlayer;
     public int maxIndex;
     public int avatarIndex;
+    public BigInteger hightScore;
+    public BigInteger highestCellValue;
     public TypeLogin typeLogin;
     public Dictionary<string, Friend> listFriend = new Dictionary<string, Friend>();
+    public GameData gameData;
+    //public List<string> boughtItems;
     public void CopyFromLocalData()
     {
         if (GameSystem.userdata == null)
@@ -39,6 +44,20 @@ public class UserDataServer
         this.indexPlayer = GameSystem.userdata.gameData.indexPlayer;
         this.nickName = GameSystem.userdata.nickName;
         this.avatarIndex = GameSystem.userdata.avatarIndex;
+        this.hightScore = GameSystem.userdata.highestScore;
+        this.highestCellValue = GameSystem.userdata.highestCellValue;
+        this.gameData = GameSystem.userdata.gameData;
+        //if (this.gameData.cellDic == null)
+        //{
+        //    this.gameData.cellDic = new Dictionary<string, int>();
+        //}
+        //var newDic = new Dictionary<string, int>();
+        //foreach(var item in this.gameData.cellDic)
+        //{
+        //    newDic.Add(item.Key.Replace(".", "_"), item.Value);
+        //}
+        //this.gameData.cellDic = newDic;
+        //this.boughtItems = GameSystem.userdata.boughtItems;
     }
 
     public string GetID()

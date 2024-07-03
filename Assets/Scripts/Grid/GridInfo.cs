@@ -38,7 +38,7 @@ public struct GridPosition
     {
         if (string.IsNullOrEmpty (format))
         {
-            format = "F2";
+            format = "F0";
         }
 
         if (formatProvider == null)

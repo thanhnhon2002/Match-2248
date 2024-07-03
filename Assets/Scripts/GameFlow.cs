@@ -55,6 +55,7 @@ public class GameFlow : MonoBehaviour
             {
                 userData.highestScore = gameScore;
                 highScoreTxt.text = BigIntegerConverter.ConvertNameValue(gameScore);
+                DataUserManager.SaveUserData();
             }
             GameSystem.SaveUserDataToLocal ();
         }
