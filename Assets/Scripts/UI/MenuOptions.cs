@@ -37,6 +37,17 @@ public class MenuOptions : MonoBehaviour
         ShowOption(OptionAnimation.optionAnimation.option);
         OnPanel();
     }
+
+    public void ShowDefaultOption()
+    {
+        OptionAnimation.optionAnimation.AnimationDown();
+        panel.GetComponent<RectTransform>().localPosition = normalPos;
+        if (GameSystem.userdata.firstPlayGame) return;
+        OptionAnimation.optionAnimation = defaultOption;
+        ShowOption(OptionAnimation.optionAnimation.option);
+        OnPanel();
+    }
+
     public void ShowOption(OptionMenu option)
     {
         dicMenuOptions[option].SetActive(true);

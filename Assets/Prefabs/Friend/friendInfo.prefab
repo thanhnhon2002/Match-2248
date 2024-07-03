@@ -511,7 +511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76f7a21acc2840940bf0c0d0eb651c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatar: {fileID: 0}
+  avatar: {fileID: 8267710535051958152}
   userName: {fileID: 7485633635935467132}
   id: {fileID: 5013780652789884055}
   BtnRemoveFriend: {fileID: 7481585216206713973}

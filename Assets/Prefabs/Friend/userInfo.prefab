@@ -405,7 +405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77a7ffb72b08924aa90564fa7934512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatar: {fileID: 0}
+  avatar: {fileID: 6362655650517031479}
   userName: {fileID: 7485633635935467132}
   id: {fileID: 5013780652789884055}
   BtnAddFriend: {fileID: 7419215754036934832}

@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b11a3257c820f6047b77cb8c9629347f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatar: {fileID: 0}
+  avatar: {fileID: 5749505930990723819}
   userName: {fileID: 7485633635935467132}
   id: {fileID: 5013780652789884055}
   BtnRemoveRequest: {fileID: 7419215754036934832}
