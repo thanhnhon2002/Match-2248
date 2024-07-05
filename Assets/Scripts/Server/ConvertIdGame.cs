@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConvertIdGame : MonoBehaviour
+[System.Serializable]
+public class ConvertIdGame
 {
     public string idSocialNetwork;
     public string idGame;
 
+    public ConvertIdGame(string idSocialNetwork, string idGame)
+    {
+        this.idSocialNetwork = idSocialNetwork;
+        this.idGame = idGame;
+    }
 }

@@ -4,19 +4,25 @@ using TMPro;
 
 public class AuthenticationManager : MonoBehaviour
 {
+    public static AuthenticationManager Instance;
     [SerializeField] private GameObject googleSignInButton;
     [SerializeField] private GameObject facebookSignInButton;
     [SerializeField] private GameObject signOutButton;
 
     [SerializeField] private GoogleAuthentication googleAuth;
-    [SerializeField] private FacebookAuthentication facebookAuth;
+    //[SerializeField] private FacebookAuthentication facebookAuth;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     public void UpdateSignInUI()
     {
         bool isGoogleLoggedIn = googleAuth.IsLoggedIn();
-        bool isFacebookLoggedIn = facebookAuth.IsLoggedIn();
+        //bool isFacebookLoggedIn = facebookAuth.IsLoggedIn();
 
-        if (isGoogleLoggedIn || isFacebookLoggedIn)
+        if (isGoogleLoggedIn /*|| isFacebookLoggedIn*/)
         {
             googleSignInButton.SetActive(false);
             facebookSignInButton.SetActive(false);
@@ -25,7 +31,7 @@ public class AuthenticationManager : MonoBehaviour
         else
         {
             googleSignInButton.SetActive(true);
-            facebookSignInButton.SetActive(true);
+            //facebookSignInButton.SetActive(true);
             signOutButton.SetActive(false);
         }
     }

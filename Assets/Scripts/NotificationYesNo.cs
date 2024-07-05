@@ -1,0 +1,32 @@
+using DG.Tweening;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+
+public class NotificationYesNo : MonoBehaviour
+{
+    [SerializeField] private TextMeshProUGUI message;
+    [SerializeField] private Button btnNo;
+    [SerializeField] private Button btnYes;
+
+    public void Show(string messageInput, Action actionClickBtnYes)
+    {
+        message.text = "";
+        message.text = messageInput;
+        btnYes.onClick.RemoveAllListeners();
+        btnYes.onClick.AddListener(() => 
+        {
+            actionClickBtnYes.Invoke();
+            Hide();
+        });
+        transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
+    }
+
+    public void Hide()
+    {
+        transform.DOScale(0f, 0.2f).SetEase(Ease.OutBack);
+    }
+}
