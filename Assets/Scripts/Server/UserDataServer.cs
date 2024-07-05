@@ -26,7 +26,7 @@ public class UserDataServer
     public TypeLogin typeLogin;
     public Dictionary<string, Friend> listFriend = new Dictionary<string, Friend>();
     public GameData gameData;
-    //public List<string> boughtItems;
+    public List<string> boughtItems;
     public void CopyFromLocalData()
     {
         if (GameSystem.userdata == null)
@@ -57,7 +57,31 @@ public class UserDataServer
         //    newDic.Add(item.Key.Replace(".", "_"), item.Value);
         //}
         //this.gameData.cellDic = newDic;
-        //this.boughtItems = GameSystem.userdata.boughtItems;
+        this.boughtItems = GameSystem.userdata.boughtItems;
+    }
+
+    public static void UpdateLocalData(UserDataServer dataServer)
+    {
+        if (GameSystem.userdata == null)
+        {
+            Debug.LogError("user data currently is null");
+            return;
+        }
+        if (GameSystem.userdata.gameData == null)
+        {
+            Debug.LogError("user game data null");
+            return;
+        }
+
+        GameSystem.userdata.gameData.maxIndex = dataServer.maxIndex;
+        GameSystem.userdata.gameData.indexPlayer = dataServer.indexPlayer;
+        GameSystem.userdata.nickName = dataServer.nickName;
+        GameSystem.userdata.avatarIndex = dataServer.avatarIndex;
+        GameSystem.userdata.highestScore = dataServer.hightScore;
+        GameSystem.userdata.highestCellValue = dataServer.highestCellValue;
+        GameSystem.userdata.gameData = dataServer.gameData;
+        GameSystem.userdata.boughtItems = dataServer.boughtItems;
+        GameSystem.SaveUserDataToLocal();
     }
 
     public string GetID()

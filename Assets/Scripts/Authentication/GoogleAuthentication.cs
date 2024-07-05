@@ -46,6 +46,7 @@ public class GoogleAuthentication : MonoBehaviour
     {
         return currentUser != null;
     }
+
     public void SignIn()
     {
         GoogleSignIn.Configuration = configuration;
@@ -56,6 +57,7 @@ public class GoogleAuthentication : MonoBehaviour
         Debug.Log("Calling SignIn");
         GoogleSignIn.DefaultInstance.SignIn().ContinueWithOnMainThread(OnAuthenticationFinished);
     }
+
     private void OnAuthenticationFinished(Task<GoogleSignInUser> task)
     {
         if (task.IsFaulted)
@@ -98,6 +100,7 @@ public class GoogleAuthentication : MonoBehaviour
             GameSystem.userdata.nickName = Name;
             GameSystem.SaveUserDataToLocal();
             ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
+            ServerSystem.user.idGoogle = task.Result.UserId;
             ServerSystem.user.avatarPath = imageURL;
             ConvertIdManager.UpdateIdConvert(task.Result.UserId, ServerSystem.user.id);
             DataUserManager.SaveUserData();
@@ -111,19 +114,24 @@ public class GoogleAuthentication : MonoBehaviour
     }
     public void SignOut()
     {
-        if (profileImage != null)
+        PopupNotification.Instance.ShowPopupYesNo("Are you sure you want to unlink?", () =>
         {
-            profileImage.sprite = null;
-            nameText.text = "User";
-        }
-        Debug.Log("Signing out");
-        if (currentUser != null)
-        {
-            GoogleSignIn.DefaultInstance.SignOut();
-            currentUser = null;
-            ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Guest;
-            ServerSystem.user.avatarPath = string.Empty;
-            DataUserManager.SaveUserData();
-        }
+            AuthenticationManager.Instance.SignOut();
+            if (profileImage != null)
+            {
+                profileImage.sprite = null;
+                nameText.text = "User";
+            }
+            Debug.Log("Signing out");
+            if (currentUser != null)
+            {
+                GoogleSignIn.DefaultInstance.SignOut();
+                currentUser = null;
+                ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Guest;
+                ServerSystem.user.avatarPath = string.Empty;
+                ConvertIdManager.RemoveConvertId(ServerSystem.user.idGoogle);
+                DataUserManager.SaveUserData();
+            }
+        });     
     }
 }

@@ -51,7 +51,7 @@ public class PlayerInfo : MonoBehaviour
         return user.typeLogin switch
         {
             UserDataServer.TypeLogin.Google => GoogleAuthentication.Name,
-            UserDataServer.TypeLogin.Facebook => FacebookAuthentication.Name,
+            //UserDataServer.TypeLogin.Facebook => FacebookAuthentication.Name,
             _ => GameSystem.userdata.nickName
         };;
     }
