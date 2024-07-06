@@ -59,11 +59,24 @@ public class MenuOptions : MonoBehaviour
     public void HideAllOption(OptionMenu optionException)
     {
         foreach (var option in dicMenuOptions.Keys)
+        {
             if (option != optionException)
             {
-                if (dicMenuOptions[option].activeInHierarchy) dicMenuOptions[option].SetActive(false);
+                if (dicMenuOptions[option].activeInHierarchy)
+                {
+                    //dicMenuOptions[option].SetActive(false);
+                    var close = dicMenuOptions[option].GetComponent<EffectOnClose>();
+                    if (close) close.Close();
+                    else
+                    {
+                        dicMenuOptions[option].gameObject.SetActive(false);
+                    }
+                }
+            } else if (!dicMenuOptions[option].activeInHierarchy)
+            {
+                dicMenuOptions[option].SetActive(true);
             }
-            else if (!dicMenuOptions[option].activeInHierarchy) dicMenuOptions[option].SetActive(true);
+        }
     }
     void OnPanel()
     {       
