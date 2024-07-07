@@ -64,8 +64,7 @@ public class MenuOptions : MonoBehaviour
             {
                 if (dicMenuOptions[option].activeInHierarchy)
                 {
-                    //dicMenuOptions[option].SetActive(false);
-                    var close = dicMenuOptions[option].GetComponent<EffectOnClose>();
+                    var close = dicMenuOptions[option].GetComponent<EffectCloseSlide>();
                     if (close) close.Close();
                     else
                     {

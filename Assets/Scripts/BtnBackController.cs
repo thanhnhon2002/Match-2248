@@ -15,7 +15,7 @@ public class BtnBackController : MonoBehaviour
 
     private void OnClickBtn()
     {
-        GetComponentInParent<EffectOnClose>().Close();
+        GetComponentInParent<EffectCloseSlide>().Close();
         MenuOptions.Instance.ShowDefaultOption();
     }
 }
