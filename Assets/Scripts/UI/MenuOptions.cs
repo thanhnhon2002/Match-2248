@@ -65,7 +65,7 @@ public class MenuOptions : MonoBehaviour
             {
                 if (dicMenuOptions[option].activeInHierarchy)
                 {
-                    dicMenuOptions[option].gameObject.SetActive(false);
+                    //dicMenuOptions[option].gameObject.SetActive(false);
                 }
             } else if (!dicMenuOptions[option].activeInHierarchy)
             {

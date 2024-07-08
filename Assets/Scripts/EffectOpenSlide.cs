@@ -20,6 +20,7 @@ public class EffectOpenSlide: MonoBehaviour
     {
         var value = isReverse ? -1f : 1f;
         DOTween.Kill(rectTransform);
+        GetComponent<CanvasGroup>().DOFade(1, 0.35f);
         rectTransform.anchoredPosition = new Vector2(Screen.width*value, rectTransform.anchoredPosition.y);
         rectTransform.DOAnchorPosX(0, fadeTime).SetEase(Ease.OutQuad);
     }
