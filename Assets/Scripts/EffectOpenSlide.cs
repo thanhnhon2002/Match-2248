@@ -14,13 +14,13 @@ public class EffectOpenSlide: MonoBehaviour
     private void OnEnable()
     {
         rectTransform = GetComponent<RectTransform>();
-        DoEffect();
     }
 
-    private void DoEffect()
+    public void DoEffect(bool isReverse = false)
     {
+        var value = isReverse ? -1f : 1f;
         DOTween.Kill(rectTransform);
-        rectTransform.anchoredPosition = new Vector2(Screen.width, rectTransform.anchoredPosition.y);
+        rectTransform.anchoredPosition = new Vector2(Screen.width*value, rectTransform.anchoredPosition.y);
         rectTransform.DOAnchorPosX(0, fadeTime).SetEase(Ease.OutQuad);
     }
 }
