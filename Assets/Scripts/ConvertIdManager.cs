@@ -4,14 +4,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ConvertIdManager : MonoBehaviour
 {
     [ContextMenu("TestConvertID")]
     public void TestConvertId()
     {
-        UpdateIdConvert("A", "2x9xa4bt");
+        UpdateIdConvert("112064091026792404297", "eo58uu6i");
     }
+
+    [ContextMenu("UpdateIdConvert")]
     public static async void UpdateIdConvert(string idSocialNetwork, string idGame)
     {
         Debug.Log("a");
@@ -29,10 +32,19 @@ public class ConvertIdManager : MonoBehaviour
             UserDataServer currentUser = ServerSystem.user;
             if (currentUser.typeLogin != UserDataServer.TypeLogin.Guest) 
             {
-                PopupNotification.Instance.ShowPopupYesNo("Are you sure you want to change account?", () =>
+                if (idGame.Equals(convertIdGame))
                 {
                     UserDataServer.UpdateLocalData(dataServer);
-                });
+                }
+                else
+                {
+                    PopupNotification.Instance.ShowPopupYesNo("Are you sure you want to change account?", () =>
+                    {
+                        UserDataServer.UpdateLocalData(dataServer);
+                        Destroy(ServerSystem.Instance.gameObject);
+                        SceneManager.LoadScene("Loading");
+                    });
+                }
             }
             else
             {
@@ -43,7 +55,6 @@ public class ConvertIdManager : MonoBehaviour
             }        
         }
     }
-
     public static async Task<String> GetIdGameByIdSocialNetwork(string idSocialNetwork)
     {
         string idGame = null;

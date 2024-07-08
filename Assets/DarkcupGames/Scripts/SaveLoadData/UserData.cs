@@ -59,6 +59,8 @@ public class GameData
 public class UserData
 {
     public string nickName;
+    public string id;
+    public string avatarPath;
     public int avatarIndex;
     public int level;
     public float diamond;
