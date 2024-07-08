@@ -67,7 +67,7 @@ public class GoogleAuthentication : MonoBehaviour
         GoogleSignIn.Configuration.RequestEmail = true;
         GoogleSignIn.Configuration.RequestAuthCode = true;
         Debug.Log("Calling SignIn");
-        GoogleSignIn.DefaultInstance.SignIn().ContinueWithOnMainThread(OnAuthenticationFinished);
+        GoogleSignIn.DefaultInstance.SignIn().ContinueWithOnMainThread(SwitchFinished);
     }
     private void OnAuthenticationFinished(Task<GoogleSignInUser> task)
     {
@@ -109,7 +109,54 @@ public class GoogleAuthentication : MonoBehaviour
 
             Debug.Log("Google Name" + Name);
             GameSystem.userdata.nickName = Name;
-            GameSystem.SaveUserDataToLocal();
+            ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
+            ServerSystem.user.idGoogle = task.Result.UserId;
+            ServerSystem.user.avatarPath = imageURL;
+            ConvertIdManager.UpdateIdConvert(task.Result.UserId, ServerSystem.user.id);
+            DataUserManager.SaveUserData();
+        }
+    }
+
+    private void SwitchFinished(Task<GoogleSignInUser> task)
+    {
+        if (task.IsFaulted)
+        {
+            using (IEnumerator<Exception> enumerator = task.Exception.InnerExceptions.GetEnumerator())
+            {
+                if (enumerator.MoveNext())
+                {
+                    GoogleSignIn.SignInException error = (GoogleSignIn.SignInException)enumerator.Current;
+                    Debug.Log("Got Error: " + error.Status + " " + error.Message);
+                }
+                else
+                {
+                    Debug.Log("Got Unexpected Exception: " + task.Exception);
+                }
+            }
+        }
+        else if (task.IsCanceled)
+        {
+            Debug.Log("Canceled");
+        }
+        else
+        {
+            currentUser = task.Result;
+            Debug.Log("Welcome: " + task.Result.DisplayName + "!");
+            Debug.Log("Email: " + task.Result.Email);
+            Debug.Log("IdToken: " + task.Result.IdToken);
+            Debug.Log("UserId: " + task.Result.UserId);
+            Debug.Log("AuthCode: " + task.Result.AuthCode);
+            nameText.text = task.Result.DisplayName;
+            Name = task.Result.DisplayName;
+            imageURL = $"{task.Result.ImageUrl}";
+            StartCoroutine(LoadImage());
+            transform.parent.GetComponent<AuthenticationManager>().UpdateSignInUI();
+            string idToken = task.Result.IdToken;
+            string accessToken = task.Result.AuthCode;
+            FirebaseManager.Instance.OnLoginGoogleCompleted(idToken, accessToken);
+
+            Debug.Log("Google Name" + Name);
+            GameSystem.userdata.nickName = Name;
             ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
             ServerSystem.user.idGoogle = task.Result.UserId;
             ServerSystem.user.avatarPath = imageURL;

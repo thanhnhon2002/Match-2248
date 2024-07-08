@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Google.Impl;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -39,7 +41,8 @@ public class UserDataServer
             Debug.LogError("user game data null");
             return;
         }
-
+        if(GameSystem.userdata.id != null) this.id = GameSystem.userdata.id;
+        this.avatarPath = GameSystem.userdata.avatarPath;
         this.maxIndex = GameSystem.userdata.gameData.maxIndex;
         this.indexPlayer = GameSystem.userdata.gameData.indexPlayer;
         this.nickName = GameSystem.userdata.nickName;
@@ -72,7 +75,8 @@ public class UserDataServer
             Debug.LogError("user game data null");
             return;
         }
-
+        GameSystem.userdata.id = dataServer.id;
+        GameSystem.userdata.avatarPath = dataServer.avatarPath;
         GameSystem.userdata.gameData.maxIndex = dataServer.maxIndex;
         GameSystem.userdata.gameData.indexPlayer = dataServer.indexPlayer;
         GameSystem.userdata.nickName = dataServer.nickName;
@@ -82,6 +86,8 @@ public class UserDataServer
         GameSystem.userdata.gameData = dataServer.gameData;
         GameSystem.userdata.boughtItems = dataServer.boughtItems;
         GameSystem.SaveUserDataToLocal();
+        ServerSaveLoadLocal.SaveToLocal(dataServer);
+        ServerSystem.Instance.gameObject.IsDestroyed();
     }
 
     public string GetID()
