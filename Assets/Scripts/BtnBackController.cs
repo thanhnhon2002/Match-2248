@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class BtnBackController : MonoBehaviour
@@ -15,7 +16,15 @@ public class BtnBackController : MonoBehaviour
 
     private void OnClickBtn()
     {
-        GetComponentInParent<EffectCloseSlide>().Close();
-        MenuOptions.Instance.ShowDefaultOption();
+        if (SceneManager.GetActiveScene().name == "GameplayUI")
+        {
+            GetComponentInParent<EffectCloseSlide>().Close(false);
+        }
+        else
+        {
+            GetComponentInParent<EffectSlideManager>().SetSlideTheOpenOne(MenuOptions.Instance.dicMenuOptions[OptionMenu.Home]);
+            MenuOptions.Instance.ShowDefaultOption();
+
+        }
     }
 }

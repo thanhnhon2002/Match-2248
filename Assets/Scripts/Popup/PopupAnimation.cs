@@ -20,6 +20,7 @@ public class PopupAnimation : Popup
     SoundPopup soundPopup;
     WaitForSeconds wait015 = new WaitForSeconds(0.15f);
     WaitForSeconds wait01 = new WaitForSeconds(0.1f);
+    [ContextMenu("test Appear")]
     public override void Appear()
     {
         if (gameObject.activeInHierarchy) return;

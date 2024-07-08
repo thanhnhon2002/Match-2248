@@ -18,10 +18,11 @@ public class MenuOptions : MonoBehaviour
     public const bool ANIMATION_ALL_PANEL = false;
 
     public static MenuOptions Instance;
-    Dictionary<OptionMenu, GameObject> dicMenuOptions = new Dictionary<OptionMenu, GameObject>();
+    public Dictionary<OptionMenu, GameObject> dicMenuOptions = new Dictionary<OptionMenu, GameObject>();
     [SerializeField] OptionAnimation defaultOption;
     [SerializeField] GameObject panel;
     [SerializeField] Vector3 normalPos = new Vector3(1100, 250, 0);
+    [SerializeField] EffectSlideManager effectSlideManager;
     Sequence sequence;
     private void Awake()
     {
@@ -64,16 +65,13 @@ public class MenuOptions : MonoBehaviour
             {
                 if (dicMenuOptions[option].activeInHierarchy)
                 {
-                    var close = dicMenuOptions[option].GetComponent<EffectCloseSlide>();
-                    if (close) close.Close();
-                    else
-                    {
-                        dicMenuOptions[option].gameObject.SetActive(false);
-                    }
+                    //dicMenuOptions[option].gameObject.SetActive(false);
                 }
             } else if (!dicMenuOptions[option].activeInHierarchy)
             {
                 dicMenuOptions[option].SetActive(true);
+
+                effectSlideManager.SetSlideTheOpenOne(dicMenuOptions[option]);
             }
         }
     }
