@@ -7653,7 +7653,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40aa0da2013de9b45a380aa2241503d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 0.35
+  fadeTime: 0.45
 --- !u!114 &783318415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7666,7 +7666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a184370707bbb40bae486ca7f0b2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 0.35
+  fadeTime: 0.45
 --- !u!1001 &795511152
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13117,7 +13117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40aa0da2013de9b45a380aa2241503d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 0.35
+  fadeTime: 0.45
 --- !u!114 &1159961432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13130,7 +13130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a184370707bbb40bae486ca7f0b2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 0.35
+  fadeTime: 0.45
 --- !u!1 &1179246868
 GameObject:
   m_ObjectHideFlags: 0
@@ -14251,7 +14251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40aa0da2013de9b45a380aa2241503d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 0.35
+  fadeTime: 0.45
 --- !u!114 &1252915556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14264,7 +14264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a184370707bbb40bae486ca7f0b2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 0.35
+  fadeTime: 0.45
 --- !u!1 &1256527871
 GameObject:
   m_ObjectHideFlags: 0
@@ -18648,7 +18648,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40aa0da2013de9b45a380aa2241503d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 0.35
+  fadeTime: 0.45
 --- !u!114 &1650073073
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18661,7 +18661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6a184370707bbb40bae486ca7f0b2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 0.35
+  fadeTime: 0.45
 --- !u!1 &1673579296
 GameObject:
   m_ObjectHideFlags: 0
@@ -25840,6 +25840,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 377305996}
     m_Modifications:
+    - target: {fileID: 307692402500648815, guid: 6b8f66f202ad7b64fb37361bf4769657, type: 3}
+      propertyPath: fadeTime
+      value: 0.45
+      objectReference: {fileID: 0}
     - target: {fileID: 2842561520185882870, guid: 6b8f66f202ad7b64fb37361bf4769657, type: 3}
       propertyPath: m_Name
       value: Shop
@@ -25848,6 +25852,10 @@ PrefabInstance:
       propertyPath: m_TargetGraphic
       value: 
       objectReference: {fileID: 1391200118}
+    - target: {fileID: 5870647976491862556, guid: 6b8f66f202ad7b64fb37361bf4769657, type: 3}
+      propertyPath: fadeTime
+      value: 0.45
+      objectReference: {fileID: 0}
     - target: {fileID: 6103067195859259543, guid: 6b8f66f202ad7b64fb37361bf4769657, type: 3}
       propertyPath: OnInterDone.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
