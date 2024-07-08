@@ -3,9 +3,13 @@ using DarkcupGames;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using DG.Tweening;
 
 public class PopupAnimation : Popup
 {
+    public const float START_SCALE = 0.8f;
+    public const float FADE_TIME = 0.2f;
+
     [SerializeField] TextMeshProUGUI topic;
     [SerializeField] TextMeshProUGUI content;
     [SerializeField] AnimationPanel panel;
@@ -31,11 +35,17 @@ public class PopupAnimation : Popup
     }
     IEnumerator AnimationAppear()
     {
-        if (topic != null) EasyEffect.Appear(topic.gameObject, 0.2f, 1, 0.15f);
+        var canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup)
+        {
+            canvasGroup.alpha = 0;
+            canvasGroup.DOFade(1f, FADE_TIME);
+        }
+        if (topic != null) EasyEffect.Appear(topic.gameObject, START_SCALE, 1, 0.15f);
         yield return wait015;
         if (content != null)
         {
-            EasyEffect.Appear(content.gameObject, 0.2f, 1, 0.15f);
+            EasyEffect.Appear(content.gameObject, START_SCALE, 1, 0.15f);
             yield return wait015;
         }
         if (panel != null)
@@ -45,14 +55,14 @@ public class PopupAnimation : Popup
         }
         if (reward != null)
         {
-            EasyEffect.Appear(reward, 0.5f, 1, 0.15f);
+            EasyEffect.Appear(reward, START_SCALE, 1, 0.15f);
             yield return wait015;
         }
         if (listAppear != null && listAppear.Length > 0)
         {
             foreach (var child in listAppear)
             {
-                EasyEffect.Appear(child, 0.5f, 1, 0.2f);
+                EasyEffect.Appear(child, START_SCALE, 1, 0.2f);
                 yield return wait015;
             }
         }
@@ -61,7 +71,7 @@ public class PopupAnimation : Popup
             this.UnLockButton();
             yield break;
         }
-        EasyEffect.Appear(btnClaim.gameObject, 0.5f, 1, 0.15f, 1.2f, this.UnLockButton);
+        EasyEffect.Appear(btnClaim.gameObject, START_SCALE, 1, 0.15f, 1.2f, this.UnLockButton);
         btnClaim?.onClick.RemoveAllListeners();
         btnClaim?.onClick.AddListener(PopupManager.Instance.DeQueue);
         btnClaim?.onClick.AddListener(() => Disappear());

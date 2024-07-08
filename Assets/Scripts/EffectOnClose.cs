@@ -1,16 +1,20 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EffectOnClose : MonoBehaviour
 {
+    public readonly Vector2 END_SCALE = new Vector3(0.9f, 0.9f);
+    public const float FADE_TIME = 0.3f;
+
     [SerializeField] private CanvasGroup parent;
-    [SerializeField] private float fadeTime;
+
     public void Close()
     {
-        parent.DOFade(0, Const.DEFAULT_TWEEN_TIME);
-        transform.DOScale(0.5f, Const.DEFAULT_TWEEN_TIME).SetEase(Ease.InBack).OnComplete(() => 
+        parent.DOFade(0, FADE_TIME);
+        transform.DOScale(END_SCALE, FADE_TIME).SetEase(Ease.InBack).OnComplete(() => 
         {
             gameObject.SetActive(false);
             transform.localScale = Vector3.one;
