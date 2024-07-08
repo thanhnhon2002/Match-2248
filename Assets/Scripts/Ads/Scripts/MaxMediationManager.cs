@@ -21,6 +21,9 @@ namespace DarkcupGames
             {
                 instance = this;
                 DontDestroyOnLoad(gameObject);
+                banner = GetComponentInChildren<MaxMediationBanner>();
+                intertistial = GetComponentInChildren<MaxMediationIntertistial>();
+                rewarded = GetComponentInChildren<MaxMediationReward>();
             } else
             {
                 Destroy(gameObject);
@@ -39,10 +42,6 @@ namespace DarkcupGames
                 ads = GetComponentsInChildren<MaxMediationAds>();
                 for (int i = 0; i < ads.Length; i++)
                 {
-                    if (ads[i] is MaxMediationBanner) banner = (MaxMediationBanner)ads[i];
-                    if (ads[i] is MaxMediationIntertistial) intertistial = (MaxMediationIntertistial)ads[i];
-                    if (ads[i] is MaxMediationReward) rewarded = (MaxMediationReward)ads[i];
-
                     ads[i].Init();
                     ads[i].LoadAds();
                 }

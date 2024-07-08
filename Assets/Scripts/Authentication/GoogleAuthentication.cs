@@ -40,7 +40,7 @@ public class GoogleAuthentication : MonoBehaviour
     {
         GoogleSignIn.Configuration = configuration;
         GoogleSignIn.DefaultInstance.SignInSilently()
-            .ContinueWith(OnAuthenticationFinished);
+            .ContinueWithOnMainThread(OnAuthenticationFinished);
     }
     public bool IsLoggedIn()
     {
@@ -58,6 +58,17 @@ public class GoogleAuthentication : MonoBehaviour
         GoogleSignIn.DefaultInstance.SignIn().ContinueWithOnMainThread(OnAuthenticationFinished);
     }
 
+    public void Switch()
+    {
+        GoogleSignIn.DefaultInstance.SignOut();
+        GoogleSignIn.Configuration = configuration;
+        GoogleSignIn.Configuration.UseGameSignIn = false;
+        GoogleSignIn.Configuration.RequestIdToken = true;
+        GoogleSignIn.Configuration.RequestEmail = true;
+        GoogleSignIn.Configuration.RequestAuthCode = true;
+        Debug.Log("Calling SignIn");
+        GoogleSignIn.DefaultInstance.SignIn().ContinueWithOnMainThread(OnAuthenticationFinished);
+    }
     private void OnAuthenticationFinished(Task<GoogleSignInUser> task)
     {
         if (task.IsFaulted)
