@@ -11,35 +11,43 @@ public class ConvertIdManager : MonoBehaviour
     [ContextMenu("TestConvertID")]
     public void TestConvertId()
     {
-        UpdateIdConvert("112064091026792404297", "eo58uu6i");
+        UpdateIdConvert("112064091026792404297", null);
     }
 
     [ContextMenu("UpdateIdConvert")]
-    public static async void UpdateIdConvert(string idSocialNetwork, string idGame)
+    public static async void UpdateIdConvert(string idSocialNetwork, Action action)
     {
         Debug.Log("a");
         string convertIdGame = await GetIdGameByIdSocialNetwork(idSocialNetwork);
         if (convertIdGame == null)
         {
-            Debug.Log(idSocialNetwork + "g" +  idGame);
-            ConvertIdGame convertId = new ConvertIdGame(idSocialNetwork, idGame);
+            Debug.Log(idSocialNetwork + "g" + ServerSystem.user.id);
+            ConvertIdGame convertId = new ConvertIdGame(idSocialNetwork, ServerSystem.user.id);
             ServerSystem.SaveToServerAtPath(ServerSystem.CONVERT_ID_URL + "/" + idSocialNetwork, convertId);
+            action?.Invoke();
         }
         else
         {
+            Debug.Log("convertIdGame:" + convertIdGame);
             UserDataServer dataServer = await GetUserByIdGame(convertIdGame);
 
             UserDataServer currentUser = ServerSystem.user;
             if (currentUser.typeLogin != UserDataServer.TypeLogin.Guest) 
             {
-                if (idGame.Equals(convertIdGame))
+                Debug.Log(currentUser.typeLogin);
+                if (ServerSystem.user.id.Equals(convertIdGame))
                 {
+                    action?.Invoke();
                     UserDataServer.UpdateLocalData(dataServer);
                 }
                 else
                 {
+                    Debug.Log("idlocal" + ServerSystem.user.id);
+                    Debug.Log("idGame" + ServerSystem.user.id);
+                    Debug.Log("idGameServer" + convertIdGame);
                     PopupNotification.Instance.ShowPopupYesNo("Are you sure you want to change account?", () =>
                     {
+                        action?.Invoke();
                         UserDataServer.UpdateLocalData(dataServer);
                         Destroy(ServerSystem.Instance.gameObject);
                         SceneManager.LoadScene("Loading");
@@ -50,7 +58,8 @@ public class ConvertIdManager : MonoBehaviour
             {
                 PopupNotification.Instance.ShowPopupYesNo("Your highest score is " + currentUser.hightScore +  " and the highest score of the account linked to your Google account is " + dataServer.hightScore + ". Do you want to replace it?", () =>
                 {
-                    ConvertIdGame convertId = new ConvertIdGame(idSocialNetwork, idGame);
+                    action?.Invoke();
+                    ConvertIdGame convertId = new ConvertIdGame(idSocialNetwork, ServerSystem.user.id);
                     ServerSystem.SaveToServerAtPath(ServerSystem.CONVERT_ID_URL + "/" + idSocialNetwork, convertId);
                 });
             }        

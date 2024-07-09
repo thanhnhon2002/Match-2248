@@ -20,16 +20,19 @@ public class AuthenticationManager : MonoBehaviour
     public void UpdateSignInUI()
     {
         bool isGoogleLoggedIn = googleAuth.IsLoggedIn();
+        Debug.Log("Trang thai login:" + isGoogleLoggedIn);
         //bool isFacebookLoggedIn = facebookAuth.IsLoggedIn();
 
         if (isGoogleLoggedIn /*|| isFacebookLoggedIn*/)
         {
+            Debug.Log("Trang thai login:" + isGoogleLoggedIn);
             googleSignInButton.SetActive(false);
             facebookSignInButton.SetActive(false);
             signOutButton.SetActive(true);
         }
         else
         {
+            Debug.Log("Trang thai login:" + isGoogleLoggedIn);
             googleSignInButton.SetActive(true);
             //facebookSignInButton.SetActive(true);
             signOutButton.SetActive(false);

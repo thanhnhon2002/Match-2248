@@ -92,28 +92,30 @@ public class GoogleAuthentication : MonoBehaviour
         }
         else
         {
-            currentUser = task.Result;
-            Debug.Log("Welcome: " + task.Result.DisplayName + "!");
-            Debug.Log("Email: " + task.Result.Email);
-            Debug.Log("IdToken: " + task.Result.IdToken);
-            Debug.Log("UserId: " + task.Result.UserId);
-            Debug.Log("AuthCode: " + task.Result.AuthCode);
-            nameText.text = task.Result.DisplayName;
-            Name = task.Result.DisplayName;
-            imageURL = $"{task.Result.ImageUrl}";
-            StartCoroutine(LoadImage());
-            transform.parent.GetComponent<AuthenticationManager>().UpdateSignInUI();
-            string idToken = task.Result.IdToken;
-            string accessToken = task.Result.AuthCode;
-            FirebaseManager.Instance.OnLoginGoogleCompleted(idToken, accessToken);
+            ConvertIdManager.UpdateIdConvert(task.Result.UserId, () =>
+            {
+                currentUser = task.Result;
+                Debug.Log("Welcome: " + task.Result.DisplayName + "!");
+                Debug.Log("Email: " + task.Result.Email);
+                Debug.Log("IdToken: " + task.Result.IdToken);
+                Debug.Log("UserId: " + task.Result.UserId);
+                Debug.Log("AuthCode: " + task.Result.AuthCode);
+                nameText.text = task.Result.DisplayName;
+                Name = task.Result.DisplayName;
+                imageURL = $"{task.Result.ImageUrl}";
+                StartCoroutine(LoadImage());
+                transform.parent.GetComponent<AuthenticationManager>().UpdateSignInUI();
+                string idToken = task.Result.IdToken;
+                string accessToken = task.Result.AuthCode;
+                FirebaseManager.Instance.OnLoginGoogleCompleted(idToken, accessToken);
 
-            Debug.Log("Google Name" + Name);
-            GameSystem.userdata.nickName = Name;
-            ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
-            ServerSystem.user.idGoogle = task.Result.UserId;
-            ServerSystem.user.avatarPath = imageURL;
-            ConvertIdManager.UpdateIdConvert(task.Result.UserId, ServerSystem.user.id);
-            DataUserManager.SaveUserData();
+                Debug.Log("Google Name" + Name);
+                GameSystem.userdata.nickName = Name;
+                ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
+                ServerSystem.user.idGoogle = task.Result.UserId;
+                ServerSystem.user.avatarPath = imageURL;
+                DataUserManager.SaveUserData();
+            });
         }
     }
 
@@ -140,27 +142,28 @@ public class GoogleAuthentication : MonoBehaviour
         }
         else
         {
-            currentUser = task.Result;
-            Debug.Log("Welcome: " + task.Result.DisplayName + "!");
-            Debug.Log("Email: " + task.Result.Email);
-            Debug.Log("IdToken: " + task.Result.IdToken);
-            Debug.Log("UserId: " + task.Result.UserId);
-            Debug.Log("AuthCode: " + task.Result.AuthCode);
-            Name = task.Result.DisplayName;
-            imageURL = $"{task.Result.ImageUrl}";
-            StartCoroutine(LoadImage());
-            transform.parent.GetComponent<AuthenticationManager>().UpdateSignInUI();
-            string idToken = task.Result.IdToken;
-            string accessToken = task.Result.AuthCode;
-            FirebaseManager.Instance.OnLoginGoogleCompleted(idToken, accessToken);
+            ConvertIdManager.UpdateIdConvert(task.Result.UserId, () =>
+            {
+                currentUser = task.Result;
+                Debug.Log("Welcome: " + task.Result.DisplayName + "!");
+                Debug.Log("Email: " + task.Result.Email);
+                Debug.Log("IdToken: " + task.Result.IdToken);
+                Debug.Log("UserId: " + task.Result.UserId);
+                Debug.Log("AuthCode: " + task.Result.AuthCode);
+                Name = task.Result.DisplayName;
+                imageURL = $"{task.Result.ImageUrl}";
+                transform.parent.GetComponent<AuthenticationManager>().UpdateSignInUI();
+                string idToken = task.Result.IdToken;
+                string accessToken = task.Result.AuthCode;
+                FirebaseManager.Instance.OnLoginGoogleCompleted(idToken, accessToken);
 
-            Debug.Log("Google Name" + Name);
-            GameSystem.userdata.nickName = Name;
-            ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
-            ServerSystem.user.idGoogle = task.Result.UserId;
-            ServerSystem.user.avatarPath = imageURL;
-            ConvertIdManager.UpdateIdConvert(task.Result.UserId, ServerSystem.user.id);
-            DataUserManager.SaveUserData();
+                Debug.Log("Google Name" + Name);
+                GameSystem.userdata.nickName = Name;
+                ServerSystem.user.idGoogle = task.Result.UserId;
+                ServerSystem.user.avatarPath = imageURL;
+                ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
+                DataUserManager.SaveUserData();
+            });
         }
     }
     private IEnumerator LoadImage()
@@ -173,22 +176,24 @@ public class GoogleAuthentication : MonoBehaviour
     {
         PopupNotification.Instance.ShowPopupYesNo("Are you sure you want to unlink?", () =>
         {
+            GoogleSignIn.DefaultInstance.SignOut();
             AuthenticationManager.Instance.SignOut();
+
             if (profileImage != null)
             {
                 profileImage.sprite = null;
-                nameText.text = "User";
             }
             Debug.Log("Signing out");
             if (currentUser != null)
             {
-                GoogleSignIn.DefaultInstance.SignOut();
                 currentUser = null;
                 ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Guest;
                 ServerSystem.user.avatarPath = string.Empty;
                 ConvertIdManager.RemoveConvertId(ServerSystem.user.idGoogle);
                 DataUserManager.SaveUserData();
+                Debug.Log("Da unlink:" +ServerSystem.user.typeLogin);
             }
+            AuthenticationManager.Instance.UpdateSignInUI();
         });     
     }
 }
