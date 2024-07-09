@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Reward : MonoBehaviour
@@ -32,7 +33,15 @@ public class Reward : MonoBehaviour
         }
         DiamondGroup.Instance.AddDiamond(amount,false);
         UIManager.Instance.SpawnEffectReward(claimButton.transform);
+        if(SceneManager.GetActiveScene().name == "UI Home")
+        {
         Home.Instance.dailyReward.gameObject.SetActive(false);
+
+        }
+        else
+        {
+            FindAnyObjectByType<DailyReward>().gameObject.SetActive(false);
+        }
         GameSystem.SaveUserDataToLocal();
         FirebaseManager.Instance.LogReward(placement);
         DeepTrack.Log(placement);
