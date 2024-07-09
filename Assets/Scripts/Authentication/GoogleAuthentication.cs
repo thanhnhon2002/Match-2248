@@ -146,7 +146,6 @@ public class GoogleAuthentication : MonoBehaviour
             Debug.Log("IdToken: " + task.Result.IdToken);
             Debug.Log("UserId: " + task.Result.UserId);
             Debug.Log("AuthCode: " + task.Result.AuthCode);
-            nameText.text = task.Result.DisplayName;
             Name = task.Result.DisplayName;
             imageURL = $"{task.Result.ImageUrl}";
             StartCoroutine(LoadImage());
