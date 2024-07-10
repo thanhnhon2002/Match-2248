@@ -1,5 +1,7 @@
+using DarkcupGames;
 using Firebase.Extensions;
 using Google;
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -19,11 +21,8 @@ public class GoogleAuthentication : MonoBehaviour
     public static string Name { get; private set; }
     private void Awake()
     {
-        if (currentUser != null)
-        {
-            Debug.Log("User already signed in");
-            OnAuthenticationFinished(Task.FromResult(currentUser));
-        }
+        GetDataLogin();
+        
         if (GoogleSignIn.Configuration == null)
         {
             configuration = new GoogleSignInConfiguration
@@ -32,16 +31,25 @@ public class GoogleAuthentication : MonoBehaviour
                 RequestEmail = true,
                 RequestIdToken = true
             };
-            CheckSignInStatus();
+            //CheckSignInStatus();
             Debug.Log("Google Sign In Configuration Created");
         }
+        if (currentUser != null)
+        {
+            Debug.Log("User already signed in");
+            OnAuthenticationFinished(Task.FromResult(currentUser));
+        }
+        else
+        {
+            Debug.Log("Null roiiiiiiiiii");
+        }
     }
-    private void CheckSignInStatus()
-    {
-        GoogleSignIn.Configuration = configuration;
-        GoogleSignIn.DefaultInstance.SignInSilently()
-            .ContinueWithOnMainThread(OnAuthenticationFinished);
-    }
+    //private void CheckSignInStatus()
+    //{
+    //    GoogleSignIn.Configuration = configuration;
+    //    GoogleSignIn.DefaultInstance.SignInSilently()
+    //        .ContinueWithOnMainThread(OnAuthenticationFinished);
+    //}
     public bool IsLoggedIn()
     {
         return currentUser != null;
@@ -95,6 +103,7 @@ public class GoogleAuthentication : MonoBehaviour
             ConvertIdManager.UpdateIdConvert(task.Result.UserId, () =>
             {
                 currentUser = task.Result;
+                SaveDataToFile(currentUser);
                 Debug.Log("Welcome: " + task.Result.DisplayName + "!");
                 Debug.Log("Email: " + task.Result.Email);
                 Debug.Log("IdToken: " + task.Result.IdToken);
@@ -145,6 +154,7 @@ public class GoogleAuthentication : MonoBehaviour
             ConvertIdManager.UpdateIdConvert(task.Result.UserId, () =>
             {
                 currentUser = task.Result;
+                SaveDataToFile(currentUser);
                 Debug.Log("Welcome: " + task.Result.DisplayName + "!");
                 Debug.Log("Email: " + task.Result.Email);
                 Debug.Log("IdToken: " + task.Result.IdToken);
@@ -166,6 +176,7 @@ public class GoogleAuthentication : MonoBehaviour
             });
         }
     }
+
     private IEnumerator LoadImage()
     {
         WWW www = new WWW(imageURL);
@@ -196,4 +207,43 @@ public class GoogleAuthentication : MonoBehaviour
             AuthenticationManager.Instance.UpdateSignInUI();
         });     
     }
+
+    public void GetDataLogin()
+    {
+        UserGoogle userGoogle = ServerSaveLoadLocal.DeserializeObjectFromFile<UserGoogle>("dataLogin");
+        if (userGoogle == null)
+        {
+            currentUser = null;
+        }
+        else
+        {
+            currentUser = new GoogleSignInUser();
+            currentUser.AuthCode = userGoogle.authCode;
+            currentUser.DisplayName = userGoogle.displayName;
+            currentUser.Email = userGoogle.email;
+            currentUser.FamilyName = userGoogle.familyName;
+            currentUser.GivenName = userGoogle.givenName;
+            currentUser.IdToken = userGoogle.idToken;
+            currentUser.ImageUrl = userGoogle.imageUrl;
+            currentUser.UserId = userGoogle.userId;
+            Debug.Log("Gan roiiiiiiiiiiiiiiiiiiiiiiii");
+        }
+    }
+
+    public void SaveDataToFile(GoogleSignInUser signInUser)
+    {
+        UserGoogle userGoogle = new UserGoogle();
+        userGoogle.authCode = signInUser.AuthCode;
+        userGoogle.displayName = signInUser.DisplayName;
+        userGoogle.email = signInUser.Email;
+        userGoogle.familyName = signInUser.FamilyName;
+        userGoogle.givenName = signInUser.GivenName;
+        userGoogle.idToken = signInUser.IdToken;
+        userGoogle.imageUrl = signInUser.ImageUrl;
+        userGoogle.userId = signInUser.UserId;
+        string json = JsonConvert.SerializeObject(userGoogle);
+        string path = FileUtilities.GetWritablePath("dataLogin");
+        FileUtilities.SaveFile(System.Text.Encoding.UTF8.GetBytes(json), path, true);
+    }
+
 }

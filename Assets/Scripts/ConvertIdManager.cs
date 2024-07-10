@@ -21,10 +21,18 @@ public class ConvertIdManager : MonoBehaviour
         string convertIdGame = await GetIdGameByIdSocialNetwork(idSocialNetwork);
         if (convertIdGame == null)
         {
-            Debug.Log(idSocialNetwork + "g" + ServerSystem.user.id);
-            ConvertIdGame convertId = new ConvertIdGame(idSocialNetwork, ServerSystem.user.id);
-            ServerSystem.SaveToServerAtPath(ServerSystem.CONVERT_ID_URL + "/" + idSocialNetwork, convertId);
-            action?.Invoke();
+            if (ServerSystem.user.typeLogin.Equals(UserDataServer.TypeLogin.Guest))
+            {
+                Debug.Log(idSocialNetwork + "g" + ServerSystem.user.id);
+                ConvertIdGame convertId = new ConvertIdGame(idSocialNetwork, ServerSystem.user.id);
+                ServerSystem.SaveToServerAtPath(ServerSystem.CONVERT_ID_URL + "/" + idSocialNetwork, convertId);
+                action?.Invoke();
+            }
+            else
+            {
+                Debug.Log(UserDataServer.TypeLogin.Guest);
+                ServerSaveLoadLocal.CreateNewData();
+            }
         }
         else
         {

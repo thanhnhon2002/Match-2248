@@ -43,6 +43,13 @@ public class ServerSaveLoadLocal : MonoBehaviour
         return user;
     }
 
+    public static void CreateNewData()
+    {
+        UserDataServer user = new UserDataServer();
+        user.id = GetRandomUserKey();
+        UserDataServer.UpdateLocalData(user);
+    }
+
     //public static UserDataServer CopyUserDataTo(UserDataServer user)
     //{
     //    if (GameSystem.userdata == null)
@@ -99,7 +106,7 @@ public class ServerSaveLoadLocal : MonoBehaviour
         return path;
     }
 
-    static T DeserializeObjectFromFile<T>(string fileName, string password = null, bool isAbsolutePath = false)
+    public static T DeserializeObjectFromFile<T>(string fileName, string password = null, bool isAbsolutePath = false)
     {
         T data = default(T);
         byte[] localSaved = LoadFile(fileName, isAbsolutePath);
