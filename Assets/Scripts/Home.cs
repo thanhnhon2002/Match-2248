@@ -47,11 +47,8 @@ public class Home : MonoBehaviour
         if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS) return;
         if (DateTime.Now.Ticks - userData.lastSpecialOffer >= TimeSpan.TicksPerMinute * FirebaseManager.remoteConfig.MIN_MINUTE_SPECIAL_OFFER)
         {
-            specialOffer.popup.Appear();
+            specialOffer.animCombo.OpenAnim();
             userData.lastSpecialOffer = DateTime.Now.Ticks;
-        } else
-        {
-            specialOffer.gameObject.SetActive(false);
         }
         GameSystem.SaveUserDataToLocal();
     }

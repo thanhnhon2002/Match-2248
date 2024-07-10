@@ -8,7 +8,8 @@ public class SpecialOffer : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI oldPrice;
     [SerializeField] private ShopIAPManager shop;
-    public PopupAnimation popup;
+
+    public AnimCombo animCombo;
     private void OnEnable()
     {
         DisplayOldPrice();
