@@ -35,6 +35,7 @@ public class GameFlow : MonoBehaviour
     public ButtonGroup bottomGroup;
     public ButtonGroup topGroup;
     public GameState gameState;
+    public AnimComboManager popupAnimComboManager;
     [SerializeField] private PowerReward powerReward;
     private const int INIT_MULTILIER = 30;
     public List<int> multiliers = new List<int>();
@@ -180,10 +181,11 @@ public class GameFlow : MonoBehaviour
 
     public void PauseGame()
     {
-        if (PopupManager.Instance.GetPopup(PopupOptions.Pause).gameObject.activeInHierarchy)
-            return;
+        //because child of this gameobject have popup animation instead of parent
+        if (popupAnimComboManager.GetAnimCombo(AnimComboName.PopupPause).gameObject.transform.GetChild(0).gameObject.activeInHierarchy) return;
         gameState = GameState.Pause;
-        PopupManager.Instance.ShowPopup (PopupOptions.Pause);
+        //PopupManager.Instance.ShowPopup (PopupOptions.Pause);
+        popupAnimComboManager.OpenCombo(AnimComboName.PopupPause);
     }
 
     public void ContinueGame () => gameState = GameState.Playing;
