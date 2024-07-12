@@ -43,11 +43,11 @@ public class ServerSaveLoadLocal : MonoBehaviour
         return user;
     }
 
-    public static void CreateNewData()
+    public static UserDataServer CreateNewData()
     {
         UserDataServer user = new UserDataServer();
         user.id = GetRandomUserKey();
-        UserDataServer.UpdateLocalData(user);
+        return user;
     }
 
     //public static UserDataServer CopyUserDataTo(UserDataServer user)

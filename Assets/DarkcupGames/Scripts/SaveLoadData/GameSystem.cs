@@ -84,10 +84,17 @@ public class GameSystem : MonoBehaviour
             GameSystem.userdata = FileUtilities.DeserializeObjectFromFile<UserData>(GameSystem.USER_DATA_FILE_NAME);
             if (userdata == null) userdata = new UserData();
         }
+        userdata.CheckValid();
     }
 
     public static void ChangeScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+    }
+
+    public static void DeleteFile()
+    {
+        string path = FileUtilities.GetWritablePath(USER_DATA_FILE_NAME);
+        FileUtilities.DeleteFile(path);
     }
 }

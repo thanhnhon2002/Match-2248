@@ -23,6 +23,7 @@ public class UserDataServer
     public int indexPlayer;
     public int maxIndex;
     public int avatarIndex;
+    public float diamond;
     public BigInteger hightScore;
     public BigInteger highestCellValue;
     public TypeLogin typeLogin;
@@ -50,6 +51,7 @@ public class UserDataServer
         this.hightScore = GameSystem.userdata.highestScore;
         this.highestCellValue = GameSystem.userdata.highestCellValue;
         this.gameData = GameSystem.userdata.gameData;
+        this.diamond = GameSystem.userdata.diamond;
         //if (this.gameData.cellDic == null)
         //{
         //    this.gameData.cellDic = new Dictionary<string, int>();
@@ -85,6 +87,7 @@ public class UserDataServer
         GameSystem.userdata.highestCellValue = dataServer.highestCellValue;
         GameSystem.userdata.gameData = dataServer.gameData;
         GameSystem.userdata.boughtItems = dataServer.boughtItems;
+        GameSystem.userdata.diamond = dataServer.diamond;
         GameSystem.SaveUserDataToLocal();
         ServerSaveLoadLocal.SaveToLocal(dataServer);
         ServerSystem.Instance.gameObject.IsDestroyed();

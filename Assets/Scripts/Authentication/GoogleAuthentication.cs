@@ -21,9 +21,7 @@ public class GoogleAuthentication : MonoBehaviour
     public static string Name { get; private set; }
     private void Awake()
     {
-        GetDataLogin();
-        
-        if (GoogleSignIn.Configuration == null)
+        if(GoogleSignIn.Configuration == null)
         {
             configuration = new GoogleSignInConfiguration
             {
@@ -31,12 +29,15 @@ public class GoogleAuthentication : MonoBehaviour
                 RequestEmail = true,
                 RequestIdToken = true
             };
+            Debug.Log("configurationnnnnnnnnnnn:" + configuration);
             //CheckSignInStatus();
             Debug.Log("Google Sign In Configuration Created");
         }
+        GetDataLogin();
         if (currentUser != null)
         {
             Debug.Log("User already signed in");
+            GoogleSignIn.Configuration = configuration;
             OnAuthenticationFinished(Task.FromResult(currentUser));
         }
         else
@@ -44,12 +45,12 @@ public class GoogleAuthentication : MonoBehaviour
             Debug.Log("Null roiiiiiiiiii");
         }
     }
-    //private void CheckSignInStatus()
-    //{
-    //    GoogleSignIn.Configuration = configuration;
-    //    GoogleSignIn.DefaultInstance.SignInSilently()
-    //        .ContinueWithOnMainThread(OnAuthenticationFinished);
-    //}
+    private void CheckSignInStatus()
+    {
+        GoogleSignIn.Configuration = configuration;
+        GoogleSignIn.DefaultInstance.SignInSilently()
+            .ContinueWithOnMainThread(OnAuthenticationFinished);
+    }
     public bool IsLoggedIn()
     {
         return currentUser != null;
@@ -204,6 +205,7 @@ public class GoogleAuthentication : MonoBehaviour
                 DataUserManager.SaveUserData();
                 Debug.Log("Da unlink:" +ServerSystem.user.typeLogin);
             }
+            SaveDataToFile(null);
             AuthenticationManager.Instance.UpdateSignInUI();
         });     
     }
@@ -211,7 +213,7 @@ public class GoogleAuthentication : MonoBehaviour
     public void GetDataLogin()
     {
         UserGoogle userGoogle = ServerSaveLoadLocal.DeserializeObjectFromFile<UserGoogle>("dataLogin");
-        if (userGoogle == null)
+        if (userGoogle.email == null)
         {
             currentUser = null;
         }
@@ -233,14 +235,17 @@ public class GoogleAuthentication : MonoBehaviour
     public void SaveDataToFile(GoogleSignInUser signInUser)
     {
         UserGoogle userGoogle = new UserGoogle();
-        userGoogle.authCode = signInUser.AuthCode;
-        userGoogle.displayName = signInUser.DisplayName;
-        userGoogle.email = signInUser.Email;
-        userGoogle.familyName = signInUser.FamilyName;
-        userGoogle.givenName = signInUser.GivenName;
-        userGoogle.idToken = signInUser.IdToken;
-        userGoogle.imageUrl = signInUser.ImageUrl;
-        userGoogle.userId = signInUser.UserId;
+        if (signInUser != null)
+        {
+            userGoogle.authCode = signInUser.AuthCode;
+            userGoogle.displayName = signInUser.DisplayName;
+            userGoogle.email = signInUser.Email;
+            userGoogle.familyName = signInUser.FamilyName;
+            userGoogle.givenName = signInUser.GivenName;
+            userGoogle.idToken = signInUser.IdToken;
+            userGoogle.imageUrl = signInUser.ImageUrl;
+            userGoogle.userId = signInUser.UserId;
+        }
         string json = JsonConvert.SerializeObject(userGoogle);
         string path = FileUtilities.GetWritablePath("dataLogin");
         FileUtilities.SaveFile(System.Text.Encoding.UTF8.GetBytes(json), path, true);

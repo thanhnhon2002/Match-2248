@@ -823,6 +823,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 970323870059514057, guid: be4dd17bf9aade74bb369423a3f9d503, type: 3}
+      propertyPath: maskImg
+      value: 
+      objectReference: {fileID: 65259105}
     - target: {fileID: 1017912483263796420, guid: be4dd17bf9aade74bb369423a3f9d503, type: 3}
       propertyPath: m_fontAsset
       value: 
@@ -857,6 +861,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 150069886314608411, guid: be4dd17bf9aade74bb369423a3f9d503, type: 3}
   m_PrefabInstance: {fileID: 65259103}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &65259105 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4020813276763164502, guid: be4dd17bf9aade74bb369423a3f9d503, type: 3}
+  m_PrefabInstance: {fileID: 65259103}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &92929084
 GameObject:
   m_ObjectHideFlags: 0
@@ -22763,31 +22778,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1966415115}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 562125505}
-        m_TargetAssemblyTypeName: OptionAnimation, Assembly-CSharp
-        m_MethodName: OpenPanel
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 955043860}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!224 &1991645372 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 38309669091701840, guid: e1875844ff0db0b44b1abca5a85fad41, type: 3}

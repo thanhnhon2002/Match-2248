@@ -11,9 +11,15 @@ public class NotificationYesNo : MonoBehaviour
     [SerializeField] private TextMeshProUGUI message;
     [SerializeField] private Button btnNo;
     [SerializeField] private Button btnYes;
+    [SerializeField] private Image maskImg;
 
+    private void Awake()
+    {
+        btnNo.onClick.AddListener(Hide);
+    }
     public void Show(string messageInput, Action actionClickBtnYes)
     {
+        maskImg.gameObject.SetActive(true);
         message.text = "";
         message.text = messageInput;
         btnYes.onClick.RemoveAllListeners();
@@ -28,5 +34,9 @@ public class NotificationYesNo : MonoBehaviour
     public void Hide()
     {
         transform.DOScale(0f, 0.2f).SetEase(Ease.OutBack);
+        maskImg.DOFade(0, 0.2f).OnComplete(()=> 
+        {
+            maskImg.gameObject.SetActive(false);
+        });
     }
 }
