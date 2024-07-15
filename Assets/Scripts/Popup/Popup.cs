@@ -24,14 +24,16 @@ public class Popup : MonoBehaviour
         this.Awake();
         LockButton();
         transform.localScale = originSize;
-        if (PopupManager.Instance.blackBackground != null) EasyEffect.Fade(PopupManager.Instance.blackBackground.gameObject, 0.3f, 0.9f, true, 0.2f);
+        GetComponent<CanvasGroup>().alpha = 0;
+        if (PopupManager.Instance.blackBackground != null) PopupManager.Instance.blackBackground.gameObject.SetActive(true);
+        GetComponent<CanvasGroup>().DOFade(1,0.3f);
         EasyEffect.Appear(gameObject, 0.5f, 1, 0.2f);
     }
     public virtual void Disappear()
     {
         transform.localScale = originSize;
-        if (PopupManager.Instance.blackBackground != null) 
-            EasyEffect.Fade(PopupManager.Instance.blackBackground.gameObject, 0.9f, 0f, false, 0.2f);
+        GetComponent<CanvasGroup>().alpha = 1;
+        GetComponent<CanvasGroup>().DOFade(0, 0.3f);
         EasyEffect.Disappear(gameObject, 1, 0, 0.2f);
     }
     public void LockButton()

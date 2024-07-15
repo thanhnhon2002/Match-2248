@@ -66,6 +66,7 @@ public class PopupManager : MonoBehaviour
     public void ShowAllQueue()
     {
         if (queueShow.Count != 0) queueShow?.Peek()?.action?.Invoke(queueShow.Peek().option);
+        
     }
     public void DeQueue()
     {
@@ -73,7 +74,13 @@ public class PopupManager : MonoBehaviour
         {
             queueShow?.Dequeue();
             this.ShowAllQueue();
+            if (queueShow.Count == 0)
+            {
+                if (blackBackground != null)
+                    blackBackground.GetComponent<AnimBase>().CloseAnim();
+            }
         }
+        
     }
     public void DeQueueButtonAds()
     {
@@ -83,7 +90,7 @@ public class PopupManager : MonoBehaviour
     }
     public void ShowPopup(PopupOptions option)
     {
-        if(Hint.Instance!=null) Hint.Instance.ClearList();
+        if (Hint.Instance != null) Hint.Instance.ClearList();
         popupDic[option].Appear();
         FirebaseManager.Instance.LogUIAppear(option.ToString());
     }

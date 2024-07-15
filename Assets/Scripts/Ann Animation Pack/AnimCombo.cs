@@ -61,6 +61,7 @@ public class AnimCombo : MonoBehaviour
         {
             yield return new WaitForSeconds(anim.delayTime);
             anim.animClass.gameObject.SetActive(true);
+            if (anim.animClass.useOnEnable == false) anim.animClass.OpenAnim();
         }
     }
 

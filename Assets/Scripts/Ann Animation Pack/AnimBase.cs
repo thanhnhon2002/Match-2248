@@ -1,5 +1,4 @@
 ﻿using DG.Tweening;
-using System;
 using UnityEngine;
 
 public abstract class AnimBase : MonoBehaviour
