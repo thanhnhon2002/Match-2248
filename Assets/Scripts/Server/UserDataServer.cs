@@ -67,6 +67,7 @@ public class UserDataServer
 
     public static void UpdateLocalData(UserDataServer dataServer)
     {
+        ServerSystem.user = dataServer;
         if (GameSystem.userdata == null)
         {
             Debug.LogError("user data currently is null");
@@ -74,7 +75,7 @@ public class UserDataServer
         }
         if (GameSystem.userdata.gameData == null)
         {
-            Debug.LogError("user game data null");
+            Debug.LogError("game data null");
             return;
         }
         GameSystem.userdata.id = dataServer.id;
@@ -88,6 +89,7 @@ public class UserDataServer
         GameSystem.userdata.gameData = dataServer.gameData;
         GameSystem.userdata.boughtItems = dataServer.boughtItems;
         GameSystem.userdata.diamond = dataServer.diamond;
+        Debug.Log("da luu local: " + GameSystem.userdata.id);
         GameSystem.SaveUserDataToLocal();
         ServerSaveLoadLocal.SaveToLocal(dataServer);
         ServerSystem.Instance.gameObject.IsDestroyed();

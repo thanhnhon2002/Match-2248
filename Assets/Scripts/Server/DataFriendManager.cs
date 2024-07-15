@@ -108,6 +108,7 @@ public class DataFriendManager : MonoBehaviour
     }
     private async void HandleFriendListChanged(object sender, ValueChangedEventArgs args)
     {
+        Debug.Log("La do cai ban be nayyyyyyyyyyyyyyyyyyyyxxxxxxx");
         try
         {
             if (args.DatabaseError != null)
@@ -211,6 +212,7 @@ public class DataFriendManager : MonoBehaviour
         Friend friend = new Friend(state, friendData.id);
         userDataServer.listFriend[friend.id] = friend;
         ServerSystem.SaveToServerAtPath(ServerSystem.USER_DATA_URL + "/" + userDataServer.id, userDataServer);
+        Debug.Log("GOi tu UpdateFriend");
         DataUserManager.SaveUserData();
     }
 
@@ -218,6 +220,7 @@ public class DataFriendManager : MonoBehaviour
     {
         userDataServer.listFriend.Remove(friendData.id);
         ServerSystem.SaveToServerAtPath(ServerSystem.USER_DATA_URL + "/" + userDataServer.id, userDataServer);
+        Debug.Log("RemoveRequest");
         DataUserManager.SaveUserData();
     }
 

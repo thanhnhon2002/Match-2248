@@ -125,6 +125,7 @@ public class GoogleAuthentication : MonoBehaviour
                 ServerSystem.user.idGoogle = task.Result.UserId;
                 ServerSystem.user.avatarPath = imageURL;
                 DataUserManager.SaveUserData();
+                Debug.Log("GOi tu Login");
             });
         }
     }
@@ -154,6 +155,7 @@ public class GoogleAuthentication : MonoBehaviour
         {
             ConvertIdManager.UpdateIdConvert(task.Result.UserId, () =>
             {
+                Debug.Log("Ban dau goi action: " + ServerSystem.user.id);
                 currentUser = task.Result;
                 SaveDataToFile(currentUser);
                 Debug.Log("Welcome: " + task.Result.DisplayName + "!");
@@ -173,7 +175,9 @@ public class GoogleAuthentication : MonoBehaviour
                 ServerSystem.user.idGoogle = task.Result.UserId;
                 ServerSystem.user.avatarPath = imageURL;
                 ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
+                Debug.Log("GOi truoc khi Chyen Tk: " + ServerSystem.user.id);
                 DataUserManager.SaveUserData();
+                Debug.Log("GOi tu Chyen Tk: " + ServerSystem.user.id);
             });
         }
     }
@@ -203,6 +207,7 @@ public class GoogleAuthentication : MonoBehaviour
                 ServerSystem.user.avatarPath = string.Empty;
                 ConvertIdManager.RemoveConvertId(ServerSystem.user.idGoogle);
                 DataUserManager.SaveUserData();
+                Debug.Log("GOi tu Dang xuat");
                 Debug.Log("Da unlink:" +ServerSystem.user.typeLogin);
             }
             SaveDataToFile(null);

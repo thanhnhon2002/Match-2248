@@ -11,31 +11,30 @@ public class ConvertIdManager : MonoBehaviour
     [ContextMenu("TestConvertID")]
     public void TestConvertId()
     {
-        UserDataServer dataServer = ServerSaveLoadLocal.CreateNewData();
-        UserDataServer.UpdateLocalData(dataServer);
+        UpdateIdConvert("100061128722692045164", null);
     }
 
     [ContextMenu("UpdateIdConvert")]
     public static async void UpdateIdConvert(string idSocialNetwork, Action action)
     {
-        Debug.Log("a");
         string convertIdGame = await GetIdGameByIdSocialNetwork(idSocialNetwork);
         if (convertIdGame == null)
         {
             if (ServerSystem.user.typeLogin.Equals(UserDataServer.TypeLogin.Guest))
             {
-                Debug.Log(idSocialNetwork + "g" + ServerSystem.user.id);
                 ConvertIdGame convertId = new ConvertIdGame(idSocialNetwork, ServerSystem.user.id);
                 ServerSystem.SaveToServerAtPath(ServerSystem.CONVERT_ID_URL + "/" + idSocialNetwork, convertId);
                 action?.Invoke();
             }
             else
             {
-                
+                Debug.Log("Tao tk moi");
                 PopupNotification.Instance.ShowPopupYesNo("Are you sure you want to change account?", () =>
                 {
                     UserDataServer dataServer = ServerSaveLoadLocal.CreateNewData();
+                    Debug.Log("Tk moi tao: " + dataServer.id);
                     UserDataServer.UpdateLocalData(dataServer);
+                    DataUserManager.Instance.RemoveListeningForUserChanges();
                     ConvertIdGame convertId = new ConvertIdGame(idSocialNetwork, ServerSystem.user.id);
                     ServerSystem.SaveToServerAtPath(ServerSystem.CONVERT_ID_URL + "/" + idSocialNetwork, convertId);
                     action?.Invoke();
@@ -46,13 +45,11 @@ public class ConvertIdManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("convertIdGame:" + convertIdGame);
             UserDataServer dataServer = await GetUserByIdGame(convertIdGame);
 
             UserDataServer currentUser = ServerSystem.user;
             if (currentUser.typeLogin != UserDataServer.TypeLogin.Guest) 
             {
-                Debug.Log(currentUser.typeLogin);
                 if (ServerSystem.user.id.Equals(convertIdGame))
                 {
                     UserDataServer.UpdateLocalData(dataServer);
@@ -60,15 +57,14 @@ public class ConvertIdManager : MonoBehaviour
                 }
                 else
                 {
-                    Debug.Log("idlocal" + ServerSystem.user.id);
-                    Debug.Log("idGame" + ServerSystem.user.id);
-                    Debug.Log("idGameServer" + convertIdGame);
                     PopupNotification.Instance.ShowPopupYesNo("Are you sure you want to change account?", () =>
                     {
                         UserDataServer.UpdateLocalData(dataServer);
+                        DataUserManager.Instance.RemoveListeningForUserChanges();
+                        action?.Invoke();
                         Destroy(ServerSystem.Instance.gameObject);
                         SceneManager.LoadScene("Loading");
-                        action?.Invoke();
+                        
                     });
                 }
             }

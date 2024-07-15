@@ -29,6 +29,7 @@ public class ServerSaveLoadLocal : MonoBehaviour
 
     public static void SaveToLocal(UserDataServer user)
     {
+        Debug.Log("Luu serverrrrrrrrrrrrrrrrrr:" + user.id);
         string json = JsonConvert.SerializeObject(user);
         string path = FileUtilities.GetWritablePath(FILE_NAME);
         FileUtilities.SaveFile(System.Text.Encoding.UTF8.GetBytes(json), path, true);
@@ -39,6 +40,7 @@ public class ServerSaveLoadLocal : MonoBehaviour
         UserDataServer user = new UserDataServer();
         user.id = GetRandomUserKey();
         user.CopyFromLocalData(); //CopyUserDataTo(user);
+        GameSystem.userdata.firstPlayGame = true;
         SaveToLocal(user);
         return user;
     }
