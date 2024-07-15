@@ -27,6 +27,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Cell cellPrefab;
     [SerializeField] private Transform cellSpawnPos;
     [SerializeField] private ParticalSystemController removeCellFx;
+    public AnimComboManager popupComboManager;
     public Dictionary<int, List<Cell>> allCellInCollom = new Dictionary<int, List<Cell>>();
     public Dictionary<GridPosition, Vector3> girdPosToLocal { get; private set; } = new Dictionary<GridPosition, Vector3>();
     public Cell[] allCell { get; private set; }
@@ -174,7 +175,8 @@ public class GridManager : MonoBehaviour
             FirebaseManager.Instance.LogLevelPass(index, GameFlow.Instance.timeCount);
             DeepTrack.LogLevelWin(index);
             GameFlow.Instance.Congrastulate();
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
+            popupComboManager.OpenCombo(AnimComboName.PopupNewBlock);
+            //PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
         }
         SaveDataIndex();
         if (index > indexPlayer)

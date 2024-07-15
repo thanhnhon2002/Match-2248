@@ -7,7 +7,7 @@ using Vector2 = UnityEngine.Vector2;
 
 public class AnimationPanelBlock : AnimationPanel
 {
-    Image[] images = new Image[3];
+    public Image[] images;
     public Image crown;
     public Image close;
     [SerializeField] GameObject lightRotate;
@@ -15,11 +15,11 @@ public class AnimationPanelBlock : AnimationPanel
     {
         base.Awake();
         int index=0;
-        foreach (Transform child in transform)
-        {
-            images[index] = child.GetComponentInChildren<Image>();
-            index++;
-        }
+        //foreach (Transform child in transform)
+        //{
+        //    images[index] = child.GetComponentInChildren<Image>(true);
+        //    index++;
+        //}
     }
     
     public override void Animation()

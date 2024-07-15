@@ -4,11 +4,12 @@ using TMPro;
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
+using JetBrains.Annotations;
 
 public class PopupAnimation : Popup
 {
     public const float START_SCALE = 0.8f;
-    public const float FADE_TIME = 0.2f;
+    public const float FADE_TIME = 0.3f;
 
     [SerializeField] TextMeshProUGUI topic;
     [SerializeField] TextMeshProUGUI content;
@@ -36,17 +37,18 @@ public class PopupAnimation : Popup
     }
     IEnumerator AnimationAppear()
     {
+        yield return wait015;
         var canvasGroup = GetComponent<CanvasGroup>();
         if (canvasGroup)
         {
             canvasGroup.alpha = 0;
             canvasGroup.DOFade(1f, FADE_TIME);
         }
-        if (topic != null) EasyEffect.Appear(topic.gameObject, START_SCALE, 1, 0.15f);
+        if (topic != null) EasyEffect.Appear(topic.gameObject, START_SCALE, 1, FADE_TIME);
         yield return wait015;
         if (content != null)
         {
-            EasyEffect.Appear(content.gameObject, START_SCALE, 1, 0.15f);
+            EasyEffect.Appear(content.gameObject, START_SCALE, 1, FADE_TIME);
             yield return wait015;
         }
         if (panel != null)
@@ -56,14 +58,15 @@ public class PopupAnimation : Popup
         }
         if (reward != null)
         {
-            EasyEffect.Appear(reward, START_SCALE, 1, 0.15f);
+            EasyEffect.Fade(reward, FADE_TIME);
             yield return wait015;
         }
         if (listAppear != null && listAppear.Length > 0)
         {
             foreach (var child in listAppear)
             {
-                EasyEffect.Appear(child, START_SCALE, 1, 0.2f);
+                if (child.GetComponent<CanvasGroup>() == null) child.AddComponent<CanvasGroup>();
+                EasyEffect.Fade(child, 1, FADE_TIME);
                 yield return wait015;
             }
         }
@@ -72,28 +75,29 @@ public class PopupAnimation : Popup
             this.UnLockButton();
             yield break;
         }
-        EasyEffect.Appear(btnClaim.gameObject, START_SCALE, 1, 0.15f, 1.2f, this.UnLockButton);
+        EasyEffect.Fade(btnClaim.gameObject, 1, 0.3f, this.UnLockButton);
         btnClaim?.onClick.RemoveAllListeners();
         btnClaim?.onClick.AddListener(PopupManager.Instance.DeQueue);
         btnClaim?.onClick.AddListener(() => Disappear());
     }
     IEnumerator AnimationDisappear()
     {
-        if (topic != null) EasyEffect.Disappear(topic.gameObject, 1, 0, 0.1f);
-        if (content != null) EasyEffect.Disappear(content.gameObject, 1, 0, 0.1f);
+        if (topic != null) EasyEffect.Disappear(topic.gameObject, 1, 0, FADE_TIME);
+        if (content != null) EasyEffect.Disappear(content.gameObject, 1, 0, FADE_TIME);
         if (reward != null)
         {
-            EasyEffect.Disappear(reward, 1, 0, 0.1f);
+            EasyEffect.Fade(reward, 0, FADE_TIME);
         }
         if (listAppear != null && listAppear.Length > 0)
         {
             foreach (var child in listAppear)
             {
-                EasyEffect.Disappear(child, 1, 0, 0.1f);
+                if (child.GetComponent<CanvasGroup>() == null) child.AddComponent<CanvasGroup>();
+                EasyEffect.Fade(child, 0, FADE_TIME);
                 yield return wait01;
             }
         }
-        if (btnClaim != null) EasyEffect.Disappear(btnClaim.gameObject, 1, 0, 0.1f);
+        if (btnClaim != null) EasyEffect.Fade(btnClaim.gameObject, 0, FADE_TIME); ;
         yield return wait01;
         if (panel != null) panel.gameObject.SetActive(false);
     }

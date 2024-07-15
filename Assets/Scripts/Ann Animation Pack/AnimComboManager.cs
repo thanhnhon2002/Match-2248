@@ -12,8 +12,11 @@ using UnityEngine;
 public enum AnimComboName
 {
     PopupPause,
-    NoInternetConnectionPopup,
-    PopupMakeSure
+    PopupNewBlock,
+    PopupRaseGame,
+    PopupLose,
+    PopupMakeSure,
+    NoInternetConnectionPopup
 }
 /// <summary>
 /// this class using enum AnimComboName to find and run AnimCombo class

@@ -5,6 +5,7 @@ using System;
 using TMPro;
 using UnityEngine.UI;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 namespace DarkcupGames
 {
@@ -18,7 +19,16 @@ namespace DarkcupGames
         {
             Instance = this;
         }
-
+        public static void Fade(GameObject obj, float endValue, float speed = 0.1f, Action callback = null)
+        {
+            obj.SetActive(true);
+            obj.GetComponent<CanvasGroup>().DOFade(endValue, speed).OnComplete(() => { callback?.Invoke(); });
+        }
+        public static void Scale(GameObject obj, float endValue, float speed = 0.1f, Action callback = null)
+        {
+            obj.SetActive(true);
+            obj.transform.DOScale(endValue, speed).OnComplete(() => { callback?.Invoke(); });
+        }
         public static void Appear(GameObject obj, float startScale, float endScale, float speed = 0.1f, float maxScale = 1.2f,Action callback =null)
         {
             obj.SetActive(true);
