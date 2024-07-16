@@ -37,6 +37,7 @@ public class DataEventPopup : EventArgs
 public class PopupManager : MonoBehaviour
 {
     public static PopupManager Instance;
+    public AnimComboManager animComboManager;
     public Popup[] popups;
     private Dictionary<PopupOptions, Popup> popupDic = new Dictionary<PopupOptions, Popup>();
     public Image blackBackground;
