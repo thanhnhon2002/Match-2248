@@ -18,7 +18,7 @@ public class DailyReward : MonoBehaviour
     {
         FirebaseManager.Instance.LogUIAppear(gameObject.name);
         transform.localScale = Vector3.one;
-        UpdateClaimButtonInteractable();
+        UpdateClaimButtonInteractable();    
     }
     public void Close()
     {
