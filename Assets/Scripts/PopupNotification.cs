@@ -13,9 +13,9 @@ public class PopupNotification : MonoBehaviour
         Instance = this;
     }
 
-    public void ShowPopupYesNo(string message, Action onClickBtnYes)
+    public void ShowPopupYesNo(string message, Action onClickBtnYes, Action actionClickBtnNo = null)
     {
         popupYesNo.gameObject.SetActive(true);
-        popupYesNo.Show(message, onClickBtnYes);
+        popupYesNo.Show(message, onClickBtnYes, actionClickBtnNo);
     }
 }

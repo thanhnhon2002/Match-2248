@@ -70,11 +70,18 @@ public class ConvertIdManager : MonoBehaviour
             }
             else
             {
-                PopupNotification.Instance.ShowPopupYesNo("Your highest score is " + currentUser.hightScore +  " and the highest score of the account linked to your Google account is " + dataServer.hightScore + ". Do you want to replace it?", () =>
+                PopupNotification.Instance.ShowPopupYesNo("Replace Google account's score of" + dataServer.hightScore + "with this account's" + currentUser.hightScore + "?", () =>
                 {                 
                     ConvertIdGame convertId = new ConvertIdGame(idSocialNetwork, ServerSystem.user.id);
                     ServerSystem.SaveToServerAtPath(ServerSystem.CONVERT_ID_URL + "/" + idSocialNetwork, convertId);
                     action?.Invoke();
+                }, () =>
+                {
+                    UserDataServer.UpdateLocalData(dataServer);
+                    DataUserManager.Instance.RemoveListeningForUserChanges();
+                    action?.Invoke();
+                    Destroy(ServerSystem.Instance.gameObject);
+                    SceneManager.LoadScene("Loading");
                 });
             }        
         }

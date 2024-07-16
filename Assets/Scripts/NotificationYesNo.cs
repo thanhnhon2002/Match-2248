@@ -17,15 +17,21 @@ public class NotificationYesNo : MonoBehaviour
     {
         btnNo.onClick.AddListener(Hide);
     }
-    public void Show(string messageInput, Action actionClickBtnYes)
+    public void Show(string messageInput, Action actionClickBtnYes, Action actionClickBtnNo)
     {
         maskImg.gameObject.SetActive(true);
         message.text = "";
         message.text = messageInput;
         btnYes.onClick.RemoveAllListeners();
+        btnNo.onClick.RemoveAllListeners();
         btnYes.onClick.AddListener(() => 
         {
-            actionClickBtnYes.Invoke();
+            actionClickBtnYes?.Invoke();
+            Hide();
+        });
+        btnNo.onClick.AddListener(() =>
+        {
+            actionClickBtnNo?.Invoke();
             Hide();
         });
         transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
