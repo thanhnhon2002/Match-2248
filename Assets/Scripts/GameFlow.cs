@@ -98,7 +98,7 @@ public class GameFlow : MonoBehaviour
         yield return new WaitForEndOfFrame();
         if (GameSystem.userdata.replay)
         {
-            PopupManager.Instance.ShowPopup(PopupOptions.StartFrom);
+            popupAnimComboManager.OpenCombo(AnimComboName.PopupStartFrom);
             unmask.transform.localScale = Vector3.one;
             blockInteract.gameObject.SetActive(false);
         } else

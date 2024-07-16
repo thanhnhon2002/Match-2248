@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ClaimDuplicate : MonoBehaviour
 {
-    [SerializeField] private PopupAnimation popup;
     [SerializeField] private float cost;
     public void OnClick()
     {
@@ -17,7 +16,6 @@ public class ClaimDuplicate : MonoBehaviour
         userData.diamond -= cost;
         GameFlow.Instance.diamondGroup.Display();
         GridManager.Instance.DoubleHightCellValue();
-        popup.Disappear();
         PopupManager.Instance.DeQueue();
         GameSystem.SaveUserDataToLocal();
     }

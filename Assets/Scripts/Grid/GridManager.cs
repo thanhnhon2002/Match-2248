@@ -175,14 +175,17 @@ public class GridManager : MonoBehaviour
             FirebaseManager.Instance.LogLevelPass(index, GameFlow.Instance.timeCount);
             DeepTrack.LogLevelWin(index);
             GameFlow.Instance.Congrastulate();
-            popupComboManager.OpenCombo(AnimComboName.PopupNewBlock);
+
+            popupComboManager.RegisterComboAnimQueue(AnimComboName.PopupNewBlock);
+            popupComboManager.OpenComboAnimQueue();
             //PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.NewBlock));
         }
         SaveDataIndex();
         if (index > indexPlayer)
         {
             indexPlayer = index;
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
+            popupComboManager.RegisterComboAnimQueue(AnimComboName.PopupDuplidate);
+            //PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.Duplicate));
         }
         if (index > maxIndex)
         {
@@ -197,8 +200,10 @@ public class GridManager : MonoBehaviour
                 maxIndexRandom++;
                 Debug.Log("AddBlock 2^" + maxIndexRandom);
             }
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
+            popupComboManager.RegisterComboAnimQueue(AnimComboName.PopupBlockAdded);
+            popupComboManager.RegisterComboAnimQueue(AnimComboName.PopupLockElinimated);
+            //PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
+            //PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
         }
     }
     void CheckIndexDublicate()
@@ -212,8 +217,10 @@ public class GridManager : MonoBehaviour
             else maxIndex += 1;
             maxIndexRandom++;
             Debug.Log("AddBlock 2^" + maxIndexRandom);
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
-            PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
+            popupComboManager.RegisterComboAnimQueue(AnimComboName.PopupBlockAdded);
+            popupComboManager.RegisterComboAnimQueue(AnimComboName.PopupLockElinimated);
+            //PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.LockElinimated));
+            //PopupManager.Instance.SubShowPopup(new DataEventPopup(PopupManager.Instance.ShowPopup, PopupOptions.BlockAdded));
             SaveDataIndex();
         }
     }

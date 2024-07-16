@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class ClaimStartFrom : MonoBehaviour
 {
     private float cost;
-    [SerializeField] private PopupAnimation popup;
     [SerializeField] private RewardEventLog logger;
     public Button button;
     [SerializeField] private Image adIcon;
@@ -55,7 +54,6 @@ public class ClaimStartFrom : MonoBehaviour
         userData.diamond -= cost;
         GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.diamondGroup.Display();
-        popup.Disappear();
         GridManager.Instance.SetStartIndex();
     }
 
