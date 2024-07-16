@@ -66,7 +66,8 @@ public class Home : MonoBehaviour
     }
     public void GetDiamond()
     {
-        diamondGroup.AddDiamond(20, false);
+        diamondGroup.AddDiamond(20);
+        diamondGroup.Display();
         UIManager.Instance.SpawnEffectReward(diamondAdButton.transform);
     }
 

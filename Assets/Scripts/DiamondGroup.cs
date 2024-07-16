@@ -21,15 +21,15 @@ public class DiamondGroup : MonoBehaviour
         Display();
     }
 
-    public void AddDiamond(int amount, bool doEffect = false)
-    {
-        var userData = GameSystem.userdata;
-        oldDiamondAmount = userData.diamond;
-        userData.diamond += amount;
-        GameSystem.SaveUserDataToLocal ();
-        //if (!doEffect) return;
+    //public void AddDiamond(int amount, bool doEffect = false)
+    //{
+    //    var userData = GameSystem.userdata;
+    //    oldDiamondAmount = userData.diamond;
+    //    userData.diamond += amount;
+    //    GameSystem.SaveUserDataToLocal ();
+    //    //if (!doEffect) return;
        
-    }
+    //}
 
     public void AddDiamond(int amount)
     {
