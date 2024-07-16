@@ -172,7 +172,8 @@ public class GameFlow : MonoBehaviour
         FirebaseManager.Instance.LogLevelFail(GridManager.Instance.MaxIndex, timeCount);
         DeepTrack.LogLevelLose(GridManager.Instance.MaxIndex);
         gameState = GameState.GameOver;
-        PopupManager.Instance.ShowPopup(PopupOptions.Lose);
+        popupAnimComboManager.OpenCombo(AnimComboName.PopupLose);
+        //PopupManager.Instance.ShowPopup(PopupOptions.Lose);
         var userData = GameSystem.userdata;
         userData.gameData.cellDic.Clear();
         GameSystem.SaveUserDataToLocal();

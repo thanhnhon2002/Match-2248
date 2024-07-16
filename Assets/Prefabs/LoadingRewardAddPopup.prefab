@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 7914718999013293969}
   - component: {fileID: 1613892234102722461}
   - component: {fileID: 8541827256014531502}
+  - component: {fileID: 2997206298428623459}
+  - component: {fileID: 3246924915214496601}
+  - component: {fileID: 1148489777387124497}
   m_Layer: 5
   m_Name: LoadingRewardAddPopup
   m_TagString: Untagged
@@ -91,6 +94,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 2
+--- !u!225 &2997206298428623459
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067655853243482735}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &3246924915214496601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067655853243482735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 229bfcbeb3681534ab0975082ada4feb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dotSpeed: 0.3
+  useOnEnable: 1
+  targetValue: 1
+  defaultValue: 0
+--- !u!114 &1148489777387124497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067655853243482735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 192445af01932fb459f4316477f07ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dotSpeed: 0.3
+  useOnEnable: 1
+  targetVector: {x: 1, y: 1}
+  defaultVector: {x: 0.8, y: 0.8}
+  openMoveType: 0
+  closeMoveType: 0
 --- !u!1 &1313887360672755344
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,6 +151,7 @@ GameObject:
   - component: {fileID: 3286914579872884803}
   - component: {fileID: 611242966809698124}
   - component: {fileID: 2469567928771722441}
+  - component: {fileID: 3763806876086885464}
   m_Layer: 5
   m_Name: Image (2)
   m_TagString: Untagged
@@ -166,6 +216,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &3763806876086885464
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313887360672755344}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1902079445830657035
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,6 +239,7 @@ GameObject:
   - component: {fileID: 7189170077030847081}
   - component: {fileID: 7620167871296866753}
   - component: {fileID: 8282149568936806091}
+  - component: {fileID: 7556170306087498222}
   m_Layer: 5
   m_Name: Image (1)
   m_TagString: Untagged
@@ -241,6 +304,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &7556170306087498222
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902079445830657035}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5847833807840798231
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,6 +392,7 @@ GameObject:
   - component: {fileID: 3070783697995015251}
   - component: {fileID: 349810054113159680}
   - component: {fileID: 5256131590230019492}
+  - component: {fileID: 5702399729517440913}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -381,6 +457,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &5702399729517440913
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7994164040563692229}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &9163999267307633860
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,8 +536,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Loading...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3cbe8017b75c71c479f5cceb08db3e16, type: 2}
-  m_sharedMaterial: {fileID: 4679512349138776985, guid: 3cbe8017b75c71c479f5cceb08db3e16, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8d5798c7378731e4c8dffa0a15f8cde9, type: 2}
+  m_sharedMaterial: {fileID: -2971432030075830006, guid: 8d5798c7378731e4c8dffa0a15f8cde9, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -512,6 +600,6 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 0
+  m_hasFontAssetChanged: 1
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}

@@ -53,7 +53,8 @@ public class InternetChecker : MonoBehaviour
     private void ShowNoInternetConnectionPopup()
     {
         Debug.Log("Please check your internet connection.");
-        PopupManager.Instance.ShowPopup(PopupOptions.NoInternet);
+        PopupManager.Instance.animComboManager.OpenCombo(AnimComboName.NoInternetConnectionPopup);
+        //PopupManager.Instance.ShowPopup(PopupOptions.NoInternet);
     }
     private void OnInternetReconnected()
     {
@@ -63,7 +64,8 @@ public class InternetChecker : MonoBehaviour
     private void HideNoInternetConnectionPopup()
     {
         Debug.Log("Internet connection is back.");
-        PopupManager.Instance.HidePopup(PopupOptions.NoInternet);
+        PopupManager.Instance.animComboManager.CloseCombo(AnimComboName.NoInternetConnectionPopup);
+        //PopupManager.Instance.HidePopup(PopupOptions.NoInternet);
     }
 }
 
