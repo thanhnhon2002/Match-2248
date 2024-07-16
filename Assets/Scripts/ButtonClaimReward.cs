@@ -8,6 +8,6 @@ public class ButtonClaimReward : MonoBehaviour
     public void OnClickClaim()
     {
         UIManager.Instance.SpawnEffectReward(transform);
-        diamondGroup.AddDiamond(player.multiple * player.multiple, false);
+        diamondGroup.AddDiamond(player.multiple * player.multiple);
     }
 }

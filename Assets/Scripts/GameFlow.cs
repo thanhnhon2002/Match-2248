@@ -229,7 +229,7 @@ public class GameFlow : MonoBehaviour
             {
                 AudioSystem.Instance.PlaySound ("Coins_collect");
                 bonusDiamond.gameObject.SetActive (false);
-                diamondGroup.AddDiamond (diamond, true);
+                diamondGroup.AddDiamond (diamond);
                 diamondGroup.Display();
             });
         });

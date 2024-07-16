@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 497373882816798527}
   - component: {fileID: 8064476359936893277}
   - component: {fileID: 2593066545010355439}
+  - component: {fileID: 1514145399170820876}
   m_Layer: 5
   m_Name: EffectDropReward
   m_TagString: Untagged
@@ -328,6 +329,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   popupSound: {fileID: 8300000, guid: 319e1621e7e7d0242b2b115fc14ee4ff, type: 3}
+--- !u!114 &1514145399170820876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1064146706113661061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a78e60752e324a944b0663eba2c85022, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  children:
+  - {fileID: 4999461983971400120}
+  - {fileID: 8080776018125358886}
+  - {fileID: 5735673051770751448}
+  - {fileID: 6137645069782183316}
+  - {fileID: 1746602351106806685}
+  - {fileID: 8946540895239334571}
+  - {fileID: 1845243595890207273}
+  - {fileID: 7541612254101676232}
+  - {fileID: 3784690481939909181}
+  - {fileID: 6851935980439456373}
+  - {fileID: 3354095844142752326}
+  - {fileID: 7873957121064879782}
 --- !u!1 &1129711147092478700
 GameObject:
   m_ObjectHideFlags: 0
