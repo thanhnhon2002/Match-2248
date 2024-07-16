@@ -40,7 +40,6 @@ public class ServerSaveLoadLocal : MonoBehaviour
         UserDataServer user = new UserDataServer();
         user.id = GetRandomUserKey();
         user.CopyFromLocalData(); //CopyUserDataTo(user);
-        GameSystem.userdata.firstPlayGame = true;
         SaveToLocal(user);
         return user;
     }
@@ -49,6 +48,8 @@ public class ServerSaveLoadLocal : MonoBehaviour
     {
         UserDataServer user = new UserDataServer();
         user.id = GetRandomUserKey();
+        user.gameData = new GameData();
+        GameSystem.userdata.firstPlayGame = true;
         return user;
     }
 

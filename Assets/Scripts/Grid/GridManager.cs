@@ -86,7 +86,7 @@ public class GridManager : MonoBehaviour
     private void SetUpCell()
     {
         var userData = GameSystem.userdata;
-        if (userData.gameData.minIndex == 0)
+        if (userData.gameData.minIndex == 0 || userData.gameData == null)
         {
             minIndex = 1;
             maxIndex = Space_Index + minIndex - 1;

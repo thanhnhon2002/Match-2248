@@ -35,6 +35,7 @@ public class FriendManager : MonoBehaviour
 
     private async void OnEnable()
     {
+        ClickListFriend();
         ResetContent();
         await ShowAllFriendAsync();
     }
@@ -51,6 +52,7 @@ public class FriendManager : MonoBehaviour
 
     public async Task SearchUser(string id)
     {
+        if (currentContent.Equals(NameContent.FriendRequest)) return;
         ResetContent();
         currentContent = NameContent.Search;
         UserDataServer userData = null;
@@ -73,7 +75,7 @@ public class FriendManager : MonoBehaviour
         else
         {
             userData = await DataFriendManager.GetFriend(id);
-            if (userData != null)
+            if (userData != null && userData.id!= ServerSystem.user.id)
             {
                 var info = PoolSystem.Instance.GetObjectFromPool(userInfo, content);
                 await info.DisplayInfo(userData);
@@ -115,6 +117,7 @@ public class FriendManager : MonoBehaviour
 
     public async void ClickListFriend()
     {
+        inputField.text = "";
         texts[0].DOFade(1, 0);
         texts[1].DOFade(0.1f, 0);
         ResetContent();
@@ -123,6 +126,7 @@ public class FriendManager : MonoBehaviour
 
     public async void ClickListFriendRequest()
     {
+        inputField.text = "";
         texts[1].DOFade(1, 0);
         texts[0].DOFade(0.1f, 0);
         ResetContent();

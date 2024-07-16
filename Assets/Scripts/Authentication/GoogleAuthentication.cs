@@ -70,6 +70,7 @@ public class GoogleAuthentication : MonoBehaviour
     public void Switch()
     {
         GoogleSignIn.DefaultInstance.SignOut();
+        GoogleSignIn.Configuration = null;
         GoogleSignIn.Configuration = configuration;
         GoogleSignIn.Configuration.UseGameSignIn = false;
         GoogleSignIn.Configuration.RequestIdToken = true;
