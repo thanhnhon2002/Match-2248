@@ -40,6 +40,7 @@ public class DisplayRankFriend : MonoBehaviour
             if (user.id == ServerSystem.user.id)
             {
                 var info = PoolSystem.Instance.GetObjectFromPool(myInfo, content);
+                await info.DisplayInfo(user);
             }
             else
             {

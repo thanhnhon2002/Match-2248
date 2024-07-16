@@ -29,7 +29,7 @@ public class RankUserInfo : MonoBehaviour
     public async Task DisplayInfo(UserDataServer data)
     {
         userName.text = data.nickName;
-        score.text = BigIntegerConverter.ConvertNameValue(BigInteger.Pow(2, data.indexPlayer));
+        score.text = data.hightScore.ToString();
         id.text = data.id;
         if (data.typeLogin == UserDataServer.TypeLogin.Guest)
         {
