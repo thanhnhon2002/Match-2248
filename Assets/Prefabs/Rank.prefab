@@ -1116,7 +1116,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
+    m_Top: 10
     m_Bottom: 0
   m_ChildAlignment: 1
   m_Spacing: 35.13
@@ -1140,7 +1140,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
-  m_VerticalFit: 0
+  m_VerticalFit: 1
 --- !u!1 &4916679170204351063
 GameObject:
   m_ObjectHideFlags: 0
@@ -2538,6 +2538,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 5688584801621273542}
   rankUserInfo: {fileID: 40684947199167886, guid: 38f39b213d704574d8a61f909c82b241, type: 3}
+  myInfo: {fileID: 40684947199167886, guid: d713b087aedad4c4fba42f19c268a718, type: 3}
   canvasGroup: {fileID: 3651309865101336391}
 --- !u!225 &7678144534435842598
 CanvasGroup:
