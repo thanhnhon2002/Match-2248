@@ -31,14 +31,14 @@ public class DiamondGroup : MonoBehaviour
        
     }
 
-    //public void AddDiamond(int amount)
-    //{
-    //    var userData = GameSystem.userdata;
-    //    oldDiamondAmount = userData.diamond;
-    //    userData.diamond += amount;
-    //    GameSystem.SaveUserDataToLocal();
-    //    EasyEffect.Bounce(icon.gameObject, 0.1f);
-    //}
+    public void AddDiamond(int amount)
+    {
+        var userData = GameSystem.userdata;
+        oldDiamondAmount = userData.diamond;
+        userData.diamond += amount;
+        GameSystem.SaveUserDataToLocal();
+        //EasyEffect.Bounce(icon.gameObject, 0.1f);
+    }
 
     public void Display()
     {

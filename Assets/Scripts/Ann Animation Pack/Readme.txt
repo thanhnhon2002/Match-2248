@@ -1,3 +1,3 @@
-1>addcomponent to gameobject want to dotween animation.
-2>to use AnimCombo class to make animation chain -> put all gameobject that have component implemented from AnimBase class into AnimCombo gameobject as children
-3>that's all
+>This pack require DOTween Package
+>All gameobject in children that have Script Anim implement from AnimBase managed by AnimCombo & AnimBase
+
