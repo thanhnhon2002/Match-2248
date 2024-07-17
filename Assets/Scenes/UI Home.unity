@@ -823,6 +823,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 540168756746582954, guid: be4dd17bf9aade74bb369423a3f9d503, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 970323870059514057, guid: be4dd17bf9aade74bb369423a3f9d503, type: 3}
       propertyPath: maskImg
       value: 
@@ -834,6 +838,10 @@ PrefabInstance:
     - target: {fileID: 1017912483263796420, guid: be4dd17bf9aade74bb369423a3f9d503, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2520127779210688605, guid: be4dd17bf9aade74bb369423a3f9d503, type: 3}
+      propertyPath: m_Alpha
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4546822828164437905, guid: be4dd17bf9aade74bb369423a3f9d503, type: 3}
       propertyPath: m_fontAsset
