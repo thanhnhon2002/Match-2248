@@ -150,9 +150,7 @@ namespace DarkcupGames
 
             iap.OnPurchaseClicked(id.ToString(), () =>
             {
-                GameSystem.userdata.diamond += amount;
-                GameSystem.SaveUserDataToLocal();
-                DataUserManager.SaveUserData();
+                UIManager.Instance.diamondGroup.AddDiamond(amount);
                 UIManager.Instance.SpawnEffectReward(clickedButton);
             });
         }
