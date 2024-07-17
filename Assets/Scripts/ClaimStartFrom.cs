@@ -51,7 +51,8 @@ public class ClaimStartFrom : MonoBehaviour
             GameFlow.Instance.shop.SetActive(true);
             return;
         }
-        userData.diamond -= cost;
+       
+        GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
         GameSystem.SaveUserDataToLocal();
         DataUserManager.SaveUserData();
         GameFlow.Instance.diamondGroup.Display();

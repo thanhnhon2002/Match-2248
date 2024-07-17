@@ -32,7 +32,6 @@ public class Reward : MonoBehaviour
             userData.dailyRewardInfo.freeTimeRemain = FirebaseManager.remoteConfig.FREE_REWARD_INTERVAL;
         }
         DiamondGroup.Instance.AddDiamond(amount);
-        DiamondGroup.Instance.Display();
         UIManager.Instance.SpawnEffectReward(claimButton.transform);
         if(SceneManager.GetActiveScene().name == "UI Home")
         {

@@ -21,6 +21,7 @@ public class Hammer : Power<Hammer>
         if (GameSystem.userdata.diamond < cost)
         {
             GameFlow.Instance.shop.SetActive(true);
+            GameFlow.Instance.shop.GetComponent<EffectOpenSlide>().DoEffect();
             return;
         }
         cell = null;
@@ -53,7 +54,7 @@ public class Hammer : Power<Hammer>
         this.cell = cell;
         var highligt = PoolSystem.Instance.GetObject(highlightPre, cell.transform.position);
         highligt.cell = cell;
-        if(!ignoreCost) GameSystem.userdata.diamond -= cost;
+        if (!ignoreCost) GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
         GameFlow.Instance.diamondGroup.Display();
         info.isTutorialFinish = true;
         GameSystem.SaveUserDataToLocal();

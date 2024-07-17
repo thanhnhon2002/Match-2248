@@ -46,9 +46,13 @@ public class DiamondGroup : MonoBehaviour
         var userData = GameSystem.userdata;
         if(userData.diamond < 0) userData.diamond = 0;
         GameSystem.SaveUserDataToLocal();
-        DOVirtual.Float(oldDiamondAmount, userData.diamond, Const.DEFAULT_TWEEN_TIME, x =>
+        Debug.LogError(oldDiamondAmount + "/" + userData.diamond);
+        DOVirtual.Float((int)oldDiamondAmount, (int)userData.diamond, 0.8f, x =>
         {
-            diamondTxt.text = MoneyConveter.ConvertNameValueBestCode((int)x);
+            diamondTxt.text = (int)x+"";
+        }).OnComplete(() =>
+        {
+            diamondTxt.text = MoneyConveter.ConvertNameValueBestCode((int)userData.diamond);
         });
         EasyEffect.Bounce(icon.gameObject, 0.1f);
     }

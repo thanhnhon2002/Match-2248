@@ -22,6 +22,7 @@ public class RocketLauncher : Power<RocketLauncher>
         if (GameSystem.userdata.diamond < cost)
         {
             GameFlow.Instance.shop.SetActive(true);
+            GameFlow.Instance.shop.GetComponent<EffectOpenSlide>().DoEffect();
             return;
         }
         base.UsePower();
@@ -80,7 +81,7 @@ public class RocketLauncher : Power<RocketLauncher>
             GameFlow.Instance.shop.SetActive(true);
             return;
         }
-        if (!ignoreCost) userData.diamond -= cost;
+        if (!ignoreCost) GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
         PopupManager.Instance.HidePopup(PopupOptions.Lose);
         info.isTutorialFinish = true;
         GameSystem.SaveUserDataToLocal();

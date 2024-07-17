@@ -19,6 +19,7 @@ public class Swap : Power<Swap>
         if (GameSystem.userdata.diamond < cost)
         {
             GameFlow.Instance.shop.SetActive(true);
+            GameFlow.Instance.shop.GetComponent<EffectOpenSlide>().DoEffect();
             return;
         }
         base.UsePower ();
@@ -56,7 +57,7 @@ public class Swap : Power<Swap>
         }
         if (chosenCell.Count < 2) return;
         if (tutorial != null) tutorial.gameObject.SetActive(false);
-        if (!ignoreCost) GameSystem.userdata.diamond -= cost;
+        if (!ignoreCost) GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
         GameFlow.Instance.diamondGroup.Display();
         info.isTutorialFinish = true;
         GameSystem.SaveUserDataToLocal();

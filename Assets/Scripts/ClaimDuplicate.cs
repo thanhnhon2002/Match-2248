@@ -13,7 +13,7 @@ public class ClaimDuplicate : MonoBehaviour
             GameFlow.Instance.shop.SetActive(true);
             return;
         }
-        userData.diamond -= cost;
+        GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
         GameFlow.Instance.diamondGroup.Display();
         GridManager.Instance.DoubleHightCellValue();
         PopupManager.Instance.DeQueue();

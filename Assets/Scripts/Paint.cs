@@ -24,6 +24,7 @@ public class Paint : Power<Paint>
         if (GameSystem.userdata.diamond < cost)
         {
             GameFlow.Instance.shop.SetActive(true);
+            GameFlow.Instance.shop.GetComponent<EffectOpenSlide>().DoEffect();
             return;
         }
         base.UsePower();
@@ -76,12 +77,12 @@ public class Paint : Power<Paint>
         Back();
         if (chosenCells.Count == 1)
         {
-            GameFlow.Instance.gameState = GameState.Playing;
-            if (turorial != null) turorial.gameObject.SetActive(true);
+            //GameFlow.Instance.gameState = GameState.Playing;
+            //if (turorial != null) turorial.gameObject.SetActive(true);
             return;
         }
         onUseCompleted?.Invoke();
-        if (!ignoreCost) GameSystem.userdata.diamond -= cost;
+        if (!ignoreCost) GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
         info.isTutorialFinish = true;
         GameSystem.SaveUserDataToLocal();
         DataUserManager.SaveUserData();
