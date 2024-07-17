@@ -18,5 +18,6 @@ public class ClaimDuplicate : MonoBehaviour
         GridManager.Instance.DoubleHightCellValue();
         PopupManager.Instance.DeQueue();
         GameSystem.SaveUserDataToLocal();
+        DataUserManager.SaveUserData();
     }
 }
