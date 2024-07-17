@@ -29,7 +29,7 @@ public class RankDisplay : MonoBehaviour
     {
         userDataServers.Clear();
         userDataServers.AddRange(users);
-        userDataServers.Sort((a, b) => b.indexPlayer.CompareTo(a.indexPlayer));
+        userDataServers.Sort((a, b) => b.hightScore.CompareTo(a.hightScore));
 
         for (int i = 0; i < infos.Length; i++)
         {
