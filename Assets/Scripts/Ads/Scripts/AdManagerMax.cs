@@ -59,7 +59,6 @@ namespace DarkcupGames
 
         public void ShowIntertistial(string placement, Action onWatchAdsComplete)
         {
-            Debug.Log(1);
             onWatchAdsComplete += () =>
             {
                 GameSystem.userdata.diamond += adBreak.diamondAmount;
@@ -68,23 +67,18 @@ namespace DarkcupGames
                 //var diamondGroup = FindObjectOfType<DiamondGroup>();
                 //if (diamondGroup != null) diamondGroup.Display();
             };
-            Debug.Log(2);
             var userData = GameSystem.userdata;
-            Debug.Log(10);
-            Debug.Log(userData.boughtItems.Contains(IAP_ID.no_ads.ToString()));
+            userData.CheckValid();
             if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS || userData.boughtItems.Contains(IAP_ID.no_ads.ToString()))
             {
-                Debug.Log(11);
                 onWatchAdsComplete?.Invoke();
                 return;
             }
-            Debug.Log(3);
             if (Time.time - lastInterTime < FirebaseManager.remoteConfig.TIME_BETWEEN_ADS)
             {
                 onWatchAdsComplete?.Invoke();
                 return;
             }
-            Debug.Log(4);
             lastInterTime = Time.time;
             bool haveAds = MaxMediationManager.intertistial.IsAdAvailable();
             if (haveAds == false || GameSystem.userdata.boughtItems.Contains(IAP_ID.no_ads.ToString()))
@@ -92,13 +86,11 @@ namespace DarkcupGames
                 onWatchAdsComplete?.Invoke();
                 return;
             }
-            Debug.Log(5);
             onWatchAdsComplete += () =>
             {
                 DeepTrack.LogEvent(DeepTrackEvent.inter_success);
             };
             if (adBreak != null) adBreak.gameObject.SetActive(true);
-            Debug.Log(6);
             LeanTween.delayedCall(DELAY_SHOW_INTER, () =>
             {
                 MaxMediationManager.intertistial.ShowAds(onWatchAdsComplete);
