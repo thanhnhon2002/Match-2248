@@ -51,6 +51,7 @@ public class MoveLeftRight : MonoBehaviour
                 multiple = int.Parse(nearest.text.Replace("x", ""));
                 textButton.text = "";
                 textButton.text = "Claim x"+ (multiple).ToString();
+                var cal = 5 * multiple;
             }
         });  
     }

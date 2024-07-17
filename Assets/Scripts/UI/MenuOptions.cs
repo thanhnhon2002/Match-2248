@@ -53,6 +53,10 @@ public class MenuOptions : MonoBehaviour
     {
         dicMenuOptions[option].SetActive(true);
     }
+    public void ShowProfileOption()
+    {
+        dicMenuOptions[OptionMenu.PlayerInformation].SetActive(true);
+    }
     public void HideOption(OptionMenu option)
     {
         dicMenuOptions[option].SetActive(false);

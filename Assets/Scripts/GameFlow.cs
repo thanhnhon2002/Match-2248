@@ -24,7 +24,7 @@ public class GameFlow : MonoBehaviour
     [SerializeField] private ConectedPointDisplay pointDisplay;
     [SerializeField] private Combo combo;
     [SerializeField] private BonusDiamond bonusDiamond;
-    [SerializeField] private GiftButton giftButton;
+    //[SerializeField] private GiftButton giftButton;
     [SerializeField] private Image unmask;
     [SerializeField] private Image blockInteract;
     [SerializeField] private ParticleSystem[] confextiFx;
@@ -86,7 +86,7 @@ public class GameFlow : MonoBehaviour
         InitMultilier ();
         pointDisplay.gameObject.SetActive (false);
         bonusDiamond.gameObject.SetActive (false);
-        giftButton.gameObject.SetActive (false);
+        //giftButton.gameObject.SetActive (false);
     }
 
     private IEnumerator Start ()
@@ -116,7 +116,7 @@ public class GameFlow : MonoBehaviour
         if (!MaxMediationManager.rewarded.IsAdAvailable()) return;
         if(Time.time - lastGifTime > FirebaseManager.remoteConfig.GIFT_INTERVAL && GameSystem.userdata.gameData.currentHighestCellValue >= GridManager.MIN_HIGHLIGHT_VALUE)
         {
-            giftButton.gameObject.SetActive (true);
+            //giftButton.gameObject.SetActive (true);
             lastGifTime = Time.time;
         }
     }
