@@ -31,6 +31,7 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
     }
     void Start()
     {
+        if (option == OptionMenu.Home) return;
         nameOption.gameObject.SetActive(false);
     }
     public void OnPointerEnter(PointerEventData eventData)
