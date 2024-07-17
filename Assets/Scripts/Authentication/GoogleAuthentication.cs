@@ -124,7 +124,7 @@ public class GoogleAuthentication : MonoBehaviour
                 GameSystem.userdata.nickName = Name;
                 ServerSystem.user.typeLogin = UserDataServer.TypeLogin.Google;
                 ServerSystem.user.idGoogle = task.Result.UserId;
-                ServerSystem.user.avatarPath = imageURL;
+                GameSystem.userdata.avatarPath = imageURL;
                 DataUserManager.SaveUserData();
                 Debug.Log("GOi tu Login");
             });

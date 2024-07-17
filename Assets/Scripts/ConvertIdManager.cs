@@ -70,7 +70,7 @@ public class ConvertIdManager : MonoBehaviour
             }
             else
             {
-                PopupNotification.Instance.ShowPopupYesNo("Replace Google account's score of" + dataServer.hightScore + "with this account's" + currentUser.hightScore + "?", () =>
+                PopupNotification.Instance.ShowPopupYesNo("Replace Google account's score of " + dataServer.hightScore + " with this account's " + currentUser.hightScore + "?", () =>
                 {                 
                     ConvertIdGame convertId = new ConvertIdGame(idSocialNetwork, ServerSystem.user.id);
                     ServerSystem.SaveToServerAtPath(ServerSystem.CONVERT_ID_URL + "/" + idSocialNetwork, convertId);
