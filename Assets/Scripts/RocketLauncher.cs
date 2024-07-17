@@ -84,6 +84,7 @@ public class RocketLauncher : Power<RocketLauncher>
         PopupManager.Instance.HidePopup(PopupOptions.Lose);
         info.isTutorialFinish = true;
         GameSystem.SaveUserDataToLocal();
+        DataUserManager.SaveUserData();
         LaunchRocket();
         GameFlow.Instance.diamondGroup.Display();
     }

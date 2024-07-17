@@ -57,6 +57,7 @@ public class Hammer : Power<Hammer>
         GameFlow.Instance.diamondGroup.Display();
         info.isTutorialFinish = true;
         GameSystem.SaveUserDataToLocal();
+        DataUserManager.SaveUserData();
         if (chose) return;
         chose = true; 
         backButton.gameObject.SetActive (false); 

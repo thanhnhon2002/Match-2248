@@ -19,7 +19,7 @@ public class PersonalRank : MonoBehaviour
     public void DisplayPersonalRank()
     {
         rank.text = string.Empty;
-        score.text = BigIntegerConverter.ConvertNameValue(BigInteger.Pow(2, ServerSystem.user.indexPlayer));
+        score.text = ServerSystem.user.hightScore.ToString();
         var place = rankDisplay.UserDataServers.Find(x => x.id.Equals(ServerSystem.user.id));
         if (place == null) rank.text = $"{rankDisplay.UserDataServers.Count}+";
         else rank.text = (rankDisplay.UserDataServers.IndexOf(place) + 1).ToString();

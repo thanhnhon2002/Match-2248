@@ -15,6 +15,7 @@ public class RankUserInfo : MonoBehaviour
     [SerializeField] private TextMeshProUGUI id;
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI stt;
+    [SerializeField] private Image bg;
 
     private void Awake()
     {
@@ -28,8 +29,9 @@ public class RankUserInfo : MonoBehaviour
 
     public async Task DisplayInfo(UserDataServer data)
     {
+        bg.gameObject.SetActive(data.id.Equals(ServerSystem.user.id));
         userName.text = data.nickName;
-        score.text = data.hightScore.ToString();
+        score.text = BigIntegerConverter.ConvertNameValue(data.hightScore);
         id.text = data.id;
         if (data.typeLogin == UserDataServer.TypeLogin.Guest)
         {

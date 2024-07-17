@@ -8,7 +8,6 @@ public class DisplayRankFriend : MonoBehaviour
 {
     [SerializeField] private Transform content;
     [SerializeField] private RankUserInfo rankUserInfo;
-    [SerializeField] private RankUserInfo myInfo;
     [SerializeField] private CanvasGroup canvasGroup;
 
     private void OnEnable()
@@ -37,16 +36,8 @@ public class DisplayRankFriend : MonoBehaviour
         rankFriend = rankFriend.OrderByDescending(kv => kv.Value.maxIndex).ToDictionary(kv => kv.Key, kv => kv.Value);
         foreach (UserDataServer user in rankFriend.Values)
         {
-            if (user.id == ServerSystem.user.id)
-            {
-                var info = PoolSystem.Instance.GetObjectFromPool(myInfo, content);
-                await info.DisplayInfo(user);
-            }
-            else
-            {
-                var info = PoolSystem.Instance.GetObjectFromPool(rankUserInfo, content);
-                await info.DisplayInfo(user);
-            }
+            var info = PoolSystem.Instance.GetObjectFromPool(rankUserInfo, content);
+            await info.DisplayInfo(user);
         }
     }
 

@@ -152,6 +152,7 @@ namespace DarkcupGames
             {
                 GameSystem.userdata.diamond += amount;
                 GameSystem.SaveUserDataToLocal();
+                DataUserManager.SaveUserData();
                 UIManager.Instance.SpawnEffectReward(clickedButton);
             });
         }

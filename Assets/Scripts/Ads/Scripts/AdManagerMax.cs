@@ -63,6 +63,8 @@ namespace DarkcupGames
             onWatchAdsComplete += () =>
             {
                 GameSystem.userdata.diamond += adBreak.diamondAmount;
+                GameSystem.SaveUserDataToLocal();
+                DataUserManager.SaveUserData();
                 //var diamondGroup = FindObjectOfType<DiamondGroup>();
                 //if (diamondGroup != null) diamondGroup.Display();
             };
