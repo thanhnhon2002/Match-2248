@@ -12,10 +12,12 @@ public class NotificationYesNo : MonoBehaviour
     [SerializeField] private Button btnNo;
     [SerializeField] private Button btnYes;
     [SerializeField] private Image maskImg;
+    private CanvasGroup canvasGroup;
 
     private void Awake()
     {
         btnNo.onClick.AddListener(Hide);
+        canvasGroup = GetComponent<CanvasGroup>();
     }
     public void Show(string messageInput, Action actionClickBtnYes, Action actionClickBtnNo)
     {
@@ -35,11 +37,13 @@ public class NotificationYesNo : MonoBehaviour
             Hide();
         });
         transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
+        canvasGroup.DOFade(1, 0.2f);
     }
 
     public void Hide()
     {
-        transform.DOScale(0f, 0.2f).SetEase(Ease.OutBack);
+        canvasGroup.DOFade(0, 0.2f);
+        transform.DOScale(0.5f, 0.2f).SetEase(Ease.InBack);
         maskImg.DOFade(0, 0.2f).OnComplete(()=> 
         {
             maskImg.gameObject.SetActive(false);
