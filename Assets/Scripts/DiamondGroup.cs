@@ -37,6 +37,7 @@ public class DiamondGroup : MonoBehaviour
         oldDiamondAmount = userData.diamond;
         userData.diamond += amount;
         GameSystem.SaveUserDataToLocal();
+        DataUserManager.SaveUserData();
         //EasyEffect.Bounce(icon.gameObject, 0.1f);
     }
 

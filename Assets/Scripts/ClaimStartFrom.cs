@@ -53,6 +53,7 @@ public class ClaimStartFrom : MonoBehaviour
         }
         userData.diamond -= cost;
         GameSystem.SaveUserDataToLocal();
+        DataUserManager.SaveUserData();
         GameFlow.Instance.diamondGroup.Display();
         GridManager.Instance.SetStartIndex();
     }
