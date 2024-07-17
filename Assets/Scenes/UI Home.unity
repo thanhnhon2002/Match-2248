@@ -2434,9 +2434,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PopupAnimation, Assembly-CSharp
-        m_MethodName: Disappear
+      - m_Target: {fileID: 367788240}
+        m_TargetAssemblyTypeName: AnimCombo, Assembly-CSharp
+        m_MethodName: CloseAnim
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4114,7 +4114,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Try one more time. Now With 4+4+8=16
+  m_text: Try one more time.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8d5798c7378731e4c8dffa0a15f8cde9, type: 2}
   m_sharedMaterial: {fileID: 4679512349138776985, guid: 3cbe8017b75c71c479f5cceb08db3e16, type: 2}
