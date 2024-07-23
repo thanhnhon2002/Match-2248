@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DarkcupGames;
 
 public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHandler,IPointerDownHandler,IPointerEnterHandler,IPointerExitHandler,IDragHandler,IEndDragHandler,IBeginDragHandler
 {
@@ -95,6 +96,7 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
 
     public void AnimationUp(float speed = TIME_ANIMATON_UP)
     {
+        AdManagerMax.Instance.ShowIntertistial("home_tab", null);
         DestroyAniamtion();
         //sequence = DOTween.Sequence();
         iconOption.sprite = iconUsed;

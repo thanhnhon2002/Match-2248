@@ -10,7 +10,7 @@ namespace DarkcupGames
     public class AdManagerMax : MonoBehaviour
     {
         private const float DELAY_SHOW_INTER = 0.5f;
-        public const float INTER_BUFFER = 60F;
+        public const float INTER_BUFFER = 30F;
         public static readonly float MAX_RETRY_TIME = 64f;
         public static AdManagerMax Instance { get; private set; }
         public List<UnityEvent> events;
@@ -61,21 +61,24 @@ namespace DarkcupGames
         {
             onWatchAdsComplete += () =>
             {
-                GameSystem.userdata.diamond += adBreak.diamondAmount;
-                GameSystem.SaveUserDataToLocal();
-                DataUserManager.SaveUserData();
-                //var diamondGroup = FindObjectOfType<DiamondGroup>();
-                //if (diamondGroup != null) diamondGroup.Display();
+                if (adBreak != null)
+                {
+                    GameSystem.userdata.diamond += adBreak.diamondAmount;
+                    GameSystem.SaveUserDataToLocal();
+                    DataUserManager.SaveUserData();
+                }
             };
             var userData = GameSystem.userdata;
             userData.CheckValid();
             if (Time.time < FirebaseManager.remoteConfig.MIN_SESSION_TIME_SHOW_ADS || userData.boughtItems.Contains(IAP_ID.no_ads.ToString()))
             {
+                Debug.Log("Time.time: " + Time.time);
                 onWatchAdsComplete?.Invoke();
                 return;
             }
             if (Time.time - lastInterTime < FirebaseManager.remoteConfig.TIME_BETWEEN_ADS)
             {
+                Debug.Log("Time.time - lastInterTime:" + (Time.time - lastInterTime));
                 onWatchAdsComplete?.Invoke();
                 return;
             }
@@ -83,6 +86,7 @@ namespace DarkcupGames
             bool haveAds = MaxMediationManager.intertistial.IsAdAvailable();
             if (haveAds == false || GameSystem.userdata.boughtItems.Contains(IAP_ID.no_ads.ToString()))
             {
+                Debug.Log("haveAds" + haveAds);
                 onWatchAdsComplete?.Invoke();
                 return;
             }
@@ -98,6 +102,7 @@ namespace DarkcupGames
                 GameSystem.SaveUserDataToLocal();
                 FirebaseManager.Instance.SetProperty(UserPopertyKey.total_interstitial_ads, GameSystem.userdata.property.total_interstitial_ads.ToString());
                 FirebaseManager.Instance.LogIntertisial(placement);
+                Debug.Log("ShowAds");
             });
         }
 

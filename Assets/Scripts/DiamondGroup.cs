@@ -21,16 +21,6 @@ public class DiamondGroup : MonoBehaviour
         Display();
     }
 
-    //public void AddDiamond(int amount, bool doEffect = false)
-    //{
-    //    var userData = GameSystem.userdata;
-    //    oldDiamondAmount = userData.diamond;
-    //    userData.diamond += amount;
-    //    GameSystem.SaveUserDataToLocal ();
-    //    //if (!doEffect) return;
-       
-    //}
-
     public void AddDiamond(int amount)
     {
         var userData = GameSystem.userdata;
@@ -38,7 +28,6 @@ public class DiamondGroup : MonoBehaviour
         userData.diamond += amount;
         GameSystem.SaveUserDataToLocal();
         DataUserManager.SaveUserData();
-        //EasyEffect.Bounce(icon.gameObject, 0.1f);
     }
 
     public void Display()
@@ -46,7 +35,6 @@ public class DiamondGroup : MonoBehaviour
         var userData = GameSystem.userdata;
         if(userData.diamond < 0) userData.diamond = 0;
         GameSystem.SaveUserDataToLocal();
-        Debug.LogError(oldDiamondAmount + "/" + userData.diamond);
         DOVirtual.Float((int)oldDiamondAmount, (int)userData.diamond, 0.8f, x =>
         {
             diamondTxt.text = (int)x+"";

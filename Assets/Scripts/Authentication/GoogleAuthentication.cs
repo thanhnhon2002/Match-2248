@@ -219,7 +219,7 @@ public class GoogleAuthentication : MonoBehaviour
     public void GetDataLogin()
     {
         UserGoogle userGoogle = ServerSaveLoadLocal.DeserializeObjectFromFile<UserGoogle>("dataLogin");
-        if (userGoogle.email == null)
+        if (userGoogle == null || userGoogle.email == null)
         {
             currentUser = null;
         }
@@ -234,7 +234,6 @@ public class GoogleAuthentication : MonoBehaviour
             currentUser.IdToken = userGoogle.idToken;
             currentUser.ImageUrl = userGoogle.imageUrl;
             currentUser.UserId = userGoogle.userId;
-            Debug.Log("Gan roiiiiiiiiiiiiiiiiiiiiiiii");
         }
     }
 
