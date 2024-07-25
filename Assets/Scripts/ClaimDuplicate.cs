@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ClaimDuplicate : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class ClaimDuplicate : MonoBehaviour
         {
             GameFlow.Instance.shop.SetActive(true);
             GameFlow.Instance.shop.GetComponent<EffectOpenSlide>().DoEffect();
+            GetComponent<Button>().enabled = true;
             return;
         }
         GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
