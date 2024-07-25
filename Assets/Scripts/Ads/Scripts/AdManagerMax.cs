@@ -109,12 +109,12 @@ namespace DarkcupGames
         public void ShowAds(int id)
         {
             var onWatchAdsFinished = events[id];
-            var userData = GameSystem.userdata;
-            if (userData.boughtItems.Contains(IAP_ID.no_ads.ToString()))
-            {
-                onWatchAdsFinished?.Invoke();
-                return;
-            }
+            //var userData = GameSystem.userdata;
+            //if (userData.boughtItems.Contains(IAP_ID.no_ads.ToString()))
+            //{
+            //    onWatchAdsFinished?.Invoke();
+            //    return;
+            //}
             InternetChecker.Instance.CheckInternetConnection();
             if (InternetChecker.Instance.WasConnected == false) return;
             lastInterTime = Time.time + INTER_BUFFER;
