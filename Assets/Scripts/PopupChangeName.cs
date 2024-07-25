@@ -43,8 +43,4 @@ public class PopupChangeName : MonoBehaviour
         DataUserManager.SaveUserData();
     }
 
-    public void Close()
-    {
-        transform.DOScale(0f, Const.DEFAULT_TWEEN_TIME).OnComplete(() => gameObject.SetActive(false));
-    }
 }

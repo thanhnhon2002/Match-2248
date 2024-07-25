@@ -54,11 +54,7 @@ public class Hammer : Power<Hammer>
         this.cell = cell;
         var highligt = PoolSystem.Instance.GetObject(highlightPre, cell.transform.position);
         highligt.cell = cell;
-        if (!ignoreCost) GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
-        GameFlow.Instance.diamondGroup.Display();
         info.isTutorialFinish = true;
-        GameSystem.SaveUserDataToLocal();
-        DataUserManager.SaveUserData();
         if (chose) return;
         chose = true; 
         backButton.gameObject.SetActive (false); 

@@ -63,10 +63,10 @@ public class Paint : Power<Paint>
 
     public void CheckCell(Cell cell)
     {
-        if(!isDraging) return;
+        if (!isDraging) return;
         if (chosenCells.Contains(cell) && chosenCells.Count > 1 && cell.Equals(chosenCells[chosenCells.Count - 2]))
             RemoveCell(chosenCells[chosenCells.Count - 1]);
-        else if(!chosenCells.Contains(cell)) ConectCell(cell);
+        else if (!chosenCells.Contains(cell)) ConectCell(cell);
     }
 
     public void PaintAllCells()
@@ -81,24 +81,18 @@ public class Paint : Power<Paint>
             //if (turorial != null) turorial.gameObject.SetActive(true);
             return;
         }
-        onUseCompleted?.Invoke();
-        if (!ignoreCost) GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
         info.isTutorialFinish = true;
-        GameSystem.SaveUserDataToLocal();
-        DataUserManager.SaveUserData();
-        GameFlow.Instance.diamondGroup.Display();
-        DisplayCost();
         var highestValue = FindHighestValue();
         GameFlow.Instance.gameState = GameState.Fx;
         var sq = DOTween.Sequence();
-        sq.AppendCallback(() => 
+        sq.AppendCallback(() =>
         {
             foreach (var item in chosenCells)
             {
                 item.IncreaseValue(highestValue);
             }
         });
-        sq.AppendInterval(Const.DEFAULT_TWEEN_TIME +0.05f);
+        sq.AppendInterval(Const.DEFAULT_TWEEN_TIME + 0.05f);
         sq.AppendCallback(() =>
         {
             foreach (var item in chosenCells)
@@ -107,7 +101,9 @@ public class Paint : Power<Paint>
             }
             GameFlow.Instance.gameState = GameState.Playing;
             GridManager.Instance.UpdateCell(true);
-        });      
+            onUseCompleted?.Invoke();
+            DisplayCost();
+        });
     }
 
     private BigInteger FindHighestValue()
@@ -115,7 +111,7 @@ public class Paint : Power<Paint>
         BigInteger highestValue = 0;
         foreach (var item in chosenCells)
         {
-            if(item.Value > highestValue) highestValue = item.Value;
+            if (item.Value > highestValue) highestValue = item.Value;
         }
         return highestValue;
     }
