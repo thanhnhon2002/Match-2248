@@ -82,4 +82,12 @@ public abstract class Power<T> : MonoBehaviour where T : Power<T>
         var text = cost > 0 ? cost.ToString() : "Free";
         priceTxt.text = text;
     }
+    public void UpdateCost()
+    {
+        Debug.LogError(ignoreCost + "ignore???");
+        if (!ignoreCost) GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
+        GameFlow.Instance.diamondGroup.Display();
+        GameSystem.SaveUserDataToLocal();
+        DataUserManager.SaveUserData();
+    }
 }

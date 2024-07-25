@@ -275,7 +275,19 @@ public class GameFlow : MonoBehaviour
         diamondGroup.AddDiamond(count);
         UIManager.Instance.SpawnEffectReward(diamondAdButton.transform);
     }
+    [ContextMenu("1/2 diamond")]
+    public void GetDiamondTest()
+    {
+        diamondGroup.AddDiamond((int)GameSystem.userdata.diamond/2);
+        UIManager.Instance.SpawnEffectReward(diamondAdButton.transform);
+    }
 
+    [ContextMenu("+300 diamond")]
+    public void GetDiamondTest2()
+    {
+        diamondGroup.AddDiamond((int)300);
+        UIManager.Instance.SpawnEffectReward(diamondAdButton.transform);
+    }
     public void GetDiamond(Transform spawner)
     {
         if(powerReward.IsShowing()) diamondGroup.AddDiamond(80);

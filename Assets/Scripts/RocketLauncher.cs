@@ -19,7 +19,9 @@ public class RocketLauncher : Power<RocketLauncher>
     public override void UsePower()
     {
         if (GameFlow.Instance.gameState != GameState.Playing) return;
-        if (GameSystem.userdata.diamond < cost)
+        var userData = GameSystem.userdata;
+        Debug.Log("rocketCost"+cost);
+        if (userData.diamond < cost)
         {
             GameFlow.Instance.shop.SetActive(true);
             GameFlow.Instance.shop.GetComponent<EffectOpenSlide>().DoEffect();
@@ -32,7 +34,6 @@ public class RocketLauncher : Power<RocketLauncher>
     public void LaunchRocket()
     {
         info.isTutorialFinish = true;
-        GameSystem.SaveUserDataToLocal();
         GameFlow.Instance.gameState = GameState.Fx; 
         targets.Clear();
         allCells.Clear();

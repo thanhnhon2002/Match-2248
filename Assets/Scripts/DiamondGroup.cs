@@ -25,6 +25,7 @@ public class DiamondGroup : MonoBehaviour
     {
         var userData = GameSystem.userdata;
         oldDiamondAmount = userData.diamond;
+        if (userData.diamond < 0) userData.diamond = 0;
         userData.diamond += amount;
         GameSystem.SaveUserDataToLocal();
         DataUserManager.SaveUserData();
