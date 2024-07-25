@@ -54,7 +54,7 @@ public class AdmobAdBanner : AdmobAds
                 return;
             }
             var adRequest = new AdRequest();
-            if (useCollapsible && !SceneManager.GetActiveScene().name.Equals("GameplayUI"))
+            if (useCollapsible/* && !SceneManager.GetActiveScene().name.Equals("GameplayUI")*/)
             {
                 adRequest.Extras.Add("collapsible", "bottom");
                 adRequest.Extras.Add("collapsible_request_id", uuid);

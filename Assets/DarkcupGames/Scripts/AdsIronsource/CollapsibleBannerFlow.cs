@@ -60,8 +60,8 @@ namespace DarkcupGames
                 return;
             }
 
-            if (FirebaseManager.remoteConfig.COLLAPSIBLE_BANNER_ENABLED == true &&
-                FirebaseManager.remoteConfig.COLLAPSIBLE_FALLBACK_ENABLED == true &&
+            if (/*FirebaseManager.remoteConfig.COLLAPSIBLE_BANNER_ENABLED == true &&
+                FirebaseManager.remoteConfig.COLLAPSIBLE_FALLBACK_ENABLED == true &&*/
                 admobBanner.IsAdsAvailable() == false)
             {
                 admobBanner.SetBannerVisible(false);
