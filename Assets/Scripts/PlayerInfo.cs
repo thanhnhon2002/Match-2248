@@ -18,7 +18,6 @@ public class PlayerInfo : MonoBehaviour
 
     private void OnEnable ()
     {
-        changeName.gameObject.SetActive(false);
         DisplayInfo();
     }
 
