@@ -49,11 +49,13 @@ public class ClaimStartFrom : MonoBehaviour
         if (userData.diamond < cost)
         {
             GameFlow.Instance.shop.SetActive(true);
+            GameFlow.Instance.shop.GetComponent<EffectOpenSlide>().DoEffect();
             return;
         }
        
         GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
         GameSystem.SaveUserDataToLocal();
+        transform.parent.parent.GetComponent<AnimCombo>().CloseAnim();
         DataUserManager.SaveUserData();
         GameFlow.Instance.diamondGroup.Display();
         GridManager.Instance.SetStartIndex();

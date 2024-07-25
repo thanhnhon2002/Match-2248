@@ -11,10 +11,12 @@ public class ClaimDuplicate : MonoBehaviour
         if (userData.diamond < cost)
         {
             GameFlow.Instance.shop.SetActive(true);
+            GameFlow.Instance.shop.GetComponent<EffectOpenSlide>().DoEffect();
             return;
         }
         GameFlow.Instance.diamondGroup.AddDiamond((int)-cost);
         GameFlow.Instance.diamondGroup.Display();
+        GameFlow.Instance.popupAnimComboManager.OpenComboAnimQueue();
         GridManager.Instance.DoubleHightCellValue();
         PopupManager.Instance.DeQueue();
         GameSystem.SaveUserDataToLocal();
