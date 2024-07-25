@@ -81,6 +81,7 @@ public class UserData
 #if UNITY_EDITOR
         diamond = 10000;
 #endif
+        lastHighestCellValue = 128;
         highestCellValue = 128;
         property = new UserProperty();
         gameData = new GameData();

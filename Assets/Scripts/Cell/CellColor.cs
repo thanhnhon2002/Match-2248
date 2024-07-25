@@ -22,6 +22,7 @@ public class CellColor : MonoBehaviour
         Mathf mathf;
         var pow = mathf.LogBigInt(value, 2)-1;
         var index = pow % colors.Length;
+
         var color = colors[index];
         color.a = 1f;
         return color;

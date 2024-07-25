@@ -1,4 +1,5 @@
 ﻿using System.Numerics;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class SetTextStartFrom : SetTextPanel
@@ -16,8 +17,10 @@ public class SetTextStartFrom : SetTextPanel
         texts[2].GetComponentInParent<Button>(true).image.color = CellColor.Instance.GetCellColor(4096);
         texts[2].color = CellColor.Instance.GetTextColor(4096);
 
+        texts[3].transform.parent.gameObject.SetActive(false);
+        if (GameSystem.userdata.lastHighestCellValue < 12) return;
         var lastValue = BigInteger.Pow(2, GameSystem.userdata.lastHighestCellValue);
-        texts[3].transform.parent.gameObject.SetActive(GameSystem.userdata.lastHighestCellValue > 12);
+        texts[3].transform.parent.gameObject.SetActive(true);
         texts[3].text = BigIntegerConverter.ConvertNameValue(lastValue);
         texts[3].GetComponentInParent<Button>(true).image.color = CellColor.Instance.GetCellColor(lastValue);
         texts[3].color = CellColor.Instance.GetTextColor(lastValue);
