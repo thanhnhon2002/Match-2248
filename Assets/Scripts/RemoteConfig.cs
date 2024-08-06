@@ -8,8 +8,8 @@ public class RemoteConfig : MonoBehaviour
     [SerializeField] private bool _showDebug = false;
     [SerializeField] private bool _collapsibleBannerEnabled = true;
     [SerializeField] private bool _collapsibleBannerFallbackEnabled = true;
-    [SerializeField] private float _collapsibleBannerInterval = 40f;
-    [SerializeField] private float _timeBetweenAds = 30f;
+    [SerializeField] private float _collapsibleBannerInterval = 20f;
+    [SerializeField] private float _timeBetweenAds = 60f;
     [SerializeField] private float _giftInterval = 120f;
     [SerializeField] private float _minSessionTimeShowAds = 0f;
     [SerializeField] private float _minMinuteSpecialOffer = 10f;
