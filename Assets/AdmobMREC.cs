@@ -23,6 +23,8 @@ public class AdmobMREC : AdmobAds
             available = true;
         };
         // Raised when an ad fails to load into the banner view.
+        bannerView.OnAdPaid += (AdValue adValue) => AppsFlyerObjectScript.Instance.LogAdRevenue("admob", bannerView.GetAdUnitID(), "MREC", string.Empty, adValue.Value);
+        bannerView.OnAdPaid += (AdValue value) => AdjustLog.OnAdRevenuePaidEventAdmob(value);
         bannerView.OnBannerAdLoadFailed += (LoadAdError error) =>
         {
             Debug.LogError("Banner view failed to load an ad with error : "

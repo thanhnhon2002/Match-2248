@@ -67,6 +67,7 @@ namespace DarkcupGames
                                         new Firebase.Analytics.Parameter("value", revenue),
                                         new Firebase.Analytics.Parameter("currency", "USD"), };
             Firebase.Analytics.FirebaseAnalytics.LogEvent("ad_impression", impressionParameters);
+            AdjustLog.OnAdRevenuePaidEventMAX(info);
         }
 
 

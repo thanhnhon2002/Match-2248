@@ -68,6 +68,7 @@ public class AdmobAppOpen : AdmobAds
                 isShowingAds = false;
             };
             appOpenAd.OnAdPaid += (AdValue value) => AppsFlyerObjectScript.Instance.LogAdRevenue("admob", appOpenAd.GetAdUnitID(), "app open", string.Empty, value.Value);
+            appOpenAd.OnAdPaid += (AdValue value) => AdjustLog.OnAdRevenuePaidEventAdmob(value);
             appOpenAd.OnAdImpressionRecorded += () =>
             {
                 var param = new Parameter[]

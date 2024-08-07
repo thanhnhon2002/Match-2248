@@ -30,7 +30,8 @@ public class AdmobAdBanner : AdmobAds
             available = false;
             CollapsibleBannerFlow.Instance.OnCollapsibleAdsFailed();
         };
-        bannerView.OnAdPaid += (AdValue adValue) => AppsFlyerObjectScript.Instance.LogAdRevenue("admob", bannerView.GetAdUnitID(), "default", string.Empty, adValue.Value);
+        bannerView.OnAdPaid += (AdValue adValue) => AppsFlyerObjectScript.Instance.LogAdRevenue("admob", bannerView.GetAdUnitID(), "banner", string.Empty, adValue.Value);
+        bannerView.OnAdPaid += (AdValue value) => AdjustLog.OnAdRevenuePaidEventAdmob(value);
         bannerView.OnAdImpressionRecorded += () => 
         {
             var param = new Parameter[]
