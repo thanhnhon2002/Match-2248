@@ -9,7 +9,7 @@ public class AdmobManager : MonoBehaviour
 {
     public static AdmobManager Instance;
     public static bool isReady = false;
-    public static readonly float MAX_RETRY_TIME = 2f;
+    public static readonly float MAX_RETRY_TIME = 16f;
     [SerializeField] private bool showDebug;
 
     private void Awake()

@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -71,7 +72,7 @@ public class MenuOptions : MonoBehaviour
             {
                 if (dicMenuOptions[option].activeInHierarchy)
                 {
-                    //dicMenuOptions[option].gameObject.SetActive(false);
+                    dicMenuOptions[option].gameObject.SetActive(false);
                 }
             } else if (!dicMenuOptions[option].activeInHierarchy)
             {
@@ -82,7 +83,7 @@ public class MenuOptions : MonoBehaviour
         }
     }
     void OnPanel()
-    {       
+    {
         if (ANIMATION_ALL_PANEL)
         {
             panel.GetComponent<RectTransform>().anchoredPosition = normalPos;

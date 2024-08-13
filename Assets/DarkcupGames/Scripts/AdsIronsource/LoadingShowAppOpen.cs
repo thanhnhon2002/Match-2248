@@ -21,10 +21,10 @@ public class LoadingShowAppOpen : MonoBehaviour
         });
     }
 
-    public async void StartLoadingAndShowAppOpen(System.Action onLoadFinished)
+    public void StartLoadingAndShowAppOpen(System.Action onLoadFinished)
     {
-        while (!FirebaseManager.remoteConfig.fetch) await Task.Yield();
-        LOADING_TIME = FirebaseManager.remoteConfig.LOADING_TIME;
+        LOADING_TIME = 7f;
+        if (FirebaseManager.remoteConfig.fetch) LOADING_TIME = FirebaseManager.remoteConfig.LOADING_TIME;
         popupLoading.gameObject.SetActive(true);
         popupLoading.ShowLoading(LOADING_TIME, () =>{
             if (showDebug) Debug.Log("try showing app open");
