@@ -22,6 +22,7 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
     RectTransform rectTransformImageUsed;
     public OptionMenu option;
     public static OptionAnimation optionAnimation;
+    public static float lastClickTime;
     static bool draging;
     void Awake()
     {
@@ -52,12 +53,8 @@ public class OptionAnimation : MonoBehaviour,IPointerClickHandler,IPointerUpHand
     public void OnPointerDown(PointerEventData eventData)
     {
         //Debug.Log("Down " + transform.name);
-        if (optionAnimation != null)
-        {
-            optionAnimation.AnimationDown();
-        }
-        optionAnimation = this;
-        AnimationUp();
+        //Debug.Log("Click " + transform.name);
+        OpenPanel();
     }
     public void OnBeginDrag(PointerEventData eventData)
     {

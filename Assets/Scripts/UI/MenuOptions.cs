@@ -24,6 +24,8 @@ public class MenuOptions : MonoBehaviour
     [SerializeField] Vector3 normalPos = new Vector3(1100, 250, 0);
     [SerializeField] EffectSlideManager effectSlideManager;
     Sequence sequence;
+
+    public OptionAnimation[] optionAnimations; 
     private void Awake()
     {
         var options = GetComponentsInChildren<Option>(true);
