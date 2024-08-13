@@ -16,7 +16,7 @@ public class AdmobMREC : AdmobAds
     private bool isShowing;
     public override void Init()
     {
-        bannerView = new BannerView(MREC_ID, AdSize.MediumRectangle, AdPosition.Center);
+        bannerView = new BannerView(MREC_ID, AdSize.MediumRectangle, AdPosition.Top);
         // Raised when an ad is loaded into the banner view.
         bannerView.OnBannerAdLoaded += () =>
         {
@@ -27,7 +27,7 @@ public class AdmobMREC : AdmobAds
         bannerView.OnAdPaid += (AdValue value) => AdjustLog.OnAdRevenuePaidEventAdmob(value);
         bannerView.OnBannerAdLoadFailed += (LoadAdError error) =>
         {
-            Debug.LogError("Banner view failed to load an ad with error : "
+            Debug.LogError("MREC view failed to load an ad with error : "
                 + error);
         };
     }
@@ -49,7 +49,7 @@ public class AdmobMREC : AdmobAds
             if (AdmobManager.isReady == false)
             {
                 AdmobManager.Instance.Init();
-                Debug.LogError("admob is not ready for load banner");
+                Debug.LogError("admob is not ready for load MREC");
                 return;
             }
             var adRequest = new AdRequest();
