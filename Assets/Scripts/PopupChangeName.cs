@@ -11,7 +11,7 @@ public class PopupChangeName : MonoBehaviour
     private int chosenAvatarIndex;
     private void Awake()
     {
-        avatarButtons = GetComponentsInChildren<AvatarButton>();
+        avatarButtons = GetComponentsInChildren<AvatarButton>(true);
     }
 
     private void OnEnable()

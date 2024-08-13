@@ -19,7 +19,7 @@
     <package>com.applovin.mediation:unityads-adapter:4.10.0.0</package>
     <package>com.applovin.mediation:vungle-adapter:7.3.1.2</package>
     <package>com.applovin.mediation:yandex-adapter:6.4.1.0</package>
-    <package>com.applovin:applovin-sdk:12.4.2</package>
+    <package>com.applovin:applovin-sdk:12.6.0</package>
     <package>com.appsflyer:adrevenue:6.4.3</package>
     <package>com.appsflyer:af-android-sdk:6.14.0</package>
     <package>com.appsflyer:af-purchaseconnector-unity:2.0.1</package>

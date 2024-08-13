@@ -18,7 +18,7 @@ namespace DarkcupGames
         [SerializeField] private AdBreak adBreak;
         private MaxMediationIntertistial intertistial;
         private MaxMediationReward rewarded;
-        private float lastInterTime;
+        private static float lastInterTime;
 
         private void Awake()
         {
@@ -26,7 +26,7 @@ namespace DarkcupGames
         }
         private void Start()
         {
-            lastInterTime = Time.time;
+            //lastInterTime = Time.time;
             MaxMediationManager.intertistial.AddOnAdCloseAction((str, info) =>
             {
                 HideAdBreak();
